@@ -20,3 +20,14 @@ func NewTestClient(t *testing.T) *api.API {
 
 	return api.NewClient(keyID, keySecret)
 }
+
+// General testing utilities
+
+func GetProjectID(t *testing.T) string {
+	t.Helper()
+	projectID := os.Getenv("STYTCH_PROJECT_ID")
+	if projectID == "" {
+		t.Skip("STYTCH_PROJECT_ID environment variable is required for this test")
+	}
+	return projectID
+}

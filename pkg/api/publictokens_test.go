@@ -5,26 +5,17 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/stytchauth/stytch-management-go/v1/pkg/models/publictokens"
-	"os"
 	"testing"
 )
 
-func helperGetProjectIDOrSkip(t *testing.T) string {
-	projectID := os.Getenv("STYTCH_PROJECT_ID")
-	if projectID == "" {
-		t.Skip("STYTCH_PROJECT_ID environment variable is required for this test")
-	}
-	return projectID
-}
-
 func TestPublicTokensClient_CreatePublicToken(t *testing.T) {
 	// Arrange
-	projectID := helperGetProjectIDOrSkip(t)
-
-	// Act
+	projectID := GetProjectID(t)
 	client := NewTestClient(t)
 	ctx := context.Background()
-	_, err := client.PublicTokens.CreatePublicToken(ctx, publictokens.CreatePublicTokenRequest{
+
+	// Act
+	_, err := client.PublicTokens.Create(ctx, publictokens.CreatePublicTokenRequest{
 		ProjectID: projectID,
 	})
 
@@ -34,16 +25,16 @@ func TestPublicTokensClient_CreatePublicToken(t *testing.T) {
 
 func TestPublicTokensClient_GetPublicTokens(t *testing.T) {
 	// Arrange
-	projectID := helperGetProjectIDOrSkip(t)
+	projectID := GetProjectID(t)
 	client := NewTestClient(t)
 	ctx := context.Background()
-	createResp, err := client.PublicTokens.CreatePublicToken(ctx, publictokens.CreatePublicTokenRequest{
+	createResp, err := client.PublicTokens.Create(ctx, publictokens.CreatePublicTokenRequest{
 		ProjectID: projectID,
 	})
 	require.NoError(t, err)
 
 	// Act
-	resp, err := client.PublicTokens.GetPublicTokens(ctx, publictokens.GetPublicTokensRequest{
+	resp, err := client.PublicTokens.GetAll(ctx, publictokens.GetAllPublicTokensRequest{
 		ProjectID: projectID,
 	})
 	var tokens []string
@@ -58,16 +49,16 @@ func TestPublicTokensClient_GetPublicTokens(t *testing.T) {
 
 func TestPublicTokensClient_DeletePublicToken(t *testing.T) {
 	// Arrange
-	projectID := helperGetProjectIDOrSkip(t)
+	projectID := GetProjectID(t)
 	client := NewTestClient(t)
 	ctx := context.Background()
-	createResp, err := client.PublicTokens.CreatePublicToken(ctx, publictokens.CreatePublicTokenRequest{
+	createResp, err := client.PublicTokens.Create(ctx, publictokens.CreatePublicTokenRequest{
 		ProjectID: projectID,
 	})
 	require.NoError(t, err)
 
 	// Act
-	_, err = client.PublicTokens.DeletePublicToken(ctx, publictokens.DeletePublicTokenRequest{
+	_, err = client.PublicTokens.Delete(ctx, publictokens.DeletePublicTokenRequest{
 		ProjectID:     projectID,
 		PublicTokenID: createResp.PublicToken,
 	})

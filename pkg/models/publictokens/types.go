@@ -8,11 +8,11 @@ type PublicToken struct {
 	CreatedAt   time.Time `json:"created_at"`
 }
 
-type GetPublicTokensRequest struct {
+type GetAllPublicTokensRequest struct {
 	ProjectID string `json:"project_id"`
 }
 
-type GetPublicTokensResponse struct {
+type GetAllPublicTokensResponse struct {
 	ProjectID    string        `json:"project_id"`
 	PublicTokens []PublicToken `json:"public_tokens"`
 	RequestID    string        `json:"request_id"`
