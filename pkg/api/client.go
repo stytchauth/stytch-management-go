@@ -1,4 +1,4 @@
-package client
+package api
 
 import (
 	"net/http"
@@ -10,6 +10,8 @@ const defaultBaseURI = "https://management.stytch.com"
 
 type API struct {
 	client *internal.Client
+
+	Projects *ProjectsClient
 }
 
 type apiConfig struct {
@@ -34,7 +36,7 @@ func WithHTTPClient(client *http.Client) APIOption {
 	}
 }
 
-func New(workspaceKeyID string, workspaceKeySecret string, opts ...APIOption) *API {
+func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOption) *API {
 	c := apiConfig{
 		baseURI:    defaultBaseURI,
 		httpClient: &http.Client{},
@@ -44,12 +46,15 @@ func New(workspaceKeyID string, workspaceKeySecret string, opts ...APIOption) *A
 		opt(&c)
 	}
 
+	client := internal.NewClient(internal.ClientConfig{
+		WorkspaceKeyID:     workspaceKeyID,
+		WorkspaceKeySecret: workspaceKeySecret,
+		BaseURI:            c.baseURI,
+		HTTPClient:         c.httpClient,
+	})
+
 	return &API{
-		client: internal.NewClient(internal.ClientConfig{
-			WorkspaceKeyID:     workspaceKeyID,
-			WorkspaceKeySecret: workspaceKeySecret,
-			BaseURI:            c.baseURI,
-			HTTPClient:         c.httpClient,
-		}),
+		client:   client,
+		Projects: newProjectsClient(client),
 	}
 }

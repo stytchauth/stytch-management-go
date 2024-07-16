@@ -46,9 +46,8 @@ func (c *Client) NewRequest(
 	queryParams map[string]string,
 	body []byte,
 	v any,
-	headers map[string][]string,
 ) error {
-	b, err := c.RawRequest(ctx, method, path, queryParams, body, headers)
+	b, err := c.RawRequest(ctx, method, path, queryParams, body)
 	if err != nil {
 		return err
 	}
@@ -69,7 +68,6 @@ func (c *Client) RawRequest(
 	path string,
 	queryParams map[string]string,
 	body []byte,
-	headers map[string][]string,
 ) ([]byte, error) {
 	if !strings.HasPrefix(path, "/") {
 		path = "/" + path
@@ -96,12 +94,6 @@ func (c *Client) RawRequest(
 
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("User-Agent", "Stytch Management Go v"+version.Version)
-
-	for k, vSlice := range headers {
-		for _, v := range vSlice {
-			req.Header.Add(k, v)
-		}
-	}
 
 	res, err := c.httpClient.Do(req)
 	if err != nil {
