@@ -22,7 +22,7 @@ func (c *PublicTokensClient) GetPublicTokens(ctx context.Context, body public_to
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/web/v1/projects/%s/public_tokens", body.ProjectId),
+		fmt.Sprintf("/v1/projects/%s/public_tokens", body.ProjectId),
 		nil,
 		nil,
 		&resp)
@@ -37,7 +37,7 @@ func (c *PublicTokensClient) CreatePublicToken(ctx context.Context, body public_
 	err = c.client.NewRequest(
 		ctx,
 		"POST",
-		fmt.Sprintf("/web/v1/projects/%s/public_tokens", body.ProjectId),
+		fmt.Sprintf("/v1/projects/%s/public_tokens", body.ProjectId),
 		nil,
 		jsonBody,
 		&res)
@@ -48,7 +48,7 @@ func (c *PublicTokensClient) DeletePublicToken(ctx context.Context, body public_
 	return c.client.NewRequest(
 		ctx,
 		"DELETE",
-		fmt.Sprintf("/web/v1/projects/%s/public_tokens/%s", body.ProjectId, body.PublicTokenId),
+		fmt.Sprintf("/v1/projects/%s/public_tokens/%s", body.ProjectId, body.PublicTokenId),
 		nil,
 		nil,
 		nil)
