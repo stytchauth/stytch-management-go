@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/stytchauth/stytch-management-go/v1/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/models/public_tokens"
+	"github.com/stytchauth/stytch-management-go/v1/pkg/models/publictokens"
 )
 
 type PublicTokensClient struct {
@@ -16,8 +16,8 @@ func newPublicTokensClient(c *internal.Client) *PublicTokensClient {
 	return &PublicTokensClient{client: c}
 }
 
-func (c *PublicTokensClient) GetPublicTokens(ctx context.Context, body public_tokens.GetPublicTokensRequest) (*public_tokens.GetPublicTokensResponse, error) {
-	var resp public_tokens.GetPublicTokensResponse
+func (c *PublicTokensClient) GetPublicTokens(ctx context.Context, body publictokens.GetPublicTokensRequest) (*publictokens.GetPublicTokensResponse, error) {
+	var resp publictokens.GetPublicTokensResponse
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
@@ -29,13 +29,13 @@ func (c *PublicTokensClient) GetPublicTokens(ctx context.Context, body public_to
 	return &resp, err
 }
 
-func (c *PublicTokensClient) CreatePublicToken(ctx context.Context, body public_tokens.CreatePublicTokenRequest) (*public_tokens.CreatePublicTokenResponse, error) {
+func (c *PublicTokensClient) CreatePublicToken(ctx context.Context, body publictokens.CreatePublicTokenRequest) (*publictokens.CreatePublicTokenResponse, error) {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 
-	var res public_tokens.CreatePublicTokenResponse
+	var res publictokens.CreatePublicTokenResponse
 	err = c.client.NewRequest(
 		ctx,
 		"POST",
@@ -46,7 +46,7 @@ func (c *PublicTokensClient) CreatePublicToken(ctx context.Context, body public_
 	return &res, err
 }
 
-func (c *PublicTokensClient) DeletePublicToken(ctx context.Context, body public_tokens.DeletePublicTokenRequest) error {
+func (c *PublicTokensClient) DeletePublicToken(ctx context.Context, body publictokens.DeletePublicTokenRequest) error {
 	return c.client.NewRequest(
 		ctx,
 		"DELETE",

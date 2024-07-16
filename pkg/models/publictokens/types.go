@@ -1,4 +1,4 @@
-package public_tokens
+package publictokens
 
 import "time"
 
