@@ -46,12 +46,14 @@ func (c *PublicTokensClient) CreatePublicToken(ctx context.Context, body publict
 	return &res, err
 }
 
-func (c *PublicTokensClient) DeletePublicToken(ctx context.Context, body publictokens.DeletePublicTokenRequest) error {
-	return c.client.NewRequest(
+func (c *PublicTokensClient) DeletePublicToken(ctx context.Context, body publictokens.DeletePublicTokenRequest) (*publictokens.DeletePublicTokenResponse, error) {
+	var res publictokens.DeletePublicTokenResponse
+	err := c.client.NewRequest(
 		ctx,
 		"DELETE",
 		fmt.Sprintf("/v1/projects/%s/public_tokens/%s", body.ProjectID, body.PublicTokenID),
 		nil,
 		nil,
-		nil)
+		&res)
+	return &res, err
 }
