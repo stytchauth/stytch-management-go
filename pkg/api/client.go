@@ -13,6 +13,7 @@ type API struct {
 
 	Projects     *ProjectsClient
 	PublicTokens *PublicTokensClient
+	Secrets      *SecretsClient
 }
 
 type apiConfig struct {
@@ -58,5 +59,6 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 		client:       client,
 		Projects:     newProjectsClient(client),
 		PublicTokens: newPublicTokensClient(client),
+		Secrets:      newSecretsClient(client),
 	}
 }
