@@ -57,6 +57,6 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 	return &API{
 		client:       client,
 		Projects:     newProjectsClient(client),
-		PublicTokens: NewPublicTokensClient(client),
+		PublicTokens: newPublicTokensClient(client),
 	}
 }

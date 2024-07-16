@@ -12,17 +12,16 @@ type PublicTokensClient struct {
 	client *internal.Client
 }
 
-func NewPublicTokensClient(c *internal.Client) *PublicTokensClient {
+func newPublicTokensClient(c *internal.Client) *PublicTokensClient {
 	return &PublicTokensClient{client: c}
 }
 
 func (c *PublicTokensClient) GetPublicTokens(ctx context.Context, body public_tokens.GetPublicTokensRequest) (*public_tokens.GetPublicTokensResponse, error) {
-
 	var resp public_tokens.GetPublicTokensResponse
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v1/projects/%s/public_tokens", body.ProjectId),
+		fmt.Sprintf("/v1/projects/%s/public_tokens", body.ProjectID),
 		nil,
 		nil,
 		&resp)
@@ -32,12 +31,15 @@ func (c *PublicTokensClient) GetPublicTokens(ctx context.Context, body public_to
 
 func (c *PublicTokensClient) CreatePublicToken(ctx context.Context, body public_tokens.CreatePublicTokenRequest) (*public_tokens.CreatePublicTokenResponse, error) {
 	jsonBody, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
 
 	var res public_tokens.CreatePublicTokenResponse
 	err = c.client.NewRequest(
 		ctx,
 		"POST",
-		fmt.Sprintf("/v1/projects/%s/public_tokens", body.ProjectId),
+		fmt.Sprintf("/v1/projects/%s/public_tokens", body.ProjectID),
 		nil,
 		jsonBody,
 		&res)
@@ -48,7 +50,7 @@ func (c *PublicTokensClient) DeletePublicToken(ctx context.Context, body public_
 	return c.client.NewRequest(
 		ctx,
 		"DELETE",
-		fmt.Sprintf("/v1/projects/%s/public_tokens/%s", body.ProjectId, body.PublicTokenId),
+		fmt.Sprintf("/v1/projects/%s/public_tokens/%s", body.ProjectID, body.PublicTokenID),
 		nil,
 		nil,
 		nil)
