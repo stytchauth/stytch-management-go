@@ -11,7 +11,8 @@ const defaultBaseURI = "https://management.stytch.com"
 type API struct {
 	client *internal.Client
 
-	Projects *ProjectsClient
+	Projects     *ProjectsClient
+	PublicTokens *PublicTokensClient
 }
 
 type apiConfig struct {
@@ -54,7 +55,8 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 	})
 
 	return &API{
-		client:   client,
-		Projects: newProjectsClient(client),
+		client:       client,
+		Projects:     newProjectsClient(client),
+		PublicTokens: newPublicTokensClient(client),
 	}
 }
