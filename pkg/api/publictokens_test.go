@@ -9,12 +9,17 @@ import (
 	"testing"
 )
 
-func TestPublicTokensClient_CreatePublicToken(t *testing.T) {
-	// Arrange
+func helperGetProjectIDOrSkip(t *testing.T) string {
 	projectID := os.Getenv("STYTCH_PROJECT_ID")
 	if projectID == "" {
 		t.Skip("STYTCH_PROJECT_ID environment variable is required for this test")
 	}
+	return projectID
+}
+
+func TestPublicTokensClient_CreatePublicToken(t *testing.T) {
+	// Arrange
+	projectID := helperGetProjectIDOrSkip(t)
 
 	// Act
 	client := NewTestClient(t)
@@ -29,12 +34,9 @@ func TestPublicTokensClient_CreatePublicToken(t *testing.T) {
 
 func TestPublicTokensClient_GetPublicTokens(t *testing.T) {
 	// Arrange
+	projectID := helperGetProjectIDOrSkip(t)
 	client := NewTestClient(t)
 	ctx := context.Background()
-	projectID := os.Getenv("STYTCH_PROJECT_ID")
-	if projectID == "" {
-		t.Skip("STYTCH_PROJECT_ID environment variable is required for this test")
-	}
 	createResp, err := client.PublicTokens.CreatePublicToken(ctx, publictokens.CreatePublicTokenRequest{
 		ProjectID: projectID,
 	})
@@ -56,12 +58,9 @@ func TestPublicTokensClient_GetPublicTokens(t *testing.T) {
 
 func TestPublicTokensClient_DeletePublicToken(t *testing.T) {
 	// Arrange
+	projectID := helperGetProjectIDOrSkip(t)
 	client := NewTestClient(t)
 	ctx := context.Background()
-	projectID := os.Getenv("STYTCH_PROJECT_ID")
-	if projectID == "" {
-		t.Skip("STYTCH_PROJECT_ID environment variable is required for this test")
-	}
 	createResp, err := client.PublicTokens.CreatePublicToken(ctx, publictokens.CreatePublicTokenRequest{
 		ProjectID: projectID,
 	})
