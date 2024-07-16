@@ -23,6 +23,9 @@ func (c *ProjectsClient) Create(
 	body projects.CreateRequest,
 ) (*projects.CreateResponse, error) {
 	jsonBody, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
 
 	var res projects.CreateResponse
 	err = c.client.NewRequest(ctx, "POST", "/v1/projects", nil, jsonBody, &res)
