@@ -31,3 +31,12 @@ func (c *ProjectsClient) Create(
 	err = c.client.NewRequest(ctx, "POST", "/v1/projects", nil, jsonBody, &res)
 	return &res, err
 }
+
+func (c *ProjectsClient) Get(
+	ctx context.Context,
+	body projects.GetRequest,
+) (*projects.GetResponse, error) {
+	var res projects.GetResponse
+	err := c.client.NewRequest(ctx, "GET", "/v1/projects/"+body.ProjectID, nil, nil, &res)
+	return &res, err
+}

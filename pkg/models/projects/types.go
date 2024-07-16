@@ -41,3 +41,18 @@ type CreateResponse struct {
 	AccountVerified bool    `json:"account_verified"`
 	RedirectEnabled bool    `json:"redirect_enabled"`
 }
+
+type GetRequest struct {
+	ProjectID string `json:"project_id"`
+}
+
+type GetResponse struct {
+	StatusCode            int     `json:"status_code"`
+	RequestID             string  `json:"request_id"`
+	Project               Project `json:"project"`
+	DisableEmailWatermark bool    `json:"disable_email_watermark"`
+	DisableSDKWatermark   bool    `json:"disable_sdk_watermark"`
+	AccountVerified       bool    `json:"account_verified"`
+	RedirectEnabled       bool    `json:"redirect_enabled"`
+	EnableCustomLogo      bool    `json:"enable_custom_logo"`
+}
