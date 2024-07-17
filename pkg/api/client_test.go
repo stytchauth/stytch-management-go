@@ -7,6 +7,10 @@ import (
 	"github.com/stytchauth/stytch-management-go/v1/pkg/api"
 )
 
+func ptr[T any](v T) *T {
+	return &v
+}
+
 // NewTestClient is a test helper function that returns a new API client.
 // It relies on the environment variables STYTCH_WORKSPACE_KEY_ID and STYTCH_WORKSPACE_KEY_SECRET being set.
 func NewTestClient(t *testing.T) *api.API {
