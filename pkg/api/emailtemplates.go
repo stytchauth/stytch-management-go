@@ -16,7 +16,10 @@ func newEmailTemplatesClient(c *internal.Client) *EmailTemplatesClient {
 	return &EmailTemplatesClient{client: c}
 }
 
-func (c *EmailTemplatesClient) GetAll(ctx context.Context, body emailtemplates.GetAllEmailTemplatesRequest) (*emailtemplates.GetAllEmailTemplatesResponse, error) {
+func (c *EmailTemplatesClient) GetAll(
+	ctx context.Context,
+	body emailtemplates.GetAllEmailTemplatesRequest,
+) (*emailtemplates.GetAllEmailTemplatesResponse, error) {
 	var resp emailtemplates.GetAllEmailTemplatesResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -29,7 +32,10 @@ func (c *EmailTemplatesClient) GetAll(ctx context.Context, body emailtemplates.G
 	return &resp, err
 }
 
-func (c *EmailTemplatesClient) Get(ctx context.Context, body emailtemplates.GetEmailTemplateRequest) (*emailtemplates.GetEmailTemplateResponse, error) {
+func (c *EmailTemplatesClient) Get(
+	ctx context.Context,
+	body emailtemplates.GetEmailTemplateRequest,
+) (*emailtemplates.GetEmailTemplateResponse, error) {
 	var resp emailtemplates.GetEmailTemplateResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -42,7 +48,10 @@ func (c *EmailTemplatesClient) Get(ctx context.Context, body emailtemplates.GetE
 	return &resp, err
 }
 
-func (c *EmailTemplatesClient) Create(ctx context.Context, body emailtemplates.CreateEmailTemplateRequest) (*emailtemplates.CreateEmailTemplateResponse, error) {
+func (c *EmailTemplatesClient) Create(
+	ctx context.Context,
+	body emailtemplates.CreateEmailTemplateRequest,
+) (*emailtemplates.CreateEmailTemplateResponse, error) {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -59,7 +68,10 @@ func (c *EmailTemplatesClient) Create(ctx context.Context, body emailtemplates.C
 	return &res, err
 }
 
-func (c *EmailTemplatesClient) Delete(ctx context.Context, body emailtemplates.DeleteEmailTemplateRequest) (*emailtemplates.DeleteEmailTemplateResponse, error) {
+func (c *EmailTemplatesClient) Delete(
+	ctx context.Context,
+	body emailtemplates.DeleteEmailTemplateRequest,
+) (*emailtemplates.DeleteEmailTemplateResponse, error) {
 	var res emailtemplates.DeleteEmailTemplateResponse
 	err := c.client.NewRequest(
 		ctx,
