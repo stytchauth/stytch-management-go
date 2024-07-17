@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"encoding/json"
 	"github.com/stytchauth/stytch-management-go/v1/pkg/api/internal"
 	"github.com/stytchauth/stytch-management-go/v1/pkg/models/secrets"
 )
@@ -42,18 +41,13 @@ func (c *SecretsClient) Create(ctx context.Context, body secrets.CreateSecretReq
 }
 
 func (c *SecretsClient) Delete(ctx context.Context, body secrets.DeleteSecretRequest) (*secrets.DeleteSecretResponse, error) {
-	jsonBody, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-
 	var resp secrets.DeleteSecretResponse
-	err = c.client.NewRequest(
+	err := c.client.NewRequest(
 		ctx,
 		"DELETE",
-		"/v1/projects/"+body.ProjectID+"/secrets",
+		"/v1/projects/"+body.ProjectID+"/secrets/"+body.SecretID,
 		nil,
-		jsonBody,
+		nil,
 		&resp,
 	)
 	return &resp, err
