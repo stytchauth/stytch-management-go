@@ -105,3 +105,30 @@ type DeleteEmailTemplateResponse struct {
 	EmailTemplateID     string `json:"email_template_id"`
 	TestEmailTemplateID string `json:"test_email_template_id"`
 }
+
+type UpdateEmailTemplateRequest struct {
+	ProjectID          string `json:"project_id"`
+	EmailTemplateID    string `json:"email_template_id"`
+	ButtonColor        string `json:"button_color"`
+	ButtonTextColor    string `json:"button_text_color"`
+	FontFamily         string `json:"font_family"`
+	TextAlignment      string `json:"text_alignment"`
+	LogoSrc            string `json:"logo_src"`
+	ButtonBorderRadius string `json:"button_border_radius"`
+	FromLocalPart      string `json:"from_local_part"`
+	FromDomain         string `json:"from_domain"`
+	FromName           string `json:"from_name"`
+	ReplyToLocalPart   string `json:"reply_to_local_part"`
+	ReplyToName        string `json:"reply_to_name"`
+	Name               string `json:"name"`
+	IsDefault          bool   `json:"is_default"`
+	HTMLContent        string `json:"html_content"`
+	PlaintextContent   string `json:"plaintext_content"`
+	Subject            string `json:"subject"`
+}
+
+type UpdateEmailTemplateResponse struct {
+	StatusCode      int    `json:"status_code"`
+	RequestID       string `json:"request_id"`
+	EmailTemplateID string `json:"email_template_id"`
+}

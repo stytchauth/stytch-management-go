@@ -82,3 +82,23 @@ func (c *EmailTemplatesClient) Delete(
 		&res)
 	return &res, err
 }
+
+func (c *EmailTemplatesClient) Update(
+	ctx context.Context,
+	body emailtemplates.UpdateEmailTemplateRequest,
+) (*emailtemplates.UpdateEmailTemplateResponse, error) {
+	jsonBody, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+
+	var res emailtemplates.UpdateEmailTemplateResponse
+	err = c.client.NewRequest(
+		ctx,
+		"PUT",
+		fmt.Sprintf("/v1/projects/%s/email_templates/%s", body.ProjectID, body.EmailTemplateID),
+		nil,
+		jsonBody,
+		&res)
+	return &res, err
+}
