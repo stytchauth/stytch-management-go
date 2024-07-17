@@ -108,6 +108,14 @@ func (c *Client) RawRequest(
 		return io.ReadAll(res.Body)
 	}
 
+	if res.StatusCode == 404 {
+		err := stytcherror.Error{
+			StatusCode:   res.StatusCode,
+			ErrorMessage: "Not found.",
+		}
+		return nil, err
+	}
+
 	// Attempt to unmarshal into Stytch error format
 	var stytchErr stytcherror.Error
 	if err = json.NewDecoder(res.Body).Decode(&stytchErr); err != nil {
