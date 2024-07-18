@@ -94,3 +94,13 @@ type SetPasswordStrengthPolicyResponse struct {
 	RequestID      string                 `json:"request_id"`
 	PasswordConfig PasswordStrengthConfig `json:"password_config"`
 }
+
+type DeleteRequest struct {
+	ProjectID string `json:"project_id"`
+}
+
+type DeleteResponse struct {
+	StatusCode int    `json:"status_code"`
+	RequestID  string `json:"request_id"`
+	ProjectID  string `json:"project_id"`
+}
