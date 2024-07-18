@@ -110,3 +110,23 @@ func Test_ProjectsSetPasswordStrengthPolicy(t *testing.T) {
 	assert.True(t, resp.PasswordConfig.CheckBreachOnCreate)
 	assert.Equal(t, 12, *resp.PasswordConfig.LudsMinCount)
 }
+
+func Test_ProjectsDelete(t *testing.T) {
+	// Arrange
+	client := NewTestClient(t)
+	ctx := context.Background()
+	createResp, err := client.Projects.Create(ctx, projects.CreateRequest{
+		ProjectName: "Delete project test",
+		Vertical:    projects.VerticalB2B,
+	})
+	require.NoError(t, err)
+
+	// Act
+	resp, err := client.Projects.Delete(ctx, projects.DeleteRequest{
+		ProjectID: createResp.Project.ProjectID,
+	})
+
+	// Assert
+	assert.NoError(t, err)
+	assert.Equal(t, createResp.Project.ProjectID, resp.ProjectID)
+}

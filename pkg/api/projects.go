@@ -62,3 +62,12 @@ func (c *ProjectsClient) SetPasswordStrengthPolicy(
 	err = c.client.NewRequest(ctx, "POST", "/v1/projects/"+body.ProjectID+"/password_strength", nil, jsonBody, &res)
 	return &res, err
 }
+
+func (c *ProjectsClient) Delete(
+	ctx context.Context,
+	body projects.DeleteRequest,
+) (*projects.DeleteResponse, error) {
+	var res projects.DeleteResponse
+	err := c.client.NewRequest(ctx, "DELETE", "/v1/projects/"+body.ProjectID, nil, nil, &res)
+	return &res, err
+}
