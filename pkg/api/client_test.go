@@ -1,19 +1,27 @@
 package api_test
 
 import (
+	"context"
 	"os"
 	"testing"
 
+	"github.com/stretchr/testify/require"
 	"github.com/stytchauth/stytch-management-go/v1/pkg/api"
+	"github.com/stytchauth/stytch-management-go/v1/pkg/models/projects"
 )
 
 func ptr[T any](v T) *T {
 	return &v
 }
 
+type testClient struct {
+	t *testing.T
+	*api.API
+}
+
 // NewTestClient is a test helper function that returns a new API client.
 // It relies on the environment variables STYTCH_WORKSPACE_KEY_ID and STYTCH_WORKSPACE_KEY_SECRET being set.
-func NewTestClient(t *testing.T) *api.API {
+func NewTestClient(t *testing.T) *testClient {
 	t.Helper()
 
 	keyID := os.Getenv("STYTCH_WORKSPACE_KEY_ID")
@@ -22,16 +30,31 @@ func NewTestClient(t *testing.T) *api.API {
 		t.Skip("STYTCH_WORKSPACE_KEY_ID and STYTCH_WORKSPACE_KEY_SECRET environment variables are required for this test")
 	}
 
-	return api.NewClient(keyID, keySecret)
+	return &testClient{
+		t:   t,
+		API: api.NewClient(keyID, keySecret),
+	}
 }
 
-// General testing utilities
+func (c *testClient) DisposableProject(vertical projects.Vertical) projects.Project {
+	c.t.Helper()
+	ctx := context.Background()
+	resp, err := c.Projects.Create(ctx, projects.CreateRequest{
+		ProjectName: "Disposable project",
+		Vertical:    vertical,
+	})
+	require.NoError(c.t, err)
 
-func GetProjectID(t *testing.T) string {
-	t.Helper()
-	projectID := os.Getenv("STYTCH_PROJECT_ID")
-	if projectID == "" {
-		t.Skip("STYTCH_PROJECT_ID environment variable is required for this test")
-	}
-	return projectID
+	c.t.Cleanup(func() {
+		_, err := c.Projects.Delete(ctx, projects.DeleteRequest{
+			ProjectID: resp.Project.ProjectID,
+		})
+		require.NoError(c.t, err)
+	})
+
+	getResp, err := c.Projects.Get(ctx, projects.GetRequest{
+		ProjectID: resp.Project.ProjectID,
+	})
+	require.NoError(c.t, err)
+	return getResp.Project
 }

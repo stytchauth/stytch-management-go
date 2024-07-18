@@ -20,6 +20,12 @@ func Test_ProjectsCreate(t *testing.T) {
 		ProjectName: "Test project",
 		Vertical:    projects.VerticalB2B,
 	})
+	t.Cleanup(func() {
+		_, err := client.Projects.Delete(ctx, projects.DeleteRequest{
+			ProjectID: resp.Project.ProjectID,
+		})
+		require.NoError(t, err)
+	})
 
 	// Assert
 	assert.NoError(t, err)
@@ -30,21 +36,17 @@ func Test_ProjectsCreate(t *testing.T) {
 func Test_ProjectsGet(t *testing.T) {
 	// Arrange
 	client := NewTestClient(t)
+	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
-	createResp, err := client.Projects.Create(ctx, projects.CreateRequest{
-		ProjectName: "Get project test",
-		Vertical:    projects.VerticalB2B,
-	})
-	require.NoError(t, err)
 
 	// Act
 	resp, err := client.Projects.Get(ctx, projects.GetRequest{
-		ProjectID: createResp.Project.ProjectID,
+		ProjectID: project.ProjectID,
 	})
 
 	// Assert
 	assert.NoError(t, err)
-	assert.Equal(t, "Get project test", resp.Project.ProjectSettings.ProjectName)
+	assert.Equal(t, project.ProjectSettings.ProjectName, resp.Project.ProjectSettings.ProjectName)
 	assert.Equal(t, projects.VerticalB2B, resp.Project.Vertical)
 }
 
@@ -52,13 +54,9 @@ func Test_ProjectsGetPasswordStrengthPolicy(t *testing.T) {
 	// Arrange
 	client := NewTestClient(t)
 	ctx := context.Background()
-	createResp, err := client.Projects.Create(ctx, projects.CreateRequest{
-		ProjectName: "Get PW policy project test",
-		Vertical:    projects.VerticalB2B,
-	})
-	require.NoError(t, err)
-	_, err = client.Projects.SetPasswordStrengthPolicy(ctx, projects.SetPasswordStrengthPolicyRequest{
-		ProjectID: createResp.Project.ProjectID,
+	project := client.DisposableProject(projects.VerticalB2B)
+	_, err := client.Projects.SetPasswordStrengthPolicy(ctx, projects.SetPasswordStrengthPolicyRequest{
+		ProjectID: project.ProjectID,
 		PasswordConfig: projects.PasswordStrengthConfig{
 			CheckBreachOnCreate:         true,
 			CheckBreachOnAuthentication: true,
@@ -72,7 +70,7 @@ func Test_ProjectsGetPasswordStrengthPolicy(t *testing.T) {
 
 	// Act
 	resp, err := client.Projects.GetPasswordStrengthPolicy(ctx, projects.GetPasswordStrengthPolicyRequest{
-		ProjectID: createResp.Project.ProjectID,
+		ProjectID: project.ProjectID,
 	})
 
 	// Assert
@@ -85,16 +83,12 @@ func Test_ProjectsGetPasswordStrengthPolicy(t *testing.T) {
 func Test_ProjectsSetPasswordStrengthPolicy(t *testing.T) {
 	// Arrange
 	client := NewTestClient(t)
+	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
-	createResp, err := client.Projects.Create(ctx, projects.CreateRequest{
-		ProjectName: "Set PW policy project test",
-		Vertical:    projects.VerticalB2B,
-	})
-	require.NoError(t, err)
 
 	// Act
 	resp, err := client.Projects.SetPasswordStrengthPolicy(ctx, projects.SetPasswordStrengthPolicyRequest{
-		ProjectID: createResp.Project.ProjectID,
+		ProjectID: project.ProjectID,
 		PasswordConfig: projects.PasswordStrengthConfig{
 			CheckBreachOnCreate:         true,
 			CheckBreachOnAuthentication: true,
