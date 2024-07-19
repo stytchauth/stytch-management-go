@@ -6,6 +6,8 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stytchauth/stytch-management-go/v1/pkg/models/emailtemplates"
 	"github.com/stytchauth/stytch-management-go/v1/pkg/models/projects"
+	"math/rand"
+	"strconv"
 	"testing"
 )
 
@@ -15,10 +17,13 @@ func createNewEmailTemplate(
 	client *testClient,
 	project projects.Project,
 ) emailtemplates.CreateEmailTemplateResponse {
+
+	// A random enough number to avoid conflicts
+	random_suffix := strconv.Itoa(rand.Int())[:5]
 	requestBody := emailtemplates.CreateEmailTemplateRequest{
 		LiveProjectID: project.ProjectID,
 		Name:          "Test email template",
-		VanityID:      "test_email_template",
+		VanityID:      "test_email_template_" + random_suffix,
 		Method:        emailtemplates.MethodBuiltInCustomizations,
 		Type:          emailtemplates.TemplateTypeAll,
 	}
@@ -77,6 +82,7 @@ func TestEmailTemplatesClient_GetAll(t *testing.T) {
 	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
 	createResp := createNewEmailTemplate(t, ctx, client, project)
+	createResp2 := createNewEmailTemplate(t, ctx, client, project)
 
 	// Act
 	resp, err := client.EmailTemplates.GetAll(ctx, emailtemplates.GetAllEmailTemplatesRequest{
@@ -90,6 +96,7 @@ func TestEmailTemplatesClient_GetAll(t *testing.T) {
 	// Assert
 	assert.NoError(t, err)
 	assert.Contains(t, liveTemplatesVanityIDs, createResp.EmailTemplate.LiveEmailTemplate.VanityID)
+	assert.Contains(t, liveTemplatesVanityIDs, createResp2.EmailTemplate.LiveEmailTemplate.VanityID)
 }
 
 func TestEmailTemplatesClient_Update(t *testing.T) {
