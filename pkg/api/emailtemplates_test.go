@@ -14,7 +14,7 @@ func createNewEmailTemplate(
 	ctx context.Context,
 	client *testClient,
 	project projects.Project,
-) (emailtemplates.CreateEmailTemplateResponse, error) {
+) emailtemplates.CreateEmailTemplateResponse {
 	requestBody := emailtemplates.CreateEmailTemplateRequest{
 		LiveProjectID: project.ProjectID,
 		Name:          "Test email template",
@@ -24,7 +24,7 @@ func createNewEmailTemplate(
 	}
 	resp, err := client.EmailTemplates.Create(ctx, requestBody)
 	require.NoError(t, err)
-	return *resp, nil
+	return *resp
 }
 
 func TestEmailTemplatesClient_Create(t *testing.T) {
@@ -57,7 +57,7 @@ func TestEmailTemplatesClient_Get(t *testing.T) {
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
-	createResp, _ := createNewEmailTemplate(t, ctx, client, project)
+	createResp := createNewEmailTemplate(t, ctx, client, project)
 
 	// Act
 	resp, err := client.EmailTemplates.Get(ctx, emailtemplates.GetEmailTemplateRequest{
@@ -76,7 +76,7 @@ func TestEmailTemplatesClient_GetAll(t *testing.T) {
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
-	createResp, _ := createNewEmailTemplate(t, ctx, client, project)
+	createResp := createNewEmailTemplate(t, ctx, client, project)
 
 	// Act
 	resp, err := client.EmailTemplates.GetAll(ctx, emailtemplates.GetAllEmailTemplatesRequest{
@@ -97,7 +97,7 @@ func TestEmailTemplatesClient_Update(t *testing.T) {
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
-	createResp, _ := createNewEmailTemplate(t, ctx, client, project)
+	createResp := createNewEmailTemplate(t, ctx, client, project)
 
 	// Act
 	_, err := client.EmailTemplates.Update(ctx, emailtemplates.UpdateEmailTemplateRequest{
@@ -122,7 +122,7 @@ func TestEmailTemplatesClient_Delete(t *testing.T) {
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
-	createResp, _ := createNewEmailTemplate(t, ctx, client, project)
+	createResp := createNewEmailTemplate(t, ctx, client, project)
 
 	// Act
 	resp, err := client.EmailTemplates.Delete(ctx, emailtemplates.DeleteEmailTemplateRequest{
