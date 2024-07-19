@@ -57,7 +57,7 @@ func TestEmailTemplatesClient_Get(t *testing.T) {
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
-	createResp, err := createNewEmailTemplate(t, ctx, client, project)
+	createResp, _ := createNewEmailTemplate(t, ctx, client, project)
 
 	// Act
 	resp, err := client.EmailTemplates.Get(ctx, emailtemplates.GetEmailTemplateRequest{
@@ -76,7 +76,7 @@ func TestEmailTemplatesClient_GetAll(t *testing.T) {
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
-	createResp, err := createNewEmailTemplate(t, ctx, client, project)
+	createResp, _ := createNewEmailTemplate(t, ctx, client, project)
 
 	// Act
 	resp, err := client.EmailTemplates.GetAll(ctx, emailtemplates.GetAllEmailTemplatesRequest{
@@ -97,10 +97,10 @@ func TestEmailTemplatesClient_Update(t *testing.T) {
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
-	createResp, err := createNewEmailTemplate(t, ctx, client, project)
+	createResp, _ := createNewEmailTemplate(t, ctx, client, project)
 
 	// Act
-	_, err = client.EmailTemplates.Update(ctx, emailtemplates.UpdateEmailTemplateRequest{
+	_, err := client.EmailTemplates.Update(ctx, emailtemplates.UpdateEmailTemplateRequest{
 		ProjectID:       project.ProjectID,
 		EmailTemplateID: createResp.EmailTemplate.LiveEmailTemplate.ID,
 		Name:            "Updated email template",
@@ -122,7 +122,7 @@ func TestEmailTemplatesClient_Delete(t *testing.T) {
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
-	createResp, err := createNewEmailTemplate(t, ctx, client, project)
+	createResp, _ := createNewEmailTemplate(t, ctx, client, project)
 
 	// Act
 	resp, err := client.EmailTemplates.Delete(ctx, emailtemplates.DeleteEmailTemplateRequest{
