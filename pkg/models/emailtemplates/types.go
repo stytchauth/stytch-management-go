@@ -1,11 +1,15 @@
 package emailtemplates
 
 type Method string
+
+const (
+	MethodCustomHTML            Method = "custom_html"
+	MethodBuiltInCustomizations Method = "built_in_customizations"
+)
+
 type TemplateType string
 
 const (
-	MethodCustomHTML                  Method       = "custom_html"
-	MethodBuiltInCustomizations       Method       = "built_in_customizations"
 	TemplateTypeLogin                 TemplateType = "login"
 	TemplateTypeSignup                TemplateType = "signup"
 	TemplateTypeInvite                TemplateType = "invite"
