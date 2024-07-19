@@ -31,7 +31,7 @@ type EmailTemplate struct {
 	FontFamily         string       `json:"font_family"`
 	TextAlignment      string       `json:"text_alignment"`
 	LogoSrc            string       `json:"logo_src"`
-	ButtonBorderRadius string       `json:"button_border_radius"`
+	ButtonBorderRadius int          `json:"button_border_radius"`
 	FromLocalPart      string       `json:"from_local_part"`
 	FromDomain         string       `json:"from_domain"`
 	FromName           string       `json:"from_name"`
@@ -100,7 +100,7 @@ type GetEmailTemplateResponse struct {
 	FontFamily         string `json:"font_family"`
 	TextAlignment      string `json:"text_alignment"`
 	LogoSrc            string `json:"logo_src"`
-	ButtonBorderRadius string `json:"button_border_radius"`
+	ButtonBorderRadius int    `json:"button_border_radius"`
 	FromLocalPart      string `json:"from_local_part"`
 	FromDomain         string `json:"from_domain"`
 	FromName           string `json:"from_name"`
@@ -124,22 +124,22 @@ type DeleteEmailTemplateResponse struct {
 type UpdateEmailTemplateRequest struct {
 	ProjectID          string `json:"project_id"`
 	EmailTemplateID    string `json:"email_template_id"`
-	ButtonColor        string `json:"button_color"`
-	ButtonTextColor    string `json:"button_text_color"`
-	FontFamily         string `json:"font_family"`
-	TextAlignment      string `json:"text_alignment"`
-	LogoSrc            string `json:"logo_src"`
-	ButtonBorderRadius string `json:"button_border_radius"`
-	FromLocalPart      string `json:"from_local_part"`
-	FromDomain         string `json:"from_domain"`
-	FromName           string `json:"from_name"`
-	ReplyToLocalPart   string `json:"reply_to_local_part"`
-	ReplyToName        string `json:"reply_to_name"`
-	Name               string `json:"name"`
-	IsDefault          bool   `json:"is_default"`
-	HTMLContent        string `json:"html_content"`
-	PlaintextContent   string `json:"plaintext_content"`
-	Subject            string `json:"subject"`
+	ButtonColor        string `json:"button_color,omitempty"`
+	ButtonTextColor    string `json:"button_text_color,omitempty"`
+	FontFamily         string `json:"font_family,omitempty"`
+	TextAlignment      string `json:"text_alignment,omitempty"`
+	LogoSrc            string `json:"logo_src,omitempty"`
+	ButtonBorderRadius int    `json:"button_border_radius,omitempty"`
+	FromLocalPart      string `json:"from_local_part,omitempty"`
+	FromDomain         string `json:"from_domain,omitempty"`
+	FromName           string `json:"from_name,omitempty"`
+	ReplyToLocalPart   string `json:"reply_to_local_part,omitempty"`
+	ReplyToName        string `json:"reply_to_name,omitempty"`
+	Name               string `json:"name,omitempty"`
+	IsDefault          bool   `json:"is_default,omitempty"`
+	HTMLContent        string `json:"html_content,omitempty"`
+	PlaintextContent   string `json:"plaintext_content,omitempty"`
+	Subject            string `json:"subject,omitempty"`
 }
 
 type UpdateEmailTemplateResponse struct {
