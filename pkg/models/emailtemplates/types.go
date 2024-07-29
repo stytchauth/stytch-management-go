@@ -1,153 +1,124 @@
 package emailtemplates
 
-type Method string
-
-const (
-	MethodCustomHTML            Method = "custom_html"
-	MethodBuiltInCustomizations Method = "built_in_customizations"
-)
-
 type TemplateType string
 
 const (
-	TemplateTypeLogin                 TemplateType = "login"
-	TemplateTypeSignup                TemplateType = "signup"
-	TemplateTypeInvite                TemplateType = "invite"
-	TemplateTypeResetPassword         TemplateType = "reset_password"
-	TemplateTypeOneTimePasscode       TemplateType = "one_time_passcode"
-	TemplateTypeOneTimePasscodeSignup TemplateType = "one_time_passcode_signup"
-	TemplateTypeAll                   TemplateType = "all"
+	TemplateTypeLogin                 TemplateType = "LOGIN"
+	TemplateTypeSignup                TemplateType = "SIGNUP"
+	TemplateTypeInvite                TemplateType = "INVITE"
+	TemplateTypeResetPassword         TemplateType = "RESET_PASSWORD"
+	TemplateTypeOneTimePasscode       TemplateType = "ONE_TIME_PASSCODE"
+	TemplateTypeOneTimePasscodeSignup TemplateType = "ONE_TIME_PASSCODE_SIGNUP"
+	TemplateTypeAll                   TemplateType = "ALL"
 )
 
+type TextAlignment string
+
+const (
+	TextAlignmentUnknown TextAlignment = "UNKNOWN_TEXT_ALIGNMENT"
+	TextAlignmentLeft    TextAlignment = "LEFT"
+	TextAlignmentCenter  TextAlignment = "CENTER"
+)
+
+type FontFamily string
+
+const (
+	FontFamilyUnknown                  = "UNKNOWN_FONT_FAMILY"
+	FontFamilyArial         FontFamily = "ARIAL"
+	FontFamilyBrushScriptMT FontFamily = "BRUSH_SCRIPT_MT"
+	FontFamilyCourierNew    FontFamily = "COURIER_NEW"
+	FontFamilyGeorgia       FontFamily = "GEORGIA"
+	FontFamilyHelvetica     FontFamily = "HELVETICA"
+	FontFamilyTahoma        FontFamily = "TAHOMA"
+	FontFamilyTimesNewRoman FontFamily = "TIMES_NEW_ROMAN"
+	FontFamilyTrebuchetMS   FontFamily = "TREBUCHET_MS"
+	FontFamilyVerdana       FontFamily = "VERDANA"
+)
+
+type SenderInformation struct {
+	FromLocalPart    *string `json:"from_local_part,omitempty"`
+	FromDomain       *string `json:"from_domain,omitempty"`
+	FromName         *string `json:"from_name,omitempty"`
+	ReplyToLocalPart *string `json:"reply_to_local_part,omitempty"`
+	ReplyToName      *string `json:"reply_to_name,omitempty"`
+}
+
+type PrebuiltCustomization struct {
+	ButtonBorderRadius *float32       `json:"button_border_radius,omitempty"`
+	ButtonColor        *string        `json:"button_color,omitempty"`
+	ButtonTextColor    *string        `json:"button_text_color,omitempty"`
+	FontFamily         *FontFamily    `json:"font_family,omitempty"`
+	LogoSrc            *string        `json:"logo_src,omitempty"`
+	TextAlignment      *TextAlignment `json:"text_alignment,omitempty"`
+}
+
+type CustomHTMLCustomization struct {
+	HTMLContent      *string `json:"html_content,omitempty"`
+	PlaintextContent *string `json:"plaintext_content,omitempty"`
+	Subject          *string `json:"subject,omitempty"`
+}
+
 type EmailTemplate struct {
-	ID                 string       `json:"id"`
-	ProjectID          string       `json:"project_id"`
-	Type               TemplateType `json:"type"`
-	IsDefault          bool         `json:"is_default"`
-	Method             Method       `json:"method"`
-	Name               string       `json:"name"`
-	VanityID           string       `json:"vanity_id"`
-	Subject            string       `json:"subject"`
-	PlaintextContent   string       `json:"plaintext_content"`
-	HTMLContent        string       `json:"html_content"`
-	ButtonColor        string       `json:"button_color"`
-	ButtonTextColor    string       `json:"button_text_color"`
-	FontFamily         string       `json:"font_family"`
-	TextAlignment      string       `json:"text_alignment"`
-	LogoSrc            string       `json:"logo_src"`
-	ButtonBorderRadius int          `json:"button_border_radius"`
-	FromLocalPart      string       `json:"from_local_part"`
-	FromDomain         string       `json:"from_domain"`
-	FromName           string       `json:"from_name"`
-	ReplyToLocalPart   string       `json:"reply_to_local_part"`
-	ReplyToName        string       `json:"reply_to_name"`
-	SecondarySubject   string       `json:"secondary_subject"`
+	TemplateID        string             `json:"template_id,omitempty"`
+	Name              *string            `json:"name,omitempty"`
+	TemplateType      TemplateType       `json:"template_type,omitempty"`
+	SenderInformation *SenderInformation `json:"sender_information,omitempty"`
+
+	// NOTE: Only *one of these fields* should be set.
+	PrebuiltCustomization   *PrebuiltCustomization   `json:"prebuilt_customization,omitempty"`
+	CustomHTMLCustomization *CustomHTMLCustomization `json:"custom_html_customization,omitempty"`
 }
 
-type EmailTemplateDefault struct {
-	Type                      TemplateType `json:"type"`
-	Locale                    string       `json:"locale"`
-	HTMLContent               string       `json:"html_content"`
-	PlaintextContent          string       `json:"plaintext_content"`
-	Subject                   string       `json:"subject"`
-	SecondarySubject          string       `json:"secondary_subject"`
-	DiscoveryHTMLContent      string       `json:"discovery_html_content"`
-	DiscoveryPlaintextContent string       `json:"discovery_plaintext_content"`
+type CreateRequest struct {
+	ProjectID     string        `json:"project_id,omitempty"`
+	EmailTemplate EmailTemplate `json:"email_template,omitempty"`
 }
 
-type TestAndLiveEmailTemplate struct {
-	TestEmailTemplate EmailTemplate `json:"test_email_template"`
-	LiveEmailTemplate EmailTemplate `json:"live_email_template"`
+type CreateResponse struct {
+	RequestID     string        `json:"request_id,omitempty"`
+	ProjectID     string        `json:"project_id,omitempty"`
+	EmailTemplate EmailTemplate `json:"email_template,omitempty"`
 }
 
-type GetAllEmailTemplatesRequest struct {
-	LiveProjectID string `json:"project_id"`
+type GetRequest struct {
+	ProjectID  string `json:"project_id,omitempty"`
+	TemplateID string `json:"template_id,omitempty"`
 }
 
-type GetAllEmailTemplatesResponse struct {
-	StatusCode       int                        `json:"status_code"`
-	RequestID        string                     `json:"request_id"`
-	LiveProjectID    string                     `json:"project_id"`
-	EmailTemplates   []TestAndLiveEmailTemplate `json:"email_templates"`
-	DefaultTemplates []EmailTemplateDefault     `json:"defaults"`
+type GetResponse struct {
+	RequestID     string        `json:"request_id,omitempty"`
+	ProjectID     string        `json:"project_id,omitempty"`
+	EmailTemplate EmailTemplate `json:"email_template,omitempty"`
 }
 
-type CreateEmailTemplateRequest struct {
-	LiveProjectID string       `json:"project_id"`
-	Name          string       `json:"name"`
-	VanityID      string       `json:"vanity_id"`
-	Method        Method       `json:"method"`
-	Type          TemplateType `json:"type"`
+type GetAllRequest struct {
+	ProjectID string `json:"project_id,omitempty"`
 }
 
-type CreateEmailTemplateResponse struct {
-	StatusCode    int                      `json:"status_code"`
-	RequestID     string                   `json:"request_id"`
-	EmailTemplate TestAndLiveEmailTemplate `json:"email_template"`
+type GetAllResponse struct {
+	RequestID      string          `json:"request_id,omitempty"`
+	ProjectID      string          `json:"project_id,omitempty"`
+	EmailTemplates []EmailTemplate `json:"email_templates,omitempty"`
 }
 
-type GetEmailTemplateRequest struct {
-	ProjectID       string `json:"project_id"`
-	EmailTemplateID string `json:"email_template_id"`
+type UpdateRequest struct {
+	ProjectID     string        `json:"project_id,omitempty"`
+	EmailTemplate EmailTemplate `json:"email_template,omitempty"`
 }
 
-type GetEmailTemplateResponse struct {
-	StatusCode         int    `json:"status_code"`
-	RequestID          string `json:"request_id"`
-	EmailTemplateID    string `json:"email_template_id"`
-	Name               string `json:"name"`
-	Subject            string `json:"subject"`
-	PlaintextContent   string `json:"plaintext_content"`
-	HTMLContent        string `json:"html_content"`
-	ButtonColor        string `json:"button_color"`
-	ButtonTextColor    string `json:"button_text_color"`
-	FontFamily         string `json:"font_family"`
-	TextAlignment      string `json:"text_alignment"`
-	LogoSrc            string `json:"logo_src"`
-	ButtonBorderRadius int    `json:"button_border_radius"`
-	FromLocalPart      string `json:"from_local_part"`
-	FromDomain         string `json:"from_domain"`
-	FromName           string `json:"from_name"`
-	ReplyToLocalPart   string `json:"reply_to_local_part"`
-	ReplyToName        string `json:"reply_to_name"`
-	SecondarySubject   string `json:"secondary_subject"`
+type UpdateResponse struct {
+	RequestID     string        `json:"request_id,omitempty"`
+	ProjectID     string        `json:"project_id,omitempty"`
+	EmailTemplate EmailTemplate `json:"email_template,omitempty"`
 }
 
-type DeleteEmailTemplateRequest struct {
-	LiveProjectID   string `json:"project_id"`
-	EmailTemplateID string `json:"email_template_id"`
+type DeleteRequest struct {
+	ProjectID  string `json:"project_id,omitempty"`
+	TemplateID string `json:"template_id,omitempty"`
 }
 
-type DeleteEmailTemplateResponse struct {
-	StatusCode          int    `json:"status_code"`
-	RequestID           string `json:"request_id"`
-	EmailTemplateID     string `json:"email_template_id"`
-	TestEmailTemplateID string `json:"test_email_template_id"`
-}
-
-type UpdateEmailTemplateRequest struct {
-	ProjectID          string `json:"project_id"`
-	EmailTemplateID    string `json:"email_template_id"`
-	ButtonColor        string `json:"button_color,omitempty"`
-	ButtonTextColor    string `json:"button_text_color,omitempty"`
-	FontFamily         string `json:"font_family,omitempty"`
-	TextAlignment      string `json:"text_alignment,omitempty"`
-	LogoSrc            string `json:"logo_src,omitempty"`
-	ButtonBorderRadius int    `json:"button_border_radius,omitempty"`
-	FromLocalPart      string `json:"from_local_part,omitempty"`
-	FromDomain         string `json:"from_domain,omitempty"`
-	FromName           string `json:"from_name,omitempty"`
-	ReplyToLocalPart   string `json:"reply_to_local_part,omitempty"`
-	ReplyToName        string `json:"reply_to_name,omitempty"`
-	Name               string `json:"name,omitempty"`
-	IsDefault          bool   `json:"is_default,omitempty"`
-	HTMLContent        string `json:"html_content,omitempty"`
-	PlaintextContent   string `json:"plaintext_content,omitempty"`
-	Subject            string `json:"subject,omitempty"`
-}
-
-type UpdateEmailTemplateResponse struct {
-	StatusCode      int    `json:"status_code"`
-	RequestID       string `json:"request_id"`
-	EmailTemplateID string `json:"email_template_id"`
+type DeleteResponse struct {
+	RequestID  string `json:"request_id,omitempty"`
+	ProjectID  string `json:"project_id,omitempty"`
+	TemplateID string `json:"template_id,omitempty"`
 }
