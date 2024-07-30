@@ -14,6 +14,7 @@ type API struct {
 	EmailTemplates *EmailTemplatesClient
 	Projects       *ProjectsClient
 	PublicTokens   *PublicTokensClient
+	SDK            *SDKClient
 	Secrets        *SecretsClient
 }
 
@@ -61,6 +62,7 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 		EmailTemplates: newEmailTemplatesClient(client),
 		Projects:       newProjectsClient(client),
 		PublicTokens:   newPublicTokensClient(client),
+		SDK:            newSDKClient(client),
 		Secrets:        newSecretsClient(client),
 	}
 }
