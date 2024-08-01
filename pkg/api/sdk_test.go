@@ -10,7 +10,7 @@ import (
 	"github.com/stytchauth/stytch-management-go/v1/pkg/models/sdk"
 )
 
-func getTestConfig(t *testing.T) sdk.Config {
+func makeTestConfig(t *testing.T) sdk.Config {
 	t.Helper()
 	return sdk.Config{
 		ManageUserData:                 true,
@@ -50,7 +50,7 @@ func TestSDKClient_GetConfig(t *testing.T) {
 	// Arrange
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
-	config := getTestConfig(t)
+	config := makeTestConfig(t)
 	_, err := client.SDK.SetConfig(context.Background(), sdk.SetConfigRequest{
 		ProjectID: project.ProjectID,
 		Config:    config,
@@ -71,7 +71,7 @@ func TestSDKClient_SetConfig(t *testing.T) {
 	// Arrange
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
-	config := getTestConfig(t)
+	config := makeTestConfig(t)
 
 	// Act
 	_, err := client.SDK.SetConfig(context.Background(), sdk.SetConfigRequest{
