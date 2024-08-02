@@ -92,14 +92,14 @@ func TestRBACClient_GetPolicy(t *testing.T) {
 	project := client.DisposableProject(projects.VerticalB2B)
 	policy := getTestPolicy(t)
 	_, err := client.RBAC.SetPolicy(context.Background(), rbac.SetPolicyRequest{
-		ProjectID: project.ProjectID,
+		ProjectID: project.LiveProject.ID,
 		Policy:    policy,
 	})
 	require.NoError(t, err)
 
 	// Act
 	resp, err := client.RBAC.GetPolicy(context.Background(), rbac.GetPolicyRequest{
-		ProjectID: project.ProjectID,
+		ProjectID: project.LiveProject.ID,
 	})
 
 	// Assert
@@ -118,7 +118,7 @@ func TestRBACClient_SetPolicy(t *testing.T) {
 
 	// Act
 	resp, err := client.RBAC.SetPolicy(context.Background(), rbac.SetPolicyRequest{
-		ProjectID: project.ProjectID,
+		ProjectID: project.LiveProject.ID,
 		Policy:    policy,
 	})
 

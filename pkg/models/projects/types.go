@@ -9,37 +9,29 @@ const (
 	VerticalB2B      Vertical = "B2B"
 )
 
+type Project struct {
+	ID              string    `json:"id"`
+	Name            string    `json:"name"`
+	OAuthCallbackID string    `json:"oauth_callback_id"`
+	Domain          string    `json:"domain"`
+	Vertical        Vertical  `json:"vertical"`
+	CreatedAt       time.Time `json:"created_at"`
+}
+
+type LiveAndTestProject struct {
+	LiveProject Project `json:"live_project"`
+	TestProject Project `json:"test_project"`
+}
+
 type CreateRequest struct {
 	ProjectName string   `json:"project_name"`
 	Vertical    Vertical `json:"vertical"`
 }
 
-type ProjectSettings struct {
-	ProjectName string    `json:"project_name"`
-	CreatedAt   time.Time `json:"created_at"`
-}
-
-type Project struct {
-	ProjectID                           string          `json:"project_id"`
-	TestProjectID                       string          `json:"test_project_id"`
-	ProjectSettings                     ProjectSettings `json:"project_settings"`
-	Domain                              string          `json:"domain"`
-	OAuthCallbackID                     string          `json:"oauth_callback_id"`
-	TestOAuthCallbackID                 string          `json:"test_oauth_callback_id"`
-	EnableCustomLogo                    bool            `json:"enable_custom_logo"`
-	DisableEmailWatermark               bool            `json:"disable_email_watermark"`
-	Vertical                            Vertical        `json:"vertical"`
-	ZeroDownTimeSessionMigrationURL     string          `json:"zero_downtime_session_migration_url"`
-	TestZeroDownTimeSessionMigrationURL string          `json:"test_zero_downtime_session_migration_url"`
-}
-
 type CreateResponse struct {
-	StatusCode      int     `json:"status_code"`
-	RequestID       string  `json:"request_id"`
-	ProjectUserID   string  `json:"project_user_id"`
-	Project         Project `json:"project"`
-	AccountVerified bool    `json:"account_verified"`
-	RedirectEnabled bool    `json:"redirect_enabled"`
+	StatusCode int                `json:"status_code"`
+	RequestID  string             `json:"request_id"`
+	Projects   LiveAndTestProject `json:"projects"`
 }
 
 type GetRequest struct {
@@ -47,14 +39,27 @@ type GetRequest struct {
 }
 
 type GetResponse struct {
-	StatusCode            int     `json:"status_code"`
-	RequestID             string  `json:"request_id"`
-	Project               Project `json:"project"`
-	DisableEmailWatermark bool    `json:"disable_email_watermark"`
-	DisableSDKWatermark   bool    `json:"disable_sdk_watermark"`
-	AccountVerified       bool    `json:"account_verified"`
-	RedirectEnabled       bool    `json:"redirect_enabled"`
-	EnableCustomLogo      bool    `json:"enable_custom_logo"`
+	StatusCode int     `json:"status_code"`
+	RequestID  string  `json:"request_id"`
+	Project    Project `json:"project"`
+}
+
+type GetAllRequest struct{}
+
+type GetAllResponse struct {
+	StatusCode int                  `json:"status_code"`
+	RequestID  string               `json:"request_id"`
+	Projects   []LiveAndTestProject `json:"projects"`
+}
+
+type DeleteRequest struct {
+	ProjectID string `json:"project_id"`
+}
+
+type DeleteResponse struct {
+	StatusCode int    `json:"status_code"`
+	RequestID  string `json:"request_id"`
+	ProjectID  string `json:"project_id"`
 }
 
 type PasswordValidationPolicy string
@@ -93,14 +98,4 @@ type SetPasswordStrengthPolicyResponse struct {
 	StatusCode     int                    `json:"status_code"`
 	RequestID      string                 `json:"request_id"`
 	PasswordConfig PasswordStrengthConfig `json:"password_config"`
-}
-
-type DeleteRequest struct {
-	ProjectID string `json:"project_id"`
-}
-
-type DeleteResponse struct {
-	StatusCode int    `json:"status_code"`
-	RequestID  string `json:"request_id"`
-	ProjectID  string `json:"project_id"`
 }
