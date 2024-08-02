@@ -27,9 +27,8 @@ func createNewEmailTemplate(
 	requestBody := emailtemplates.CreateRequest{
 		ProjectID: project.ProjectID,
 		EmailTemplate: emailtemplates.EmailTemplate{
-			TemplateID:   randomID(t),
-			Name:         ptr("Test email template"),
-			TemplateType: emailtemplates.TemplateTypeAll,
+			TemplateID: randomID(t),
+			Name:       ptr("Test email template"),
 			PrebuiltCustomization: &emailtemplates.PrebuiltCustomization{
 				ButtonColor:     ptr("blue"),
 				ButtonTextColor: ptr("white"),
@@ -49,9 +48,8 @@ func TestEmailTemplatesClient_Create(t *testing.T) {
 	requestBody := emailtemplates.CreateRequest{
 		ProjectID: project.ProjectID,
 		EmailTemplate: emailtemplates.EmailTemplate{
-			TemplateID:   randomID(t),
-			Name:         ptr("Test email template"),
-			TemplateType: emailtemplates.TemplateTypeAll,
+			TemplateID: randomID(t),
+			Name:       ptr("Test email template"),
 			PrebuiltCustomization: &emailtemplates.PrebuiltCustomization{
 				ButtonColor:     ptr("blue"),
 				ButtonTextColor: ptr("white"),
@@ -67,7 +65,6 @@ func TestEmailTemplatesClient_Create(t *testing.T) {
 	// both Live and Test templates should have the same values
 	assert.Equal(t, requestBody.EmailTemplate.Name, resp.EmailTemplate.Name)
 	assert.Equal(t, requestBody.EmailTemplate.TemplateID, resp.EmailTemplate.TemplateID)
-	assert.Equal(t, requestBody.EmailTemplate.TemplateType, resp.EmailTemplate.TemplateType)
 	assert.NotNil(t, resp.EmailTemplate.PrebuiltCustomization)
 }
 

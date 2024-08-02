@@ -53,15 +53,15 @@ type PrebuiltCustomization struct {
 }
 
 type CustomHTMLCustomization struct {
-	HTMLContent      *string `json:"html_content,omitempty"`
-	PlaintextContent *string `json:"plaintext_content,omitempty"`
-	Subject          *string `json:"subject,omitempty"`
+	TemplateType     TemplateType `json:"template_type,omitempty"`
+	HTMLContent      *string      `json:"html_content,omitempty"`
+	PlaintextContent *string      `json:"plaintext_content,omitempty"`
+	Subject          *string      `json:"subject,omitempty"`
 }
 
 type EmailTemplate struct {
 	TemplateID        string             `json:"template_id,omitempty"`
 	Name              *string            `json:"name,omitempty"`
-	TemplateType      TemplateType       `json:"template_type,omitempty"`
 	SenderInformation *SenderInformation `json:"sender_information,omitempty"`
 
 	// NOTE: Only *one of these fields* should be set.
