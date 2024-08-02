@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
 	"github.com/stytchauth/stytch-management-go/v1/pkg/api/internal"
 	"github.com/stytchauth/stytch-management-go/v1/pkg/models/emailtemplates"
 )
@@ -18,13 +19,13 @@ func newEmailTemplatesClient(c *internal.Client) *EmailTemplatesClient {
 
 func (c *EmailTemplatesClient) GetAll(
 	ctx context.Context,
-	body emailtemplates.GetAllEmailTemplatesRequest,
-) (*emailtemplates.GetAllEmailTemplatesResponse, error) {
-	var resp emailtemplates.GetAllEmailTemplatesResponse
+	body emailtemplates.GetAllRequest,
+) (*emailtemplates.GetAllResponse, error) {
+	var resp emailtemplates.GetAllResponse
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v1/projects/%s/email_templates", body.LiveProjectID),
+		fmt.Sprintf("/v1/projects/%s/email_templates", body.ProjectID),
 		nil,
 		nil,
 		&resp)
@@ -34,13 +35,13 @@ func (c *EmailTemplatesClient) GetAll(
 
 func (c *EmailTemplatesClient) Get(
 	ctx context.Context,
-	body emailtemplates.GetEmailTemplateRequest,
-) (*emailtemplates.GetEmailTemplateResponse, error) {
-	var resp emailtemplates.GetEmailTemplateResponse
+	body emailtemplates.GetRequest,
+) (*emailtemplates.GetResponse, error) {
+	var resp emailtemplates.GetResponse
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v1/projects/%s/email_templates/%s", body.ProjectID, body.EmailTemplateID),
+		fmt.Sprintf("/v1/projects/%s/email_templates/%s", body.ProjectID, body.TemplateID),
 		nil,
 		nil,
 		&resp)
@@ -50,18 +51,18 @@ func (c *EmailTemplatesClient) Get(
 
 func (c *EmailTemplatesClient) Create(
 	ctx context.Context,
-	body emailtemplates.CreateEmailTemplateRequest,
-) (*emailtemplates.CreateEmailTemplateResponse, error) {
+	body emailtemplates.CreateRequest,
+) (*emailtemplates.CreateResponse, error) {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 
-	var res emailtemplates.CreateEmailTemplateResponse
+	var res emailtemplates.CreateResponse
 	err = c.client.NewRequest(
 		ctx,
 		"POST",
-		fmt.Sprintf("/v1/projects/%s/email_templates", body.LiveProjectID),
+		fmt.Sprintf("/v1/projects/%s/email_templates", body.ProjectID),
 		nil,
 		jsonBody,
 		&res)
@@ -70,13 +71,13 @@ func (c *EmailTemplatesClient) Create(
 
 func (c *EmailTemplatesClient) Delete(
 	ctx context.Context,
-	body emailtemplates.DeleteEmailTemplateRequest,
-) (*emailtemplates.DeleteEmailTemplateResponse, error) {
-	var res emailtemplates.DeleteEmailTemplateResponse
+	body emailtemplates.DeleteRequest,
+) (*emailtemplates.DeleteResponse, error) {
+	var res emailtemplates.DeleteResponse
 	err := c.client.NewRequest(
 		ctx,
 		"DELETE",
-		fmt.Sprintf("/v1/projects/%s/email_templates/%s", body.LiveProjectID, body.EmailTemplateID),
+		fmt.Sprintf("/v1/projects/%s/email_templates/%s", body.ProjectID, body.TemplateID),
 		nil,
 		nil,
 		&res)
@@ -85,18 +86,18 @@ func (c *EmailTemplatesClient) Delete(
 
 func (c *EmailTemplatesClient) Update(
 	ctx context.Context,
-	body emailtemplates.UpdateEmailTemplateRequest,
-) (*emailtemplates.UpdateEmailTemplateResponse, error) {
+	body emailtemplates.UpdateRequest,
+) (*emailtemplates.UpdateResponse, error) {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 
-	var res emailtemplates.UpdateEmailTemplateResponse
+	var res emailtemplates.UpdateResponse
 	err = c.client.NewRequest(
 		ctx,
 		"PUT",
-		fmt.Sprintf("/v1/projects/%s/email_templates/%s", body.ProjectID, body.EmailTemplateID),
+		fmt.Sprintf("/v1/projects/%s/email_templates/%s", body.ProjectID, body.EmailTemplate.TemplateID),
 		nil,
 		jsonBody,
 		&res)
