@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
 	"github.com/stytchauth/stytch-management-go/v1/pkg/api/internal"
 	"github.com/stytchauth/stytch-management-go/v1/pkg/models/publictokens"
 )
@@ -51,7 +52,7 @@ func (c *PublicTokensClient) Delete(ctx context.Context, body publictokens.Delet
 	err := c.client.NewRequest(
 		ctx,
 		"DELETE",
-		fmt.Sprintf("/v1/projects/%s/public_tokens/%s", body.ProjectID, body.PublicTokenID),
+		fmt.Sprintf("/v1/projects/%s/public_tokens/%s", body.ProjectID, body.PublicToken),
 		nil,
 		nil,
 		&res)

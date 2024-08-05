@@ -86,8 +86,9 @@ type GetConfigRequest struct {
 }
 
 type GetConfigResponse struct {
-	RequestID string `json:"request_id"`
-	Config    Config `json:"config"`
+	StatusCode int    `json:"status_code"`
+	RequestID  string `json:"request_id"`
+	Config     Config `json:"config"`
 }
 
 type SetConfigRequest struct {
@@ -96,5 +97,6 @@ type SetConfigRequest struct {
 }
 
 type SetConfigResponse struct {
-	RequestID string `json:"request_id"`
+	StatusCode int    `json:"status_code"`
+	RequestID  string `json:"request_id"`
 }

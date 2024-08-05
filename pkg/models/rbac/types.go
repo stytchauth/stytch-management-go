@@ -30,8 +30,9 @@ type GetPolicyRequest struct {
 }
 
 type GetPolicyResponse struct {
-	RequestID string `json:"request_id"`
-	Policy    Policy `json:"policy"`
+	StatusCode int    `json:"status_code"`
+	RequestID  string `json:"request_id"`
+	Policy     Policy `json:"policy"`
 }
 
 type SetPolicyRequest struct {
@@ -40,6 +41,7 @@ type SetPolicyRequest struct {
 }
 
 type SetPolicyResponse struct {
-	RequestID string `json:"request_id"`
-	Policy    Policy `json:"policy"`
+	StatusCode int    `json:"status_code"`
+	RequestID  string `json:"request_id"`
+	Policy     Policy `json:"policy"`
 }
