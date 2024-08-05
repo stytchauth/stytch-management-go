@@ -61,8 +61,8 @@ func TestPublicTokensClient_DeletePublicToken(t *testing.T) {
 
 	// Act
 	_, err = client.PublicTokens.Delete(ctx, publictokens.DeletePublicTokenRequest{
-		ProjectID:     project.ProjectID,
-		PublicTokenID: createResp.PublicToken,
+		ProjectID:   project.ProjectID,
+		PublicToken: createResp.PublicToken,
 	})
 
 	// Assert

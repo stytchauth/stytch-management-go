@@ -72,3 +72,18 @@ func (c *RedirectURLsClient) RemoveValidType(
 		&res)
 	return &res, err
 }
+
+func (c *RedirectURLsClient) Delete(
+	ctx context.Context,
+	body redirecturls.DeleteRequest,
+) (*redirecturls.DeleteResponse, error) {
+	var res redirecturls.DeleteResponse
+	err := c.client.NewRequest(
+		ctx,
+		"DELETE",
+		fmt.Sprintf("/v1/projects/%s/redirect_urls?url=%s", body.ProjectID, body.URL),
+		nil,
+		nil,
+		&res)
+	return &res, err
+}

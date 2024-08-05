@@ -75,6 +75,7 @@ type CreateRequest struct {
 }
 
 type CreateResponse struct {
+	StatusCode    int           `json:"status_code"`
 	RequestID     string        `json:"request_id,omitempty"`
 	ProjectID     string        `json:"project_id,omitempty"`
 	EmailTemplate EmailTemplate `json:"email_template,omitempty"`
@@ -86,6 +87,7 @@ type GetRequest struct {
 }
 
 type GetResponse struct {
+	StatusCode    int           `json:"status_code"`
 	RequestID     string        `json:"request_id,omitempty"`
 	ProjectID     string        `json:"project_id,omitempty"`
 	EmailTemplate EmailTemplate `json:"email_template,omitempty"`
@@ -96,6 +98,7 @@ type GetAllRequest struct {
 }
 
 type GetAllResponse struct {
+	StatusCode     int             `json:"status_code"`
 	RequestID      string          `json:"request_id,omitempty"`
 	ProjectID      string          `json:"project_id,omitempty"`
 	EmailTemplates []EmailTemplate `json:"email_templates,omitempty"`
@@ -107,6 +110,7 @@ type UpdateRequest struct {
 }
 
 type UpdateResponse struct {
+	StatusCode    int           `json:"status_code"`
 	RequestID     string        `json:"request_id,omitempty"`
 	ProjectID     string        `json:"project_id,omitempty"`
 	EmailTemplate EmailTemplate `json:"email_template,omitempty"`
@@ -118,6 +122,7 @@ type DeleteRequest struct {
 }
 
 type DeleteResponse struct {
+	StatusCode int    `json:"status_code"`
 	RequestID  string `json:"request_id,omitempty"`
 	ProjectID  string `json:"project_id,omitempty"`
 	TemplateID string `json:"template_id,omitempty"`
