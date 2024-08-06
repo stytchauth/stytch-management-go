@@ -13,36 +13,37 @@ import (
 func makeTestConfig(t *testing.T) sdk.Config {
 	t.Helper()
 	return sdk.Config{
-		ManageUserData:                 true,
-		ManageSessionData:              true,
-		EmailMagicLinks:                sdk.AuthSettingAlways,
-		SMSOTPs:                        sdk.AuthSettingSecondaryOnly,
-		WhatsappOTPs:                   sdk.AuthSettingDisabled,
-		EmailOTPs:                      sdk.AuthSettingSecondaryOnly,
-		OAuth:                          sdk.AuthSettingPrimaryOnly,
-		CreateTOTPEnabled:              true,
-		TOTPs:                          sdk.AuthSettingDisabled,
-		CreateWebauthnEnabled:          true,
-		Webauthns:                      sdk.AuthSettingDisabled,
-		CreateNewUsers:                 true,
-		CryptoWallets:                  sdk.AuthSettingAlways,
-		MaxSessionDurationMinutes:      60,
-		PKCERequiredForEmailMagicLinks: true,
-		PKCERequiredForOAuth:           true,
-		PKCERequiredForPasswordResets:  true,
-		Passwords:                      sdk.AuthSettingAlways,
-		CreateBiometricsEnabled:        true,
-		Biometrics:                     sdk.AuthSettingDisabled,
-		EmailMagicLinksSend:            sdk.AuthSettingAlways,
-		SMSOTPsSend:                    sdk.AuthSettingAlways,
-		WhatsappOTPsSend:               sdk.AuthSettingDisabled,
-		EmailOTPsSend:                  sdk.AuthSettingAlways,
-		SSO:                            sdk.AuthSettingDisabled,
-		Domains:                        []string{},
-		BundleIDs:                      []string{},
-		B2BDomains:                     []sdk.AuthorizedB2BDomain{},
-		DFPProtectedAuthEnabled:        sdk.DFPProtectedAuthDisabled,
-		DFPProtectedAuthOnChallenge:    sdk.DFPProtectedAuthChallengeSettingAllow,
+		AllowSelfOnboarding:                  true,
+		B2BDomains:                           []sdk.AuthorizedB2BDomain{},
+		Biometrics:                           sdk.AuthSettingSecondaryOnly,
+		BundleIDs:                            []string{},
+		CreateBiometricsEnabled:              true,
+		CreateNewUsers:                       true,
+		CreateTOTPEnabled:                    true,
+		CreateWebauthnEnabled:                true,
+		CryptoWallets:                        sdk.AuthSettingAlways,
+		DFPProtectedAuthEnabled:              sdk.DFPProtectedAuthDisabled,
+		DFPProtectedAuthLookupTimeoutSeconds: 10,
+		DFPProtectedAuthOnChallenge:          sdk.DFPProtectedAuthChallengeSettingAllow,
+		Domains:                              []string{"http://localhost:3000", "http://localhost:3001"},
+		EmailMagicLinks:                      sdk.AuthSettingAlways,
+		EmailMagicLinksSend:                  sdk.AuthSettingAlways,
+		EmailOTPs:                            sdk.AuthSettingAlways,
+		EmailOTPsSend:                        sdk.AuthSettingAlways,
+		EnableB2BUseMemberPermissions:        true,
+		ManageSessionData:                    true,
+		ManageUserData:                       true,
+		MaxSessionDurationMinutes:            60,
+		OAuth:                                sdk.AuthSettingAlways,
+		Passwords:                            sdk.AuthSettingAlways,
+		SMSAutofillMetadata:                  []sdk.SMSAutofillMetadata{},
+		SMSOTPs:                              sdk.AuthSettingAlways,
+		SMSOTPsSend:                          sdk.AuthSettingAlways,
+		SSO:                                  sdk.AuthSettingAlways,
+		TOTPs:                                sdk.AuthSettingSecondaryOnly,
+		Webauthns:                            sdk.AuthSettingSecondaryOnly,
+		WhatsappOTPs:                         sdk.AuthSettingAlways,
+		WhatsappOTPsSend:                     sdk.AuthSettingAlways,
 	}
 }
 
@@ -52,14 +53,14 @@ func TestSDKClient_GetConfig(t *testing.T) {
 	project := client.DisposableProject(projects.VerticalB2B)
 	config := makeTestConfig(t)
 	_, err := client.SDK.SetConfig(context.Background(), sdk.SetConfigRequest{
-		ProjectID: project.ProjectID,
+		ProjectID: project.LiveProject.ID,
 		Config:    config,
 	})
 	require.NoError(t, err)
 
 	// Act
 	resp, err := client.SDK.GetConfig(context.Background(), sdk.GetConfigRequest{
-		ProjectID: project.ProjectID,
+		ProjectID: project.LiveProject.ID,
 	})
 
 	// Assert
@@ -75,11 +76,11 @@ func TestSDKClient_SetConfig(t *testing.T) {
 
 	// Act
 	_, err := client.SDK.SetConfig(context.Background(), sdk.SetConfigRequest{
-		ProjectID: project.ProjectID,
+		ProjectID: project.LiveProject.ID,
 		Config:    config,
 	})
 	getResp, getErr := client.SDK.GetConfig(context.Background(), sdk.GetConfigRequest{
-		ProjectID: project.ProjectID,
+		ProjectID: project.LiveProject.ID,
 	})
 
 	// Assert

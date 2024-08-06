@@ -78,7 +78,7 @@ type Config struct {
 	DFPProtectedAuthOnChallenge             DFPProtectedAuthChallengeSetting `json:"dfp_protected_auth_on_challenge,omitempty"`
 	DFPProtectedAuthLookupTimeoutSeconds    int                              `json:"dfp_protected_auth_lookup_timeout_seconds,omitempty"`
 	SIWERequiredForCryptoWallets            bool                             `json:"siwe_required_for_crypto_wallets,omitempty"`
-	SMSAutofillMetadata                     SMSAutofillMetadata              `json:"sms_autofill_metadata,omitempty"`
+	SMSAutofillMetadata                     []SMSAutofillMetadata            `json:"sms_autofill_metadata,omitempty"`
 }
 
 type GetConfigRequest struct {
