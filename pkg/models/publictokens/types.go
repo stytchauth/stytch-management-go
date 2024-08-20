@@ -15,7 +15,6 @@ type GetAllPublicTokensRequest struct {
 type GetAllPublicTokensResponse struct {
 	StatusCode   int           `json:"status_code"`
 	RequestID    string        `json:"request_id"`
-	ProjectID    string        `json:"project_id"`
 	PublicTokens []PublicToken `json:"public_tokens"`
 }
 
@@ -24,11 +23,9 @@ type CreatePublicTokenRequest struct {
 }
 
 type CreatePublicTokenResponse struct {
-	StatusCode  int       `json:"status_code"`
-	RequestID   string    `json:"request_id"`
-	ProjectID   string    `json:"project_id"`
-	PublicToken string    `json:"public_token"`
-	CreatedAt   time.Time `json:"created_at"`
+	StatusCode  int         `json:"status_code"`
+	RequestID   string      `json:"request_id"`
+	PublicToken PublicToken `json:"public_token"`
 }
 
 type DeletePublicTokenRequest struct {

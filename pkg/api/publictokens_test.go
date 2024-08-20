@@ -39,14 +39,10 @@ func TestPublicTokensClient_GetPublicTokens(t *testing.T) {
 	resp, err := client.PublicTokens.GetAll(ctx, publictokens.GetAllPublicTokensRequest{
 		ProjectID: project.LiveProject.ID,
 	})
-	var tokens []string
-	for _, token := range resp.PublicTokens {
-		tokens = append(tokens, token.PublicToken)
-	}
 
 	// Assert
 	assert.NoError(t, err)
-	assert.Contains(t, tokens, createResp.PublicToken)
+	assert.Contains(t, resp.PublicTokens, createResp.PublicToken)
 }
 
 func TestPublicTokensClient_DeletePublicToken(t *testing.T) {
@@ -62,7 +58,7 @@ func TestPublicTokensClient_DeletePublicToken(t *testing.T) {
 	// Act
 	_, err = client.PublicTokens.Delete(ctx, publictokens.DeletePublicTokenRequest{
 		ProjectID:   project.LiveProject.ID,
-		PublicToken: createResp.PublicToken,
+		PublicToken: createResp.PublicToken.PublicToken,
 	})
 
 	// Assert
