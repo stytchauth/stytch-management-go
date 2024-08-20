@@ -13,6 +13,7 @@ type API struct {
 
 	EmailTemplates *EmailTemplatesClient
 	Projects       *ProjectsClient
+	ProjectMetrics *ProjectMetricsClient
 	PublicTokens   *PublicTokensClient
 	RBAC           *RBACClient
 	RedirectURLs   *RedirectURLsClient
@@ -63,6 +64,7 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 		client:         client,
 		EmailTemplates: newEmailTemplatesClient(client),
 		Projects:       newProjectsClient(client),
+		ProjectMetrics: newProjectMetricsClient(client),
 		PublicTokens:   newPublicTokensClient(client),
 		RBAC:           newRBACClient(client),
 		RedirectURLs:   newRedirectURLsClient(client),
