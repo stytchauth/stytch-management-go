@@ -17,6 +17,7 @@ func newPublicTokensClient(c *internal.Client) *PublicTokensClient {
 	return &PublicTokensClient{client: c}
 }
 
+// GetAll retrieves all the active public tokens defined for a project.
 func (c *PublicTokensClient) GetAll(ctx context.Context, body publictokens.GetAllPublicTokensRequest) (*publictokens.GetAllPublicTokensResponse, error) {
 	var resp publictokens.GetAllPublicTokensResponse
 	err := c.client.NewRequest(
@@ -30,6 +31,7 @@ func (c *PublicTokensClient) GetAll(ctx context.Context, body publictokens.GetAl
 	return &resp, err
 }
 
+// Create creates a new public token for a project.
 func (c *PublicTokensClient) Create(ctx context.Context, body publictokens.CreatePublicTokenRequest) (*publictokens.CreatePublicTokenResponse, error) {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
@@ -47,6 +49,7 @@ func (c *PublicTokensClient) Create(ctx context.Context, body publictokens.Creat
 	return &res, err
 }
 
+// Delete deletes a public token for a project.
 func (c *PublicTokensClient) Delete(ctx context.Context, body publictokens.DeletePublicTokenRequest) (*publictokens.DeletePublicTokenResponse, error) {
 	var res publictokens.DeletePublicTokenResponse
 	err := c.client.NewRequest(
