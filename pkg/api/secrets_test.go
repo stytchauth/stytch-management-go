@@ -18,7 +18,7 @@ func TestSecretsClient_Create(t *testing.T) {
 
 	// Act
 	_, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
-		ProjectID: project.LiveProject.ID,
+		ProjectID: project.LiveProjectID,
 	})
 
 	// Assert
@@ -31,13 +31,13 @@ func TestSecretsClient_GetAll(t *testing.T) {
 	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
 	createResp, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
-		ProjectID: project.LiveProject.ID,
+		ProjectID: project.LiveProjectID,
 	})
 	require.NoError(t, err)
 
 	// Act
 	resp, err := client.Secrets.GetAll(ctx, secrets.GetAllSecretsRequest{
-		ProjectID: project.LiveProject.ID,
+		ProjectID: project.LiveProjectID,
 	})
 	var secretIDs []string
 	for _, secret := range resp.Secrets {
@@ -55,12 +55,12 @@ func TestSecretsClient_Delete(t *testing.T) {
 	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
 	createResp, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
-		ProjectID: project.LiveProject.ID,
+		ProjectID: project.LiveProjectID,
 	})
 	require.NoError(t, err)
 
 	resp, err := client.Secrets.Delete(ctx, secrets.DeleteSecretRequest{
-		ProjectID: project.LiveProject.ID,
+		ProjectID: project.LiveProjectID,
 		SecretID:  createResp.SecretID,
 	})
 

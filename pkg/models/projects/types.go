@@ -10,17 +10,13 @@ const (
 )
 
 type Project struct {
-	ID              string    `json:"id"`
-	Name            string    `json:"name"`
-	OAuthCallbackID string    `json:"oauth_callback_id"`
-	Domain          string    `json:"domain"`
-	Vertical        Vertical  `json:"vertical"`
-	CreatedAt       time.Time `json:"created_at"`
-}
-
-type LiveAndTestProject struct {
-	LiveProject Project `json:"live_project"`
-	TestProject Project `json:"test_project"`
+	LiveProjectID       string    `json:"live_project_id"`
+	TestProjectID       string    `json:"test_project_id"`
+	Name                string    `json:"name"`
+	LiveOAuthCallbackID string    `json:"live_oauth_callback_id"`
+	TestOAuthCallbackID string    `json:"test_oauth_callback_id"`
+	Vertical            Vertical  `json:"vertical"`
+	CreatedAt           time.Time `json:"created_at"`
 }
 
 type CreateRequest struct {
@@ -29,9 +25,9 @@ type CreateRequest struct {
 }
 
 type CreateResponse struct {
-	StatusCode int                `json:"status_code"`
-	RequestID  string             `json:"request_id"`
-	Projects   LiveAndTestProject `json:"projects"`
+	StatusCode int     `json:"status_code"`
+	RequestID  string  `json:"request_id"`
+	Project    Project `json:"project"`
 }
 
 type GetRequest struct {
@@ -47,9 +43,9 @@ type GetResponse struct {
 type GetAllRequest struct{}
 
 type GetAllResponse struct {
-	StatusCode int                  `json:"status_code"`
-	RequestID  string               `json:"request_id"`
-	Projects   []LiveAndTestProject `json:"projects"`
+	StatusCode int       `json:"status_code"`
+	RequestID  string    `json:"request_id"`
+	Projects   []Project `json:"projects"`
 }
 
 type DeleteRequest struct {
@@ -59,7 +55,6 @@ type DeleteRequest struct {
 type DeleteResponse struct {
 	StatusCode int    `json:"status_code"`
 	RequestID  string `json:"request_id"`
-	ProjectID  string `json:"project_id"`
 }
 
 type PasswordValidationPolicy string

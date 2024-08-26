@@ -41,6 +41,15 @@ func (c *ProjectsClient) Get(
 	return &res, err
 }
 
+func (c *ProjectsClient) GetAll(
+	ctx context.Context,
+	body projects.GetAllRequest,
+) (*projects.GetAllResponse, error) {
+	var res projects.GetAllResponse
+	err := c.client.NewRequest(ctx, "GET", "/v1/projects/", nil, nil, &res)
+	return &res, err
+}
+
 func (c *ProjectsClient) GetPasswordStrengthPolicy(
 	ctx context.Context,
 	body projects.GetPasswordStrengthPolicyRequest,
