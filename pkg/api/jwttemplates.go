@@ -46,7 +46,7 @@ func (c *JWTTemplatesClient) Set(
 	err = c.client.NewRequest(
 		ctx,
 		"PUT",
-		fmt.Sprintf("/v1/projects/%s/email_templates", body.ProjectID),
+		fmt.Sprintf("/v1/projects/%s/jwt_templates", body.ProjectID),
 		nil,
 		jsonBody,
 		&res)
