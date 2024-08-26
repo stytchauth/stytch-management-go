@@ -12,6 +12,7 @@ type API struct {
 	client *internal.Client
 
 	EmailTemplates         *EmailTemplatesClient
+	JWTTemplates           *JWTTemplatesClient
 	PasswordStrengthConfig *PasswordStrengthConfigClient
 	Projects               *ProjectsClient
 	ProjectMetrics         *ProjectMetricsClient
@@ -64,6 +65,7 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 	return &API{
 		client:                 client,
 		EmailTemplates:         newEmailTemplatesClient(client),
+		JWTTemplates:           newJWTTemplatesClient(client),
 		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
 		Projects:               newProjectsClient(client),
 		ProjectMetrics:         newProjectMetricsClient(client),
