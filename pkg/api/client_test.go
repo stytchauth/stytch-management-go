@@ -30,9 +30,14 @@ func NewTestClient(t *testing.T) *testClient {
 		t.Skip("STYTCH_WORKSPACE_KEY_ID and STYTCH_WORKSPACE_KEY_SECRET environment variables are required for this test")
 	}
 
+	var opts []api.APIOption
+	if baseURI := os.Getenv("STYTCH_WORKSPACE_BASE_URI"); baseURI != "" {
+		opts = append(opts, api.WithBaseURI(baseURI))
+	}
+
 	return &testClient{
 		t:   t,
-		API: api.NewClient(keyID, keySecret),
+		API: api.NewClient(keyID, keySecret, opts...),
 	}
 }
 
