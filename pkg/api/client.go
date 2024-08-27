@@ -11,14 +11,15 @@ const defaultBaseURI = "https://management.stytch.com"
 type API struct {
 	client *internal.Client
 
-	EmailTemplates *EmailTemplatesClient
-	Projects       *ProjectsClient
-	ProjectMetrics *ProjectMetricsClient
-	PublicTokens   *PublicTokensClient
-	RBAC           *RBACClient
-	RedirectURLs   *RedirectURLsClient
-	SDK            *SDKClient
-	Secrets        *SecretsClient
+	EmailTemplates         *EmailTemplatesClient
+	PasswordStrengthConfig *PasswordStrengthConfigClient
+	Projects               *ProjectsClient
+	ProjectMetrics         *ProjectMetricsClient
+	PublicTokens           *PublicTokensClient
+	RBAC                   *RBACClient
+	RedirectURLs           *RedirectURLsClient
+	SDK                    *SDKClient
+	Secrets                *SecretsClient
 }
 
 type apiConfig struct {
@@ -61,14 +62,15 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 	})
 
 	return &API{
-		client:         client,
-		EmailTemplates: newEmailTemplatesClient(client),
-		Projects:       newProjectsClient(client),
-		ProjectMetrics: newProjectMetricsClient(client),
-		PublicTokens:   newPublicTokensClient(client),
-		RBAC:           newRBACClient(client),
-		RedirectURLs:   newRedirectURLsClient(client),
-		SDK:            newSDKClient(client),
-		Secrets:        newSecretsClient(client),
+		client:                 client,
+		EmailTemplates:         newEmailTemplatesClient(client),
+		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
+		Projects:               newProjectsClient(client),
+		ProjectMetrics:         newProjectMetricsClient(client),
+		PublicTokens:           newPublicTokensClient(client),
+		RBAC:                   newRBACClient(client),
+		RedirectURLs:           newRedirectURLsClient(client),
+		SDK:                    newSDKClient(client),
+		Secrets:                newSecretsClient(client),
 	}
 }
