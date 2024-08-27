@@ -50,28 +50,6 @@ func (c *ProjectsClient) GetAll(
 	return &res, err
 }
 
-func (c *ProjectsClient) GetPasswordStrengthPolicy(
-	ctx context.Context,
-	body projects.GetPasswordStrengthPolicyRequest,
-) (*projects.GetPasswordStrengthPolicyResponse, error) {
-	var res projects.GetPasswordStrengthPolicyResponse
-	err := c.client.NewRequest(ctx, "GET", "/v1/projects/"+body.ProjectID+"/password_strength", nil, nil, &res)
-	return &res, err
-}
-
-func (c *ProjectsClient) SetPasswordStrengthPolicy(
-	ctx context.Context,
-	body projects.SetPasswordStrengthPolicyRequest,
-) (*projects.SetPasswordStrengthPolicyResponse, error) {
-	jsonBody, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	var res projects.SetPasswordStrengthPolicyResponse
-	err = c.client.NewRequest(ctx, "POST", "/v1/projects/"+body.ProjectID+"/password_strength", nil, jsonBody, &res)
-	return &res, err
-}
-
 func (c *ProjectsClient) Delete(
 	ctx context.Context,
 	body projects.DeleteRequest,
