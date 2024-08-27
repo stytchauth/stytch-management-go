@@ -19,7 +19,7 @@ func Test_ProjectMetricsGet(t *testing.T) {
 
 	// Act
 	resp, err := client.ProjectMetrics.Get(ctx, projectmetrics.GetRequest{
-		ProjectID: project.LiveProject.ID,
+		ProjectID: project.LiveProjectID,
 	})
 
 	// Assert

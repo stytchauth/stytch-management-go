@@ -53,14 +53,14 @@ func TestSDKClient_GetConfig(t *testing.T) {
 	project := client.DisposableProject(projects.VerticalB2B)
 	config := makeTestConfig(t)
 	_, err := client.SDK.SetConfig(context.Background(), sdk.SetConfigRequest{
-		ProjectID: project.LiveProject.ID,
+		ProjectID: project.LiveProjectID,
 		Config:    config,
 	})
 	require.NoError(t, err)
 
 	// Act
 	resp, err := client.SDK.GetConfig(context.Background(), sdk.GetConfigRequest{
-		ProjectID: project.LiveProject.ID,
+		ProjectID: project.LiveProjectID,
 	})
 
 	// Assert
@@ -76,11 +76,11 @@ func TestSDKClient_SetConfig(t *testing.T) {
 
 	// Act
 	_, err := client.SDK.SetConfig(context.Background(), sdk.SetConfigRequest{
-		ProjectID: project.LiveProject.ID,
+		ProjectID: project.LiveProjectID,
 		Config:    config,
 	})
 	getResp, getErr := client.SDK.GetConfig(context.Background(), sdk.GetConfigRequest{
-		ProjectID: project.LiveProject.ID,
+		ProjectID: project.LiveProjectID,
 	})
 
 	// Assert

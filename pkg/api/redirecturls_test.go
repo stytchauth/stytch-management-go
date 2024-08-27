@@ -44,7 +44,7 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
 	req := redirecturls.CreateRequest{
-		ProjectID: project.TestProject.ID,
+		ProjectID: project.TestProjectID,
 		URL:       "http://localhost:3000",
 		Type:      redirecturls.RedirectTypeLogin,
 		IsDefault: true,
@@ -52,7 +52,7 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 
 	// Act
 	resp, err := client.RedirectURLs.Create(context.Background(), req)
-	redirectURL := client.getRedirectURL(project.TestProject.ID, req.URL)
+	redirectURL := client.getRedirectURL(project.TestProjectID, req.URL)
 
 	// Assert
 	assert.NoError(t, err)
@@ -66,9 +66,9 @@ func TestRedirectURLsClient_GetAll(t *testing.T) {
 	// Arrange
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
-	client.createRedirectURL(project.TestProject.ID, "http://localhost:3000", redirecturls.RedirectTypeLogin)
-	client.createRedirectURL(project.TestProject.ID, "http://localhost:3000", redirecturls.RedirectTypeSignup)
-	client.createRedirectURL(project.TestProject.ID, "http://localhost:3001", redirecturls.RedirectTypeInvite)
+	client.createRedirectURL(project.TestProjectID, "http://localhost:3000", redirecturls.RedirectTypeLogin)
+	client.createRedirectURL(project.TestProjectID, "http://localhost:3000", redirecturls.RedirectTypeSignup)
+	client.createRedirectURL(project.TestProjectID, "http://localhost:3001", redirecturls.RedirectTypeInvite)
 	expected := map[string][]redirecturls.RedirectType{
 		"http://localhost:3000": {redirecturls.RedirectTypeLogin, redirecturls.RedirectTypeSignup},
 		"http://localhost:3001": {redirecturls.RedirectTypeInvite},
@@ -76,7 +76,7 @@ func TestRedirectURLsClient_GetAll(t *testing.T) {
 
 	// Act
 	resp, err := client.RedirectURLs.GetAll(context.Background(), redirecturls.GetAllRequest{
-		ProjectID: project.TestProject.ID,
+		ProjectID: project.TestProjectID,
 	})
 	actual := make(map[string][]redirecturls.RedirectType)
 	for _, r := range resp.RedirectURLs {
@@ -95,16 +95,16 @@ func TestRedirectURLsClient_RemoveValidType(t *testing.T) {
 	// Arrange
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
-	client.createRedirectURL(project.TestProject.ID, "http://localhost:3000", redirecturls.RedirectTypeLogin)
-	client.createRedirectURL(project.TestProject.ID, "http://localhost:3000", redirecturls.RedirectTypeSignup)
+	client.createRedirectURL(project.TestProjectID, "http://localhost:3000", redirecturls.RedirectTypeLogin)
+	client.createRedirectURL(project.TestProjectID, "http://localhost:3000", redirecturls.RedirectTypeSignup)
 
 	// Act
 	_, err := client.RedirectURLs.RemoveValidType(context.Background(), redirecturls.RemoveValidTypeRequest{
-		ProjectID: project.TestProject.ID,
+		ProjectID: project.TestProjectID,
 		URL:       "http://localhost:3000",
 		Type:      redirecturls.RedirectTypeLogin,
 	})
-	redirectURL := client.getRedirectURL(project.TestProject.ID, "http://localhost:3000")
+	redirectURL := client.getRedirectURL(project.TestProjectID, "http://localhost:3000")
 
 	// Assert
 	assert.NoError(t, err)

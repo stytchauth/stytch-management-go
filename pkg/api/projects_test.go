@@ -22,15 +22,15 @@ func Test_ProjectsCreate(t *testing.T) {
 	})
 	t.Cleanup(func() {
 		_, err := client.Projects.Delete(ctx, projects.DeleteRequest{
-			ProjectID: resp.Projects.LiveProject.ID,
+			ProjectID: resp.Project.LiveProjectID,
 		})
 		require.NoError(t, err)
 	})
 
 	// Assert
 	assert.NoError(t, err)
-	assert.Equal(t, "Test project", resp.Projects.LiveProject.Name)
-	assert.Equal(t, projects.VerticalB2B, resp.Projects.LiveProject.Vertical)
+	assert.Equal(t, "Test project", resp.Project.Name)
+	assert.Equal(t, projects.VerticalB2B, resp.Project.Vertical)
 }
 
 func Test_ProjectsGet(t *testing.T) {
@@ -41,12 +41,12 @@ func Test_ProjectsGet(t *testing.T) {
 
 	// Act
 	resp, err := client.Projects.Get(ctx, projects.GetRequest{
-		ProjectID: project.LiveProject.ID,
+		ProjectID: project.LiveProjectID,
 	})
 
 	// Assert
 	assert.NoError(t, err)
-	assert.Equal(t, project.LiveProject.Name, resp.Project.Name)
+	assert.Equal(t, project.Name, resp.Project.Name)
 	assert.Equal(t, projects.VerticalB2B, resp.Project.Vertical)
 }
 
@@ -56,7 +56,7 @@ func Test_ProjectsGetPasswordStrengthPolicy(t *testing.T) {
 	ctx := context.Background()
 	project := client.DisposableProject(projects.VerticalB2B)
 	_, err := client.Projects.SetPasswordStrengthPolicy(ctx, projects.SetPasswordStrengthPolicyRequest{
-		ProjectID: project.LiveProject.ID,
+		ProjectID: project.LiveProjectID,
 		PasswordConfig: projects.PasswordStrengthConfig{
 			CheckBreachOnCreate:         true,
 			CheckBreachOnAuthentication: true,
@@ -70,7 +70,7 @@ func Test_ProjectsGetPasswordStrengthPolicy(t *testing.T) {
 
 	// Act
 	resp, err := client.Projects.GetPasswordStrengthPolicy(ctx, projects.GetPasswordStrengthPolicyRequest{
-		ProjectID: project.LiveProject.ID,
+		ProjectID: project.LiveProjectID,
 	})
 
 	// Assert
@@ -88,7 +88,7 @@ func Test_ProjectsSetPasswordStrengthPolicy(t *testing.T) {
 
 	// Act
 	resp, err := client.Projects.SetPasswordStrengthPolicy(ctx, projects.SetPasswordStrengthPolicyRequest{
-		ProjectID: project.LiveProject.ID,
+		ProjectID: project.LiveProjectID,
 		PasswordConfig: projects.PasswordStrengthConfig{
 			CheckBreachOnCreate:         true,
 			CheckBreachOnAuthentication: true,
@@ -116,11 +116,10 @@ func Test_ProjectsDelete(t *testing.T) {
 	require.NoError(t, err)
 
 	// Act
-	resp, err := client.Projects.Delete(ctx, projects.DeleteRequest{
-		ProjectID: createResp.Projects.LiveProject.ID,
+	_, err = client.Projects.Delete(ctx, projects.DeleteRequest{
+		ProjectID: createResp.Project.LiveProjectID,
 	})
 
 	// Assert
 	assert.NoError(t, err)
-	assert.Equal(t, createResp.Projects.LiveProject.ID, resp.ProjectID)
 }
