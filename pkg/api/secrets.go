@@ -14,6 +14,19 @@ func newSecretsClient(c *internal.Client) *SecretsClient {
 	return &SecretsClient{client: c}
 }
 
+func (c *SecretsClient) Get(ctx context.Context, body secrets.GetSecretRequest) (*secrets.GetSecretResponse, error) {
+	var resp secrets.GetSecretResponse
+	err := c.client.NewRequest(
+		ctx,
+		"GET",
+		"/v1/projects/"+body.ProjectID+"/secrets/"+body.SecretID,
+		nil,
+		nil,
+		&resp,
+	)
+	return &resp, err
+}
+
 func (c *SecretsClient) GetAll(ctx context.Context, body secrets.GetAllSecretsRequest) (*secrets.GetAllSecretsResponse, error) {
 	var resp secrets.GetAllSecretsResponse
 	err := c.client.NewRequest(

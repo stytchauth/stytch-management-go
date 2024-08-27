@@ -46,7 +46,29 @@ func TestSecretsClient_GetAll(t *testing.T) {
 
 	// Assert
 	assert.NoError(t, err)
-	assert.Contains(t, secretIDs, createResp.SecretID)
+	assert.Contains(t, secretIDs, createResp.Secret.SecretID)
+}
+
+func TestSecretsClient_Get(t *testing.T) {
+	// Arrange
+	client := NewTestClient(t)
+	project := client.DisposableProject(projects.VerticalB2B)
+	ctx := context.Background()
+	createResp, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
+		ProjectID: project.LiveProjectID,
+	})
+	require.NoError(t, err)
+
+	// Act
+	resp, err := client.Secrets.Get(ctx, secrets.GetSecretRequest{
+		ProjectID: project.LiveProjectID,
+		SecretID:  createResp.Secret.SecretID,
+	})
+
+	// Assert
+	assert.NoError(t, err)
+	assert.Equal(t, createResp.Secret.SecretID, resp.Secret.SecretID)
+	assert.Equal(t, createResp.Secret.LastFour, resp.Secret.LastFour)
 }
 
 func TestSecretsClient_Delete(t *testing.T) {
@@ -59,12 +81,11 @@ func TestSecretsClient_Delete(t *testing.T) {
 	})
 	require.NoError(t, err)
 
-	resp, err := client.Secrets.Delete(ctx, secrets.DeleteSecretRequest{
+	_, err = client.Secrets.Delete(ctx, secrets.DeleteSecretRequest{
 		ProjectID: project.LiveProjectID,
-		SecretID:  createResp.SecretID,
+		SecretID:  createResp.Secret.SecretID,
 	})
 
 	// Assert
 	assert.NoError(t, err)
-	assert.Equal(t, createResp.SecretID, resp.SecretID)
 }
