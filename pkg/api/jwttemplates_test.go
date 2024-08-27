@@ -24,7 +24,7 @@ func TestJWTTemplatesClient_Set(t *testing.T) {
 
 		// Act
 		resp, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
-			ProjectID:   project.LiveProject.ID,
+			ProjectID:   project.LiveProjectID,
 			JWTTemplate: expected,
 		})
 
@@ -46,7 +46,7 @@ func TestJWTTemplatesClient_Set(t *testing.T) {
 
 		// Act
 		resp, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
-			ProjectID:   project.LiveProject.ID,
+			ProjectID:   project.LiveProjectID,
 			JWTTemplate: expected,
 		})
 
@@ -69,14 +69,14 @@ func TestJWTTemplatesClient_Get(t *testing.T) {
 			TemplateType:    jwttemplates.TemplateTypeSession,
 		}
 		_, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
-			ProjectID:   project.LiveProject.ID,
+			ProjectID:   project.LiveProjectID,
 			JWTTemplate: expected,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.JWTTemplates.Get(ctx, &jwttemplates.GetRequest{
-			ProjectID:    project.LiveProject.ID,
+			ProjectID:    project.LiveProjectID,
 			TemplateType: jwttemplates.TemplateTypeSession,
 		})
 
@@ -96,14 +96,14 @@ func TestJWTTemplatesClient_Get(t *testing.T) {
 			TemplateType:    jwttemplates.TemplateTypeM2M,
 		}
 		_, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
-			ProjectID:   project.LiveProject.ID,
+			ProjectID:   project.LiveProjectID,
 			JWTTemplate: expected,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.JWTTemplates.Get(ctx, &jwttemplates.GetRequest{
-			ProjectID:    project.LiveProject.ID,
+			ProjectID:    project.LiveProjectID,
 			TemplateType: jwttemplates.TemplateTypeM2M,
 		})
 
