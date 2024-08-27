@@ -51,7 +51,6 @@ func TestSecretsClient_GetAll(t *testing.T) {
 
 func TestSecretsClient_Get(t *testing.T) {
 	// Arrange
-	// Arrange
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
