@@ -7,34 +7,34 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/stytchauth/stytch-management-go/v1/pkg/models/projects"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/models/rbac"
+	"github.com/stytchauth/stytch-management-go/v1/pkg/models/rbacpolicy"
 )
 
-func getTestPolicy(t *testing.T) rbac.Policy {
+func getTestPolicy(t *testing.T) rbacpolicy.Policy {
 	t.Helper()
 
-	resources := []rbac.PolicyResource{
+	resources := []rbacpolicy.Resource{
 		{
-			ResourceID:  "resource1",
-			Description: "Resource 1",
-			Actions:     []string{"read", "write", "delete"},
+			ResourceID:       "resource1",
+			Description:      "Resource 1",
+			AvailableActions: []string{"read", "write", "delete"},
 		},
 		{
-			ResourceID:  "resource2",
-			Description: "Resource 2",
-			Actions:     []string{"read", "write"},
+			ResourceID:       "resource2",
+			Description:      "Resource 2",
+			AvailableActions: []string{"read", "write"},
 		},
 		{
-			ResourceID:  "resource3",
-			Description: "Resource 3",
-			Actions:     []string{"do_admin_things"},
+			ResourceID:       "resource3",
+			Description:      "Resource 3",
+			AvailableActions: []string{"do_admin_things"},
 		},
 	}
 
-	admin := rbac.PolicyRole{
+	admin := rbacpolicy.Role{
 		RoleID:      "admin_role",
 		Description: "Admin role",
-		Permissions: []rbac.PolicyRolePermission{
+		Permissions: []rbacpolicy.Permission{
 			{
 				ResourceID: "resource1",
 				Actions:    []string{"read", "write", "delete"},
@@ -49,10 +49,10 @@ func getTestPolicy(t *testing.T) rbac.Policy {
 			},
 		},
 	}
-	writer := rbac.PolicyRole{
+	writer := rbacpolicy.Role{
 		RoleID:      "writer_role",
 		Description: "Writer role",
-		Permissions: []rbac.PolicyRolePermission{
+		Permissions: []rbacpolicy.Permission{
 			{
 				ResourceID: "resource1",
 				Actions:    []string{"read", "write"},
@@ -63,10 +63,10 @@ func getTestPolicy(t *testing.T) rbac.Policy {
 			},
 		},
 	}
-	viewer := rbac.PolicyRole{
+	viewer := rbacpolicy.Role{
 		RoleID:      "viewer_role",
 		Description: "Viewer role",
-		Permissions: []rbac.PolicyRolePermission{
+		Permissions: []rbacpolicy.Permission{
 			{
 				ResourceID: "resource1",
 				Actions:    []string{"read"},
@@ -78,34 +78,34 @@ func getTestPolicy(t *testing.T) rbac.Policy {
 		},
 	}
 
-	return rbac.Policy{
-		DefaultRole:           viewer,
-		OrganizationAdminRole: admin,
-		CustomRoles:           []rbac.PolicyRole{writer},
-		CustomResources:       resources,
+	return rbacpolicy.Policy{
+		StytchMember:    viewer,
+		StytchAdmin:     admin,
+		CustomRoles:     []rbacpolicy.Role{writer},
+		CustomResources: resources,
 	}
 }
 
-func TestRBACClient_GetPolicy(t *testing.T) {
+func TestRBACPolicyClient_Get(t *testing.T) {
 	// Arrange
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
 	policy := getTestPolicy(t)
-	_, err := client.RBAC.SetPolicy(context.Background(), rbac.SetPolicyRequest{
+	_, err := client.RBACPolicy.Set(context.Background(), rbacpolicy.SetRequest{
 		ProjectID: project.LiveProjectID,
 		Policy:    policy,
 	})
 	require.NoError(t, err)
 
 	// Act
-	resp, err := client.RBAC.GetPolicy(context.Background(), rbac.GetPolicyRequest{
+	resp, err := client.RBACPolicy.Get(context.Background(), rbacpolicy.GetRequest{
 		ProjectID: project.LiveProjectID,
 	})
 
 	// Assert
 	assert.NoError(t, err)
-	assert.Equal(t, policy.DefaultRole, resp.Policy.DefaultRole)
-	assert.Equal(t, policy.OrganizationAdminRole, resp.Policy.OrganizationAdminRole)
+	assert.Equal(t, policy.StytchMember, resp.Policy.StytchMember)
+	assert.Equal(t, policy.StytchAdmin, resp.Policy.StytchAdmin)
 	assert.Equal(t, policy.CustomRoles, resp.Policy.CustomRoles)
 	assert.Equal(t, policy.CustomResources, resp.Policy.CustomResources)
 }
@@ -117,15 +117,15 @@ func TestRBACClient_SetPolicy(t *testing.T) {
 	policy := getTestPolicy(t)
 
 	// Act
-	resp, err := client.RBAC.SetPolicy(context.Background(), rbac.SetPolicyRequest{
+	resp, err := client.RBACPolicy.Set(context.Background(), rbacpolicy.SetRequest{
 		ProjectID: project.LiveProjectID,
 		Policy:    policy,
 	})
 
 	// Assert
 	assert.NoError(t, err)
-	assert.Equal(t, policy.DefaultRole, resp.Policy.DefaultRole)
-	assert.Equal(t, policy.OrganizationAdminRole, resp.Policy.OrganizationAdminRole)
+	assert.Equal(t, policy.StytchMember, resp.Policy.StytchMember)
+	assert.Equal(t, policy.StytchAdmin, resp.Policy.StytchAdmin)
 	assert.Equal(t, policy.CustomRoles, resp.Policy.CustomRoles)
 	assert.Equal(t, policy.CustomResources, resp.Policy.CustomResources)
 }
