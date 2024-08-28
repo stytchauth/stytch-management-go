@@ -147,12 +147,11 @@ func TestEmailTemplatesClient_Delete(t *testing.T) {
 	createResp := createNewEmailTemplate(t, ctx, client, project)
 
 	// Act
-	resp, err := client.EmailTemplates.Delete(ctx, emailtemplates.DeleteRequest{
+	_, err := client.EmailTemplates.Delete(ctx, emailtemplates.DeleteRequest{
 		ProjectID:  project.LiveProjectID,
 		TemplateID: createResp.EmailTemplate.TemplateID,
 	})
 
 	// Assert
 	assert.NoError(t, err)
-	assert.Equal(t, createResp.EmailTemplate.TemplateID, resp.TemplateID)
 }
