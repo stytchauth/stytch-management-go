@@ -62,7 +62,8 @@ func Test_PasswordStrengthConfigSet(t *testing.T) {
 		// Assert
 		assert.NoError(t, err)
 		assert.True(t, resp.PasswordStrengthConfig.CheckBreachOnCreation)
-		assert.Equal(t, 12, resp.PasswordStrengthConfig.LudsMinPasswordComplexity)
+		assert.Equal(t, 12, resp.PasswordStrengthConfig.LudsMinPasswordLength)
+		assert.Equal(t, 3, resp.PasswordStrengthConfig.LudsMinPasswordComplexity)
 	})
 	t.Run("zxcvbn", func(t *testing.T) {
 		// Arrange

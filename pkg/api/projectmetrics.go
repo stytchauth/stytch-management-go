@@ -23,6 +23,6 @@ func (c *ProjectMetricsClient) Get(
 	body projectmetrics.GetRequest,
 ) (*projectmetrics.GetResponse, error) {
 	var res projectmetrics.GetResponse
-	err := c.client.NewRequest(ctx, "GET", "/v1/projects/"+body.ProjectID+"/metrics", nil, nil, &res)
+	err := c.client.NewRequest(ctx, "GET", "/v1/projects/"+body.ProjectID+"/project_metrics", nil, nil, &res)
 	return &res, err
 }
