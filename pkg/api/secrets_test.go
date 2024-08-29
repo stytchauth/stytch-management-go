@@ -46,7 +46,7 @@ func TestSecretsClient_GetAll(t *testing.T) {
 
 	// Assert
 	assert.NoError(t, err)
-	assert.Contains(t, secretIDs, createResp.Secret.SecretID)
+	assert.Contains(t, secretIDs, createResp.CreatedSecret.SecretID)
 }
 
 func TestSecretsClient_Get(t *testing.T) {
@@ -62,13 +62,13 @@ func TestSecretsClient_Get(t *testing.T) {
 	// Act
 	resp, err := client.Secrets.Get(ctx, secrets.GetSecretRequest{
 		ProjectID: project.LiveProjectID,
-		SecretID:  createResp.Secret.SecretID,
+		SecretID:  createResp.CreatedSecret.SecretID,
 	})
 
 	// Assert
 	assert.NoError(t, err)
-	assert.Equal(t, createResp.Secret.SecretID, resp.Secret.SecretID)
-	assert.Equal(t, createResp.Secret.LastFour, resp.Secret.LastFour)
+	assert.Equal(t, createResp.CreatedSecret.SecretID, resp.Secret.SecretID)
+	assert.Equal(t, createResp.CreatedSecret.LastFour, resp.Secret.LastFour)
 }
 
 func TestSecretsClient_Delete(t *testing.T) {
@@ -83,7 +83,7 @@ func TestSecretsClient_Delete(t *testing.T) {
 
 	_, err = client.Secrets.Delete(ctx, secrets.DeleteSecretRequest{
 		ProjectID: project.LiveProjectID,
-		SecretID:  createResp.Secret.SecretID,
+		SecretID:  createResp.CreatedSecret.SecretID,
 	})
 
 	// Assert
