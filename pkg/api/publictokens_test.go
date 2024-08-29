@@ -17,7 +17,7 @@ func TestPublicTokensClient_CreatePublicToken(t *testing.T) {
 	ctx := context.Background()
 
 	// Act
-	_, err := client.PublicTokens.Create(ctx, publictokens.CreatePublicTokenRequest{
+	_, err := client.PublicTokens.Create(ctx, publictokens.CreateRequest{
 		ProjectID: project.LiveProjectID,
 	})
 
@@ -30,13 +30,13 @@ func TestPublicTokensClient_GetPublicTokens(t *testing.T) {
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
-	createResp, err := client.PublicTokens.Create(ctx, publictokens.CreatePublicTokenRequest{
+	createResp, err := client.PublicTokens.Create(ctx, publictokens.CreateRequest{
 		ProjectID: project.LiveProjectID,
 	})
 	require.NoError(t, err)
 
 	// Act
-	resp, err := client.PublicTokens.GetAll(ctx, publictokens.GetAllPublicTokensRequest{
+	resp, err := client.PublicTokens.GetAll(ctx, publictokens.GetAllRequest{
 		ProjectID: project.LiveProjectID,
 	})
 
@@ -50,13 +50,13 @@ func TestPublicTokensClient_DeletePublicToken(t *testing.T) {
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
 	ctx := context.Background()
-	createResp, err := client.PublicTokens.Create(ctx, publictokens.CreatePublicTokenRequest{
+	createResp, err := client.PublicTokens.Create(ctx, publictokens.CreateRequest{
 		ProjectID: project.LiveProjectID,
 	})
 	require.NoError(t, err)
 
 	// Act
-	_, err = client.PublicTokens.Delete(ctx, publictokens.DeletePublicTokenRequest{
+	_, err = client.PublicTokens.Delete(ctx, publictokens.DeleteRequest{
 		ProjectID:   project.LiveProjectID,
 		PublicToken: createResp.PublicToken.PublicToken,
 	})

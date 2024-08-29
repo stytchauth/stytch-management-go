@@ -18,8 +18,8 @@ func newPublicTokensClient(c *internal.Client) *PublicTokensClient {
 }
 
 // GetAll retrieves all the active public tokens defined for a project.
-func (c *PublicTokensClient) GetAll(ctx context.Context, body publictokens.GetAllPublicTokensRequest) (*publictokens.GetAllPublicTokensResponse, error) {
-	var resp publictokens.GetAllPublicTokensResponse
+func (c *PublicTokensClient) GetAll(ctx context.Context, body publictokens.GetAllRequest) (*publictokens.GetAllResponse, error) {
+	var resp publictokens.GetAllResponse
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
@@ -32,13 +32,13 @@ func (c *PublicTokensClient) GetAll(ctx context.Context, body publictokens.GetAl
 }
 
 // Create creates a new public token for a project.
-func (c *PublicTokensClient) Create(ctx context.Context, body publictokens.CreatePublicTokenRequest) (*publictokens.CreatePublicTokenResponse, error) {
+func (c *PublicTokensClient) Create(ctx context.Context, body publictokens.CreateRequest) (*publictokens.CreateResponse, error) {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 
-	var res publictokens.CreatePublicTokenResponse
+	var res publictokens.CreateResponse
 	err = c.client.NewRequest(
 		ctx,
 		"POST",
@@ -50,8 +50,8 @@ func (c *PublicTokensClient) Create(ctx context.Context, body publictokens.Creat
 }
 
 // Delete deletes a public token for a project.
-func (c *PublicTokensClient) Delete(ctx context.Context, body publictokens.DeletePublicTokenRequest) (*publictokens.DeletePublicTokenResponse, error) {
-	var res publictokens.DeletePublicTokenResponse
+func (c *PublicTokensClient) Delete(ctx context.Context, body publictokens.DeleteRequest) (*publictokens.DeleteResponse, error) {
+	var res publictokens.DeleteResponse
 	err := c.client.NewRequest(
 		ctx,
 		"DELETE",

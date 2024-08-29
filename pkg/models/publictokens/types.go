@@ -12,12 +12,12 @@ type PublicToken struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
-type GetAllPublicTokensRequest struct {
+type GetAllRequest struct {
 	// ProjectID is the project to retrieve the public tokens for
 	ProjectID string `json:"project_id"`
 }
 
-type GetAllPublicTokensResponse struct {
+type GetAllResponse struct {
 	// StatusCode is the HTTP status code for the response
 	StatusCode int `json:"status_code"`
 	// RequestID is a unique identifier to help with debugging the request
@@ -26,12 +26,12 @@ type GetAllPublicTokensResponse struct {
 	PublicTokens []PublicToken `json:"public_tokens"`
 }
 
-type CreatePublicTokenRequest struct {
+type CreateRequest struct {
 	// ProjectID is the project to create the public token for
 	ProjectID string `json:"project_id"`
 }
 
-type CreatePublicTokenResponse struct {
+type CreateResponse struct {
 	// StatusCode is the HTTP status code for the response
 	StatusCode int `json:"status_code"`
 	// RequestID is a unique identifier to help with debugging the request
@@ -40,14 +40,14 @@ type CreatePublicTokenResponse struct {
 	PublicToken PublicToken `json:"public_token"`
 }
 
-type DeletePublicTokenRequest struct {
+type DeleteRequest struct {
 	// ProjectID is the project where the public token is located
 	ProjectID string `json:"project_id"`
 	// PublicToken is the public token to delete
 	PublicToken string `json:"public_token"`
 }
 
-type DeletePublicTokenResponse struct {
+type DeleteResponse struct {
 	// StatusCode is the HTTP status code for the response
 	StatusCode int `json:"status_code"`
 	// RequestID is a unique identifier to help with debugging
