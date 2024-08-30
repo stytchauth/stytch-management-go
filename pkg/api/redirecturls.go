@@ -45,7 +45,7 @@ func (c *RedirectURLsClient) GetAll(
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v1/projects/%s/redirect_urls", body.ProjectID),
+		fmt.Sprintf("/v1/projects/%s/redirect_urls/all", body.ProjectID),
 		nil,
 		nil,
 		&resp)
@@ -53,20 +53,35 @@ func (c *RedirectURLsClient) GetAll(
 	return &resp, err
 }
 
-func (c *RedirectURLsClient) RemoveValidType(
+func (c *RedirectURLsClient) Get(
 	ctx context.Context,
-	body redirecturls.RemoveValidTypeRequest,
-) (*redirecturls.RemoveValidTypeResponse, error) {
+	body redirecturls.GetRequest,
+) (*redirecturls.GetResponse, error) {
+	var res redirecturls.GetResponse
+	err := c.client.NewRequest(
+		ctx,
+		"GET",
+		fmt.Sprintf("/v1/projects/%s/redirect_urls?url=%s", body.ProjectID, body.URL),
+		nil,
+		nil,
+		&res)
+	return &res, err
+}
+
+func (c *RedirectURLsClient) Update(
+	ctx context.Context,
+	body redirecturls.UpdateRequest,
+) (*redirecturls.UpdateResponse, error) {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 
-	var res redirecturls.RemoveValidTypeResponse
+	var res redirecturls.UpdateResponse
 	err = c.client.NewRequest(
 		ctx,
-		"POST",
-		fmt.Sprintf("/v1/projects/%s/redirect_urls/remove_valid_type", body.ProjectID),
+		"PUT",
+		fmt.Sprintf("/v1/projects/%s/redirect_urls?url=%s", body.ProjectID, body.RedirectURL.URL),
 		nil,
 		jsonBody,
 		&res)

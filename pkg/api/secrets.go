@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+
 	"github.com/stytchauth/stytch-management-go/v1/pkg/api/internal"
 	"github.com/stytchauth/stytch-management-go/v1/pkg/models/secrets"
 )
