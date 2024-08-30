@@ -16,25 +16,48 @@ func newSDKClient(c *internal.Client) *SDKClient {
 	return &SDKClient{client: c}
 }
 
-func (c *SDKClient) GetConfig(
+func (c *SDKClient) GetConsumerConfig(
 	ctx context.Context,
-	body sdk.GetConfigRequest,
-) (*sdk.GetConfigResponse, error) {
-	var res sdk.GetConfigResponse
-	err := c.client.NewRequest(ctx, "GET", "/v1/projects/"+body.ProjectID+"/sdk", nil, nil, &res)
+	body sdk.GetConsumerConfigRequest,
+) (*sdk.GetConsumerConfigResponse, error) {
+	var res sdk.GetConsumerConfigResponse
+	err := c.client.NewRequest(ctx, "GET", "/v1/projects/"+body.ProjectID+"/sdk/consumer", nil, nil, &res)
 	return &res, err
 }
 
-func (c *SDKClient) SetConfig(
+func (c *SDKClient) SetConsumerConfig(
 	ctx context.Context,
-	body sdk.SetConfigRequest,
-) (*sdk.SetConfigResponse, error) {
+	body sdk.SetConsumerConfigRequest,
+) (*sdk.SetConsumerConfigResponse, error) {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 
-	var res sdk.SetConfigResponse
-	err = c.client.NewRequest(ctx, "PUT", "/v1/projects/"+body.ProjectID+"/sdk", nil, jsonBody, &res)
+	var res sdk.SetConsumerConfigResponse
+	err = c.client.NewRequest(ctx, "PUT", "/v1/projects/"+body.ProjectID+"/sdk/consumer", nil, jsonBody, &res)
+	return &res, err
+}
+
+func (c *SDKClient) GetB2BConfig(
+	ctx context.Context,
+	body sdk.GetB2BConfigRequest,
+) (*sdk.GetB2BConfigResponse, error) {
+	var res sdk.GetB2BConfigResponse
+	err := c.client.NewRequest(ctx, "GET", "/v1/projects/"+body.ProjectID+"/sdk/b2b", nil, nil, &res)
+	return &res, err
+}
+
+func (c *SDKClient) SetB2BConfig(
+	ctx context.Context,
+	body sdk.SetB2BConfigRequest,
+) (*sdk.SetB2BConfigResponse, error) {
+	jsonBody, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+
+	var res sdk.SetB2BConfigResponse
+	err = c.client.NewRequest(ctx, "PUT", "/v1/projects/"+body.ProjectID+"/sdk/b2b", nil, jsonBody, &res)
 	return &res, err
 }
