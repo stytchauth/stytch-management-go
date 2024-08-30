@@ -1,5 +1,6 @@
 package redirecturls
 
+// RedirectType are the different types of redirect available.
 type RedirectType string
 
 const (
@@ -7,27 +8,53 @@ const (
 	RedirectTypeSignup        RedirectType = "signup"
 	RedirectTypeInvite        RedirectType = "invite"
 	RedirectTypeResetPassword RedirectType = "reset_password"
-	RedirectTypeDiscovery     RedirectType = "discovery"
+	// RedirectTypeDiscovery is used for the discovery endpoint exclusively in B2B projects.
+	RedirectTypeDiscovery RedirectType = "discovery"
 )
 
+// URLRedirectType holds information for a specific kind of redirect.
+type URLRedirectType struct {
+	// Type is one of the RedirectType values.
+	Type RedirectType `json:"type"`
+	// IsDefault is true if this is the default redirect type, false otherwise.
+	IsDefault bool `json:"is_default"`
+}
+
+// RedirectURL holds information for a specific redirect URL and all its redirect types
 type RedirectURL struct {
-	MagicLinkURLID string         `json:"magic_link_url_id"`
-	URL            string         `json:"url"`
-	ValidTypes     []RedirectType `json:"valid_types"`
-	DefaultTypes   []RedirectType `json:"default_types"`
+	// URL is the URL to redirect to.
+	URL string `json:"url"`
+	// ValidTypes is a list of all the URLRedirectType available for this object
+	ValidTypes []URLRedirectType `json:"valid_types"`
 }
 
 type CreateRequest struct {
-	ProjectID string       `json:"project_id"`
-	URL       string       `json:"url"`
-	Type      RedirectType `json:"type"`
-	IsDefault bool         `json:"is_default"`
+	// ProjectID is the ID of the project to create the redirect URL for
+	ProjectID string `json:"project_id"`
+	// RedirectURL is the object that will be created
+	RedirectURL RedirectURL `json:"redirect_url"`
 }
 
 type CreateResponse struct {
-	StatusCode     int    `json:"status_code"`
-	RequestID      string `json:"request_id"`
-	MagicLinkURLID string `json:"magic_link_url_id"`
+	// StatusCode is the HTTP status code of the response
+	StatusCode int `json:"status_code"`
+	// RequestID is a unique identifier to help with debugging the request
+	RequestID string `json:"request_id"`
+	// RedirectURL is the object that was created
+	RedirectURL RedirectURL `json:"redirect_url"`
+}
+
+type GetRequest struct {
+	ProjectID string `json:"project_id"`
+	URL       string `json:"url"`
+}
+
+type GetResponse struct {
+	// StatusCode is the HTTP status code of the response
+	StatusCode int `json:"status_code"`
+	// RequestID is a unique identifier to help with debugging the request
+	RequestID   string      `json:"request_id"`
+	RedirectURL RedirectURL `json:"redirect_url"`
 }
 
 type GetAllRequest struct {
@@ -35,29 +62,42 @@ type GetAllRequest struct {
 }
 
 type GetAllResponse struct {
-	StatusCode   int           `json:"status_code"`
-	RequestID    string        `json:"request_id"`
-	ProjectID    string        `json:"project_id"`
+	// StatusCode is the HTTP status code of the response
+	StatusCode int `json:"status_code"`
+	// RequestID is a unique identifier to help with debugging the request
+	RequestID string `json:"request_id"`
+	// ProjectID is the ID of the project for the redirect URLs
+	ProjectID string `json:"project_id"`
+	// RedirectURLs is a list of all the redirect URLs for the project
 	RedirectURLs []RedirectURL `json:"redirect_urls"`
 }
 
-type RemoveValidTypeRequest struct {
-	ProjectID string       `json:"project_id"`
-	URL       string       `json:"url"`
-	Type      RedirectType `json:"type"`
-}
-
-type RemoveValidTypeResponse struct {
-	StatusCode int    `json:"status_code"`
-	RequestID  string `json:"request_id"`
-}
-
 type DeleteRequest struct {
+	// ProjectID is the ID of the project to delete the redirect URL from
 	ProjectID string `json:"project_id"`
-	URL       string `json:"url"`
+	// URL is the redirect URL to delete
+	URL string `json:"url"`
 }
 
 type DeleteResponse struct {
-	StatusCode int    `json:"status_code"`
-	RequestID  string `json:"request_id"`
+	// StatusCode is the HTTP status code of the response
+	StatusCode int `json:"status_code"`
+	// RequestID is a unique identifier to help with debugging the request
+	RequestID string `json:"request_id"`
+}
+
+type UpdateRequest struct {
+	// ProjectID is the ID of the project to update the redirect URL in
+	ProjectID string `json:"project_id"`
+	// RedirectURL is the object that will be updated
+	RedirectURL RedirectURL `json:"redirect_url"`
+}
+
+type UpdateResponse struct {
+	// StatusCode is the HTTP status code of the response
+	StatusCode int `json:"status_code"`
+	// RequestID is a unique identifier to help with debugging the request
+	RequestID string `json:"request_id"`
+	// RedirectURL is the object that was updated
+	RedirectURL RedirectURL `json:"redirect_url"`
 }
