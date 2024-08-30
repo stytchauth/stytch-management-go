@@ -4,12 +4,12 @@ package redirecturls
 type RedirectType string
 
 const (
-	RedirectTypeLogin         RedirectType = "login"
-	RedirectTypeSignup        RedirectType = "signup"
-	RedirectTypeInvite        RedirectType = "invite"
-	RedirectTypeResetPassword RedirectType = "reset_password"
+	RedirectTypeLogin         RedirectType = "LOGIN"
+	RedirectTypeSignup        RedirectType = "SIGNUP"
+	RedirectTypeInvite        RedirectType = "INVITE"
+	RedirectTypeResetPassword RedirectType = "RESET_PASSWORD"
 	// RedirectTypeDiscovery is used for the discovery endpoint exclusively in B2B projects.
-	RedirectTypeDiscovery RedirectType = "discovery"
+	RedirectTypeDiscovery RedirectType = "DISCOVERY"
 )
 
 // URLRedirectType holds information for a specific kind of redirect.
@@ -45,19 +45,23 @@ type CreateResponse struct {
 }
 
 type GetRequest struct {
+	// ProjectID is the ID of the project to get the redirect URL from
 	ProjectID string `json:"project_id"`
-	URL       string `json:"url"`
+	// URL is the redirect URL to get
+	URL string `json:"url"`
 }
 
 type GetResponse struct {
 	// StatusCode is the HTTP status code of the response
 	StatusCode int `json:"status_code"`
 	// RequestID is a unique identifier to help with debugging the request
-	RequestID   string      `json:"request_id"`
+	RequestID string `json:"request_id"`
+	// RedirectURL is the object that was retrieved
 	RedirectURL RedirectURL `json:"redirect_url"`
 }
 
 type GetAllRequest struct {
+	// ProjectID is the ID of the project to get all the redirect URLs from
 	ProjectID string `json:"project_id"`
 }
 
