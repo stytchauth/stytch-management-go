@@ -1,28 +1,19 @@
 package sdk
 
-type AuthSetting string
+type DFPPASetting string
 
 const (
-	AuthSettingDisabled      AuthSetting = "disabled"
-	AuthSettingSecondaryOnly AuthSetting = "secondary_only"
-	AuthSettingPrimaryOnly   AuthSetting = "primary_only"
-	AuthSettingAlways        AuthSetting = "always"
+	DFPPASettingDisabled DFPPASetting = "DISABLED"
+	DFPPASettingPassive  DFPPASetting = "PASSIVE"
+	DFPPASettingEnabled  DFPPASetting = "ENABLED"
 )
 
-type DFPProtectedAuthSetting string
+type DFPPAOnChallengeAction string
 
 const (
-	DFPProtectedAuthDisabled DFPProtectedAuthSetting = "DISABLED"
-	DFPProtectedAuthPassive  DFPProtectedAuthSetting = "PASSIVE"
-	DFPProtectedAuthEnabled  DFPProtectedAuthSetting = "ENABLED"
-)
-
-type DFPProtectedAuthChallengeSetting string
-
-const (
-	DFPProtectedAuthChallengeSettingAllow   DFPProtectedAuthChallengeSetting = "ALLOW"
-	DFPProtectedAuthChallengeSettingBlock   DFPProtectedAuthChallengeSetting = "BLOCK"
-	DFPProtectedAuthChallengeSettingCaptcha DFPProtectedAuthChallengeSetting = "CAPTCHA"
+	DFPPAOnChallengeActionAllow          DFPPAOnChallengeAction = "ALLOW"
+	DFPPAOnChallengeActionBlock          DFPPAOnChallengeAction = "BLOCK"
+	DFPPAOnChallengeActionTriggerCaptcha DFPPAOnChallengeAction = "TRIGGER_CAPTCHA"
 )
 
 type AuthorizedB2BDomain struct {
@@ -31,72 +22,191 @@ type AuthorizedB2BDomain struct {
 }
 
 type SMSAutofillMetadata struct {
-	AppDomain string `json:"app_domain,omitempty"`
-	AppHash   string `json:"app_hash,omitempty"`
+	MetadataType  string `json:"metadata_type"`
+	MetadataValue string `json:"metadata_value"`
+	BundleID      string `json:"bundle_id"`
+	ID            string `json:"id"`
 }
 
-type Config struct {
-	ManageUserData                          bool                             `json:"manage_user_data,omitempty"`
-	ManageSessionData                       bool                             `json:"manage_session_data,omitempty"`
-	EmailMagicLinks                         AuthSetting                      `json:"email_magic_links,omitempty"`
-	SMSOTPs                                 AuthSetting                      `json:"sms_otps,omitempty"`
-	WhatsappOTPs                            AuthSetting                      `json:"whatsapp_otps,omitempty"`
-	EmailOTPs                               AuthSetting                      `json:"email_otps,omitempty"`
-	OAuth                                   AuthSetting                      `json:"oauth,omitempty"`
-	CreateTOTPEnabled                       bool                             `json:"create_totp_enabled,omitempty"`
-	TOTPs                                   AuthSetting                      `json:"totps,omitempty"`
-	CreateWebauthnEnabled                   bool                             `json:"create_webauthn_enabled,omitempty"`
-	Webauthns                               AuthSetting                      `json:"webauthns,omitempty"`
-	CreateNewUsers                          bool                             `json:"create_new_users,omitempty"`
-	CryptoWallets                           AuthSetting                      `json:"crypto_wallets,omitempty"`
-	MaxSessionDurationMinutes               int                              `json:"max_session_duration_minutes,omitempty"`
-	PKCERequiredForEmailMagicLinks          bool                             `json:"pkce_required_for_email_magic_links,omitempty"`
-	PKCERequiredForOAuth                    bool                             `json:"pkce_required_for_oauth,omitempty"`
-	PKCERequiredForPasswordResets           bool                             `json:"pkce_required_for_password_resets,omitempty"`
-	Passwords                               AuthSetting                      `json:"passwords,omitempty"`
-	CreateBiometricsEnabled                 bool                             `json:"create_biometrics_enabled,omitempty"`
-	Biometrics                              AuthSetting                      `json:"biometrics,omitempty"`
-	EmailMagicLinksSend                     AuthSetting                      `json:"email_magic_links_send,omitempty"`
-	SMSOTPsSend                             AuthSetting                      `json:"sms_otps_send,omitempty"`
-	WhatsappOTPsSend                        AuthSetting                      `json:"whatsapp_otps_send,omitempty"`
-	EmailOTPsSend                           AuthSetting                      `json:"email_otps_send,omitempty"`
-	EnableGenericB2BLoginForEmailMagicLinks bool                             `json:"enable_generic_b2b_login_for_email_magic_links,omitempty"`
-	EnableGenericB2BLoginForEmailOTPs       bool                             `json:"enable_generic_b2b_login_for_email_otps,omitempty"`
-	EnableGenericB2BLoginForOAuth           bool                             `json:"enable_generic_b2b_login_for_oauth,omitempty"`
-	EnableOrganizationAuthSettings          bool                             `json:"enable_organization_auth_settings,omitempty"`
-	AllowSelfOnboarding                     bool                             `json:"allow_self_onboarding,omitempty"`
-	SSO                                     AuthSetting                      `json:"sso,omitempty"`
-	PKCERequiredForSSO                      bool                             `json:"pkce_required_for_sso,omitempty"`
-	DiscoveryEnabled                        bool                             `json:"discovery_enabled,omitempty"`
-	EnableGenericB2BLoginForPasswords       bool                             `json:"enable_generic_b2b_login_for_passwords,omitempty"`
-	EnableB2BUseMemberPermissions           bool                             `json:"enable_b2b_use_member_permissions,omitempty"`
-	EnableSCIMConnections                   bool                             `json:"enable_scim_connections,omitempty"`
-	Domains                                 []string                         `json:"domains,omitempty"`
-	BundleIDs                               []string                         `json:"bundle_ids,omitempty"`
-	B2BDomains                              []AuthorizedB2BDomain            `json:"b2b_domains,omitempty"`
-	DFPProtectedAuthEnabled                 DFPProtectedAuthSetting          `json:"dfp_protected_auth_enabled,omitempty"`
-	DFPProtectedAuthOnChallenge             DFPProtectedAuthChallengeSetting `json:"dfp_protected_auth_on_challenge,omitempty"`
-	DFPProtectedAuthLookupTimeoutSeconds    int                              `json:"dfp_protected_auth_lookup_timeout_seconds,omitempty"`
-	SIWERequiredForCryptoWallets            bool                             `json:"siwe_required_for_crypto_wallets,omitempty"`
-	SMSAutofillMetadata                     []SMSAutofillMetadata            `json:"sms_autofill_metadata,omitempty"`
+type Consumer_BasicConfig struct {
+	Enabled        bool     `json:"enabled"`
+	CreateNewUsers bool     `json:"create_new_users"`
+	Domains        []string `json:"domains"`
+	BundleIDs      []string `json:"bundle_ids"`
 }
 
-type GetConfigRequest struct {
+type Consumer_SessionsConfig struct {
+	Enabled                   bool  `json:"enabled"`
+	MaxSessionDurationMinutes int32 `json:"max_session_duration_minutes"`
+}
+
+type Consumer_MagicLinksConfig struct {
+	LoginOrCreateEnabled bool `json:"login_or_create_enabled"`
+	SendEnabled          bool `json:"send_enabled"`
+	PKCERequired         bool `json:"pkce_required"`
+}
+
+type Consumer_OTPsConfig struct {
+	SMSLoginOrCreateEnabled      bool `json:"sms_login_or_create_enabled"`
+	WhatsAppLoginOrCreateEnabled bool `json:"whatsapp_login_or_create_enabled"`
+	EmailLoginOrCreateEnabled    bool `json:"email_login_or_create_enabled"`
+	SMSSendEnabled               bool `json:"sms_send_enabled"`
+	WhatsAppSendEnabled          bool `json:"whatsapp_send_enabled"`
+	EmailSendEnabled             bool `json:"email_send_enabled"`
+
+	SMSAutofillMetadata []SMSAutofillMetadata `json:"sms_autofill_metadata"`
+}
+
+type Consumer_OAuthConfig struct {
+	Enabled      bool `json:"enabled"`
+	PKCERequired bool `json:"pkce_required"`
+}
+
+type Consumer_TOTPsConfig struct {
+	CreateTOTPs bool `json:"create_totps"`
+	Enabled     bool `json:"enabled"`
+}
+
+type Consumer_WebAuthnConfig struct {
+	CreateWebAuthns bool `json:"create_webauthns"`
+	Enabled         bool `json:"enabled"`
+}
+
+type Consumer_CryptoWalletsConfig struct {
+	Enabled      bool `json:"enabled"`
+	SIWERequired bool `json:"siwe_required"`
+}
+
+type Consumer_DFPPAConfig struct {
+	Enabled              DFPPASetting           `json:"enabled"`
+	OnChallenge          DFPPAOnChallengeAction `json:"on_challenge"`
+	LookupTimeoutSeconds int32                  `json:"lookup_timeout_seconds"`
+}
+
+type Consumer_BiometricsConfig struct {
+	CreateBiometricsEnabled bool `json:"create_biometrics_enabled"`
+	Enabled                 bool `json:"enabled"`
+}
+
+type Consumer_PasswordsConfig struct {
+	Enabled                       bool `json:"enabled"`
+	PKCERequiredForPasswordResets bool `json:"pkce_required_for_password_resets"`
+}
+
+type ConsumerConfig struct {
+	Basic         *Consumer_BasicConfig         `json:"basic,omitempty"`
+	Sessions      *Consumer_SessionsConfig      `json:"sessions,omitempty"`
+	MagicLinks    *Consumer_MagicLinksConfig    `json:"magic_links,omitempty"`
+	OTPs          *Consumer_OTPsConfig          `json:"otps,omitempty"`
+	OAuth         *Consumer_OAuthConfig         `json:"oauth,omitempty"`
+	TOTPs         *Consumer_TOTPsConfig         `json:"totps,omitempty"`
+	WebAuthn      *Consumer_WebAuthnConfig      `json:"webauthn,omitempty"`
+	CryptoWallets *Consumer_CryptoWalletsConfig `json:"crypto_wallets,omitempty"`
+	DFPPA         *Consumer_DFPPAConfig         `json:"dfppa,omitempty"`
+	Biometrics    *Consumer_BiometricsConfig    `json:"biometrics,omitempty"`
+	Passwords     *Consumer_PasswordsConfig     `json:"passwords,omitempty"`
+}
+
+type B2B_BasicConfig struct {
+	Enabled                 bool                  `json:"enabled"`
+	CreateNewMembers        bool                  `json:"create_new_members"`
+	AllowSelfOnboarding     bool                  `json:"allow_self_onboarding"`
+	EnableMemberPermissions bool                  `json:"enable_member_permissions"`
+	Domains                 []AuthorizedB2BDomain `json:"domains"`
+	BundleIDs               []string              `json:"bundle_ids"`
+}
+
+type B2B_SessionsConfig struct {
+	Enabled                   bool  `json:"enabled"`
+	MaxSessionDurationMinutes int32 `json:"max_session_duration_minutes"`
+}
+
+type B2B_MagicLinksConfig struct {
+	Enabled      bool `json:"enabled"`
+	PKCERequired bool `json:"pkce_required"`
+}
+
+type B2B_OAuthConfig struct {
+	Enabled      bool `json:"enabled"`
+	PKCERequired bool `json:"pkce_required"`
+}
+
+type B2B_TOTPsConfig struct {
+	CreateTOTPs bool `json:"create_totps"`
+	Enabled     bool `json:"enabled"`
+}
+
+type B2B_SSOConfig struct {
+	Enabled      bool `json:"enabled"`
+	PKCERequired bool `json:"pkce_required"`
+}
+
+type B2B_OTPsConfig struct {
+	SMSEnabled          bool                  `json:"sms_enabled"`
+	SMSAutofillMetadata []SMSAutofillMetadata `json:"sms_autofill_metadata"`
+}
+
+type B2B_DFPPAConfig struct {
+	Enabled              DFPPASetting           `json:"enabled"`
+	OnChallenge          DFPPAOnChallengeAction `json:"on_challenge"`
+	LookupTimeoutSeconds int32                  `json:"lookup_timeout_seconds"`
+}
+
+type B2B_PasswordsConfig struct {
+	Enabled                       bool `json:"enabled"`
+	PKCERequiredForPasswordResets bool `json:"pkce_required_for_password_resets"`
+}
+
+type B2BConfig struct {
+	Basic      *B2B_BasicConfig      `json:"basic,omitempty"`
+	Sessions   *B2B_SessionsConfig   `json:"sessions,omitempty"`
+	MagicLinks *B2B_MagicLinksConfig `json:"magic_links,omitempty"`
+	OAuth      *B2B_OAuthConfig      `json:"oauth,omitempty"`
+	TOTPs      *B2B_TOTPsConfig      `json:"totps,omitempty"`
+	SSO        *B2B_SSOConfig        `json:"sso,omitempty"`
+	OTPs       *B2B_OTPsConfig       `json:"otps,omitempty"`
+	DFPPA      *B2B_DFPPAConfig      `json:"dfppa,omitempty"`
+	Passwords  *B2B_PasswordsConfig  `json:"passwords,omitempty"`
+}
+
+type GetConsumerConfigRequest struct {
 	ProjectID string `json:"project_id"`
 }
 
-type GetConfigResponse struct {
-	StatusCode int    `json:"status_code"`
-	RequestID  string `json:"request_id"`
-	Config     Config `json:"config"`
+type GetConsumerConfigResponse struct {
+	StatusCode int            `json:"status_code"`
+	RequestID  string         `json:"request_id"`
+	Config     ConsumerConfig `json:"config"`
 }
 
-type SetConfigRequest struct {
+type SetConsumerConfigRequest struct {
+	ProjectID string         `json:"project_id"`
+	Config    ConsumerConfig `json:"config"`
+}
+
+type SetConsumerConfigResponse struct {
+	StatusCode int            `json:"status_code"`
+	RequestID  string         `json:"request_id"`
+	Config     ConsumerConfig `json:"config"`
+}
+
+type GetB2BConfigRequest struct {
 	ProjectID string `json:"project_id"`
-	Config    Config `json:"config"`
 }
 
-type SetConfigResponse struct {
-	StatusCode int    `json:"status_code"`
-	RequestID  string `json:"request_id"`
+type GetB2BConfigResponse struct {
+	StatusCode int       `json:"status_code"`
+	RequestID  string    `json:"request_id"`
+	Config     B2BConfig `json:"config"`
+}
+
+type SetB2BConfigRequest struct {
+	ProjectID string    `json:"project_id"`
+	Config    B2BConfig `json:"config"`
+}
+
+type SetB2BConfigResponse struct {
+	StatusCode int       `json:"status_code"`
+	RequestID  string    `json:"request_id"`
+	Config     B2BConfig `json:"config"`
 }
