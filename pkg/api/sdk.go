@@ -16,6 +16,7 @@ func newSDKClient(c *internal.Client) *SDKClient {
 	return &SDKClient{client: c}
 }
 
+// GetConsumerConfig retrieves the SDK configuration for a B2C project
 func (c *SDKClient) GetConsumerConfig(
 	ctx context.Context,
 	body sdk.GetConsumerConfigRequest,
@@ -25,6 +26,7 @@ func (c *SDKClient) GetConsumerConfig(
 	return &res, err
 }
 
+// SetConsumerConfig updates the SDK configuration for a B2C project
 func (c *SDKClient) SetConsumerConfig(
 	ctx context.Context,
 	body sdk.SetConsumerConfigRequest,
@@ -39,6 +41,7 @@ func (c *SDKClient) SetConsumerConfig(
 	return &res, err
 }
 
+// GetB2BConfig retrieves the SDK configuration for a B2B project
 func (c *SDKClient) GetB2BConfig(
 	ctx context.Context,
 	body sdk.GetB2BConfigRequest,
@@ -48,6 +51,7 @@ func (c *SDKClient) GetB2BConfig(
 	return &res, err
 }
 
+// SetB2BConfig updates the SDK configuration for a B2B project
 func (c *SDKClient) SetB2BConfig(
 	ctx context.Context,
 	body sdk.SetB2BConfigRequest,

@@ -18,6 +18,7 @@ func newProjectsClient(c *internal.Client) *ProjectsClient {
 	}
 }
 
+// Create creates a live and test project
 func (c *ProjectsClient) Create(
 	ctx context.Context,
 	body projects.CreateRequest,
@@ -32,6 +33,7 @@ func (c *ProjectsClient) Create(
 	return &res, err
 }
 
+// Get retrieves a project
 func (c *ProjectsClient) Get(
 	ctx context.Context,
 	body projects.GetRequest,
@@ -41,6 +43,7 @@ func (c *ProjectsClient) Get(
 	return &res, err
 }
 
+// GetAll retrieves all projects in a workspace
 func (c *ProjectsClient) GetAll(
 	ctx context.Context,
 	body projects.GetAllRequest,
@@ -50,6 +53,7 @@ func (c *ProjectsClient) GetAll(
 	return &res, err
 }
 
+// Delete deletes a live project and its test counterpart
 func (c *ProjectsClient) Delete(
 	ctx context.Context,
 	body projects.DeleteRequest,

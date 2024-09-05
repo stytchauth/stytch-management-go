@@ -6,11 +6,14 @@ import (
 	"github.com/stytchauth/stytch-management-go/v1/pkg/api/internal"
 )
 
+// This is the main entrypoint for interacting with the Stytch Management API
 const defaultBaseURI = "https://management.stytch.com"
 
 type API struct {
 	client *internal.Client
 
+	// These are the clients for all the different
+	// resources available via the management API
 	EmailTemplates         *EmailTemplatesClient
 	JWTTemplates           *JWTTemplatesClient
 	PasswordStrengthConfig *PasswordStrengthConfigClient
@@ -24,6 +27,9 @@ type API struct {
 }
 
 type apiConfig struct {
+	// The workspace key ID and secret required to authenticate
+	// with the Stytch management API. These can be obtained
+	// from the Stytch dashboard
 	WorkspaceKeyID     string
 	WorkspaceKeySecret string
 
@@ -45,6 +51,7 @@ func WithHTTPClient(client *http.Client) APIOption {
 	}
 }
 
+// NewClient creates a new API client with the given workspace key ID and secret
 func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOption) *API {
 	c := apiConfig{
 		baseURI:    defaultBaseURI,
