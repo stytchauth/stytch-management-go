@@ -62,3 +62,17 @@ func (c *ProjectsClient) Delete(
 	err := c.client.NewRequest(ctx, "DELETE", "/v1/projects/"+body.ProjectID, nil, nil, &res)
 	return &res, err
 }
+
+// Update changes the name of both the live and test projects
+func (c *ProjectsClient) Update(
+	ctx context.Context,
+	body projects.UpdateRequest,
+) (*projects.UpdateResponse, error) {
+	jsonBody, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	var res projects.UpdateResponse
+	err = c.client.NewRequest(ctx, "PUT", "/v1/projects/"+body.ProjectID, nil, jsonBody, &res)
+	return &res, err
+}

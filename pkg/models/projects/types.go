@@ -79,3 +79,19 @@ type DeleteResponse struct {
 	// RequestID is a unique identifier to help with debugging the request
 	RequestID string `json:"request_id"`
 }
+
+type UpdateRequest struct {
+	// ProjectID is the unique id for the live project to update
+	ProjectID string `json:"project_id"`
+	// Name is the new name for the project
+	Name string `json:"name"`
+}
+
+type UpdateResponse struct {
+	// StatusCode is the HTTP status code for the response
+	StatusCode int `json:"status_code"`
+	// RequestID is a unique identifier to help with debugging the request
+	RequestID string `json:"request_id"`
+	// Project contains the updated project details
+	Project Project `json:"project"`
+}
