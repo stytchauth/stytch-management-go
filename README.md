@@ -51,13 +51,10 @@ Create a new b2b project:
 
 ```go
     // Send the request
-    res, err := client.Projects.Create(
-        ctx,
-        projects.CreateRequest{
-            ProjectName: "My new project",
-            Vertical: projects.VerticalB2B
-        }
-    )
+    res, err := client.Projects.Create(ctx, projects.CreateRequest{
+        ProjectName: "My new project",
+        Vertical: projects.VerticalB2B,
+    })
     
     // Get the new project information
     // This is used in examples below
