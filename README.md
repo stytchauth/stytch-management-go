@@ -65,7 +65,7 @@ Create a new project secret in the test project:
 
 ```go
     res, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
-        ProjectID: newProject.Project.TestProjectID,
+        ProjectID: newProject.TestProjectID,
     })
 ```
 
