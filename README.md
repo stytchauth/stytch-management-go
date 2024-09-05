@@ -81,7 +81,7 @@ Delete a redirect URL
 
 ```go
     res, err := client.RedirectURLs.Delete(ctx, redirecturls.DeleteRequest{
-        ProjectID: newProject.Project.TestProjectID,
+        ProjectID: newProject.TestProjectID,
         URL: "http://localhost:3000/authenticate",
     })
 ```
