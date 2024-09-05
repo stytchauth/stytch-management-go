@@ -15,6 +15,7 @@ func newSecretsClient(c *internal.Client) *SecretsClient {
 	return &SecretsClient{client: c}
 }
 
+// Get retrieves a secret for a project
 func (c *SecretsClient) Get(ctx context.Context, body secrets.GetSecretRequest) (*secrets.GetSecretResponse, error) {
 	var resp secrets.GetSecretResponse
 	err := c.client.NewRequest(
@@ -28,6 +29,7 @@ func (c *SecretsClient) Get(ctx context.Context, body secrets.GetSecretRequest) 
 	return &resp, err
 }
 
+// GetAll retrieves all secrets for a project
 func (c *SecretsClient) GetAll(ctx context.Context, body secrets.GetAllSecretsRequest) (*secrets.GetAllSecretsResponse, error) {
 	var resp secrets.GetAllSecretsResponse
 	err := c.client.NewRequest(
@@ -41,6 +43,8 @@ func (c *SecretsClient) GetAll(ctx context.Context, body secrets.GetAllSecretsRe
 	return &resp, err
 }
 
+// Create creates a secret for a project. The response has the secret value, which
+// will not be exposed in future Get requests
 func (c *SecretsClient) Create(ctx context.Context, body secrets.CreateSecretRequest) (*secrets.CreateSecretResponse, error) {
 	var resp secrets.CreateSecretResponse
 	err := c.client.NewRequest(
@@ -54,6 +58,7 @@ func (c *SecretsClient) Create(ctx context.Context, body secrets.CreateSecretReq
 	return &resp, err
 }
 
+// Delete deletes a secret for a project
 func (c *SecretsClient) Delete(ctx context.Context, body secrets.DeleteSecretRequest) (*secrets.DeleteSecretResponse, error) {
 	var resp secrets.DeleteSecretResponse
 	err := c.client.NewRequest(

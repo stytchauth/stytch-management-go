@@ -17,6 +17,7 @@ func newJWTTemplatesClient(c *internal.Client) *JWTTemplatesClient {
 	return &JWTTemplatesClient{client: c}
 }
 
+// Get retrieves a JWT template for a project
 func (c *JWTTemplatesClient) Get(
 	ctx context.Context,
 	body *jwttemplates.GetRequest,
@@ -33,6 +34,7 @@ func (c *JWTTemplatesClient) Get(
 	return &resp, err
 }
 
+// Set updates a specific JWT template for a project
 func (c *JWTTemplatesClient) Set(
 	ctx context.Context,
 	body *jwttemplates.SetRequest,

@@ -18,6 +18,7 @@ func newPasswordStrengthConfigClient(c *internal.Client) *PasswordStrengthConfig
 	}
 }
 
+// Get retrieves the password strength configuration for a project
 func (c *PasswordStrengthConfigClient) Get(
 	ctx context.Context,
 	body passwordstrengthconfig.GetRequest,
@@ -27,6 +28,7 @@ func (c *PasswordStrengthConfigClient) Get(
 	return &res, err
 }
 
+// Set updates the password strength configuration for a project
 func (c *PasswordStrengthConfigClient) Set(
 	ctx context.Context,
 	body passwordstrengthconfig.SetRequest,

@@ -18,6 +18,7 @@ func newRBACPolicyClient(c *internal.Client) *RBACPolicyClient {
 	}
 }
 
+// Get retrieves the RBAC policy for a project
 func (c *RBACPolicyClient) Get(
 	ctx context.Context,
 	body rbacpolicy.GetRequest,
@@ -27,6 +28,7 @@ func (c *RBACPolicyClient) Get(
 	return &res, err
 }
 
+// Set updates the RBAC policy for a project
 func (c *RBACPolicyClient) Set(
 	ctx context.Context,
 	body rbacpolicy.SetRequest,

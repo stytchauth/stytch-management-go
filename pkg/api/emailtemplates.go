@@ -17,6 +17,7 @@ func newEmailTemplatesClient(c *internal.Client) *EmailTemplatesClient {
 	return &EmailTemplatesClient{client: c}
 }
 
+// GetAll retrieves all email templates for a project
 func (c *EmailTemplatesClient) GetAll(
 	ctx context.Context,
 	body emailtemplates.GetAllRequest,
@@ -33,6 +34,7 @@ func (c *EmailTemplatesClient) GetAll(
 	return &resp, err
 }
 
+// Get retrieves an email template for a project
 func (c *EmailTemplatesClient) Get(
 	ctx context.Context,
 	body emailtemplates.GetRequest,
@@ -49,6 +51,7 @@ func (c *EmailTemplatesClient) Get(
 	return &resp, err
 }
 
+// Create creates an email template for both a live and a test project
 func (c *EmailTemplatesClient) Create(
 	ctx context.Context,
 	body emailtemplates.CreateRequest,
@@ -69,6 +72,7 @@ func (c *EmailTemplatesClient) Create(
 	return &res, err
 }
 
+// Delete deletes an email template for a project
 func (c *EmailTemplatesClient) Delete(
 	ctx context.Context,
 	body emailtemplates.DeleteRequest,
@@ -84,6 +88,7 @@ func (c *EmailTemplatesClient) Delete(
 	return &res, err
 }
 
+// Update updates an email template for a project
 func (c *EmailTemplatesClient) Update(
 	ctx context.Context,
 	body emailtemplates.UpdateRequest,
