@@ -67,3 +67,21 @@ func Test_ProjectsDelete(t *testing.T) {
 	// Assert
 	assert.NoError(t, err)
 }
+
+func Test_ProjectsUpdate(t *testing.T) {
+	// Arrange
+	client := NewTestClient(t)
+	project := client.DisposableProject(projects.VerticalB2B)
+	ctx := context.Background()
+	newProjectName := "The new project v2"
+
+	// Act
+	resp, err := client.Projects.Update(ctx, projects.UpdateRequest{
+		ProjectID: project.LiveProjectID,
+		Name:      newProjectName,
+	})
+
+	// Assert
+	assert.NoError(t, err)
+	assert.Equal(t, newProjectName, resp.Project.Name)
+}
