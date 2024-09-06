@@ -44,7 +44,7 @@ type SMSAutofillMetadata struct {
 	BundleID string `json:"bundle_id"`
 }
 
-type Consumer_BasicConfig struct {
+type ConsumerBasicConfig struct {
 	// Enabled is a boolean indicating whether the consumer project SDK is enabled.
 	Enabled bool `json:"enabled"`
 	// CreateNewUsers is a boolean indicating whether new users can be created with the SDK.
@@ -55,14 +55,14 @@ type Consumer_BasicConfig struct {
 	BundleIDs []string `json:"bundle_ids"`
 }
 
-type Consumer_SessionsConfig struct {
+type ConsumerSessionsConfig struct {
 	// Enabled is a boolean indicating whether sessions endpoints are enabled in the SDK.
 	Enabled bool `json:"enabled"`
 	// MaxSessionDurationMinutes is the maximum session duration that can be created in minutes.
 	MaxSessionDurationMinutes int32 `json:"max_session_duration_minutes"`
 }
 
-type Consumer_MagicLinksConfig struct {
+type ConsumerMagicLinksConfig struct {
 	// LoginOrCreateEnabled is a boolean indicating whether login or create with magic links is enabled in the SDK.
 	LoginOrCreateEnabled bool `json:"login_or_create_enabled"`
 	// SendEnabled is a boolean indicating whether the magic links send endpoint is enabled in the SDK.
@@ -74,7 +74,7 @@ type Consumer_MagicLinksConfig struct {
 	PKCERequired bool `json:"pkce_required"`
 }
 
-type Consumer_OTPsConfig struct {
+type ConsumerOTPsConfig struct {
 	// SMSLoginOrCreateEnabled is a boolean indicating whether the SMS OTP login or create endpoint is enabled in the SDK.
 	SMSLoginOrCreateEnabled bool `json:"sms_login_or_create_enabled"`
 	// WhatsAppLoginOrCreateEnabled is a boolean indicating whether the WhatsApp OTP login or create endpoint is enabled in the SDK.
@@ -92,7 +92,7 @@ type Consumer_OTPsConfig struct {
 	SMSAutofillMetadata []SMSAutofillMetadata `json:"sms_autofill_metadata"`
 }
 
-type Consumer_OAuthConfig struct {
+type ConsumerOAuthConfig struct {
 	// Enabled is a boolean indicating whether OAuth endpoints are enabled in the SDK.
 	Enabled bool `json:"enabled"`
 	// PKCERequired is a boolean indicating whether PKCE is required for OAuth. PKCE increases security by
@@ -102,28 +102,28 @@ type Consumer_OAuthConfig struct {
 	PKCERequired bool `json:"pkce_required"`
 }
 
-type Consumer_TOTPsConfig struct {
+type ConsumerTOTPsConfig struct {
 	// Enabled is a boolean indicating whether TOTP endpoints are enabled in the SDK.
 	Enabled bool `json:"enabled"`
 	// CreateTOTPs is a boolean indicating whether TOTP creation is enabled in the SDK.
 	CreateTOTPs bool `json:"create_totps"`
 }
 
-type Consumer_WebAuthnConfig struct {
+type ConsumerWebAuthnConfig struct {
 	// Enabled is a boolean indicating whether WebAuthn endpoints are enabled in the SDK.
 	Enabled bool `json:"enabled"`
 	// CreateWebAuthns is a boolean indicating whether WebAuthn creation is enabled in the SDK.
 	CreateWebAuthns bool `json:"create_webauthns"`
 }
 
-type Consumer_CryptoWalletsConfig struct {
+type ConsumerCryptoWalletsConfig struct {
 	// Enabled is a boolean indicating whether Crypto Wallets endpoints are enabled in the SDK.
 	Enabled bool `json:"enabled"`
 	// SIWERequired is a boolean indicating whether Sign In With Ethereum is required for Crypto Wallets.
 	SIWERequired bool `json:"siwe_required"`
 }
 
-type Consumer_DFPPAConfig struct {
+type ConsumerDFPPAConfig struct {
 	// Enabled is a boolean indicating whether Device Fingerprinting Protected Auth is enabled in the SDK.
 	Enabled DFPPASetting `json:"enabled"`
 	// OnChallenge is the action to take when a DFPPA "challenge" verdict is returned.
@@ -132,14 +132,14 @@ type Consumer_DFPPAConfig struct {
 	LookupTimeoutSeconds int32 `json:"lookup_timeout_seconds"`
 }
 
-type Consumer_BiometricsConfig struct {
+type ConsumerBiometricsConfig struct {
 	// Enabled is a boolean indicating whether biometrics endpoints are enabled in the SDK.
 	Enabled bool `json:"enabled"`
 	// CreateBiometricsEnabled is a boolean indicating whether biometrics creation is enabled in the SDK.
 	CreateBiometricsEnabled bool `json:"create_biometrics_enabled"`
 }
 
-type Consumer_PasswordsConfig struct {
+type ConsumerPasswordsConfig struct {
 	// Enabled is a boolean indicating whether password endpoints are enabled in the SDK.
 	Enabled bool `json:"enabled"`
 	// PKCERequiredForPasswordResets is a boolean indicating whether PKCE is required for password resets. PKCE increases
@@ -151,30 +151,30 @@ type Consumer_PasswordsConfig struct {
 
 type ConsumerConfig struct {
 	// Basic is the basic configuration for the consumer project SDK. This includes enabling the SDK.
-	Basic *Consumer_BasicConfig `json:"basic,omitempty"`
+	Basic *ConsumerBasicConfig `json:"basic,omitempty"`
 	// Sessions is the session configuration for the consumer project SDK.
-	Sessions *Consumer_SessionsConfig `json:"sessions,omitempty"`
+	Sessions *ConsumerSessionsConfig `json:"sessions,omitempty"`
 	// MagicLinks is the magic links configuration for the consumer project SDK.
-	MagicLinks *Consumer_MagicLinksConfig `json:"magic_links,omitempty"`
+	MagicLinks *ConsumerMagicLinksConfig `json:"magic_links,omitempty"`
 	// OTPs is the OTPs configuration for the consumer project SDK.
-	OTPs *Consumer_OTPsConfig `json:"otps,omitempty"`
+	OTPs *ConsumerOTPsConfig `json:"otps,omitempty"`
 	// OAuth is the OAuth configuration for the consumer project SDK.
-	OAuth *Consumer_OAuthConfig `json:"oauth,omitempty"`
+	OAuth *ConsumerOAuthConfig `json:"oauth,omitempty"`
 	// TOTPs is the TOTPs configuration for the consumer project SDK.
-	TOTPs *Consumer_TOTPsConfig `json:"totps,omitempty"`
+	TOTPs *ConsumerTOTPsConfig `json:"totps,omitempty"`
 	// WebAuthn is the WebAuthn configuration for the consumer project SDK.
-	WebAuthn *Consumer_WebAuthnConfig `json:"webauthn,omitempty"`
+	WebAuthn *ConsumerWebAuthnConfig `json:"webauthn,omitempty"`
 	// CryptoWallets is the Crypto Wallets configuration for the consumer project SDK.
-	CryptoWallets *Consumer_CryptoWalletsConfig `json:"crypto_wallets,omitempty"`
+	CryptoWallets *ConsumerCryptoWalletsConfig `json:"crypto_wallets,omitempty"`
 	// DFPPA is the Device Fingerprinting Protected Auth configuration for the consumer project SDK.
-	DFPPA *Consumer_DFPPAConfig `json:"dfppa,omitempty"`
+	DFPPA *ConsumerDFPPAConfig `json:"dfppa,omitempty"`
 	// Biometrics is the biometrics configuration for the consumer project SDK.
-	Biometrics *Consumer_BiometricsConfig `json:"biometrics,omitempty"`
+	Biometrics *ConsumerBiometricsConfig `json:"biometrics,omitempty"`
 	// Passwords is the passwords configuration for the consumer project SDK.
-	Passwords *Consumer_PasswordsConfig `json:"passwords,omitempty"`
+	Passwords *ConsumerPasswordsConfig `json:"passwords,omitempty"`
 }
 
-type B2B_BasicConfig struct {
+type B2BBasicConfig struct {
 	// Enabled is a boolean indicating whether the B2B project SDK is enabled.
 	Enabled bool `json:"enabled"`
 	// CreateNewMembers is a boolean indicating whether new members can be created with the SDK.
@@ -189,14 +189,14 @@ type B2B_BasicConfig struct {
 	BundleIDs []string `json:"bundle_ids"`
 }
 
-type B2B_SessionsConfig struct {
+type B2BSessionsConfig struct {
 	// Enabled is a boolean indicating whether sessions endpoints are enabled in the SDK.
 	Enabled bool `json:"enabled"`
 	// MaxSessionDurationMinutes is the maximum session duration that can be created in minutes.
 	MaxSessionDurationMinutes int32 `json:"max_session_duration_minutes"`
 }
 
-type B2B_MagicLinksConfig struct {
+type B2BMagicLinksConfig struct {
 	// Enabled is a boolean indicating whether magic links endpoints are enabled in the SDK.
 	Enabled bool `json:"enabled"`
 	// PKCERequired is a boolean indicating whether PKCE is required for magic links. PKCE increases security by
@@ -206,7 +206,7 @@ type B2B_MagicLinksConfig struct {
 	PKCERequired bool `json:"pkce_required"`
 }
 
-type B2B_OAuthConfig struct {
+type B2BOAuthConfig struct {
 	// Enabled is a boolean indicating whether OAuth endpoints are enabled in the SDK.
 	Enabled bool `json:"enabled"`
 	// PKCERequired is a boolean indicating whether PKCE is required for OAuth. PKCE increases security by
@@ -216,14 +216,14 @@ type B2B_OAuthConfig struct {
 	PKCERequired bool `json:"pkce_required"`
 }
 
-type B2B_TOTPsConfig struct {
+type B2BTOTPsConfig struct {
 	// Enabled is a boolean indicating whether TOTP endpoints are enabled in the SDK.
 	Enabled bool `json:"enabled"`
 	// CreateTOTPs is a boolean indicating whether TOTP creation is enabled in the SDK.
 	CreateTOTPs bool `json:"create_totps"`
 }
 
-type B2B_SSOConfig struct {
+type B2BSSOConfig struct {
 	// Enabled is a boolean indicating whether SSO endpoints are enabled in the SDK.
 	Enabled bool `json:"enabled"`
 	// PKCERequired is a boolean indicating whether PKCE is required for SSO. PKCE increases security by
@@ -233,14 +233,14 @@ type B2B_SSOConfig struct {
 	PKCERequired bool `json:"pkce_required"`
 }
 
-type B2B_OTPsConfig struct {
+type B2BOTPsConfig struct {
 	// SMSEnabled is a boolean indicating whether the SMS OTP endpoints are enabled in the SDK.
 	SMSEnabled bool `json:"sms_enabled"`
 	// SMSAutofillMetadata is a list of metadata that can be used for autofill of SMS OTPs.
 	SMSAutofillMetadata []SMSAutofillMetadata `json:"sms_autofill_metadata"`
 }
 
-type B2B_DFPPAConfig struct {
+type B2BDFPPAConfig struct {
 	// Enabled is a boolean indicating whether Device Fingerprinting Protected Auth is enabled in the SDK.
 	Enabled DFPPASetting `json:"enabled"`
 	// OnChallenge is the action to take when a DFPPA "challenge" verdict is returned.
@@ -249,7 +249,7 @@ type B2B_DFPPAConfig struct {
 	LookupTimeoutSeconds int32 `json:"lookup_timeout_seconds"`
 }
 
-type B2B_PasswordsConfig struct {
+type B2BPasswordsConfig struct {
 	// Enabled is a boolean indicating whether password endpoints are enabled in the SDK.
 	Enabled bool `json:"enabled"`
 	// PKCERequiredForPasswordResets is a boolean indicating whether PKCE is required for password resets. PKCE increases
@@ -261,23 +261,23 @@ type B2B_PasswordsConfig struct {
 
 type B2BConfig struct {
 	// Basic is the basic configuration for the B2B project SDK. This includes enabling the SDK.
-	Basic *B2B_BasicConfig `json:"basic,omitempty"`
+	Basic *B2BBasicConfig `json:"basic,omitempty"`
 	// Sessions is the session configuration for the B2B project SDK.
-	Sessions *B2B_SessionsConfig `json:"sessions,omitempty"`
+	Sessions *B2BSessionsConfig `json:"sessions,omitempty"`
 	// MagicLinks is the magic links configuration for the B2B project SDK.
-	MagicLinks *B2B_MagicLinksConfig `json:"magic_links,omitempty"`
+	MagicLinks *B2BMagicLinksConfig `json:"magic_links,omitempty"`
 	// OAuth is the OAuth configuration for the B2B project SDK.
-	OAuth *B2B_OAuthConfig `json:"oauth,omitempty"`
+	OAuth *B2BOAuthConfig `json:"oauth,omitempty"`
 	// TOTPs is the TOTPs configuration for the B2B project SDK.
-	TOTPs *B2B_TOTPsConfig `json:"totps,omitempty"`
+	TOTPs *B2BTOTPsConfig `json:"totps,omitempty"`
 	// SSO is the SSO configuration for the B2B project SDK.
-	SSO *B2B_SSOConfig `json:"sso,omitempty"`
+	SSO *B2BSSOConfig `json:"sso,omitempty"`
 	// OTPs is the OTPs configuration for the B2B project SDK.
-	OTPs *B2B_OTPsConfig `json:"otps,omitempty"`
+	OTPs *B2BOTPsConfig `json:"otps,omitempty"`
 	// DFPPA is the Device Fingerprinting Protected Auth configuration for the B2B project SDK.
-	DFPPA *B2B_DFPPAConfig `json:"dfppa,omitempty"`
+	DFPPA *B2BDFPPAConfig `json:"dfppa,omitempty"`
 	// Passwords is the passwords configuration for the B2B project SDK.
-	Passwords *B2B_PasswordsConfig `json:"passwords,omitempty"`
+	Passwords *B2BPasswordsConfig `json:"passwords,omitempty"`
 }
 
 type GetConsumerConfigRequest struct {

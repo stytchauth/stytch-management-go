@@ -13,22 +13,22 @@ import (
 func makeTestConsumerConfig(t *testing.T) sdk.ConsumerConfig {
 	t.Helper()
 	return sdk.ConsumerConfig{
-		Basic: &sdk.Consumer_BasicConfig{
+		Basic: &sdk.ConsumerBasicConfig{
 			Enabled:        true,
 			CreateNewUsers: true,
 			Domains:        []string{"https://example.com"},
 			BundleIDs:      []string{"com.example.app"},
 		},
-		Sessions: &sdk.Consumer_SessionsConfig{
+		Sessions: &sdk.ConsumerSessionsConfig{
 			Enabled:                   true,
 			MaxSessionDurationMinutes: 60,
 		},
-		MagicLinks: &sdk.Consumer_MagicLinksConfig{
+		MagicLinks: &sdk.ConsumerMagicLinksConfig{
 			LoginOrCreateEnabled: true,
 			SendEnabled:          false,
 			PKCERequired:         false,
 		},
-		OTPs: &sdk.Consumer_OTPsConfig{
+		OTPs: &sdk.ConsumerOTPsConfig{
 			SMSLoginOrCreateEnabled:      true,
 			WhatsAppLoginOrCreateEnabled: false,
 			EmailLoginOrCreateEnabled:    false,
@@ -37,32 +37,32 @@ func makeTestConsumerConfig(t *testing.T) sdk.ConsumerConfig {
 			EmailSendEnabled:             false,
 			SMSAutofillMetadata:          []sdk.SMSAutofillMetadata{},
 		},
-		OAuth: &sdk.Consumer_OAuthConfig{
+		OAuth: &sdk.ConsumerOAuthConfig{
 			Enabled:      true,
 			PKCERequired: true,
 		},
-		TOTPs: &sdk.Consumer_TOTPsConfig{
+		TOTPs: &sdk.ConsumerTOTPsConfig{
 			CreateTOTPs: true,
 			Enabled:     true,
 		},
-		WebAuthn: &sdk.Consumer_WebAuthnConfig{
+		WebAuthn: &sdk.ConsumerWebAuthnConfig{
 			CreateWebAuthns: false,
 			Enabled:         false,
 		},
-		CryptoWallets: &sdk.Consumer_CryptoWalletsConfig{
+		CryptoWallets: &sdk.ConsumerCryptoWalletsConfig{
 			Enabled:      false,
 			SIWERequired: false,
 		},
-		DFPPA: &sdk.Consumer_DFPPAConfig{
+		DFPPA: &sdk.ConsumerDFPPAConfig{
 			Enabled:              sdk.DFPPASettingEnabled,
 			OnChallenge:          sdk.DFPPAOnChallengeActionTriggerCaptcha,
 			LookupTimeoutSeconds: 10,
 		},
-		Biometrics: &sdk.Consumer_BiometricsConfig{
+		Biometrics: &sdk.ConsumerBiometricsConfig{
 			CreateBiometricsEnabled: true,
 			Enabled:                 true,
 		},
-		Passwords: &sdk.Consumer_PasswordsConfig{
+		Passwords: &sdk.ConsumerPasswordsConfig{
 			Enabled:                       true,
 			PKCERequiredForPasswordResets: true,
 		},
@@ -72,7 +72,7 @@ func makeTestConsumerConfig(t *testing.T) sdk.ConsumerConfig {
 func makeTestB2BConfig(t *testing.T) sdk.B2BConfig {
 	t.Helper()
 	return sdk.B2BConfig{
-		Basic: &sdk.B2B_BasicConfig{
+		Basic: &sdk.B2BBasicConfig{
 			Enabled:                 true,
 			CreateNewMembers:        true,
 			AllowSelfOnboarding:     true,
@@ -85,36 +85,36 @@ func makeTestB2BConfig(t *testing.T) sdk.B2BConfig {
 			},
 			BundleIDs: []string{"com.example.app"},
 		},
-		Sessions: &sdk.B2B_SessionsConfig{
+		Sessions: &sdk.B2BSessionsConfig{
 			Enabled:                   true,
 			MaxSessionDurationMinutes: 60,
 		},
-		MagicLinks: &sdk.B2B_MagicLinksConfig{
+		MagicLinks: &sdk.B2BMagicLinksConfig{
 			Enabled:      true,
 			PKCERequired: true,
 		},
-		OAuth: &sdk.B2B_OAuthConfig{
+		OAuth: &sdk.B2BOAuthConfig{
 			Enabled:      true,
 			PKCERequired: true,
 		},
-		TOTPs: &sdk.B2B_TOTPsConfig{
+		TOTPs: &sdk.B2BTOTPsConfig{
 			CreateTOTPs: true,
 			Enabled:     true,
 		},
-		SSO: &sdk.B2B_SSOConfig{
+		SSO: &sdk.B2BSSOConfig{
 			Enabled:      true,
 			PKCERequired: false,
 		},
-		OTPs: &sdk.B2B_OTPsConfig{
+		OTPs: &sdk.B2BOTPsConfig{
 			SMSEnabled:          false,
 			SMSAutofillMetadata: []sdk.SMSAutofillMetadata{},
 		},
-		DFPPA: &sdk.B2B_DFPPAConfig{
+		DFPPA: &sdk.B2BDFPPAConfig{
 			Enabled:              sdk.DFPPASettingEnabled,
 			OnChallenge:          sdk.DFPPAOnChallengeActionTriggerCaptcha,
 			LookupTimeoutSeconds: 10,
 		},
-		Passwords: &sdk.B2B_PasswordsConfig{
+		Passwords: &sdk.B2BPasswordsConfig{
 			Enabled:                       false,
 			PKCERequiredForPasswordResets: false,
 		},
