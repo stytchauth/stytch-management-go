@@ -45,7 +45,7 @@ type SMSAutofillMetadata struct {
 }
 
 type ConsumerBasicConfig struct {
-	// Enabled is a boolean indicating whether the consumer project SDK is enabled.
+	// Enabled is a boolean indicating whether the consumer project SDK is enabled. This allows the SDK to manage user and session data.
 	Enabled bool `json:"enabled"`
 	// CreateNewUsers is a boolean indicating whether new users can be created with the SDK.
 	CreateNewUsers bool `json:"create_new_users"`
@@ -56,8 +56,6 @@ type ConsumerBasicConfig struct {
 }
 
 type ConsumerSessionsConfig struct {
-	// Enabled is a boolean indicating whether sessions endpoints are enabled in the SDK.
-	Enabled bool `json:"enabled"`
 	// MaxSessionDurationMinutes is the maximum session duration that can be created in minutes.
 	MaxSessionDurationMinutes int32 `json:"max_session_duration_minutes"`
 }
@@ -175,7 +173,7 @@ type ConsumerConfig struct {
 }
 
 type B2BBasicConfig struct {
-	// Enabled is a boolean indicating whether the B2B project SDK is enabled.
+	// Enabled is a boolean indicating whether the B2B project SDK is enabled. This allows the SDK to manage user and session data.
 	Enabled bool `json:"enabled"`
 	// CreateNewMembers is a boolean indicating whether new members can be created with the SDK.
 	CreateNewMembers bool `json:"create_new_members"`
@@ -190,8 +188,6 @@ type B2BBasicConfig struct {
 }
 
 type B2BSessionsConfig struct {
-	// Enabled is a boolean indicating whether sessions endpoints are enabled in the SDK.
-	Enabled bool `json:"enabled"`
 	// MaxSessionDurationMinutes is the maximum session duration that can be created in minutes.
 	MaxSessionDurationMinutes int32 `json:"max_session_duration_minutes"`
 }
