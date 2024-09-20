@@ -20,7 +20,6 @@ func makeTestConsumerConfig(t *testing.T) sdk.ConsumerConfig {
 			BundleIDs:      []string{"com.example.app"},
 		},
 		Sessions: &sdk.ConsumerSessionsConfig{
-			Enabled:                   true,
 			MaxSessionDurationMinutes: 60,
 		},
 		MagicLinks: &sdk.ConsumerMagicLinksConfig{
@@ -86,7 +85,6 @@ func makeTestB2BConfig(t *testing.T) sdk.B2BConfig {
 			BundleIDs: []string{"com.example.app"},
 		},
 		Sessions: &sdk.B2BSessionsConfig{
-			Enabled:                   true,
 			MaxSessionDurationMinutes: 60,
 		},
 		MagicLinks: &sdk.B2BMagicLinksConfig{
