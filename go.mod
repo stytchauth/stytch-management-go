@@ -1,4 +1,4 @@
-module github.com/stytchauth/stytch-management-go/v1
+module github.com/stytchauth/stytch-management-go
 
 go 1.18
 

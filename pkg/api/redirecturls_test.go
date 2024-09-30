@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/models/projects"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/models/redirecturls"
+	"github.com/stytchauth/stytch-management-go/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/pkg/models/redirecturls"
 )
 
 func (c *testClient) createRedirectURL(projectID string, url string, redirectType redirecturls.RedirectType) {

@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/api"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/pkg/api"
+	"github.com/stytchauth/stytch-management-go/pkg/models/projects"
 )
 
 func ptr[T any](v T) *T {
