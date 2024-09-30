@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/stytchauth/stytch-management-go/v1/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/models/publictokens"
+	"github.com/stytchauth/stytch-management-go/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/pkg/models/publictokens"
 )
 
 type PublicTokensClient struct {

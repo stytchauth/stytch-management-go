@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/models/passwordstrengthconfig"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/pkg/models/passwordstrengthconfig"
+	"github.com/stytchauth/stytch-management-go/pkg/models/projects"
 )
 
 func Test_PasswordStrengthConfigGet(t *testing.T) {

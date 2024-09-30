@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/stytchauth/stytch-management-go/v1/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/models/rbacpolicy"
+	"github.com/stytchauth/stytch-management-go/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/pkg/models/rbacpolicy"
 )
 
 type RBACPolicyClient struct {

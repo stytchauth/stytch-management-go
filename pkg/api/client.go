@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"github.com/stytchauth/stytch-management-go/v1/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/pkg/api/internal"
 )
 
 // This is the main entrypoint for interacting with the Stytch Management API

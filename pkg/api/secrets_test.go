@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/models/projects"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/models/secrets"
+	"github.com/stytchauth/stytch-management-go/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/pkg/models/secrets"
 )
 
 func TestSecretsClient_Create(t *testing.T) {

@@ -3,8 +3,8 @@ package api
 import (
 	"context"
 
-	"github.com/stytchauth/stytch-management-go/v1/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/models/projectmetrics"
+	"github.com/stytchauth/stytch-management-go/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/pkg/models/projectmetrics"
 )
 
 type ProjectMetricsClient struct {

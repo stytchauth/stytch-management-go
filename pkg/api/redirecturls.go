@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/stytchauth/stytch-management-go/v1/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/models/redirecturls"
+	"github.com/stytchauth/stytch-management-go/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/pkg/models/redirecturls"
 )
 
 type RedirectURLsClient struct {

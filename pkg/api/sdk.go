@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/stytchauth/stytch-management-go/v1/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v1/pkg/models/sdk"
+	"github.com/stytchauth/stytch-management-go/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/pkg/models/sdk"
 )
 
 type SDKClient struct {
