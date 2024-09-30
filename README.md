@@ -7,7 +7,7 @@ This library is tested with go 1.22.
 ## Install
 
 ```
-$ go get github.com/stytchauth/stytch-management-go/v1
+$ go get github.com/stytchauth/stytch-management-go
 ```
 
 ## Pre-requisites
