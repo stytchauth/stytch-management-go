@@ -77,11 +77,13 @@ func Test_ProjectsUpdate(t *testing.T) {
 
 	// Act
 	resp, err := client.Projects.Update(ctx, projects.UpdateRequest{
-		ProjectID: project.LiveProjectID,
-		Name:      newProjectName,
+		ProjectID:            project.LiveProjectID,
+		Name:                 newProjectName,
+		UseCrossOrgPasswords: !project.UseCrossOrgPasswords,
 	})
 
 	// Assert
 	assert.NoError(t, err)
 	assert.Equal(t, newProjectName, resp.Project.Name)
+	assert.Equal(t, !project.UseCrossOrgPasswords, resp.Project.UseCrossOrgPasswords)
 }
