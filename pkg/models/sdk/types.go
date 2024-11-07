@@ -234,6 +234,8 @@ type B2BOTPsConfig struct {
 	SMSEnabled bool `json:"sms_enabled"`
 	// SMSAutofillMetadata is a list of metadata that can be used for autofill of SMS OTPs.
 	SMSAutofillMetadata []SMSAutofillMetadata `json:"sms_autofill_metadata"`
+	// EmailEnabled is a boolean indicating whether the email OTP endpoints are enabled in the SDK.
+	EmailEnabled bool `json:"email_enabled"`
 }
 
 type B2BDFPPAConfig struct {
