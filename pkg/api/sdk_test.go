@@ -106,6 +106,7 @@ func makeTestB2BConfig(t *testing.T) sdk.B2BConfig {
 		OTPs: &sdk.B2BOTPsConfig{
 			SMSEnabled:          false,
 			SMSAutofillMetadata: []sdk.SMSAutofillMetadata{},
+			EmailEnabled:        false,
 		},
 		DFPPA: &sdk.B2BDFPPAConfig{
 			Enabled:              sdk.DFPPASettingEnabled,
