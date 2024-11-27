@@ -25,8 +25,6 @@ type Project struct {
 	Vertical Vertical `json:"vertical"`
 	// CreatedAt is the ISO-8601 timestamp for when the project was created
 	CreatedAt time.Time `json:"created_at"`
-	// UseCrossOrgPasswords is for whether we want to enable cross-org passwords for the project
-	UseCrossOrgPasswords bool `json:"use_cross_org_passwords"`
 }
 
 type CreateRequest struct {
@@ -87,8 +85,6 @@ type UpdateRequest struct {
 	ProjectID string `json:"project_id"`
 	// Name is the new name for the project
 	Name string `json:"name"`
-	// UseCrossOrgPasswords is for whether we want to enable cross-org passwords for the project
-	UseCrossOrgPasswords bool `json:"use_cross_org_passwords"`
 }
 
 type UpdateResponse struct {

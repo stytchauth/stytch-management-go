@@ -39,5 +39,4 @@ jobs:
         if: steps.diff.outputs.diff != 0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # Don't actually start publishing releases yet
-        run: echo gh release create ${{ steps.version.outputs.release_tag }} --generate-notes
+        run: gh release create ${{ steps.version.outputs.release_tag }} --generate-notes
