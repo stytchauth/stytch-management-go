@@ -9,6 +9,13 @@ const (
 	VerticalB2B      Vertical = "B2B"
 )
 
+func Verticals() []Vertical {
+	return []Vertical{
+		VerticalConsumer,
+		VerticalB2B,
+	}
+}
+
 // Project encompasses the relevant fields for a live and test project
 type Project struct {
 	// LiveProjectID is the unique identifier for the live project

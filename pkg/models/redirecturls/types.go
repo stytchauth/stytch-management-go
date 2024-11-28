@@ -12,6 +12,16 @@ const (
 	RedirectTypeDiscovery RedirectType = "DISCOVERY"
 )
 
+func RedirectTypes() []RedirectType {
+	return []RedirectType{
+		RedirectTypeLogin,
+		RedirectTypeSignup,
+		RedirectTypeInvite,
+		RedirectTypeResetPassword,
+		RedirectTypeDiscovery,
+	}
+}
+
 // URLRedirectType holds information for a specific kind of redirect.
 type URLRedirectType struct {
 	// Type is one of the RedirectType values.

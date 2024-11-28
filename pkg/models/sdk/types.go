@@ -12,6 +12,14 @@ const (
 	DFPPASettingEnabled DFPPASetting = "ENABLED"
 )
 
+func DFPPASettings() []DFPPASetting {
+	return []DFPPASetting{
+		DFPPASettingDisabled,
+		DFPPASettingPassive,
+		DFPPASettingEnabled,
+	}
+}
+
 // DFPPAOnChallenge is a type specifying the action to take when a DFPPA "challenge" verdict is returned
 type DFPPAOnChallengeAction string
 
@@ -23,6 +31,14 @@ const (
 	// DFPPAOnChallengeActionTriggerCaptcha is the action to trigger a CAPTCHA when a "challenge" verdict is returned
 	DFPPAOnChallengeActionTriggerCaptcha DFPPAOnChallengeAction = "TRIGGER_CAPTCHA"
 )
+
+func DFPPAOnChallengeActions() []DFPPAOnChallengeAction {
+	return []DFPPAOnChallengeAction{
+		DFPPAOnChallengeActionAllow,
+		DFPPAOnChallengeActionBlock,
+		DFPPAOnChallengeActionTriggerCaptcha,
+	}
+}
 
 // AuthorizedB2BDomain is a type specifying the domain and slug pattern authorized for use in the SDK for a B2B project
 type AuthorizedB2BDomain struct {
