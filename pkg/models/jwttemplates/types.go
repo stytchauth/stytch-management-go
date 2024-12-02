@@ -7,6 +7,13 @@ const (
 	TemplateTypeM2M     TemplateType = "M2M"
 )
 
+func TemplateTypes() []TemplateType {
+	return []TemplateType{
+		TemplateTypeSession,
+		TemplateTypeM2M,
+	}
+}
+
 // JWTTemplate represents a JWT template for a project. Templates are used to generate JSON objects by mapping
 // custom metadata attributes to a specific format.
 type JWTTemplate struct {

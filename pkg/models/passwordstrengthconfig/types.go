@@ -7,6 +7,13 @@ const (
 	ValidationPolicyZXCVBN ValidationPolicy = "ZXCVBN"
 )
 
+func ValidationPolicies() []ValidationPolicy {
+	return []ValidationPolicy{
+		ValidationPolicyLUDS,
+		ValidationPolicyZXCVBN,
+	}
+}
+
 // PasswordStrengthConfig is the configuration for password strength requirements used in password-based authentication
 type PasswordStrengthConfig struct {
 	// CheckBreachOnCreation is a flag to check whether to use the HaveIBeenPwned database to detect password breaches

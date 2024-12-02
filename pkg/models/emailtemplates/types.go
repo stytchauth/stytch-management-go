@@ -12,6 +12,18 @@ const (
 	TemplateTypeAll                   TemplateType = "ALL"
 )
 
+func TemplateTypes() []TemplateType {
+	return []TemplateType{
+		TemplateTypeLogin,
+		TemplateTypeSignup,
+		TemplateTypeInvite,
+		TemplateTypeResetPassword,
+		TemplateTypeOneTimePasscode,
+		TemplateTypeOneTimePasscodeSignup,
+		TemplateTypeAll,
+	}
+}
+
 type TextAlignment string
 
 const (
@@ -19,6 +31,14 @@ const (
 	TextAlignmentLeft    TextAlignment = "LEFT"
 	TextAlignmentCenter  TextAlignment = "CENTER"
 )
+
+func TextAlignments() []TextAlignment {
+	return []TextAlignment{
+		TextAlignmentUnknown,
+		TextAlignmentLeft,
+		TextAlignmentCenter,
+	}
+}
 
 type FontFamily string
 
@@ -34,6 +54,21 @@ const (
 	FontFamilyTrebuchetMS   FontFamily = "TREBUCHET_MS"
 	FontFamilyVerdana       FontFamily = "VERDANA"
 )
+
+func FontFamilies() []FontFamily {
+	return []FontFamily{
+		FontFamilyUnknown,
+		FontFamilyArial,
+		FontFamilyBrushScriptMT,
+		FontFamilyCourierNew,
+		FontFamilyGeorgia,
+		FontFamilyHelvetica,
+		FontFamilyTahoma,
+		FontFamilyTimesNewRoman,
+		FontFamilyTrebuchetMS,
+		FontFamilyVerdana,
+	}
+}
 
 // SenderInformation holds information about the sender of an email, such as the
 // name, domain, and local part of the email address.
