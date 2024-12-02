@@ -26,24 +26,6 @@ jobs:
           done
           echo "diff=$FOUND" >> $GITHUB_OUTPUT
 
-      - name: Get changed files
-        id: files
-        run: |
-          git fetch origin main
-          diff=$(git diff --name-only --diff-filter=AM origin/main..HEAD | tr '\n' ' ')
-          echo "list=$diff" >> "$GITHUB_OUTPUT"
-
-      - name: Check for version.go diff
-        id: diff
-        run: |
-          FOUND=0
-          for changed_file in ${{ steps.files.outputs.all }}; do
-            if [[ "$changed_file" == "pkg/version/version.go" ]]; then
-              FOUND=1
-            fi
-          done
-          echo "diff=$FOUND" >> $GITHUB_OUTPUT
-
       - name: Create release
         if: steps.diff.outputs.diff != 0
         env:
