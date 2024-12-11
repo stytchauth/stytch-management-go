@@ -43,6 +43,15 @@ type CreateRequest struct {
 	ProjectID string `json:"project_id"`
 	// RedirectURL is the object that will be created
 	RedirectURL RedirectURL `json:"redirect_url"`
+	// DoNotPromoteDefaults is used to suppress the automatic "promotion" of a RedirectURL to the default if no other
+	// RedirectURL exists for the given type. This is primarily intended for use with stytchauth/terraform-provider-stytch
+	// to allow terraform provisioning to be idempotent. For a Create request, the default behavior is to promote the
+	// RedirectURL to the default if no other RedirectURL exists for the given type, even if `IsDefault` was set to false.
+	//
+	// WARNING: If this is set to true, it is possible to have valid RedirectURLs for a given type but *no* default
+	// RedirectURL for that type. If no default exists for a given type, using an API endpoint that utilizes redirect
+	// URLs (such as sending a magic link), you will need to explicitly specify which redirect URL should be used.
+	DoNotPromoteDefaults bool `json:"do_not_promote_defaults"`
 }
 
 type CreateResponse struct {
@@ -91,6 +100,15 @@ type DeleteRequest struct {
 	ProjectID string `json:"project_id"`
 	// URL is the redirect URL to delete
 	URL string `json:"url"`
+	// DoNotPromoteDefaults is used to suppress the automatic "promotion" of a RedirectURL to the default if no other
+	// RedirectURL exists for the given type. This is primarily intended for use with stytchauth/terraform-provider-stytch
+	// to allow terraform provisioning to be idempotent. For a Delete request, the default behavior is to promote some
+	// other valid redirect URL for the given type to the new default if *this* URL was the current default.
+	//
+	// WARNING: If this is set to true, it is possible to have valid RedirectURLs for a given type but *no* default
+	// RedirectURL for that type. If no default exists for a given type, using an API endpoint that utilizes redirect
+	// URLs (such as sending a magic link), you will need to explicitly specify which redirect URL should be used.
+	DoNotPromoteDefaults bool `json:"do_not_promote_defaults"`
 }
 
 type DeleteResponse struct {
@@ -105,6 +123,19 @@ type UpdateRequest struct {
 	ProjectID string `json:"project_id"`
 	// RedirectURL is the object that will be updated
 	RedirectURL RedirectURL `json:"redirect_url"`
+	// DoNotPromoteDefaults is used to suppress the automatic "promotion" of a RedirectURL to the default if no other
+	// RedirectURL exists for the given type. This is primarily intended for use with stytchauth/terraform-provider-stytch
+	// to allow terraform provisioning to be idempotent. For an Update request, the default behavior is a combination of
+	// what happens for Create and Delete requests:
+	// - If the RedirectURL is having a new valid type added, it may be promoted to the default if no other RedirectURL
+	//   exists for that type.
+	// - If the RedirectURL is having a valid type removed and is *currently* the default for that type, a new default
+	//   will be promoted from the remaining URLs for that type.
+	//
+	// WARNING: If this is set to true, it is possible to have valid RedirectURLs for a given type but *no* default
+	// RedirectURL for that type. If no default exists for a given type, using an API endpoint that utilizes redirect
+	// URLs (such as sending a magic link), you will need to explicitly specify which redirect URL should be used.
+	DoNotPromoteDefaults bool `json:"do_not_promote_defaults"`
 }
 
 type UpdateResponse struct {
