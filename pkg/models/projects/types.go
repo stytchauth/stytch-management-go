@@ -100,7 +100,7 @@ type UpdateRequest struct {
 	ProjectID string `json:"project_id"`
 	// Name is the new name for the project
 	Name string `json:"name"`
-	// UserImpersonationEnabled is a boolean indiciating whether user impersonation is enabled for the live project
+	// UserImpersonationEnabled is a boolean indiciating whether user impersonation is enabled for the project
 	UserImpersonationEnabled bool `json:"user_impersonation_enabled"`
 }
 
