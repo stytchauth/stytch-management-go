@@ -32,9 +32,9 @@ type Project struct {
 	Vertical Vertical `json:"vertical"`
 	// CreatedAt is the ISO-8601 timestamp for when the project was created
 	CreatedAt time.Time `json:"created_at"`
-	// TestUserImpersonationEnabled is a boolean indiciating whether user impersonation is enabled for the live project
+	// TestUserImpersonationEnabled is a boolean indiciating whether user impersonation is enabled for the test project
 	TestUserImpersonationEnabled bool `json:"test_user_impersonation_enabled"`
-	// LiveUserImpersonationEnabled is a boolean indiciating whether user impersonation is enabled for the test project
+	// LiveUserImpersonationEnabled is a boolean indiciating whether user impersonation is enabled for the live project
 	LiveUserImpersonationEnabled bool `json:"live_user_impersonation_enabled"`
 }
 
