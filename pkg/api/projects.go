@@ -63,7 +63,7 @@ func (c *ProjectsClient) Delete(
 	return &res, err
 }
 
-// Update changes the name of both the live and test projects
+// Update updates the project. This endpoint is solely available on the live project.
 func (c *ProjectsClient) Update(
 	ctx context.Context,
 	body projects.UpdateRequest,

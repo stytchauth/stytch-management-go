@@ -16,8 +16,10 @@ func Test_ProjectsCreate(t *testing.T) {
 
 	// Act
 	resp, err := client.Projects.Create(ctx, projects.CreateRequest{
-		ProjectName: "Test project",
-		Vertical:    projects.VerticalB2B,
+		ProjectName:                  "Test project",
+		Vertical:                     projects.VerticalB2B,
+		TestUserImpersonationEnabled: true,
+		LiveUserImpersonationEnabled: false,
 	})
 	t.Cleanup(func() {
 		_, err := client.Projects.Delete(ctx, projects.DeleteRequest{
@@ -30,6 +32,8 @@ func Test_ProjectsCreate(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "Test project", resp.Project.Name)
 	assert.Equal(t, projects.VerticalB2B, resp.Project.Vertical)
+	assert.True(t, resp.Project.TestUserImpersonationEnabled)
+	assert.False(t, resp.Project.LiveUserImpersonationEnabled)
 }
 
 func Test_ProjectsGet(t *testing.T) {
@@ -47,6 +51,8 @@ func Test_ProjectsGet(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, project.Name, resp.Project.Name)
 	assert.Equal(t, projects.VerticalB2B, resp.Project.Vertical)
+	assert.False(t, project.TestUserImpersonationEnabled)
+	assert.False(t, project.LiveUserImpersonationEnabled)
 }
 
 func Test_ProjectsDelete(t *testing.T) {
@@ -77,11 +83,13 @@ func Test_ProjectsUpdate(t *testing.T) {
 
 	// Act
 	resp, err := client.Projects.Update(ctx, projects.UpdateRequest{
-		ProjectID: project.LiveProjectID,
-		Name:      newProjectName,
+		ProjectID:                project.LiveProjectID,
+		Name:                     newProjectName,
+		UserImpersonationEnabled: true,
 	})
 
 	// Assert
 	assert.NoError(t, err)
 	assert.Equal(t, newProjectName, resp.Project.Name)
+	assert.True(t, resp.Project.LiveUserImpersonationEnabled)
 }
