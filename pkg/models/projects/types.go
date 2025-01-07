@@ -32,6 +32,10 @@ type Project struct {
 	Vertical Vertical `json:"vertical"`
 	// CreatedAt is the ISO-8601 timestamp for when the project was created
 	CreatedAt time.Time `json:"created_at"`
+	// TestUserImpersonationEnabled is a boolean indicating whether user impersonation is enabled for the test project
+	TestUserImpersonationEnabled bool `json:"test_user_impersonation_enabled"`
+	// LiveUserImpersonationEnabled is a boolean indicating whether user impersonation is enabled for the live project
+	LiveUserImpersonationEnabled bool `json:"live_user_impersonation_enabled"`
 }
 
 type CreateRequest struct {
@@ -39,6 +43,10 @@ type CreateRequest struct {
 	ProjectName string `json:"project_name"`
 	// Vertical is the project's vertical
 	Vertical Vertical `json:"vertical"`
+	// TestUserImpersonationEnabled is a boolean indicating whether user impersonation is enabled for the test project
+	TestUserImpersonationEnabled bool `json:"test_user_impersonation_enabled"`
+	// LiveUserImpersonationEnabled is a boolean indicating whether user impersonation is enabled for the live project
+	LiveUserImpersonationEnabled bool `json:"live_user_impersonation_enabled"`
 }
 
 type CreateResponse struct {
@@ -92,6 +100,8 @@ type UpdateRequest struct {
 	ProjectID string `json:"project_id"`
 	// Name is the new name for the project
 	Name string `json:"name"`
+	// UserImpersonationEnabled is a boolean indicating whether user impersonation is enabled for the project
+	UserImpersonationEnabled bool `json:"user_impersonation_enabled"`
 }
 
 type UpdateResponse struct {
