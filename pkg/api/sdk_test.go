@@ -65,6 +65,9 @@ func makeTestConsumerConfig(t *testing.T) sdk.ConsumerConfig {
 			Enabled:                       true,
 			PKCERequiredForPasswordResets: true,
 		},
+		Cookies: &sdk.ConsumerCookiesConfig{
+			HttpOnlyCookies: sdk.HttpOnlyCookiesSettingEnabled,
+		},
 	}
 }
 
@@ -116,6 +119,9 @@ func makeTestB2BConfig(t *testing.T) sdk.B2BConfig {
 		Passwords: &sdk.B2BPasswordsConfig{
 			Enabled:                       false,
 			PKCERequiredForPasswordResets: false,
+		},
+		Cookies: &sdk.B2BCookiesConfig{
+			HttpOnlyCookies: sdk.HttpOnlyCookiesSettingEnabled,
 		},
 	}
 }
