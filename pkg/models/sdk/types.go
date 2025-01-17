@@ -60,6 +60,30 @@ type SMSAutofillMetadata struct {
 	BundleID string `json:"bundle_id"`
 }
 
+// HttpOnlyCookiesSetting is a type specifying whether cookies should be set with the HttpOnly flag.
+type HttpOnlyCookiesSetting string
+
+const (
+	// HttpOnlyCookiesSettingDisabled indicates that cookies should not be set.
+	HttpOnlyCookiesSettingDisabled HttpOnlyCookiesSetting = "DISABLED"
+	// HttpOnlyCookiesSettingEnabled indicates that cookies should be set with the
+	// HttpOnly flag when using a custom authentication domain, and not set
+	// otherwise.
+	HttpOnlyCookiesSettingEnabled HttpOnlyCookiesSetting = "ENABLED"
+	// HttpOnlyCookiesSettingEnforced indicates that cookies should be set with
+	// the HttpOnly flag when using a custom authentication domain, and requests
+	// to other domains should be rejected.
+	HttpOnlyCookiesSettingEnforced HttpOnlyCookiesSetting = "ENFORCED"
+)
+
+func HttpOnlyCookiesSettings() []HttpOnlyCookiesSetting {
+	return []HttpOnlyCookiesSetting{
+		HttpOnlyCookiesSettingDisabled,
+		HttpOnlyCookiesSettingEnabled,
+		HttpOnlyCookiesSettingEnforced,
+	}
+}
+
 type ConsumerBasicConfig struct {
 	// Enabled is a boolean indicating whether the consumer project SDK is enabled. This allows the SDK to manage user and session data.
 	Enabled bool `json:"enabled"`
@@ -163,6 +187,11 @@ type ConsumerPasswordsConfig struct {
 	PKCERequiredForPasswordResets bool `json:"pkce_required_for_password_resets"`
 }
 
+type ConsumerCookiesConfig struct {
+	// HttpOnlyCookies specifies whether cookies should be set with the HttpOnly flag.
+	HttpOnlyCookies HttpOnlyCookiesSetting `json:"http_only"`
+}
+
 type ConsumerConfig struct {
 	// Basic is the basic configuration for the consumer project SDK. This includes enabling the SDK.
 	Basic *ConsumerBasicConfig `json:"basic,omitempty"`
@@ -186,6 +215,8 @@ type ConsumerConfig struct {
 	Biometrics *ConsumerBiometricsConfig `json:"biometrics,omitempty"`
 	// Passwords is the passwords configuration for the consumer project SDK.
 	Passwords *ConsumerPasswordsConfig `json:"passwords,omitempty"`
+	// Cookies is the cookies configuration for the consumer project SDK.
+	Cookies *ConsumerCookiesConfig `json:"cookies,omitempty"`
 }
 
 type B2BBasicConfig struct {
@@ -273,6 +304,11 @@ type B2BPasswordsConfig struct {
 	PKCERequiredForPasswordResets bool `json:"pkce_required_for_password_resets"`
 }
 
+type B2BCookiesConfig struct {
+	// HttpOnlyCookies specifies whether cookies should be set with the HttpOnly flag.
+	HttpOnlyCookies HttpOnlyCookiesSetting `json:"http_only"`
+}
+
 type B2BConfig struct {
 	// Basic is the basic configuration for the B2B project SDK. This includes enabling the SDK.
 	Basic *B2BBasicConfig `json:"basic,omitempty"`
@@ -292,6 +328,8 @@ type B2BConfig struct {
 	DFPPA *B2BDFPPAConfig `json:"dfppa,omitempty"`
 	// Passwords is the passwords configuration for the B2B project SDK.
 	Passwords *B2BPasswordsConfig `json:"passwords,omitempty"`
+	// Cookies is the cookies configuration for the B2B project SDK.
+	Cookies *B2BCookiesConfig `json:"cookies,omitempty"`
 }
 
 type GetConsumerConfigRequest struct {
