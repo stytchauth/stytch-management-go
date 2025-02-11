@@ -86,10 +86,12 @@ func Test_ProjectsUpdate(t *testing.T) {
 		ProjectID:                project.LiveProjectID,
 		Name:                     newProjectName,
 		UserImpersonationEnabled: true,
+		UseCrossOrgPasswords:     true,
 	})
 
 	// Assert
 	assert.NoError(t, err)
 	assert.Equal(t, newProjectName, resp.Project.Name)
 	assert.True(t, resp.Project.LiveUserImpersonationEnabled)
+	assert.True(t, resp.Project.UseCrossOrgPasswords)
 }
