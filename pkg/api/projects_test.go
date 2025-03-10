@@ -78,6 +78,7 @@ func Test_ProjectsUpdate(t *testing.T) {
 	// Arrange
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
+	assert.False(t, project.LiveUseCrossOrgPasswords)
 	ctx := context.Background()
 	newProjectName := "The new project v2"
 
@@ -93,5 +94,5 @@ func Test_ProjectsUpdate(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, newProjectName, resp.Project.Name)
 	assert.True(t, resp.Project.LiveUserImpersonationEnabled)
-	assert.True(t, resp.Project.UseCrossOrgPasswords)
+	assert.True(t, resp.Project.LiveUseCrossOrgPasswords)
 }
