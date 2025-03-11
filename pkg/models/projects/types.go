@@ -52,9 +52,9 @@ type CreateRequest struct {
 	// LiveUserImpersonationEnabled is a boolean indicating whether user impersonation is enabled for the live project
 	LiveUserImpersonationEnabled bool `json:"live_user_impersonation_enabled"`
 	// TestCrossOrgPasswordsEnabled is a boolean indicating whether cross org passwords are enabled for the test project
-	TestCrossOrgPasswordsEnabled bool `json:"test_cross_org_passwords_enabled"`
+	TestCrossOrgPasswordsEnabled bool `json:"test_cross_org_password_enabled"`
 	// LiveCrossOrgPasswordsEnabled is a boolean indicating whether cross org passwords are enabled for the live project
-	LiveCrossOrgPasswordsEnabled bool `json:"live_cross_org_passwords_enabled"`
+	LiveCrossOrgPasswordsEnabled bool `json:"live_cross_org_password_enabled"`
 }
 
 type CreateResponse struct {

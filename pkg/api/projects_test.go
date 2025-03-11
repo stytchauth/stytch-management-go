@@ -20,6 +20,8 @@ func Test_ProjectsCreate(t *testing.T) {
 		Vertical:                     projects.VerticalB2B,
 		TestUserImpersonationEnabled: true,
 		LiveUserImpersonationEnabled: false,
+		TestCrossOrgPasswordsEnabled: true,
+		LiveCrossOrgPasswordsEnabled: true,
 	})
 	t.Cleanup(func() {
 		_, err := client.Projects.Delete(ctx, projects.DeleteRequest{
@@ -34,6 +36,8 @@ func Test_ProjectsCreate(t *testing.T) {
 	assert.Equal(t, projects.VerticalB2B, resp.Project.Vertical)
 	assert.True(t, resp.Project.TestUserImpersonationEnabled)
 	assert.False(t, resp.Project.LiveUserImpersonationEnabled)
+	assert.True(t, resp.Project.TestCrossOrgPasswordsEnabled)
+	assert.True(t, resp.Project.LiveCrossOrgPasswordsEnabled)
 }
 
 func Test_ProjectsGet(t *testing.T) {
