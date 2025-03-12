@@ -36,6 +36,10 @@ type Project struct {
 	TestUserImpersonationEnabled bool `json:"test_user_impersonation_enabled"`
 	// LiveUserImpersonationEnabled is a boolean indicating whether user impersonation is enabled for the live project
 	LiveUserImpersonationEnabled bool `json:"live_user_impersonation_enabled"`
+	// TestCrossOrgPasswordsEnabled is a boolean indicating whether the test project uses cross-org passwords
+	TestCrossOrgPasswordsEnabled bool `json:"test_cross_org_password_enabled"`
+	// LiveCrossOrgPasswordsEnabled is a boolean indicating whether the live project uses cross-org passwords
+	LiveCrossOrgPasswordsEnabled bool `json:"live_cross_org_password_enabled"`
 }
 
 type CreateRequest struct {
@@ -47,6 +51,10 @@ type CreateRequest struct {
 	TestUserImpersonationEnabled bool `json:"test_user_impersonation_enabled"`
 	// LiveUserImpersonationEnabled is a boolean indicating whether user impersonation is enabled for the live project
 	LiveUserImpersonationEnabled bool `json:"live_user_impersonation_enabled"`
+	// TestCrossOrgPasswordsEnabled is a boolean indicating whether cross org passwords are enabled for the test project
+	TestCrossOrgPasswordsEnabled bool `json:"test_cross_org_password_enabled"`
+	// LiveCrossOrgPasswordsEnabled is a boolean indicating whether cross org passwords are enabled for the live project
+	LiveCrossOrgPasswordsEnabled bool `json:"live_cross_org_password_enabled"`
 }
 
 type CreateResponse struct {
@@ -102,6 +110,8 @@ type UpdateRequest struct {
 	Name string `json:"name"`
 	// UserImpersonationEnabled is a boolean indicating whether user impersonation is enabled for the project
 	UserImpersonationEnabled bool `json:"user_impersonation_enabled"`
+	// UseCrossOrgPasswords is a boolean indicating whether the project uses cross-org passwords
+	UseCrossOrgPasswords bool `json:"use_cross_org_passwords"`
 }
 
 type UpdateResponse struct {
