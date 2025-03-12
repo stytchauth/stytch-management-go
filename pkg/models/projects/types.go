@@ -36,7 +36,7 @@ type Project struct {
 	TestUserImpersonationEnabled bool `json:"test_user_impersonation_enabled"`
 	// LiveUserImpersonationEnabled is a boolean indicating whether user impersonation is enabled for the live project
 	LiveUserImpersonationEnabled bool `json:"live_user_impersonation_enabled"`
-	// TestCrossOrgPasswordsEnabled is a boolean indicating whether the project uses cross-org passwords
+	// TestCrossOrgPasswordsEnabled is a boolean indicating whether the test project uses cross-org passwords
 	TestCrossOrgPasswordsEnabled bool `json:"test_cross_org_password_enabled"`
 	// LiveCrossOrgPasswordsEnabled is a boolean indicating whether the project uses cross-org passwords
 	LiveCrossOrgPasswordsEnabled bool `json:"live_cross_org_password_enabled"`
