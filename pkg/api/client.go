@@ -2,6 +2,7 @@ package api
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/stytchauth/stytch-management-go/pkg/api/internal"
 )
@@ -41,7 +42,7 @@ type APIOption func(*apiConfig)
 
 func WithBaseURI(baseURI string) APIOption {
 	return func(a *apiConfig) {
-		a.baseURI = baseURI
+		a.baseURI = strings.TrimSuffix(baseURI, "/")
 	}
 }
 
