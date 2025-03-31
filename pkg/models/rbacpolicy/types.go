@@ -12,6 +12,8 @@ type Policy struct {
 	CustomRoles []Role `json:"custom_roles"`
 	// CustomResources are resources that exist within the project beyond those defined within the stytch_resources
 	CustomResources []Resource `json:"custom_resources"`
+	// CustomScopes are scopes that within the project that are used in Connected Apps
+	CustomScopes []Scope `json:"custom_scopes"`
 }
 
 type Role struct {
@@ -30,6 +32,15 @@ type Resource struct {
 	Description string `json:"description"`
 	// AvailableActions are the actions that can be granted for this resource
 	AvailableActions []string `json:"available_actions"`
+}
+
+type Scope struct {
+	// Scope is a human-readable name that is unique within the project
+	Scope string `json:"scope"`
+	// Description is a description for the scope
+	Description string `json:"description"`
+	// Permissions are the permissions required to be granted this scope for resources within the project
+	Permissions []Permission `json:"permissions"`
 }
 
 type Permission struct {

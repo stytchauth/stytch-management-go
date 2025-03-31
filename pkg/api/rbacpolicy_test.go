@@ -78,11 +78,27 @@ func getTestPolicy(t *testing.T) rbacpolicy.Policy {
 		},
 	}
 
+	writerScope := rbacpolicy.Scope{
+		Scope:       "write:documents",
+		Description: "Write documents",
+		Permissions: []rbacpolicy.Permission{
+			{
+				ResourceID: "resource1",
+				Actions:    []string{"write"},
+			},
+			{
+				ResourceID: "resource2",
+				Actions:    []string{"write"},
+			},
+		},
+	}
+
 	return rbacpolicy.Policy{
 		StytchMember:    viewer,
 		StytchAdmin:     admin,
 		CustomRoles:     []rbacpolicy.Role{writer},
 		CustomResources: resources,
+		CustomScopes:    []rbacpolicy.Scope{writerScope},
 	}
 }
 
@@ -108,6 +124,7 @@ func TestRBACPolicyClient_Get(t *testing.T) {
 	assert.Equal(t, policy.StytchAdmin, resp.Policy.StytchAdmin)
 	assert.Equal(t, policy.CustomRoles, resp.Policy.CustomRoles)
 	assert.Equal(t, policy.CustomResources, resp.Policy.CustomResources)
+	assert.Equal(t, policy.CustomScopes, resp.Policy.CustomScopes)
 }
 
 func TestRBACClient_SetPolicy(t *testing.T) {
@@ -128,4 +145,5 @@ func TestRBACClient_SetPolicy(t *testing.T) {
 	assert.Equal(t, policy.StytchAdmin, resp.Policy.StytchAdmin)
 	assert.Equal(t, policy.CustomRoles, resp.Policy.CustomRoles)
 	assert.Equal(t, policy.CustomResources, resp.Policy.CustomResources)
+	assert.Equal(t, policy.CustomScopes, resp.Policy.CustomScopes)
 }
