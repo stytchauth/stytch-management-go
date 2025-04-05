@@ -90,10 +90,49 @@ func Test_ProjectsUpdate(t *testing.T) {
 	resp, err := client.Projects.Update(ctx, projects.UpdateRequest{
 		ProjectID:                project.LiveProjectID,
 		Name:                     newProjectName,
-		UserImpersonationEnabled: true,
-		UseCrossOrgPasswords:     true,
+		UserImpersonationEnabled: ptr(true),
+		UseCrossOrgPasswords:     ptr(true),
 	})
 
+	// Assert
+	assert.NoError(t, err)
+	assert.Equal(t, newProjectName, resp.Project.Name)
+	assert.True(t, resp.Project.LiveUserImpersonationEnabled)
+	assert.True(t, resp.Project.LiveCrossOrgPasswordsEnabled)
+}
+
+func Test_ProjectsUpdateDoesNotOverwriteValues(t *testing.T) {
+	// Arrange
+	client := NewTestClient(t)
+	project := client.DisposableProject(projects.VerticalB2B)
+	assert.False(t, project.LiveCrossOrgPasswordsEnabled)
+	ctx := context.Background()
+	newProjectName := "The new project v2"
+
+	// Act
+	resp, err := client.Projects.Update(ctx, projects.UpdateRequest{
+		ProjectID:                    project.LiveProjectID,
+		Name:                         newProjectName,
+		UserImpersonationEnabled:     ptr(true),
+		TestUserImpersonationEnabled: ptr(true),
+		UseCrossOrgPasswords:         ptr(true),
+		TestUseCrossOrgPasswords:     ptr(true),
+	})
+
+	// Assert
+	assert.NoError(t, err)
+	assert.Equal(t, newProjectName, resp.Project.Name)
+	assert.True(t, resp.Project.LiveUserImpersonationEnabled)
+	assert.True(t, resp.Project.TestUserImpersonationEnabled)
+	assert.True(t, resp.Project.LiveCrossOrgPasswordsEnabled)
+	assert.True(t, resp.Project.TestCrossOrgPasswordsEnabled)
+
+	// Act again to check if the values are not overwritten
+	newProjectName = "The new project v2.1"
+	resp, err = client.Projects.Update(ctx, projects.UpdateRequest{
+		ProjectID: project.LiveProjectID,
+		Name:      newProjectName,
+	})
 	// Assert
 	assert.NoError(t, err)
 	assert.Equal(t, newProjectName, resp.Project.Name)
