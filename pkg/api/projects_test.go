@@ -88,10 +88,10 @@ func Test_ProjectsUpdate(t *testing.T) {
 
 	// Act
 	resp, err := client.Projects.Update(ctx, projects.UpdateRequest{
-		ProjectID:                project.LiveProjectID,
-		Name:                     newProjectName,
-		UserImpersonationEnabled: ptr(true),
-		UseCrossOrgPasswords:     ptr(true),
+		ProjectID:                    project.LiveProjectID,
+		Name:                         newProjectName,
+		LiveUserImpersonationEnabled: ptr(true),
+		LiveUseCrossOrgPasswords:     ptr(true),
 	})
 
 	// Assert
@@ -113,9 +113,9 @@ func Test_ProjectsUpdateDoesNotOverwriteValues(t *testing.T) {
 	resp, err := client.Projects.Update(ctx, projects.UpdateRequest{
 		ProjectID:                    project.LiveProjectID,
 		Name:                         newProjectName,
-		UserImpersonationEnabled:     ptr(true),
+		LiveUserImpersonationEnabled: ptr(true),
 		TestUserImpersonationEnabled: ptr(true),
-		UseCrossOrgPasswords:         ptr(true),
+		LiveUseCrossOrgPasswords:     ptr(true),
 		TestUseCrossOrgPasswords:     ptr(true),
 	})
 

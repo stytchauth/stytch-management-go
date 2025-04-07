@@ -108,12 +108,12 @@ type UpdateRequest struct {
 	ProjectID string `json:"project_id"`
 	// Name is the new name for the project
 	Name string `json:"name"`
-	// UserImpersonationEnabled is a boolean indicating whether user impersonation is enabled for the project
-	UserImpersonationEnabled *bool `json:"live_user_impersonation_enabled"`
+	// LiveUserImpersonationEnabled is a boolean indicating whether user impersonation is enabled for the project
+	LiveUserImpersonationEnabled *bool `json:"live_user_impersonation_enabled"`
 	// TestUserImpersonationEnabled is a boolean indicating whether user impersonation is enabled for the test project
 	TestUserImpersonationEnabled *bool `json:"test_user_impersonation_enabled"`
-	// UseCrossOrgPasswords is a boolean indicating whether the project uses cross-org passwords
-	UseCrossOrgPasswords *bool `json:"live_use_cross_org_passwords"`
+	// LiveUseCrossOrgPasswords is a boolean indicating whether the project uses cross-org passwords
+	LiveUseCrossOrgPasswords *bool `json:"live_use_cross_org_passwords"`
 	// TestUseCrossOrgPasswords is a boolean indicating whether the test project uses cross-org passwords
 	TestUseCrossOrgPasswords *bool `json:"test_use_cross_org_passwords"`
 }
