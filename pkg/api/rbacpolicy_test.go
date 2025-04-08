@@ -6,12 +6,18 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/stytchauth/stytch-management-go/pkg/models/projects"
-	"github.com/stytchauth/stytch-management-go/pkg/models/rbacpolicy"
+	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/v2/pkg/models/rbacpolicy"
 )
 
-func getTestPolicy(t *testing.T) rbacpolicy.Policy {
+func getTestPolicy(t *testing.T, client *testClient, projectID string) rbacpolicy.Policy {
 	t.Helper()
+	// The StytchMember and StytchAdmin RoleIDs and Descriptions cannot be modified, so we first
+	// look up their current value when constructing our new RBAC policy.
+	resp, err := client.RBACPolicy.Get(context.Background(), rbacpolicy.GetRequest{
+		ProjectID: projectID,
+	})
+	require.NoError(t, err)
 
 	resources := []rbacpolicy.Resource{
 		{
@@ -32,8 +38,8 @@ func getTestPolicy(t *testing.T) rbacpolicy.Policy {
 	}
 
 	admin := rbacpolicy.Role{
-		RoleID:      "admin_role",
-		Description: "Admin role",
+		RoleID:      resp.Policy.StytchAdmin.RoleID,
+		Description: resp.Policy.StytchAdmin.Description,
 		Permissions: []rbacpolicy.Permission{
 			{
 				ResourceID: "resource1",
@@ -50,8 +56,7 @@ func getTestPolicy(t *testing.T) rbacpolicy.Policy {
 		},
 	}
 	writer := rbacpolicy.Role{
-		RoleID:      "writer_role",
-		Description: "Writer role",
+		RoleID: "writer_role",
 		Permissions: []rbacpolicy.Permission{
 			{
 				ResourceID: "resource1",
@@ -64,8 +69,8 @@ func getTestPolicy(t *testing.T) rbacpolicy.Policy {
 		},
 	}
 	viewer := rbacpolicy.Role{
-		RoleID:      "viewer_role",
-		Description: "Viewer role",
+		RoleID:      resp.Policy.StytchMember.RoleID,
+		Description: resp.Policy.StytchMember.Description,
 		Permissions: []rbacpolicy.Permission{
 			{
 				ResourceID: "resource1",
@@ -90,7 +95,7 @@ func TestRBACPolicyClient_Get(t *testing.T) {
 	// Arrange
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
-	policy := getTestPolicy(t)
+	policy := getTestPolicy(t, client, project.LiveProjectID)
 	_, err := client.RBACPolicy.Set(context.Background(), rbacpolicy.SetRequest{
 		ProjectID: project.LiveProjectID,
 		Policy:    policy,
@@ -114,7 +119,7 @@ func TestRBACClient_SetPolicy(t *testing.T) {
 	// Arrange
 	client := NewTestClient(t)
 	project := client.DisposableProject(projects.VerticalB2B)
-	policy := getTestPolicy(t)
+	policy := getTestPolicy(t, client, project.LiveProjectID)
 
 	// Act
 	resp, err := client.RBACPolicy.Set(context.Background(), rbacpolicy.SetRequest{

@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/stytchauth/stytch-management-go/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/pkg/models/emailtemplates"
+	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/v2/pkg/models/emailtemplates"
 )
 
 type EmailTemplatesClient struct {

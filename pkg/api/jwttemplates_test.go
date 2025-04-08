@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/stytchauth/stytch-management-go/pkg/models/jwttemplates"
-	"github.com/stytchauth/stytch-management-go/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/v2/pkg/models/jwttemplates"
+	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projects"
 )
 
 func TestJWTTemplatesClient_Set(t *testing.T) {
