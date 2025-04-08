@@ -3,8 +3,8 @@ package api
 import (
 	"context"
 
-	"github.com/stytchauth/stytch-management-go/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/pkg/models/secrets"
+	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/v2/pkg/models/secrets"
 )
 
 type SecretsClient struct {

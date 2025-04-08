@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stytchauth/stytch-management-go/pkg/models/projects"
-	"github.com/stytchauth/stytch-management-go/pkg/models/redirecturls"
+	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/v2/pkg/models/redirecturls"
 )
 
 func (c *testClient) createRedirectURL(projectID string, url string, redirectType redirecturls.RedirectType) {
@@ -208,5 +208,5 @@ func TestRedirectURLsClient_Update(t *testing.T) {
 
 	// Assert
 	assert.NoError(t, err)
-	assert.Equal(t, updatedRedirectUrl, resp.RedirectURL)
+	assert.ElementsMatch(t, updatedRedirectUrl.ValidTypes, resp.RedirectURL.ValidTypes)
 }

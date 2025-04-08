@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stytchauth/stytch-management-go/pkg/models/projectmetrics"
-	"github.com/stytchauth/stytch-management-go/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projectmetrics"
+	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projects"
 )
 
 // We currently have no way of creating users/orgs/members *within* the project
