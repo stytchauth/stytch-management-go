@@ -3,13 +3,14 @@ package emailtemplates
 type TemplateType string
 
 const (
-	TemplateTypeLogin                 TemplateType = "LOGIN"
-	TemplateTypeSignup                TemplateType = "SIGNUP"
-	TemplateTypeInvite                TemplateType = "INVITE"
-	TemplateTypeResetPassword         TemplateType = "RESET_PASSWORD"
-	TemplateTypeOneTimePasscode       TemplateType = "ONE_TIME_PASSCODE"
-	TemplateTypeOneTimePasscodeSignup TemplateType = "ONE_TIME_PASSCODE_SIGNUP"
-	TemplateTypeAll                   TemplateType = "ALL"
+	TemplateTypeLogin                    TemplateType = "LOGIN"
+	TemplateTypeSignup                   TemplateType = "SIGNUP"
+	TemplateTypeInvite                   TemplateType = "INVITE"
+	TemplateTypeResetPassword            TemplateType = "RESET_PASSWORD"
+	TemplateTypeOneTimePasscode          TemplateType = "ONE_TIME_PASSCODE"
+	TemplateTypeOneTimePasscodeSignup    TemplateType = "ONE_TIME_PASSCODE_SIGNUP"
+	TemplateTypeVerifyEmailPasswordReset TemplateType = "VERIFY_EMAIL_PASSWORD_RESET"
+	TemplateTypeAll                      TemplateType = "ALL"
 )
 
 func TemplateTypes() []TemplateType {
