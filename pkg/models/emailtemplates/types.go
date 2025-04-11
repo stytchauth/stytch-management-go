@@ -21,6 +21,7 @@ func TemplateTypes() []TemplateType {
 		TemplateTypeResetPassword,
 		TemplateTypeOneTimePasscode,
 		TemplateTypeOneTimePasscodeSignup,
+		TemplateTypeVerifyEmailPasswordReset,
 		TemplateTypeAll,
 	}
 }
