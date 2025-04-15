@@ -111,12 +111,13 @@ func Test_ProjectsUpdateDoesNotOverwriteValues(t *testing.T) {
 
 	// Act
 	resp, err := client.Projects.Update(ctx, projects.UpdateRequest{
-		ProjectID:                    project.LiveProjectID,
-		Name:                         newProjectName,
-		LiveUserImpersonationEnabled: ptr(true),
-		TestUserImpersonationEnabled: ptr(true),
-		LiveUseCrossOrgPasswords:     ptr(true),
-		TestUseCrossOrgPasswords:     ptr(true),
+		ProjectID:                               project.LiveProjectID,
+		Name:                                    newProjectName,
+		LiveUserImpersonationEnabled:            ptr(true),
+		TestUserImpersonationEnabled:            ptr(true),
+		LiveUseCrossOrgPasswords:                ptr(true),
+		TestUseCrossOrgPasswords:                ptr(true),
+		LiveIdpDynamicClientRegistrationEnabled: ptr(true),
 	})
 
 	// Assert
@@ -126,6 +127,7 @@ func Test_ProjectsUpdateDoesNotOverwriteValues(t *testing.T) {
 	assert.True(t, resp.Project.TestUserImpersonationEnabled)
 	assert.True(t, resp.Project.LiveCrossOrgPasswordsEnabled)
 	assert.True(t, resp.Project.TestCrossOrgPasswordsEnabled)
+	assert.True(t, resp.Project.LiveIDPDynamicClientRegistrationEnabled)
 
 	// Act again to check if the values are not overwritten
 	newProjectName = "The new project v2.1"
@@ -138,4 +140,5 @@ func Test_ProjectsUpdateDoesNotOverwriteValues(t *testing.T) {
 	assert.Equal(t, newProjectName, resp.Project.Name)
 	assert.True(t, resp.Project.LiveUserImpersonationEnabled)
 	assert.True(t, resp.Project.LiveCrossOrgPasswordsEnabled)
+	assert.True(t, resp.Project.LiveIDPDynamicClientRegistrationEnabled)
 }

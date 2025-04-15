@@ -40,6 +40,11 @@ type Project struct {
 	TestCrossOrgPasswordsEnabled bool `json:"test_cross_org_password_enabled"`
 	// LiveCrossOrgPasswordsEnabled is a boolean indicating whether the live project uses cross-org passwords
 	LiveCrossOrgPasswordsEnabled bool `json:"live_cross_org_password_enabled"`
+
+	LiveIDPAuthorizationURL                 string `json:"live_idp_authorization_url"`
+	TestIDPAuthorizationURL                 string `json:"test_idp_authorization_url"`
+	LiveIDPDynamicClientRegistrationEnabled bool   `json:"live_idp_dynamic_client_registration_enabled"`
+	TestIDPDynamicClientRegistrationEnabled bool   `json:"test_idp_dynamic_client_registration_enabled"`
 }
 
 type CreateRequest struct {
@@ -116,6 +121,9 @@ type UpdateRequest struct {
 	LiveUseCrossOrgPasswords *bool `json:"live_use_cross_org_passwords"`
 	// TestUseCrossOrgPasswords is a boolean indicating whether the test project uses cross-org passwords
 	TestUseCrossOrgPasswords *bool `json:"test_use_cross_org_passwords"`
+
+	LiveIdpDynamicClientRegistrationEnabled *bool `json:"live_idp_dynamic_client_registration_enabled,omitempty"`
+	TestIdpDynamicClientRegistrationEnabled *bool `json:"test_idp_dynamic_client_registration_enabled,omitempty"`
 }
 
 type UpdateResponse struct {
