@@ -84,3 +84,35 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 		Secrets:                newSecretsClient(client),
 	}
 }
+
+// NewClient creates a new API client with an access token.
+func NewAccessTokenClient(accessToken string, opts ...APIOption) *API {
+	c := apiConfig{
+		baseURI:    defaultBaseURI,
+		httpClient: &http.Client{},
+	}
+
+	for _, opt := range opts {
+		opt(&c)
+	}
+
+	client := internal.NewClient(internal.ClientConfig{
+		AccessToken: accessToken,
+		BaseURI:     c.baseURI,
+		HTTPClient:  c.httpClient,
+	})
+
+	return &API{
+		client:                 client,
+		EmailTemplates:         newEmailTemplatesClient(client),
+		JWTTemplates:           newJWTTemplatesClient(client),
+		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
+		Projects:               newProjectsClient(client),
+		ProjectMetrics:         newProjectMetricsClient(client),
+		PublicTokens:           newPublicTokensClient(client),
+		RBACPolicy:             newRBACPolicyClient(client),
+		RedirectURLs:           newRedirectURLsClient(client),
+		SDK:                    newSDKClient(client),
+		Secrets:                newSecretsClient(client),
+	}
+}

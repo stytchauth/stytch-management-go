@@ -17,6 +17,7 @@ import (
 type ClientConfig struct {
 	WorkspaceKeyID     string
 	WorkspaceKeySecret string
+	AccessToken        string
 	BaseURI            string
 	HTTPClient         *http.Client
 }
@@ -24,21 +25,25 @@ type ClientConfig struct {
 type Client struct {
 	workspaceKeyID     string
 	workspaceKeySecret string
-
-	baseURI    string
-	httpClient *http.Client
+	accessToken        string
+	baseURI            string
+	httpClient         *http.Client
 }
 
 func NewClient(c ClientConfig) *Client {
 	return &Client{
 		workspaceKeyID:     c.WorkspaceKeyID,
 		workspaceKeySecret: c.WorkspaceKeySecret,
+		accessToken:        c.AccessToken,
 		baseURI:            c.BaseURI,
 		httpClient:         c.HTTPClient,
 	}
 }
 
-// newRequest is used by Call to generate and Do a http.Request
+func (c *Client) basicAuth() bool  { return c.workspaceKeyID != "" && c.workspaceKeySecret != "" }
+func (c *Client) bearerAuth() bool { return c.accessToken != "" }
+
+// NewRequest is used by Call to generate and Do a http.Request
 func (c *Client) NewRequest(
 	ctx context.Context,
 	method string,
@@ -73,7 +78,7 @@ func (c *Client) RawRequest(
 		path = "/" + path
 	}
 
-	path = string(c.baseURI) + path
+	path = c.baseURI + path
 
 	req, err := http.NewRequestWithContext(ctx, method, path, bytes.NewReader(body))
 	if err != nil {
@@ -89,9 +94,15 @@ func (c *Client) RawRequest(
 	}
 	req.URL.RawQuery = q.Encode()
 
-	authToken := base64.StdEncoding.EncodeToString([]byte(c.workspaceKeyID + ":" + c.workspaceKeySecret))
-	req.Header.Set("Authorization", "Basic "+authToken)
-
+	switch {
+	case c.basicAuth():
+		authToken := base64.StdEncoding.EncodeToString([]byte(c.workspaceKeyID + ":" + c.workspaceKeySecret))
+		req.Header.Set("Authorization", "Basic "+authToken)
+	case c.bearerAuth():
+		req.Header.Set("Authorization", "Bearer "+c.accessToken)
+	default:
+		panic("unable to set auth header for request")
+	}
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("User-Agent", "Stytch Management Go v"+version.Version)
 
