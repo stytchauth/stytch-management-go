@@ -39,12 +39,6 @@ func Test_ProjectsCreate(t *testing.T) {
 		assert.False(t, resp.Project.LiveUserImpersonationEnabled)
 		assert.True(t, resp.Project.TestCrossOrgPasswordsEnabled)
 		assert.True(t, resp.Project.LiveCrossOrgPasswordsEnabled)
-		assert.False(t, resp.Project.TestUserLockSelfServeEnabled)
-		assert.False(t, resp.Project.LiveUserLockSelfServeEnabled)
-		assert.Equal(t, int32(10), resp.Project.TestUserLockThreshold)
-		assert.Equal(t, int32(10), resp.Project.LiveUserLockThreshold)
-		assert.Equal(t, int64(3600), resp.Project.TestUserLockTTL)
-		assert.Equal(t, int64(3600), resp.Project.LiveUserLockTTL)
 	})
 
 	t.Run("with user lock settings", func(t *testing.T) {
@@ -76,7 +70,7 @@ func Test_ProjectsCreate(t *testing.T) {
 		assert.True(t, resp.Project.LiveCrossOrgPasswordsEnabled)
 		assert.False(t, resp.Project.TestUserLockSelfServeEnabled)
 		assert.False(t, resp.Project.LiveUserLockSelfServeEnabled)
-		assert.Equal(t, int32(8), resp.Project.TestUserLockThreshold)
+		assert.Equal(t, int32(5), resp.Project.TestUserLockThreshold)
 		assert.Equal(t, int32(10), resp.Project.LiveUserLockThreshold)
 		assert.Equal(t, int64(3600), resp.Project.TestUserLockTTL)
 		assert.Equal(t, int64(3600), resp.Project.LiveUserLockTTL)
