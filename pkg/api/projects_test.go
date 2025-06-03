@@ -10,40 +10,78 @@ import (
 )
 
 func Test_ProjectsCreate(t *testing.T) {
-	// Arrange
-	client := NewTestClient(t)
-	ctx := context.Background()
+	t.Run("base case", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		ctx := context.Background()
 
-	// Act
-	resp, err := client.Projects.Create(ctx, projects.CreateRequest{
-		ProjectName:                  "Test project",
-		Vertical:                     projects.VerticalB2B,
-		TestUserImpersonationEnabled: true,
-		LiveUserImpersonationEnabled: false,
-		TestCrossOrgPasswordsEnabled: true,
-		LiveCrossOrgPasswordsEnabled: true,
-	})
-	t.Cleanup(func() {
-		_, err := client.Projects.Delete(ctx, projects.DeleteRequest{
-			ProjectID: resp.Project.LiveProjectID,
+		// Act
+		resp, err := client.Projects.Create(ctx, projects.CreateRequest{
+			ProjectName:                  "Test project",
+			Vertical:                     projects.VerticalB2B,
+			TestUserImpersonationEnabled: true,
+			LiveUserImpersonationEnabled: false,
+			TestCrossOrgPasswordsEnabled: true,
+			LiveCrossOrgPasswordsEnabled: true,
 		})
-		require.NoError(t, err)
+		t.Cleanup(func() {
+			_, err := client.Projects.Delete(ctx, projects.DeleteRequest{
+				ProjectID: resp.Project.LiveProjectID,
+			})
+			require.NoError(t, err)
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, "Test project", resp.Project.Name)
+		assert.Equal(t, projects.VerticalB2B, resp.Project.Vertical)
+		assert.True(t, resp.Project.TestUserImpersonationEnabled)
+		assert.False(t, resp.Project.LiveUserImpersonationEnabled)
+		assert.True(t, resp.Project.TestCrossOrgPasswordsEnabled)
+		assert.True(t, resp.Project.LiveCrossOrgPasswordsEnabled)
+		assert.False(t, resp.Project.TestUserLockSelfServeEnabled)
+		assert.False(t, resp.Project.LiveUserLockSelfServeEnabled)
+		assert.Equal(t, int32(10), resp.Project.TestUserLockThreshold)
+		assert.Equal(t, int32(10), resp.Project.LiveUserLockThreshold)
+		assert.Equal(t, int64(3600), resp.Project.TestUserLockTTL)
+		assert.Equal(t, int64(3600), resp.Project.LiveUserLockTTL)
 	})
 
-	// Assert
-	assert.NoError(t, err)
-	assert.Equal(t, "Test project", resp.Project.Name)
-	assert.Equal(t, projects.VerticalB2B, resp.Project.Vertical)
-	assert.True(t, resp.Project.TestUserImpersonationEnabled)
-	assert.False(t, resp.Project.LiveUserImpersonationEnabled)
-	assert.True(t, resp.Project.TestCrossOrgPasswordsEnabled)
-	assert.True(t, resp.Project.LiveCrossOrgPasswordsEnabled)
-	assert.False(t, resp.Project.TestUserLockSelfServeEnabled)
-	assert.False(t, resp.Project.LiveUserLockSelfServeEnabled)
-	assert.Equal(t, int32(10), resp.Project.TestUserLockThreshold)
-	assert.Equal(t, int32(10), resp.Project.LiveUserLockThreshold)
-	assert.Equal(t, int64(3600), resp.Project.TestUserLockTTL)
-	assert.Equal(t, int64(3600), resp.Project.LiveUserLockTTL)
+	t.Run("with user lock settings", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		ctx := context.Background()
+
+		// Act
+		testThreshold := int32(5)
+		resp, err := client.Projects.Create(ctx, projects.CreateRequest{
+			ProjectName:           "Test project",
+			Vertical:              projects.VerticalB2B,
+			TestUserLockThreshold: &testThreshold,
+		})
+		t.Cleanup(func() {
+			_, err := client.Projects.Delete(ctx, projects.DeleteRequest{
+				ProjectID: resp.Project.LiveProjectID,
+			})
+			require.NoError(t, err)
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, "Test project", resp.Project.Name)
+		assert.Equal(t, projects.VerticalB2B, resp.Project.Vertical)
+		assert.True(t, resp.Project.TestUserImpersonationEnabled)
+		assert.False(t, resp.Project.LiveUserImpersonationEnabled)
+		assert.True(t, resp.Project.TestCrossOrgPasswordsEnabled)
+		assert.True(t, resp.Project.LiveCrossOrgPasswordsEnabled)
+		assert.False(t, resp.Project.TestUserLockSelfServeEnabled)
+		assert.False(t, resp.Project.LiveUserLockSelfServeEnabled)
+		assert.Equal(t, int32(8), resp.Project.TestUserLockThreshold)
+		assert.Equal(t, int32(10), resp.Project.LiveUserLockThreshold)
+		assert.Equal(t, int64(3600), resp.Project.TestUserLockTTL)
+		assert.Equal(t, int64(3600), resp.Project.LiveUserLockTTL)
+	})
+
 }
 
 func Test_ProjectsGet(t *testing.T) {
