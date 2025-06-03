@@ -40,6 +40,18 @@ type Project struct {
 	TestCrossOrgPasswordsEnabled bool `json:"test_cross_org_password_enabled"`
 	// LiveCrossOrgPasswordsEnabled is a boolean indicating whether the live project uses cross-org passwords
 	LiveCrossOrgPasswordsEnabled bool `json:"live_cross_org_password_enabled"`
+	// TestUserLockSelfServeEnabled is a boolean indicating if users in the test project who get locked out should automatically get an unlock email magic link
+	TestUserLockSelfServeEnabled bool `json:"test_user_lock_self_serve_enabled"`
+	// LiveUserLockSelfServeEnabled is a boolean indicating if users in the live project who get locked out should automatically get an unlock email magic link
+	LiveUserLockSelfServeEnabled bool `json:"live_user_lock_self_serve_enabled"`
+	// TestUserLockThreshold is an int representing how many failed authenticate attempts will cause a user in test to be locked. Defaults to 10
+	TestUserLockThreshold int32 `json:"test_user_lock_threshold"`
+	// LiveUserLockThreshold is an int representing how many failed authenticate attempts will cause a user in live to be locked. Defaults to 10
+	LiveUserLockThreshold int32 `json:"live_user_lock_threshold"`
+	// TestUserLockTTL is an int representing the time in seconds that the user in test remains locked once the lock is set. Defaults to 1hr (3600sec)
+	TestUserLockTTL int64 `json:"test_user_lock_ttl"`
+	// LiveUserLockTTL is an int representing the time in seconds that the user in live remains locked once the lock is set. Defaults to 1hr (3600sec)
+	LiveUserLockTTL int32 `json:"live_user_lock_ttl"`
 }
 
 type CreateRequest struct {
@@ -55,6 +67,18 @@ type CreateRequest struct {
 	TestCrossOrgPasswordsEnabled bool `json:"test_cross_org_password_enabled"`
 	// LiveCrossOrgPasswordsEnabled is a boolean indicating whether cross org passwords are enabled for the live project
 	LiveCrossOrgPasswordsEnabled bool `json:"live_cross_org_password_enabled"`
+	// TestUserLockSelfServeEnabled is a boolean indicating if users in the test project who get locked out should automatically get an unlock email magic link. Defaults to false.
+	TestUserLockSelfServeEnabled bool `json:"test_user_lock_self_serve_enabled"`
+	// LiveUserLockSelfServeEnabled is a boolean indicating if users in the live project who get locked out should automatically get an unlock email magic link. Defaults to false.
+	LiveUserLockSelfServeEnabled bool `json:"live_user_lock_self_serve_enabled"`
+	// TestUserLockThreshold is an int representing how many failed authenticate attempts will cause a user in test to be locked. Defaults to 10 if omitted.
+	TestUserLockThreshold *int32 `json:"test_user_lock_threshold"`
+	// LiveUserLockThreshold is an int representing how many failed authenticate attempts will cause a user in live to be locked. Defaults to 10 if omitted.
+	LiveUserLockThreshold *int32 `json:"live_user_lock_threshold"`
+	// TestUserLockTTL is an int representing the time in seconds that the user in test remains locked once the lock is set. Defaults to 1hr (3600sec) if omitted.
+	TestUserLockTTL *int64 `json:"test_user_lock_ttl"`
+	// LiveUserLockTTL is an int representing the time in seconds that the user in live remains locked once the lock is set. Defaults to 1hr (3600sec) if omitted.
+	LiveUserLockTTL *int32 `json:"live_user_lock_ttl"`
 }
 
 type CreateResponse struct {
@@ -116,6 +140,18 @@ type UpdateRequest struct {
 	LiveUseCrossOrgPasswords *bool `json:"live_use_cross_org_passwords"`
 	// TestUseCrossOrgPasswords is a boolean indicating whether the test project uses cross-org passwords
 	TestUseCrossOrgPasswords *bool `json:"test_use_cross_org_passwords"`
+	// TestUserLockSelfServeEnabled is a boolean indicating if users in the test project who get locked out should automatically get an unlock email magic link
+	TestUserLockSelfServeEnabled *bool `json:"test_user_lock_self_serve_enabled"`
+	// LiveUserLockSelfServeEnabled is a boolean indicating if users in the live project who get locked out should automatically get an unlock email magic link
+	LiveUserLockSelfServeEnabled *bool `json:"live_user_lock_self_serve_enabled"`
+	// TestUserLockThreshold is an int representing how many failed authenticate attempts will cause a user in test to be locked. Defaults to 10
+	TestUserLockThreshold *int32 `json:"test_user_lock_threshold"`
+	// LiveUserLockThreshold is an int representing how many failed authenticate attempts will cause a user in live to be locked. Defaults to 10
+	LiveUserLockThreshold *int32 `json:"live_user_lock_threshold"`
+	// TestUserLockTTL is an int representing the time in seconds that the user in test remains locked once the lock is set. Defaults to 1hr (3600sec)
+	TestUserLockTTL *int64 `json:"test_user_lock_ttl"`
+	// LiveUserLockTTL is an int representing the time in seconds that the user in live remains locked once the lock is set. Defaults to 1hr (3600sec)
+	LiveUserLockTTL *int32 `json:"live_user_lock_ttl"`
 }
 
 type UpdateResponse struct {
