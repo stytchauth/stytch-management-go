@@ -23,3 +23,6 @@ go.work.sum
 
 # IDE
 .idea/*
+
+# Environment
+.env

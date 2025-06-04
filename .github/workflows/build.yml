@@ -35,6 +35,9 @@ jobs:
           # And test the latest Go release
           - "1.22"
 
+    env:
+      STYTCH_WORKSPACE_KEY_ID: ${{ secrets.STYTCH_WORKSPACE_KEY_ID }}
+      STYTCH_WORKSPACE_KEY_SECRET: ${{ secrets.STYTCH_WORKSPACE_KEY_SECRET }}
     steps:
       - uses: actions/checkout@v3
 
