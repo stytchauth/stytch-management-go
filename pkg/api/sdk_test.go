@@ -52,9 +52,11 @@ func makeTestConsumerConfig(t *testing.T) sdk.ConsumerConfig {
 			Enabled:      false,
 			SIWERequired: false,
 		},
+		// This cannot be modified beyond defaults
+		// unless the project uses DFPPA
 		DFPPA: &sdk.ConsumerDFPPAConfig{
-			Enabled:              sdk.DFPPASettingEnabled,
-			OnChallenge:          sdk.DFPPAOnChallengeActionTriggerCaptcha,
+			Enabled:              sdk.DFPPASettingDisabled,
+			OnChallenge:          sdk.DFPPAOnChallengeActionAllow,
 			LookupTimeoutSeconds: 10,
 		},
 		Biometrics: &sdk.ConsumerBiometricsConfig{
@@ -66,6 +68,8 @@ func makeTestConsumerConfig(t *testing.T) sdk.ConsumerConfig {
 			PKCERequiredForPasswordResets: true,
 		},
 		Cookies: &sdk.ConsumerCookiesConfig{
+			// This can only be Disabled unless the project has
+			// CNAMEs configured
 			HttpOnlyCookies: sdk.HttpOnlyCookiesSettingDisabled,
 		},
 	}
@@ -111,9 +115,11 @@ func makeTestB2BConfig(t *testing.T) sdk.B2BConfig {
 			SMSAutofillMetadata: []sdk.SMSAutofillMetadata{},
 			EmailEnabled:        false,
 		},
+		// These cannot be modified beyond defaults
+		// unless the project is using DFPPA
 		DFPPA: &sdk.B2BDFPPAConfig{
-			Enabled:              sdk.DFPPASettingEnabled,
-			OnChallenge:          sdk.DFPPAOnChallengeActionTriggerCaptcha,
+			Enabled:              sdk.DFPPASettingDisabled,
+			OnChallenge:          sdk.DFPPAOnChallengeActionAllow,
 			LookupTimeoutSeconds: 10,
 		},
 		Passwords: &sdk.B2BPasswordsConfig{
@@ -121,6 +127,8 @@ func makeTestB2BConfig(t *testing.T) sdk.B2BConfig {
 			PKCERequiredForPasswordResets: false,
 		},
 		Cookies: &sdk.B2BCookiesConfig{
+			// This can only be Disabled unless the project has
+			// CNAMEs configured
 			HttpOnlyCookies: sdk.HttpOnlyCookiesSettingDisabled,
 		},
 	}

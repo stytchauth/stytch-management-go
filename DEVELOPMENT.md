@@ -7,6 +7,17 @@ Thanks for contributing to Stytch's Management Go library! If you run into troub
 1. Clone this repo.
 2. To test your changes locally replace the import in your test project's go.mod with `replace github.com/stytchauth/stytch-management-go => ../stytch-management-go` where `../stytch-management-go` is the path to your cloned copy of stytch-management-go.
 
+
+## Local Testing
+
+1. Create a workspace management key and secret from your Stytch workspace
+1. Use the template in .env.example to create a file .env with these credentials
+1. run `make test`
+
+If using an IDE to test, you must add that environment to your test setup, otherwise the tests will be skipped. 
+
+There are helper functions built in to our tests (see `DisposableProject()` in client_test.go) that will create temporary projects and then delete them in order to test all the endpoints. This will not affect any existing projects.
+
 ## Issues and Pull Requests
 
 Please file issues in this repo. We don't have an issue template yet, but for now, say whatever you think is important!
