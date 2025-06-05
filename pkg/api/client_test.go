@@ -45,7 +45,7 @@ func (c *testClient) DisposableProject(vertical projects.Vertical) projects.Proj
 	c.t.Helper()
 	ctx := context.Background()
 	resp, err := c.Projects.Create(ctx, projects.CreateRequest{
-		ProjectName: "Disposable project",
+		ProjectName: "Created disposable project",
 		Vertical:    vertical,
 	})
 	require.NoError(c.t, err)
