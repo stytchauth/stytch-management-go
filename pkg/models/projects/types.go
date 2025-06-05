@@ -49,9 +49,9 @@ type Project struct {
 	// LiveUserLockThreshold is an int representing how many failed authenticate attempts will cause a user in live to be locked. Defaults to 10
 	LiveUserLockThreshold int32 `json:"live_user_lock_threshold"`
 	// TestUserLockTTL is an int representing the time in seconds that the user in test remains locked once the lock is set. Defaults to 1hr (3600sec)
-	TestUserLockTTL int64 `json:"test_user_lock_ttl"`
+	TestUserLockTTL int32 `json:"test_user_lock_ttl"`
 	// LiveUserLockTTL is an int representing the time in seconds that the user in live remains locked once the lock is set. Defaults to 1hr (3600sec)
-	LiveUserLockTTL int64 `json:"live_user_lock_ttl"`
+	LiveUserLockTTL int32 `json:"live_user_lock_ttl"`
 }
 
 type CreateRequest struct {
@@ -76,9 +76,9 @@ type CreateRequest struct {
 	// LiveUserLockThreshold is an int representing how many failed authenticate attempts will cause a user in live to be locked. Defaults to 10 if omitted.
 	LiveUserLockThreshold *int32 `json:"live_user_lock_threshold"`
 	// TestUserLockTTL is an int representing the time in seconds that the user in test remains locked once the lock is set. Defaults to 1hr (3600sec) if omitted.
-	TestUserLockTTL *int64 `json:"test_user_lock_ttl"`
+	TestUserLockTTL *int32 `json:"test_user_lock_ttl"`
 	// LiveUserLockTTL is an int representing the time in seconds that the user in live remains locked once the lock is set. Defaults to 1hr (3600sec) if omitted.
-	LiveUserLockTTL *int64 `json:"live_user_lock_ttl"`
+	LiveUserLockTTL *int32 `json:"live_user_lock_ttl"`
 }
 
 type CreateResponse struct {
@@ -149,9 +149,9 @@ type UpdateRequest struct {
 	// LiveUserLockThreshold is an int representing how many failed authenticate attempts will cause a user in live to be locked. Defaults to 10
 	LiveUserLockThreshold *int32 `json:"live_user_lock_threshold"`
 	// TestUserLockTTL is an int representing the time in seconds that the user in test remains locked once the lock is set. Defaults to 1hr (3600sec)
-	TestUserLockTTL *int64 `json:"test_user_lock_ttl"`
+	TestUserLockTTL *int32 `json:"test_user_lock_ttl"`
 	// LiveUserLockTTL is an int representing the time in seconds that the user in live remains locked once the lock is set. Defaults to 1hr (3600sec)
-	LiveUserLockTTL *int64 `json:"live_user_lock_ttl"`
+	LiveUserLockTTL *int32 `json:"live_user_lock_ttl"`
 }
 
 type UpdateResponse struct {

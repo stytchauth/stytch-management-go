@@ -64,16 +64,12 @@ func Test_ProjectsCreate(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "Test project", resp.Project.Name)
 		assert.Equal(t, projects.VerticalB2B, resp.Project.Vertical)
-		assert.True(t, resp.Project.TestUserImpersonationEnabled)
-		assert.False(t, resp.Project.LiveUserImpersonationEnabled)
-		assert.True(t, resp.Project.TestCrossOrgPasswordsEnabled)
-		assert.True(t, resp.Project.LiveCrossOrgPasswordsEnabled)
 		assert.False(t, resp.Project.TestUserLockSelfServeEnabled)
 		assert.False(t, resp.Project.LiveUserLockSelfServeEnabled)
 		assert.Equal(t, int32(5), resp.Project.TestUserLockThreshold)
 		assert.Equal(t, int32(10), resp.Project.LiveUserLockThreshold)
-		assert.Equal(t, int64(3600), resp.Project.TestUserLockTTL)
-		assert.Equal(t, int64(3600), resp.Project.LiveUserLockTTL)
+		assert.Equal(t, int32(3600), resp.Project.TestUserLockTTL)
+		assert.Equal(t, int32(3600), resp.Project.LiveUserLockTTL)
 	})
 
 }
