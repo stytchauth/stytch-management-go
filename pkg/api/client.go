@@ -15,6 +15,7 @@ type API struct {
 
 	// These are the clients for all the different
 	// resources available via the management API
+	CountryCodeAllowlist   *CountryCodeAllowlistClient
 	EmailTemplates         *EmailTemplatesClient
 	JWTTemplates           *JWTTemplatesClient
 	PasswordStrengthConfig *PasswordStrengthConfigClient
@@ -72,6 +73,7 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 
 	return &API{
 		client:                 client,
+		CountryCodeAllowlist:   newCountryCodeAllowlistClient(client),
 		EmailTemplates:         newEmailTemplatesClient(client),
 		JWTTemplates:           newJWTTemplatesClient(client),
 		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
@@ -85,7 +87,7 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 	}
 }
 
-// NewClient creates a new API client with an access token.
+// NewAccessTokenClient creates a new API client with an access token.
 func NewAccessTokenClient(accessToken string, opts ...APIOption) *API {
 	c := apiConfig{
 		baseURI:    defaultBaseURI,
@@ -104,6 +106,7 @@ func NewAccessTokenClient(accessToken string, opts ...APIOption) *API {
 
 	return &API{
 		client:                 client,
+		CountryCodeAllowlist:   newCountryCodeAllowlistClient(client),
 		EmailTemplates:         newEmailTemplatesClient(client),
 		JWTTemplates:           newJWTTemplatesClient(client),
 		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
