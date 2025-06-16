@@ -1,5 +1,20 @@
 package countrycodeallowlist
 
+type DeliveryMethod string
+
+const (
+	DeliveryMethodSMS      DeliveryMethod = "sms"
+	DeliveryMethodWhatsApp DeliveryMethod = "whatsapp"
+)
+
+// DeliveryMethods returns a list of all supported delivery methods.
+func DeliveryMethods() []DeliveryMethod {
+	return []DeliveryMethod{
+		DeliveryMethodSMS,
+		DeliveryMethodWhatsApp,
+	}
+}
+
 type GetAllowedSMSCountryCodesRequest struct {
 	// ProjectID is the unique ID of the project for which to retrieve allowed SMS country codes.
 	ProjectID string `json:"project_id"`
