@@ -15,6 +15,8 @@ func DeliveryMethods() []DeliveryMethod {
 	}
 }
 
+var DefaultCountryCodes = []string{"CA", "US"}
+
 type GetAllowedSMSCountryCodesRequest struct {
 	// ProjectID is the unique ID of the project for which to retrieve allowed SMS country codes.
 	ProjectID string `json:"project_id"`
