@@ -17,6 +17,7 @@ type API struct {
 	// resources available via the management API
 	CountryCodeAllowlist   *CountryCodeAllowlistClient
 	EmailTemplates         *EmailTemplatesClient
+	EventLogStreaming      *EventLogStreamingClient
 	JWTTemplates           *JWTTemplatesClient
 	PasswordStrengthConfig *PasswordStrengthConfigClient
 	Projects               *ProjectsClient
@@ -75,6 +76,7 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 		client:                 client,
 		CountryCodeAllowlist:   newCountryCodeAllowlistClient(client),
 		EmailTemplates:         newEmailTemplatesClient(client),
+		EventLogStreaming:      newEventLogStreamingClient(client),
 		JWTTemplates:           newJWTTemplatesClient(client),
 		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
 		Projects:               newProjectsClient(client),
@@ -108,6 +110,7 @@ func NewAccessTokenClient(accessToken string, opts ...APIOption) *API {
 		client:                 client,
 		CountryCodeAllowlist:   newCountryCodeAllowlistClient(client),
 		EmailTemplates:         newEmailTemplatesClient(client),
+		EventLogStreaming:      newEventLogStreamingClient(client),
 		JWTTemplates:           newJWTTemplatesClient(client),
 		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
 		Projects:               newProjectsClient(client),

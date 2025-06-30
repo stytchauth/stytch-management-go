@@ -71,7 +71,6 @@ func Test_ProjectsCreate(t *testing.T) {
 		assert.Equal(t, int32(3600), resp.Project.TestUserLockTTL)
 		assert.Equal(t, int32(3600), resp.Project.LiveUserLockTTL)
 	})
-
 }
 
 func Test_ProjectsGet(t *testing.T) {

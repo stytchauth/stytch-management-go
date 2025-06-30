@@ -4,9 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/http"
+
 	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
 	cca "github.com/stytchauth/stytch-management-go/v2/pkg/models/countrycodeallowlist"
-	"net/http"
 )
 
 type CountryCodeAllowlistClient struct {
