@@ -72,7 +72,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 	t.Run("default country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		project := client.DisposableProject(projects.VerticalConsumer)
 		ctx := context.Background()
 		expected := []string{"CA", "US"}
 
