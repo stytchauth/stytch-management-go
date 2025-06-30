@@ -38,6 +38,7 @@ jobs:
     env:
       STYTCH_WORKSPACE_KEY_ID: ${{ secrets.STYTCH_WORKSPACE_KEY_ID }}
       STYTCH_WORKSPACE_KEY_SECRET: ${{ secrets.STYTCH_WORKSPACE_KEY_SECRET }}
+      STYTCH_WORKSPACE_BASE_URI: ${{ secrets.STYTCH_WORKSPACE_BASE_URI }}
     steps:
       - uses: actions/checkout@v3
 
