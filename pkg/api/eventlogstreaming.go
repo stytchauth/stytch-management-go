@@ -30,6 +30,9 @@ func (c *EventLogStreamingClient) Get(
 		nil,
 		&resp,
 	)
+	if err != nil {
+		return nil, err
+	}
 	return &resp, err
 }
 
@@ -52,6 +55,9 @@ func (c *EventLogStreamingClient) Create(
 		jsonBody,
 		&resp,
 	)
+	if err != nil {
+		return nil, err
+	}
 	return &resp, err
 }
 
@@ -74,6 +80,9 @@ func (c *EventLogStreamingClient) Update(
 		jsonBody,
 		&resp,
 	)
+	if err != nil {
+		return nil, err
+	}
 	return &resp, err
 }
 
@@ -91,6 +100,9 @@ func (c *EventLogStreamingClient) Delete(
 		nil,
 		&resp,
 	)
+	if err != nil {
+		return nil, err
+	}
 	return &resp, err
 }
 
@@ -98,7 +110,6 @@ func (c *EventLogStreamingClient) Enable(
 	ctx context.Context,
 	body eventlogstreaming.EnableEventLogStreamingRequest,
 ) (*eventlogstreaming.EnableEventLogStreamingResponse, error) {
-
 	var resp eventlogstreaming.EnableEventLogStreamingResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -108,6 +119,9 @@ func (c *EventLogStreamingClient) Enable(
 		nil,
 		&resp,
 	)
+	if err != nil {
+		return nil, err
+	}
 	return &resp, err
 }
 
@@ -115,7 +129,6 @@ func (c *EventLogStreamingClient) Disable(
 	ctx context.Context,
 	body eventlogstreaming.DisableEventLogStreamingRequest,
 ) (*eventlogstreaming.DisableEventLogStreamingResponse, error) {
-
 	var resp eventlogstreaming.DisableEventLogStreamingResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -125,5 +138,8 @@ func (c *EventLogStreamingClient) Disable(
 		nil,
 		&resp,
 	)
+	if err != nil {
+		return nil, err
+	}
 	return &resp, err
 }

@@ -2,11 +2,12 @@ package api_test
 
 import (
 	"context"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/stytchauth/stytch-management-go/v2/pkg/models/eventlogstreaming"
 	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projects"
-	"testing"
 )
 
 func (c *testClient) createEventLogStreamingConfig(
