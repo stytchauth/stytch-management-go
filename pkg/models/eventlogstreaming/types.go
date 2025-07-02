@@ -8,6 +8,14 @@ const (
 	DestinationTypeGrafanaLoki DestinationType = "GRAFANA_LOKI"
 )
 
+// DestinationTypes returns a list of all supported destination types
+func DestinationTypes() []DestinationType {
+	return []DestinationType{
+		DestinationTypeDatadog,
+		DestinationTypeGrafanaLoki,
+	}
+}
+
 // These are the possible destination configurations
 type DestinationConfig struct {
 	Datadog     *DatadogConfig     `json:"datadog"`
@@ -31,6 +39,17 @@ const (
 	DatadogSiteAP1 DatadogSite = "AP1"
 )
 
+// DatadogSites returns a list of all supported Datadog sites
+func DatadogSites() []DatadogSite {
+	return []DatadogSite{
+		DatadogSiteUS,
+		DatadogSiteUS3,
+		DatadogSiteUS5,
+		DatadogSiteEU,
+		DatadogSiteAP1,
+	}
+}
+
 // DatadogConfig is the configuration for sending events to a Datadog account
 // All values must be provided in any create or update request
 type DatadogConfig struct {
@@ -51,9 +70,16 @@ type StreamingStatus string
 
 const (
 	StreamingStatusActive   StreamingStatus = "ACTIVE"
-	StreamingStatusPending  StreamingStatus = "PENDING"
 	StreamingStatusDisabled StreamingStatus = "DISABLED"
 )
+
+// StreamingStatuses returns a list of all supported streaming statuses
+func StreamingStatuses() []StreamingStatus {
+	return []StreamingStatus{
+		StreamingStatusActive,
+		StreamingStatusDisabled,
+	}
+}
 
 // EventLogStreamingConfig is the configuration for sending events to a destination
 type EventLogStreamingConfig struct {
