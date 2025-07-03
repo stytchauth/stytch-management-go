@@ -142,7 +142,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 }
 
 func TestCountryCodeAllowlistClient_SetAllowedSMSCountryCodes(t *testing.T) {
-	t.Run("get country codes", func(t *testing.T) {
+	t.Run("set country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
 		project := client.DisposableProject(projects.VerticalConsumer)
@@ -184,7 +184,7 @@ func TestCountryCodeAllowlistClient_SetAllowedSMSCountryCodes(t *testing.T) {
 }
 
 func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T) {
-	t.Run("get country codes", func(t *testing.T) {
+	t.Run("set country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
 		project := client.DisposableProject(projects.VerticalConsumer)
