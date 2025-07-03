@@ -109,6 +109,21 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 		assert.NoError(t, err)
 		assert.Equal(t, expected, resp.CountryCodes)
 	})
+	t.Run("B2B WhatsApp not supported", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalB2B)
+		ctx := context.Background()
+
+		// Act
+		_, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
+			&cca.GetAllowedWhatsAppCountryCodesRequest{
+				ProjectID: project.LiveProjectID,
+			})
+
+		// Assert
+		assert.ErrorContains(t, err, "country_code_allowlist_b2b_whatsapp_not_supported")
+	})
 	t.Run("project does not exist", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
@@ -135,7 +150,7 @@ func TestCountryCodeAllowlistClient_SetAllowedSMSCountryCodes(t *testing.T) {
 		expected := []string{"CA", "MX", "US"}
 
 		// Act
-		_, err := client.CountryCodeAllowlist.SetAllowedSMSCountryCodes(ctx,
+		setResp, err := client.CountryCodeAllowlist.SetAllowedSMSCountryCodes(ctx,
 			&cca.SetAllowedSMSCountryCodesRequest{
 				ProjectID:    project.LiveProjectID,
 				CountryCodes: expected,
@@ -143,12 +158,14 @@ func TestCountryCodeAllowlistClient_SetAllowedSMSCountryCodes(t *testing.T) {
 
 		// Assert
 		assert.NoError(t, err)
-		resp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx,
+		assert.Equal(t, expected, setResp.CountryCodes)
+
+		getResp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx,
 			&cca.GetAllowedSMSCountryCodesRequest{
 				ProjectID: project.LiveProjectID,
 			})
 		require.NoError(t, err)
-		assert.Equal(t, expected, resp.CountryCodes)
+		assert.Equal(t, expected, getResp.CountryCodes)
 	})
 	t.Run("project does not exist", func(t *testing.T) {
 		// Arrange
@@ -175,7 +192,7 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 		expected := []string{"CA", "MX", "US"}
 
 		// Act
-		_, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
+		setResp, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
 			&cca.SetAllowedWhatsAppCountryCodesRequest{
 				ProjectID:    project.LiveProjectID,
 				CountryCodes: expected,
@@ -183,12 +200,30 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 
 		// Assert
 		assert.NoError(t, err)
-		resp, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
+		assert.Equal(t, expected, setResp.CountryCodes)
+
+		getResp, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
 			&cca.GetAllowedWhatsAppCountryCodesRequest{
 				ProjectID: project.LiveProjectID,
 			})
 		require.NoError(t, err)
-		assert.Equal(t, expected, resp.CountryCodes)
+		assert.Equal(t, expected, getResp.CountryCodes)
+	})
+	t.Run("B2B WhatsApp not supported", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalB2B)
+		ctx := context.Background()
+
+		// Act
+		_, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
+			&cca.SetAllowedWhatsAppCountryCodesRequest{
+				ProjectID:    project.LiveProjectID,
+				CountryCodes: []string{"CA", "MX", "US"},
+			})
+
+		// Assert
+		assert.ErrorContains(t, err, "country_code_allowlist_b2b_whatsapp_not_supported")
 	})
 	t.Run("project does not exist", func(t *testing.T) {
 		// Arrange
