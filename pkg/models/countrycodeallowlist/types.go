@@ -51,6 +51,8 @@ type SetAllowedSMSCountryCodesRequest struct {
 type SetAllowedSMSCountryCodesResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id"`
+	// CountryCodes is a list of country codes that are allowed for SMS.
+	CountryCodes []string `json:"country_codes"`
 }
 
 type SetAllowedWhatsAppCountryCodesRequest struct {
@@ -63,4 +65,6 @@ type SetAllowedWhatsAppCountryCodesRequest struct {
 type SetAllowedWhatsAppCountryCodesResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id"`
+	// CountryCodes is a list of country codes that are allowed for WhatsApp.
+	CountryCodes []string `json:"country_codes"`
 }
