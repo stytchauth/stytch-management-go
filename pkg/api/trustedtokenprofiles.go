@@ -160,7 +160,7 @@ func (c *TrustedTokenProfilesClient) DeletePEM(
 	err := c.client.NewRequest(
 		ctx,
 		"DELETE",
-		"/v1/projects/"+body.ProjectID+"/trusted-token-profiles/"+body.ProfileID+"/keys/"+body.PemFileID,
+		"/v1/projects/"+body.ProjectID+"/trusted-token-profiles/"+body.ProfileID+"/keys/"+body.PEMFileID,
 		nil,
 		nil,
 		&resp,

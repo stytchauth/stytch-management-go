@@ -1,27 +1,27 @@
 package trustedtokenprofiles
 
 type TrustedTokenProfile struct {
-	// ProfileID is the unique identifier for the trusted token profile
-	ProfileID string `json:"profile_id"`
+	// ID is the unique identifier for the trusted token profile
+	ID string `json:"profile_id"`
 	// Name is the name of the trusted token profile
 	Name string `json:"name"`
 	// Audience is the audience for the trusted token profile
 	Audience string `json:"audience"`
 	// Issuer is the issuer for the trusted token profile
 	Issuer string `json:"issuer"`
-	// JwksUrl is the JWKS URL for the trusted token profile (optional)
-	JwksUrl *string `json:"jwks_url,omitempty"`
+	// JwksURL is the JWKS URL for the trusted token profile (optional)
+	JwksURL *string `json:"jwks_url,omitempty"`
 	// AttributeMapping is the attribute mapping for the trusted token profile (optional)
 	AttributeMapping map[string]interface{} `json:"attribute_mapping,omitempty"`
-	// PemFiles is a list of PEM file identifiers
-	PemFiles []PEMFile `json:"pem_files"`
+	// PEMFiles is a list of PEM file identifiers
+	PEMFiles []PEMFile `json:"pem_files"`
 	// PublicKeyType is the type of public key
 	PublicKeyType string `json:"public_key_type"`
 }
 
 type PEMFile struct {
-	// KeyID is the unique identifier for the PEM file
-	PemFileID string `json:"pem_file_id"`
+	// ID is the unique identifier for the PEM file
+	ID string `json:"pem_file_id"`
 	// PublicKey is the public key content
 	PublicKey string `json:"public_key"`
 }
@@ -35,12 +35,12 @@ type CreateTrustedTokenProfileRequest struct {
 	Audience string `json:"audience"`
 	// Issuer is the issuer for the trusted token profile
 	Issuer string `json:"issuer"`
-	// JwksUrl is the JWKS URL for the trusted token profile (optional)
-	JwksUrl *string `json:"jwks_url,omitempty"`
+	// JwksURL is the JWKS URL for the trusted token profile (optional)
+	JwksURL *string `json:"jwks_url,omitempty"`
 	// AttributeMapping is the attribute mapping for the trusted token profile (optional)
 	AttributeMapping map[string]interface{} `json:"attribute_mapping,omitempty"`
-	// PemFiles is a list of PEM file identifiers
-	PemFiles []string `json:"pem_files"`
+	// PEMFiles is a list of PEM files
+	PEMFiles []string `json:"pem_files"`
 	// PublicKeyType is the type of public key
 	PublicKeyType string `json:"public_key_type"`
 }
@@ -50,8 +50,8 @@ type CreateTrustedTokenProfileResponse struct {
 	StatusCode int `json:"status_code"`
 	// RequestID is a unique identifier to help with debugging the request
 	RequestID string `json:"request_id"`
-	// ProfileID is the id of the trusted token profile that was created
-	ProfileID string `json:"profile_id"`
+	// TrustedTokenProfile is the trusted token profile that was created
+	TrustedTokenProfile TrustedTokenProfile `json:"profile"`
 }
 
 type GetTrustedTokenProfileRequest struct {
@@ -95,8 +95,8 @@ type UpdateTrustedTokenProfileRequest struct {
 	Audience string `json:"audience,omitempty"`
 	// Issuer is the issuer for the trusted token profile (optional)
 	Issuer string `json:"issuer,omitempty"`
-	// JwksUrl is the JWKS URL for the trusted token profile (optional)
-	JwksUrl *string `json:"jwks_url,omitempty"`
+	// JwksURL is the JWKS URL for the trusted token profile (optional)
+	JwksURL *string `json:"jwks_url,omitempty"`
 	// AttributeMapping is the attribute mapping for the trusted token profile (optional)
 	AttributeMapping map[string]interface{} `json:"attribute_mapping,omitempty"`
 }
@@ -106,8 +106,8 @@ type UpdateTrustedTokenProfileResponse struct {
 	StatusCode int `json:"status_code"`
 	// RequestID is a unique identifier to help with debugging the request
 	RequestID string `json:"request_id"`
-	// ProfileID is the id of the trusted token profile that was updated
-	ProfileID string `json:"profile_id"`
+	// TrustedTokenProfile is the trusted token profile that was updated
+	TrustedTokenProfile TrustedTokenProfile `json:"profile"`
 }
 
 type DeleteTrustedTokenProfileRequest struct {
@@ -138,8 +138,8 @@ type CreatePEMFileResponse struct {
 	StatusCode int `json:"status_code"`
 	// RequestID is a unique identifier to help with debugging the request
 	RequestID string `json:"request_id"`
-	// PemFileID is the id of the PEM file that was created
-	PEMFileID string `json:"pem_file_id"`
+	// PEMFile is the PEM file that was created
+	PEMFile PEMFile `json:"pem_file"`
 }
 
 type DeletePEMFileRequest struct {
@@ -147,8 +147,8 @@ type DeletePEMFileRequest struct {
 	ProjectID string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile
 	ProfileID string `json:"profile_id"`
-	// PemFileId is the unique identifier for the PEM file
-	PemFileID string `json:"pem_file_id"`
+	// PEMFileID is the unique identifier for the PEM file
+	PEMFileID string `json:"pem_file_id"`
 }
 
 type DeletePEMFileResponse struct {

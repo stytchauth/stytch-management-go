@@ -24,10 +24,10 @@ func (c *testClient) createTrustedTokenProfileJWK(
 		Audience:      audience,
 		Issuer:        issuer,
 		PublicKeyType: "jwk",
-		JwksUrl:       ptr(jwksUrl),
+		JwksURL:       ptr(jwksUrl),
 	})
 	require.NoError(c.t, err)
-	return resp.ProfileID
+	return resp.TrustedTokenProfile.ID
 }
 
 func (c *testClient) createTrustedTokenProfilePEM(
@@ -44,10 +44,10 @@ func (c *testClient) createTrustedTokenProfilePEM(
 		Audience:      audience,
 		Issuer:        issuer,
 		PublicKeyType: "pem",
-		PemFiles:      []string{publicKey},
+		PEMFiles:      []string{publicKey},
 	})
 	require.NoError(c.t, err)
-	return resp.ProfileID
+	return resp.TrustedTokenProfile.ID
 }
 
 func (c *testClient) cleanupTrustedTokenProfile(projectID string, profileID string) {
@@ -73,7 +73,7 @@ func TestTrustedTokenProfilesClient_Create(t *testing.T) {
 			Audience:      "test-audience",
 			Issuer:        "https://test-issuer.com",
 			PublicKeyType: "jwk",
-			JwksUrl:       ptr("https://test-issuer.com/.well-known/jwks.json"),
+			JwksURL:       ptr("https://test-issuer.com/.well-known/jwks.json"),
 			AttributeMapping: map[string]interface{}{
 				"email": "myemail@example.com",
 				"name":  "myname",
@@ -82,8 +82,17 @@ func TestTrustedTokenProfilesClient_Create(t *testing.T) {
 
 		// Assert
 		require.NoError(t, err)
-		assert.NotEmpty(t, resp.ProfileID)
-		client.cleanupTrustedTokenProfile(project.TestProjectID, resp.ProfileID)
+		assert.NotEmpty(t, resp.TrustedTokenProfile.ID)
+		assert.Equal(t, "Test Profile", resp.TrustedTokenProfile.Name)
+		assert.Equal(t, "test-audience", resp.TrustedTokenProfile.Audience)
+		assert.Equal(t, "https://test-issuer.com", resp.TrustedTokenProfile.Issuer)
+		assert.Equal(t, "jwk", resp.TrustedTokenProfile.PublicKeyType)
+		assert.Equal(t, "https://test-issuer.com/.well-known/jwks.json", *resp.TrustedTokenProfile.JwksURL)
+		assert.Equal(t, map[string]interface{}{
+			"email": "myemail@example.com",
+			"name":  "myname",
+		}, resp.TrustedTokenProfile.AttributeMapping)
+		client.cleanupTrustedTokenProfile(project.TestProjectID, resp.TrustedTokenProfile.ID)
 	})
 
 	t.Run("happy path - with PEM", func(t *testing.T) {
@@ -94,15 +103,22 @@ func TestTrustedTokenProfilesClient_Create(t *testing.T) {
 			Audience:      "pem-test-audience",
 			Issuer:        "https://pem-test-issuer.com",
 			PublicKeyType: "pem",
-			PemFiles: []string{
+			PEMFiles: []string{
 				"-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4f5wg5l2hKsTeNem/V41\nfGnJm6gOdrj8ym3rFkEjWT2btYK36hY+c2QKfPU5O7w=\n-----END PUBLIC KEY-----",
 			},
 		})
 
 		// Assert
 		require.NoError(t, err)
-		assert.NotEmpty(t, resp.ProfileID)
-		client.cleanupTrustedTokenProfile(project.TestProjectID, resp.ProfileID)
+		assert.NotEmpty(t, resp.TrustedTokenProfile.ID)
+		assert.Equal(t, "Test Profile with PEM", resp.TrustedTokenProfile.Name)
+		assert.Equal(t, "pem-test-audience", resp.TrustedTokenProfile.Audience)
+		assert.Equal(t, "https://pem-test-issuer.com", resp.TrustedTokenProfile.Issuer)
+		assert.Equal(t, "pem", resp.TrustedTokenProfile.PublicKeyType)
+		assert.Equal(t, []string{
+			"-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4f5wg5l2hKsTeNem/V41\nfGnJm6gOdrj8ym3rFkEjWT2btYK36hY+c2QKfPU5O7w=\n-----END PUBLIC KEY-----",
+		}, resp.TrustedTokenProfile.PEMFiles)
+		client.cleanupTrustedTokenProfile(project.TestProjectID, resp.TrustedTokenProfile.ID)
 	})
 }
 
@@ -121,12 +137,12 @@ func TestTrustedTokenProfilesClient_Get(t *testing.T) {
 
 	// Assert
 	assert.NoError(t, err)
-	assert.Equal(t, profileID, resp.TrustedTokenProfile.ProfileID)
+	assert.Equal(t, profileID, resp.TrustedTokenProfile.ID)
 	assert.Equal(t, "Test Profile Get", resp.TrustedTokenProfile.Name)
 	assert.Equal(t, "test-profile-get-audience", resp.TrustedTokenProfile.Audience)
 	assert.Equal(t, "https://test-profile-get-issuer.com", resp.TrustedTokenProfile.Issuer)
 	assert.Equal(t, "jwk", resp.TrustedTokenProfile.PublicKeyType)
-	assert.Equal(t, "https://test-profile-get-issuer.com/.well-known/jwks.json", *resp.TrustedTokenProfile.JwksUrl)
+	assert.Equal(t, "https://test-profile-get-issuer.com/.well-known/jwks.json", *resp.TrustedTokenProfile.JwksURL)
 }
 
 func TestTrustedTokenProfilesClient_List(t *testing.T) {
@@ -148,7 +164,7 @@ func TestTrustedTokenProfilesClient_List(t *testing.T) {
 	assert.Len(t, resp.TrustedTokenProfiles, 2)
 
 	var profile1, profile2 *trustedtokenprofiles.TrustedTokenProfile
-	if resp.TrustedTokenProfiles[0].ProfileID == profileID1 {
+	if resp.TrustedTokenProfiles[0].ID == profileID1 {
 		profile1 = &resp.TrustedTokenProfiles[0]
 		profile2 = &resp.TrustedTokenProfiles[1]
 	} else {
@@ -156,19 +172,19 @@ func TestTrustedTokenProfilesClient_List(t *testing.T) {
 		profile2 = &resp.TrustedTokenProfiles[0]
 	}
 
-	assert.Equal(t, profileID1, profile1.ProfileID)
+	assert.Equal(t, profileID1, profile1.ID)
 	assert.Equal(t, "Test Profile 1", profile1.Name)
 	assert.Equal(t, "test-profile-1-audience", profile1.Audience)
 	assert.Equal(t, "https://test-profile-1-issuer.com", profile1.Issuer)
 	assert.Equal(t, "jwk", profile1.PublicKeyType)
-	assert.Equal(t, "https://test-profile-1-issuer.com/.well-known/jwks.json", *profile1.JwksUrl)
+	assert.Equal(t, "https://test-profile-1-issuer.com/.well-known/jwks.json", *profile1.JwksURL)
 
-	assert.Equal(t, profileID2, profile2.ProfileID)
+	assert.Equal(t, profileID2, profile2.ID)
 	assert.Equal(t, "Test Profile 2", profile2.Name)
 	assert.Equal(t, "test-profile-2-audience", profile2.Audience)
 	assert.Equal(t, "https://test-profile-2-issuer.com", profile2.Issuer)
 	assert.Equal(t, "jwk", profile2.PublicKeyType)
-	assert.Equal(t, "https://test-profile-2-issuer.com/.well-known/jwks.json", *profile2.JwksUrl)
+	assert.Equal(t, "https://test-profile-2-issuer.com/.well-known/jwks.json", *profile2.JwksURL)
 }
 
 func TestTrustedTokenProfilesClient_Update(t *testing.T) {
@@ -190,7 +206,12 @@ func TestTrustedTokenProfilesClient_Update(t *testing.T) {
 
 		// Assert
 		assert.NoError(t, err)
-		assert.Equal(t, profileID, resp.ProfileID)
+		assert.Equal(t, profileID, resp.TrustedTokenProfile.ID)
+		assert.Equal(t, "Updated Profile", resp.TrustedTokenProfile.Name)
+		assert.Equal(t, "updated-profile-audience", resp.TrustedTokenProfile.Audience)
+		assert.Equal(t, "https://updated-profile-issuer.com", resp.TrustedTokenProfile.Issuer)
+		assert.Equal(t, "jwk", resp.TrustedTokenProfile.PublicKeyType)
+		assert.Equal(t, "https://test-profile-update-issuer.com/.well-known/jwks.json", *resp.TrustedTokenProfile.JwksURL)
 	})
 	t.Run("happy path - only some fields updated", func(t *testing.T) {
 		// Arrange
@@ -208,7 +229,12 @@ func TestTrustedTokenProfilesClient_Update(t *testing.T) {
 
 		// Assert
 		assert.NoError(t, err)
-		assert.Equal(t, profileID, resp.ProfileID)
+		assert.Equal(t, profileID, resp.TrustedTokenProfile.ID)
+		assert.Equal(t, "Updated Profile 3", resp.TrustedTokenProfile.Name)
+		assert.Equal(t, "test-profile-update-2-audience", resp.TrustedTokenProfile.Audience)
+		assert.Equal(t, "https://test-profile-update-2-issuer.com", resp.TrustedTokenProfile.Issuer)
+		assert.Equal(t, "jwk", resp.TrustedTokenProfile.PublicKeyType)
+		assert.Equal(t, "https://test-profile-update-2-issuer.com/.well-known/jwks.json", *resp.TrustedTokenProfile.JwksURL)
 	})
 }
 
@@ -247,7 +273,8 @@ func TestTrustedTokenProfilesClient_CreatePEM(t *testing.T) {
 
 	// Assert
 	assert.NoError(t, err)
-	assert.NotEmpty(t, resp.PEMFileID)
+	assert.NotEmpty(t, resp.PEMFile.ID)
+	assert.Equal(t, samplePublicKey, resp.PEMFile.PublicKey)
 }
 
 func TestTrustedTokenProfilesClient_DeletePEM(t *testing.T) {
@@ -271,7 +298,7 @@ func TestTrustedTokenProfilesClient_DeletePEM(t *testing.T) {
 	_, err = client.TrustedTokenProfiles.DeletePEM(context.Background(), &trustedtokenprofiles.DeletePEMFileRequest{
 		ProjectID: project.TestProjectID,
 		ProfileID: profileID,
-		PemFileID: createResp.PEMFileID,
+		PEMFileID: createResp.PEMFile.ID,
 	})
 
 	// Assert
