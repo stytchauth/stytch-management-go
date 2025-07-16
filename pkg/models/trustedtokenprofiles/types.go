@@ -13,7 +13,7 @@ type TrustedTokenProfile struct {
 	JwksURL *string `json:"jwks_url,omitempty"`
 	// AttributeMapping is the attribute mapping for the trusted token profile (optional)
 	AttributeMapping map[string]interface{} `json:"attribute_mapping,omitempty"`
-	// PEMFiles is a list of PEM file identifiers
+	// PEMFiles is a list of PEM files
 	PEMFiles []PEMFile `json:"pem_files"`
 	// PublicKeyType is the type of public key
 	PublicKeyType string `json:"public_key_type"`
