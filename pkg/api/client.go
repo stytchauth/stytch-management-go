@@ -27,6 +27,7 @@ type API struct {
 	RedirectURLs           *RedirectURLsClient
 	SDK                    *SDKClient
 	Secrets                *SecretsClient
+	TrustedTokenProfiles   *TrustedTokenProfilesClient
 }
 
 type apiConfig struct {
@@ -86,6 +87,7 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 		RedirectURLs:           newRedirectURLsClient(client),
 		SDK:                    newSDKClient(client),
 		Secrets:                newSecretsClient(client),
+		TrustedTokenProfiles:   newTrustedTokenProfilesClient(client),
 	}
 }
 
@@ -120,5 +122,6 @@ func NewAccessTokenClient(accessToken string, opts ...APIOption) *API {
 		RedirectURLs:           newRedirectURLsClient(client),
 		SDK:                    newSDKClient(client),
 		Secrets:                newSecretsClient(client),
+		TrustedTokenProfiles:   newTrustedTokenProfilesClient(client),
 	}
 }
