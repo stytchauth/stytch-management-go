@@ -20,6 +20,7 @@ type ClientConfig struct {
 	AccessToken        string
 	BaseURI            string
 	HTTPClient         *http.Client
+	UserAgentSuffix    string
 }
 
 type Client struct {
@@ -28,6 +29,7 @@ type Client struct {
 	accessToken        string
 	baseURI            string
 	httpClient         *http.Client
+	userAgentSuffix    string
 }
 
 func NewClient(c ClientConfig) *Client {
@@ -37,6 +39,7 @@ func NewClient(c ClientConfig) *Client {
 		accessToken:        c.AccessToken,
 		baseURI:            c.BaseURI,
 		httpClient:         c.HTTPClient,
+		userAgentSuffix:    c.UserAgentSuffix,
 	}
 }
 
@@ -104,7 +107,11 @@ func (c *Client) RawRequest(
 		panic("unable to set auth header for request")
 	}
 	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("User-Agent", "Stytch Management Go v"+version.Version)
+	userAgent := "stytch-management-go/" + version.Version
+	if c.userAgentSuffix != "" {
+		userAgent += " " + c.userAgentSuffix
+	}
+	req.Header.Add("User-Agent", userAgent)
 
 	res, err := c.httpClient.Do(req)
 	if err != nil {

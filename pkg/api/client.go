@@ -37,8 +37,9 @@ type apiConfig struct {
 	WorkspaceKeyID     string
 	WorkspaceKeySecret string
 
-	baseURI    string
-	httpClient *http.Client
+	baseURI         string
+	httpClient      *http.Client
+	userAgentSuffix string
 }
 
 type APIOption func(*apiConfig)
@@ -52,6 +53,12 @@ func WithBaseURI(baseURI string) APIOption {
 func WithHTTPClient(client *http.Client) APIOption {
 	return func(a *apiConfig) {
 		a.httpClient = client
+	}
+}
+
+func WithUserAgentSuffix(userAgentSuffix string) APIOption {
+	return func(a *apiConfig) {
+		a.userAgentSuffix = userAgentSuffix
 	}
 }
 
@@ -71,6 +78,7 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 		WorkspaceKeySecret: workspaceKeySecret,
 		BaseURI:            c.baseURI,
 		HTTPClient:         c.httpClient,
+		UserAgentSuffix:    c.userAgentSuffix,
 	})
 
 	return &API{
