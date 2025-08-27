@@ -2,7 +2,9 @@ name: Publish GitHub release
 
 on:
   push:
-    branches: [main]
+    branches:
+      - "main"
+      - "v2"
 
 jobs:
   publish:
