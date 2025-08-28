@@ -14,10 +14,9 @@ func makeTestConsumerConfig(t *testing.T) sdk.ConsumerConfig {
 	t.Helper()
 	return sdk.ConsumerConfig{
 		Basic: &sdk.ConsumerBasicConfig{
-			Enabled:        true,
-			CreateNewUsers: true,
-			Domains:        []string{"https://example.com"},
-			BundleIDs:      []string{"com.example.app"},
+			Enabled:   true,
+			Domains:   []string{"https://example.com"},
+			BundleIDs: []string{"com.example.app"},
 		},
 		Sessions: &sdk.ConsumerSessionsConfig{
 			MaxSessionDurationMinutes: 60,
@@ -55,9 +54,8 @@ func makeTestConsumerConfig(t *testing.T) sdk.ConsumerConfig {
 		// This cannot be modified beyond defaults
 		// unless the project uses DFPPA
 		DFPPA: &sdk.ConsumerDFPPAConfig{
-			Enabled:              sdk.DFPPASettingDisabled,
-			OnChallenge:          sdk.DFPPAOnChallengeActionAllow,
-			LookupTimeoutSeconds: 10,
+			Enabled:     sdk.DFPPASettingDisabled,
+			OnChallenge: sdk.DFPPAOnChallengeActionAllow,
 		},
 		Biometrics: &sdk.ConsumerBiometricsConfig{
 			CreateBiometricsEnabled: true,
@@ -80,7 +78,6 @@ func makeTestB2BConfig(t *testing.T) sdk.B2BConfig {
 	return sdk.B2BConfig{
 		Basic: &sdk.B2BBasicConfig{
 			Enabled:                 true,
-			CreateNewMembers:        true,
 			AllowSelfOnboarding:     true,
 			EnableMemberPermissions: true,
 			Domains: []sdk.AuthorizedB2BDomain{
@@ -118,9 +115,8 @@ func makeTestB2BConfig(t *testing.T) sdk.B2BConfig {
 		// These cannot be modified beyond defaults
 		// unless the project is using DFPPA
 		DFPPA: &sdk.B2BDFPPAConfig{
-			Enabled:              sdk.DFPPASettingDisabled,
-			OnChallenge:          sdk.DFPPAOnChallengeActionAllow,
-			LookupTimeoutSeconds: 10,
+			Enabled:     sdk.DFPPASettingDisabled,
+			OnChallenge: sdk.DFPPAOnChallengeActionAllow,
 		},
 		Passwords: &sdk.B2BPasswordsConfig{
 			Enabled:                       false,

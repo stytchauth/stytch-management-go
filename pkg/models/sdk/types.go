@@ -88,7 +88,10 @@ type ConsumerBasicConfig struct {
 	// Enabled is a boolean indicating whether the consumer project SDK is enabled. This allows the SDK to manage user and session data.
 	Enabled bool `json:"enabled"`
 	// CreateNewUsers is a boolean indicating whether new users can be created with the SDK.
-	CreateNewUsers bool `json:"create_new_users"`
+	//
+	// Deprecated: The value of this field does not affect any SDK functionality.
+	// It will be removed in a future major release.
+	CreateNewUsers bool `json:"create_new_users,omitempty"`
 	// Domains is a list of domains authorized for use in the SDK.
 	Domains []string `json:"domains"`
 	// BundleIDs is a list of bundle IDs authorized for use in the SDK.
@@ -167,7 +170,10 @@ type ConsumerDFPPAConfig struct {
 	// OnChallenge is the action to take when a DFPPA "challenge" verdict is returned.
 	OnChallenge DFPPAOnChallengeAction `json:"on_challenge"`
 	// LookupTimeoutSeconds is how long to wait for a DFPPA lookup to complete before timing out.
-	LookupTimeoutSeconds int32 `json:"lookup_timeout_seconds"`
+	//
+	// Deprecated: The value of this field does not affect any SDK functionality.
+	// It will be removed in a future major release.
+	LookupTimeoutSeconds int32 `json:"lookup_timeout_seconds,omitempty"`
 }
 
 type ConsumerBiometricsConfig struct {
@@ -223,7 +229,10 @@ type B2BBasicConfig struct {
 	// Enabled is a boolean indicating whether the B2B project SDK is enabled. This allows the SDK to manage user and session data.
 	Enabled bool `json:"enabled"`
 	// CreateNewMembers is a boolean indicating whether new members can be created with the SDK.
-	CreateNewMembers bool `json:"create_new_members"`
+	//
+	// Deprecated: The value of this field does not affect any SDK functionality.
+	// It will be removed in a future major release.
+	CreateNewMembers bool `json:"create_new_members,omitempty"`
 	// AllowSelfOnboarding is a boolean indicating whether self-onboarding is allowed for members in the SDK.
 	AllowSelfOnboarding bool `json:"allow_self_onboarding"`
 	// EnableMemberPermissions is a boolean indicating whether member permissions RBAC are enabled in the SDK.
@@ -291,7 +300,10 @@ type B2BDFPPAConfig struct {
 	// OnChallenge is the action to take when a DFPPA "challenge" verdict is returned.
 	OnChallenge DFPPAOnChallengeAction `json:"on_challenge"`
 	// LookupTimeoutSeconds is how long to wait for a DFPPA lookup to complete before timing out.
-	LookupTimeoutSeconds int32 `json:"lookup_timeout_seconds"`
+	//
+	// Deprecated: The value of this field does not affect any SDK functionality.
+	// It will be removed in a future major release.
+	LookupTimeoutSeconds int32 `json:"lookup_timeout_seconds,omitempty"`
 }
 
 type B2BPasswordsConfig struct {
