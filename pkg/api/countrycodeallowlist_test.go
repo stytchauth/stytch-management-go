@@ -10,9 +10,6 @@ import (
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 )
 
-// TODO: Update tests for PWA V3 structure
-// Tests are temporarily commented out while updating to PWA V3
-
 func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 	t.Run("default country codes", func(t *testing.T) {
 		// Arrange
@@ -25,7 +22,7 @@ func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 		resp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx,
 			&cca.GetAllowedSMSCountryCodesRequest{
 				Project:     project.Project,
-				Environment: "live",
+				Environment: "test",
 			})
 
 		// Assert
@@ -41,7 +38,7 @@ func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 		_, err := client.CountryCodeAllowlist.SetAllowedSMSCountryCodes(ctx,
 			&cca.SetAllowedSMSCountryCodesRequest{
 				Project:      project.Project,
-				Environment:  "live",
+				Environment:  "test",
 				CountryCodes: expected,
 			})
 		require.NoError(t, err)
@@ -50,7 +47,7 @@ func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 		resp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx,
 			&cca.GetAllowedSMSCountryCodesRequest{
 				Project:     project.Project,
-				Environment: "live",
+				Environment: "test",
 			})
 
 		// Assert
@@ -66,7 +63,7 @@ func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 		resp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx,
 			&cca.GetAllowedSMSCountryCodesRequest{
 				Project:     "project-does-not-exist",
-				Environment: "live",
+				Environment: "test",
 			})
 
 		// Assert
@@ -87,7 +84,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 		resp, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
 			&cca.GetAllowedWhatsAppCountryCodesRequest{
 				Project:     project.Project,
-				Environment: "live",
+				Environment: "test",
 			})
 
 		// Assert
@@ -103,7 +100,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 		_, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
 			&cca.SetAllowedWhatsAppCountryCodesRequest{
 				Project:      project.Project,
-				Environment:  "live",
+				Environment:  "test",
 				CountryCodes: expected,
 			})
 		require.NoError(t, err)
@@ -112,7 +109,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 		resp, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
 			&cca.GetAllowedWhatsAppCountryCodesRequest{
 				Project:     project.Project,
-				Environment: "live",
+				Environment: "test",
 			})
 
 		// Assert
@@ -129,7 +126,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 		_, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
 			&cca.GetAllowedWhatsAppCountryCodesRequest{
 				Project:     project.Project,
-				Environment: "live",
+				Environment: "test",
 			})
 
 		// Assert
@@ -144,7 +141,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 		resp, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
 			&cca.GetAllowedWhatsAppCountryCodesRequest{
 				Project:     "project-does-not-exist",
-				Environment: "live",
+				Environment: "test",
 			})
 
 		// Assert
@@ -165,7 +162,7 @@ func TestCountryCodeAllowlistClient_SetAllowedSMSCountryCodes(t *testing.T) {
 		setResp, err := client.CountryCodeAllowlist.SetAllowedSMSCountryCodes(ctx,
 			&cca.SetAllowedSMSCountryCodesRequest{
 				Project:      project.Project,
-				Environment:  "live",
+				Environment:  "test",
 				CountryCodes: expected,
 			})
 
@@ -176,7 +173,7 @@ func TestCountryCodeAllowlistClient_SetAllowedSMSCountryCodes(t *testing.T) {
 		getResp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx,
 			&cca.GetAllowedSMSCountryCodesRequest{
 				Project:     project.Project,
-				Environment: "live",
+				Environment: "test",
 			})
 		require.NoError(t, err)
 		assert.Equal(t, expected, getResp.CountryCodes)
@@ -190,7 +187,7 @@ func TestCountryCodeAllowlistClient_SetAllowedSMSCountryCodes(t *testing.T) {
 		_, err := client.CountryCodeAllowlist.SetAllowedSMSCountryCodes(ctx,
 			&cca.SetAllowedSMSCountryCodesRequest{
 				Project:      "project-does-not-exist",
-				Environment:  "live",
+				Environment:  "test",
 				CountryCodes: []string{"CA", "MX", "US"},
 			})
 
@@ -210,7 +207,7 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 		setResp, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
 			&cca.SetAllowedWhatsAppCountryCodesRequest{
 				Project:      project.Project,
-				Environment:  "live",
+				Environment:  "test",
 				CountryCodes: expected,
 			})
 
@@ -221,7 +218,7 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 		getResp, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
 			&cca.GetAllowedWhatsAppCountryCodesRequest{
 				Project:     project.Project,
-				Environment: "live",
+				Environment: "test",
 			})
 		require.NoError(t, err)
 		assert.Equal(t, expected, getResp.CountryCodes)
@@ -236,7 +233,7 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 		_, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
 			&cca.SetAllowedWhatsAppCountryCodesRequest{
 				Project:      project.Project,
-				Environment:  "live",
+				Environment:  "test",
 				CountryCodes: []string{"CA", "MX", "US"},
 			})
 
@@ -252,7 +249,7 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 		_, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
 			&cca.SetAllowedWhatsAppCountryCodesRequest{
 				Project:      "project-does-not-exist",
-				Environment:  "live",
+				Environment:  "test",
 				CountryCodes: []string{"CA", "MX", "US"},
 			})
 
