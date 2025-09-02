@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 )
 
 func ptr[T any](v T) *T {
@@ -45,14 +45,14 @@ func (c *testClient) DisposableProject(vertical projects.Vertical) projects.Proj
 	c.t.Helper()
 	ctx := context.Background()
 	resp, err := c.Projects.Create(ctx, projects.CreateRequest{
-		ProjectName: "Disposable project",
-		Vertical:    vertical,
+		Name:     "Disposable project",
+		Vertical: vertical,
 	})
 	require.NoError(c.t, err)
 
 	c.t.Cleanup(func() {
 		_, err := c.Projects.Delete(ctx, projects.DeleteRequest{
-			ProjectID: resp.Project.LiveProjectID,
+			Project: resp.Project.Project,
 		})
 		require.NoError(c.t, err)
 	})

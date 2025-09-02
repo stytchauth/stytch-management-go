@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/trustedtokenprofiles"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/trustedtokenprofiles"
 )
 
 type TrustedTokenProfilesClient struct {
@@ -16,7 +16,7 @@ func newTrustedTokenProfilesClient(c *internal.Client) *TrustedTokenProfilesClie
 	return &TrustedTokenProfilesClient{client: c}
 }
 
-// Get retrieves the trusted token profile for a project
+// Get retrieves the trusted token profile for a project environment
 func (c *TrustedTokenProfilesClient) Get(
 	ctx context.Context,
 	body *trustedtokenprofiles.GetTrustedTokenProfileRequest,
@@ -25,7 +25,7 @@ func (c *TrustedTokenProfilesClient) Get(
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		"/v1/projects/"+body.ProjectID+"/trusted-token-profiles/"+body.ProfileID,
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/trusted_token_profiles/"+body.ProfileID,
 		nil,
 		nil,
 		&resp,
@@ -36,7 +36,7 @@ func (c *TrustedTokenProfilesClient) Get(
 	return &resp, err
 }
 
-// List retrieves all the trusted token profilefor a project
+// List retrieves all the trusted token profiles for a project environment
 func (c *TrustedTokenProfilesClient) List(
 	ctx context.Context,
 	body *trustedtokenprofiles.ListTrustedTokenProfilesRequest,
@@ -45,7 +45,7 @@ func (c *TrustedTokenProfilesClient) List(
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		"/v1/projects/"+body.ProjectID+"/trusted-token-profiles",
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/trusted_token_profiles",
 		nil,
 		nil,
 		&resp,
@@ -56,7 +56,7 @@ func (c *TrustedTokenProfilesClient) List(
 	return &resp, err
 }
 
-// Create creates a trusted token profile for a project
+// Create creates a trusted token profile for a project environment
 func (c *TrustedTokenProfilesClient) Create(
 	ctx context.Context,
 	body *trustedtokenprofiles.CreateTrustedTokenProfileRequest,
@@ -70,7 +70,7 @@ func (c *TrustedTokenProfilesClient) Create(
 	err = c.client.NewRequest(
 		ctx,
 		"POST",
-		"/v1/projects/"+body.ProjectID+"/trusted-token-profiles",
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/trusted_token_profiles",
 		nil,
 		jsonBody,
 		&resp,
@@ -81,7 +81,7 @@ func (c *TrustedTokenProfilesClient) Create(
 	return &resp, err
 }
 
-// Update updates a trusted token profile for a project
+// Update updates a trusted token profile for a project environment
 func (c *TrustedTokenProfilesClient) Update(
 	ctx context.Context,
 	body *trustedtokenprofiles.UpdateTrustedTokenProfileRequest,
@@ -95,7 +95,7 @@ func (c *TrustedTokenProfilesClient) Update(
 	err = c.client.NewRequest(
 		ctx,
 		"PATCH",
-		"/v1/projects/"+body.ProjectID+"/trusted-token-profiles/"+body.ProfileID,
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/trusted_token_profiles/"+body.ProfileID,
 		nil,
 		jsonBody,
 		&resp,
@@ -106,7 +106,7 @@ func (c *TrustedTokenProfilesClient) Update(
 	return &resp, err
 }
 
-// Delete deletes a trusted token profile for a project
+// Delete deletes a trusted token profile for a project environment
 func (c *TrustedTokenProfilesClient) Delete(
 	ctx context.Context,
 	body *trustedtokenprofiles.DeleteTrustedTokenProfileRequest,
@@ -115,7 +115,7 @@ func (c *TrustedTokenProfilesClient) Delete(
 	err := c.client.NewRequest(
 		ctx,
 		"DELETE",
-		"/v1/projects/"+body.ProjectID+"/trusted-token-profiles/"+body.ProfileID,
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/trusted_token_profiles/"+body.ProfileID,
 		nil,
 		nil,
 		&resp,
@@ -126,7 +126,7 @@ func (c *TrustedTokenProfilesClient) Delete(
 	return &resp, err
 }
 
-// Create creates a PEM file for a trusted token profile for a project
+// CreatePEM creates a PEM file for a trusted token profile for a project environment
 func (c *TrustedTokenProfilesClient) CreatePEM(
 	ctx context.Context,
 	body *trustedtokenprofiles.CreatePEMFileRequest,
@@ -140,7 +140,7 @@ func (c *TrustedTokenProfilesClient) CreatePEM(
 	err = c.client.NewRequest(
 		ctx,
 		"POST",
-		"/v1/projects/"+body.ProjectID+"/trusted-token-profiles/"+body.ProfileID+"/keys",
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/trusted_token_profiles/"+body.ProfileID+"/keys",
 		nil,
 		jsonBody,
 		&resp,
@@ -151,7 +151,27 @@ func (c *TrustedTokenProfilesClient) CreatePEM(
 	return &resp, err
 }
 
-// DeletePEM deletes a PEM file for a trusted token profile for a project
+// GetPEM retrieves a PEM file for a trusted token profile for a project environment
+func (c *TrustedTokenProfilesClient) GetPEM(
+	ctx context.Context,
+	body *trustedtokenprofiles.GetPEMFileRequest,
+) (*trustedtokenprofiles.GetPEMFileResponse, error) {
+	var resp trustedtokenprofiles.GetPEMFileResponse
+	err := c.client.NewRequest(
+		ctx,
+		"GET",
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/trusted_token_profiles/"+body.ProfileID+"/keys/"+body.PEMFileID,
+		nil,
+		nil,
+		&resp,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, err
+}
+
+// DeletePEM deletes a PEM file for a trusted token profile for a project environment
 func (c *TrustedTokenProfilesClient) DeletePEM(
 	ctx context.Context,
 	body *trustedtokenprofiles.DeletePEMFileRequest,
@@ -160,7 +180,7 @@ func (c *TrustedTokenProfilesClient) DeletePEM(
 	err := c.client.NewRequest(
 		ctx,
 		"DELETE",
-		"/v1/projects/"+body.ProjectID+"/trusted-token-profiles/"+body.ProfileID+"/keys/"+body.PEMFileID,
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/trusted_token_profiles/"+body.ProfileID+"/keys/"+body.PEMFileID,
 		nil,
 		nil,
 		&resp,

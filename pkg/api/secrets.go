@@ -3,8 +3,8 @@ package api
 import (
 	"context"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/secrets"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/secrets"
 )
 
 type SecretsClient struct {
@@ -21,7 +21,7 @@ func (c *SecretsClient) Get(ctx context.Context, body secrets.GetSecretRequest) 
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		"/v1/projects/"+body.ProjectID+"/secrets/"+body.SecretID,
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/secrets/"+body.SecretID,
 		nil,
 		nil,
 		&resp,
@@ -35,7 +35,7 @@ func (c *SecretsClient) GetAll(ctx context.Context, body secrets.GetAllSecretsRe
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		"/v1/projects/"+body.ProjectID+"/secrets",
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/secrets",
 		nil,
 		nil,
 		&resp,
@@ -50,7 +50,7 @@ func (c *SecretsClient) Create(ctx context.Context, body secrets.CreateSecretReq
 	err := c.client.NewRequest(
 		ctx,
 		"POST",
-		"/v1/projects/"+body.ProjectID+"/secrets",
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/secrets",
 		nil,
 		nil,
 		&resp,
@@ -64,7 +64,7 @@ func (c *SecretsClient) Delete(ctx context.Context, body secrets.DeleteSecretReq
 	err := c.client.NewRequest(
 		ctx,
 		"DELETE",
-		"/v1/projects/"+body.ProjectID+"/secrets/"+body.SecretID,
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/secrets/"+body.SecretID,
 		nil,
 		nil,
 		&resp,

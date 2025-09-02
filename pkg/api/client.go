@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
 )
 
 // This is the main entrypoint for interacting with the Stytch Management API

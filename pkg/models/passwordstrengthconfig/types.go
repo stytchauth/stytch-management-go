@@ -36,8 +36,10 @@ type PasswordStrengthConfig struct {
 }
 
 type GetRequest struct {
-	// ProjectID is the unique ID of the project for which to retrieve the password strength config
-	ProjectID string `json:"project_id"`
+	// Project is the project for which to retrieve the password strength config
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") for which to retrieve the password strength config
+	Environment string `json:"environment"`
 }
 
 type GetResponse struct {
@@ -50,8 +52,10 @@ type GetResponse struct {
 }
 
 type SetRequest struct {
-	// ProjectID is the unique ID of the project for which to set the password strength config
-	ProjectID string `json:"project_id"`
+	// Project is the project for which to set the password strength config
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") for which to set the password strength config
+	Environment string `json:"environment"`
 	// PasswordStrengthConfig is the new password strength configuration to be set for the project
 	PasswordStrengthConfig PasswordStrengthConfig `json:"password_strength_config"`
 }

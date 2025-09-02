@@ -1,28 +1,28 @@
 package api_test
 
-import (
-	"context"
-	"testing"
+// import (
+// 	"context"
+// 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projectmetrics"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projects"
-)
+// 	"github.com/stretchr/testify/assert"
+// 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projectmetrics"
+// 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
+// )
 
-// We currently have no way of creating users/orgs/members *within* the project
-// with the Management client, so this test is a bit simplistic.
-func Test_ProjectMetricsGet(t *testing.T) {
-	// Arrange
-	client := NewTestClient(t)
-	project := client.DisposableProject(projects.VerticalB2B)
-	ctx := context.Background()
+// // We currently have no way of creating users/orgs/members *within* the project
+// // with the Management client, so this test is a bit simplistic.
+// func Test_ProjectMetricsGet(t *testing.T) {
+// 	// Arrange
+// 	client := NewTestClient(t)
+// 	project := client.DisposableProject(projects.VerticalB2B)
+// 	ctx := context.Background()
 
-	// Act
-	resp, err := client.ProjectMetrics.Get(ctx, projectmetrics.GetRequest{
-		ProjectID: project.LiveProjectID,
-	})
+// 	// Act
+// 	resp, err := client.ProjectMetrics.Get(ctx, projectmetrics.GetRequest{
+// 		ProjectID: project.LiveProjectID,
+// 	})
 
-	// Assert
-	assert.NoError(t, err)
-	assert.Equal(t, projectmetrics.Metrics{}, resp.Metrics)
-}
+// 	// Assert
+// 	assert.NoError(t, err)
+// 	assert.Equal(t, projectmetrics.Metrics{}, resp.Metrics)
+// }

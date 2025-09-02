@@ -87,11 +87,6 @@ func HttpOnlyCookiesSettings() []HttpOnlyCookiesSetting {
 type ConsumerBasicConfig struct {
 	// Enabled is a boolean indicating whether the consumer project SDK is enabled. This allows the SDK to manage user and session data.
 	Enabled bool `json:"enabled"`
-	// CreateNewUsers is a boolean indicating whether new users can be created with the SDK.
-	//
-	// Deprecated: The value of this field does not affect any SDK functionality.
-	// It will be removed in a future major release.
-	CreateNewUsers bool `json:"create_new_users,omitempty"`
 	// Domains is a list of domains authorized for use in the SDK.
 	Domains []string `json:"domains"`
 	// BundleIDs is a list of bundle IDs authorized for use in the SDK.
@@ -169,11 +164,6 @@ type ConsumerDFPPAConfig struct {
 	Enabled DFPPASetting `json:"enabled"`
 	// OnChallenge is the action to take when a DFPPA "challenge" verdict is returned.
 	OnChallenge DFPPAOnChallengeAction `json:"on_challenge"`
-	// LookupTimeoutSeconds is how long to wait for a DFPPA lookup to complete before timing out.
-	//
-	// Deprecated: The value of this field does not affect any SDK functionality.
-	// It will be removed in a future major release.
-	LookupTimeoutSeconds int32 `json:"lookup_timeout_seconds,omitempty"`
 }
 
 type ConsumerBiometricsConfig struct {
@@ -228,11 +218,6 @@ type ConsumerConfig struct {
 type B2BBasicConfig struct {
 	// Enabled is a boolean indicating whether the B2B project SDK is enabled. This allows the SDK to manage user and session data.
 	Enabled bool `json:"enabled"`
-	// CreateNewMembers is a boolean indicating whether new members can be created with the SDK.
-	//
-	// Deprecated: The value of this field does not affect any SDK functionality.
-	// It will be removed in a future major release.
-	CreateNewMembers bool `json:"create_new_members,omitempty"`
 	// AllowSelfOnboarding is a boolean indicating whether self-onboarding is allowed for members in the SDK.
 	AllowSelfOnboarding bool `json:"allow_self_onboarding"`
 	// EnableMemberPermissions is a boolean indicating whether member permissions RBAC are enabled in the SDK.
@@ -299,11 +284,6 @@ type B2BDFPPAConfig struct {
 	Enabled DFPPASetting `json:"enabled"`
 	// OnChallenge is the action to take when a DFPPA "challenge" verdict is returned.
 	OnChallenge DFPPAOnChallengeAction `json:"on_challenge"`
-	// LookupTimeoutSeconds is how long to wait for a DFPPA lookup to complete before timing out.
-	//
-	// Deprecated: The value of this field does not affect any SDK functionality.
-	// It will be removed in a future major release.
-	LookupTimeoutSeconds int32 `json:"lookup_timeout_seconds,omitempty"`
 }
 
 type B2BPasswordsConfig struct {
@@ -345,8 +325,10 @@ type B2BConfig struct {
 }
 
 type GetConsumerConfigRequest struct {
-	// ProjectID is the ID of the consumer project.
-	ProjectID string `json:"project_id"`
+	// Project is the ID of the consumer project.
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to get the consumer SDK config for
+	Environment string `json:"-"`
 }
 
 type GetConsumerConfigResponse struct {
@@ -359,8 +341,10 @@ type GetConsumerConfigResponse struct {
 }
 
 type SetConsumerConfigRequest struct {
-	// ProjectID is the ID of the consumer project.
-	ProjectID string `json:"project_id"`
+	// Project is the ID of the consumer project.
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to set the consumer SDK config for
+	Environment string `json:"-"`
 	// Config is the consumer project SDK configuration to set.
 	Config ConsumerConfig `json:"config"`
 }
@@ -375,8 +359,10 @@ type SetConsumerConfigResponse struct {
 }
 
 type GetB2BConfigRequest struct {
-	// ProjectID is the ID of the B2B project.
-	ProjectID string `json:"project_id"`
+	// Project is the ID of the B2B project.
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to get the B2B SDK config for
+	Environment string `json:"-"`
 }
 
 type GetB2BConfigResponse struct {
@@ -389,8 +375,10 @@ type GetB2BConfigResponse struct {
 }
 
 type SetB2BConfigRequest struct {
-	// ProjectID is the ID of the B2B project.
-	ProjectID string `json:"project_id"`
+	// Project is the ID of the B2B project.
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to set the B2B SDK config for
+	Environment string `json:"-"`
 	// Config is the B2B project SDK configuration to set.
 	Config B2BConfig `json:"config"`
 }

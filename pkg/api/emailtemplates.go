@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/emailtemplates"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/emailtemplates"
 )
 
 type EmailTemplatesClient struct {
@@ -26,7 +26,7 @@ func (c *EmailTemplatesClient) GetAll(
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v1/projects/%s/email_templates", body.ProjectID),
+		fmt.Sprintf("/pwa/v3/projects/%s/email_templates", body.Project),
 		nil,
 		nil,
 		&resp)
@@ -43,7 +43,7 @@ func (c *EmailTemplatesClient) Get(
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v1/projects/%s/email_templates/%s", body.ProjectID, body.TemplateID),
+		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.Project, body.TemplateID),
 		nil,
 		nil,
 		&resp)
@@ -51,7 +51,7 @@ func (c *EmailTemplatesClient) Get(
 	return &resp, err
 }
 
-// Create creates an email template for both a live and a test project
+// Create creates an email template for a project
 func (c *EmailTemplatesClient) Create(
 	ctx context.Context,
 	body emailtemplates.CreateRequest,
@@ -65,7 +65,7 @@ func (c *EmailTemplatesClient) Create(
 	err = c.client.NewRequest(
 		ctx,
 		"POST",
-		fmt.Sprintf("/v1/projects/%s/email_templates", body.ProjectID),
+		fmt.Sprintf("/pwa/v3/projects/%s/email_templates", body.Project),
 		nil,
 		jsonBody,
 		&res)
@@ -81,7 +81,7 @@ func (c *EmailTemplatesClient) Delete(
 	err := c.client.NewRequest(
 		ctx,
 		"DELETE",
-		fmt.Sprintf("/v1/projects/%s/email_templates/%s", body.ProjectID, body.TemplateID),
+		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.Project, body.TemplateID),
 		nil,
 		nil,
 		&res)
@@ -102,7 +102,7 @@ func (c *EmailTemplatesClient) Update(
 	err = c.client.NewRequest(
 		ctx,
 		"PUT",
-		fmt.Sprintf("/v1/projects/%s/email_templates/%s", body.ProjectID, body.EmailTemplate.TemplateID),
+		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.Project, body.TemplateID),
 		nil,
 		jsonBody,
 		&res)

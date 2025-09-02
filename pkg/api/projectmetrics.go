@@ -3,8 +3,8 @@ package api
 import (
 	"context"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projectmetrics"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environmentmetrics"
 )
 
 type ProjectMetricsClient struct {
@@ -20,9 +20,9 @@ func newProjectMetricsClient(c *internal.Client) *ProjectMetricsClient {
 // Get retrieves metrics for a project
 func (c *ProjectMetricsClient) Get(
 	ctx context.Context,
-	body projectmetrics.GetRequest,
-) (*projectmetrics.GetResponse, error) {
-	var res projectmetrics.GetResponse
-	err := c.client.NewRequest(ctx, "GET", "/v1/projects/"+body.ProjectID+"/project_metrics", nil, nil, &res)
+	body environmentmetrics.GetRequest,
+) (*environmentmetrics.GetResponse, error) {
+	var res environmentmetrics.GetResponse
+	err := c.client.NewRequest(ctx, "GET", "/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/metrics", nil, nil, &res)
 	return &res, err
 }

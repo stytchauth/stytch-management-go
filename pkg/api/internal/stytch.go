@@ -10,8 +10,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/stytcherror"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/version"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/stytcherror"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/version"
 )
 
 type ClientConfig struct {

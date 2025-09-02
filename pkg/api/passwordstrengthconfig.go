@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/passwordstrengthconfig"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/passwordstrengthconfig"
 )
 
 type PasswordStrengthConfigClient struct {
@@ -18,17 +18,17 @@ func newPasswordStrengthConfigClient(c *internal.Client) *PasswordStrengthConfig
 	}
 }
 
-// Get retrieves the password strength configuration for a project
+// Get retrieves the password strength configuration for a project environment
 func (c *PasswordStrengthConfigClient) Get(
 	ctx context.Context,
 	body passwordstrengthconfig.GetRequest,
 ) (*passwordstrengthconfig.GetResponse, error) {
 	var res passwordstrengthconfig.GetResponse
-	err := c.client.NewRequest(ctx, "GET", "/v1/projects/"+body.ProjectID+"/password_strength", nil, nil, &res)
+	err := c.client.NewRequest(ctx, "GET", "/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/password_strength_config", nil, nil, &res)
 	return &res, err
 }
 
-// Set updates the password strength configuration for a project
+// Set updates the password strength configuration for a project environment
 func (c *PasswordStrengthConfigClient) Set(
 	ctx context.Context,
 	body passwordstrengthconfig.SetRequest,
@@ -38,6 +38,6 @@ func (c *PasswordStrengthConfigClient) Set(
 		return nil, err
 	}
 	var res passwordstrengthconfig.SetResponse
-	err = c.client.NewRequest(ctx, "PUT", "/v1/projects/"+body.ProjectID+"/password_strength", nil, jsonBody, &res)
+	err = c.client.NewRequest(ctx, "PUT", "/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/password_strength_config", nil, jsonBody, &res)
 	return &res, err
 }

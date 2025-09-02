@@ -6,8 +6,6 @@ import "time"
 type Secret struct {
 	// SecretID is the unique ID of the secret in the project
 	SecretID string `json:"secret_id"`
-	// ProjectID is the unique ID of the project to which the secret belongs
-	ProjectID string `json:"project_id"`
 	// LastFour is the last four characters of the secret
 	LastFour string `json:"last_four"`
 	// CreatedAt is the ISO-8601 timestamp for when the object was created
@@ -20,19 +18,17 @@ type Secret struct {
 type CreatedSecret struct {
 	// SecretID is the unique ID of the secret in the project
 	SecretID string `json:"secret_id"`
-	// ProjectID is the unique ID of the project to which the secret belongs
-	ProjectID string `json:"project_id"`
 	// Secret is the secret value. This is only visible once upon secret creation
 	Secret string `json:"secret"`
 	// CreatedAt is the ISO-8601 timestamp for when the object was created
 	CreatedAt time.Time `json:"created_at"`
-	// LastFour is the last four characters of the secret
-	LastFour string `json:"last_four"`
 }
 
 type GetAllSecretsRequest struct {
-	// ProjectID is the project to retrieve the secrets for
-	ProjectID string `json:"project_id"`
+	// Project is the project to retrieve the secrets for
+	Project string `json:"-"`
+	// Environment is the environment to retrieve the secrets for
+	Environment string `json:"-"`
 }
 
 type GetAllSecretsResponse struct {
@@ -45,8 +41,10 @@ type GetAllSecretsResponse struct {
 }
 
 type GetSecretRequest struct {
-	// ProjectID is the project to retrieve the secret for
-	ProjectID string `json:"project_id"`
+	// Project is the project to retrieve the secret for
+	Project string `json:"-"`
+	// Environment is the environment to retrieve the secret for
+	Environment string `json:"-"`
 	// SecretID is the ID of the secret to retrieve
 	SecretID string `json:"secret_id"`
 }
@@ -61,8 +59,10 @@ type GetSecretResponse struct {
 }
 
 type CreateSecretRequest struct {
-	// ProjectID is the project to create the secret for
-	ProjectID string `json:"project_id"`
+	// Project is the project to create the secret for
+	Project string `json:"-"`
+	// Environment is the environment to create the secret for
+	Environment string `json:"-"`
 }
 
 type CreateSecretResponse struct {
@@ -75,8 +75,10 @@ type CreateSecretResponse struct {
 }
 
 type DeleteSecretRequest struct {
-	// ProjectID is the project where the secret is located
-	ProjectID string `json:"project_id"`
+	// Project is the project where the secret is located
+	Project string `json:"-"`
+	// Environment is the environment where the secret is located
+	Environment string `json:"-"`
 	// SecretID is the ID of the secret to delete
 	SecretID string `json:"secret_id"`
 }
