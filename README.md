@@ -1,4 +1,4 @@
-# Stytch Management Go Library 
+# Stytch Management Go Library (v3)
 
 The Stytch Management Go library makes it easy to use Stytch's Programmatic Workspace Actions API via Go. 
 
@@ -7,7 +7,7 @@ This library is tested with go 1.22.
 ## Install
 
 ```
-$ go get github.com/stytchauth/stytch-management-go
+$ go get github.com/stytchauth/stytch-management-go/v3
 ```
 
 ## Pre-requisites
@@ -22,6 +22,7 @@ potentially deleting important Stytch resources like projects or secrets that ar
 This library supports project-level actions on the following resources:
 
 - [x] Projects
+- [ ] Environments
 - [x] Email Templates
 - [x] JWT Templates
 - [x] Password strength configuration

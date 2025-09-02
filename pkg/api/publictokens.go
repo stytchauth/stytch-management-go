@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/publictokens"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/publictokens"
 )
 
 type PublicTokensClient struct {
@@ -23,7 +23,7 @@ func (c *PublicTokensClient) GetAll(ctx context.Context, body publictokens.GetAl
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v1/projects/%s/public_tokens", body.ProjectID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/public_tokens", body.Project, body.Environment),
 		nil,
 		nil,
 		&resp)
@@ -42,7 +42,7 @@ func (c *PublicTokensClient) Create(ctx context.Context, body publictokens.Creat
 	err = c.client.NewRequest(
 		ctx,
 		"POST",
-		fmt.Sprintf("/v1/projects/%s/public_tokens", body.ProjectID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/public_tokens", body.Project, body.Environment),
 		nil,
 		jsonBody,
 		&res)
@@ -55,7 +55,7 @@ func (c *PublicTokensClient) Delete(ctx context.Context, body publictokens.Delet
 	err := c.client.NewRequest(
 		ctx,
 		"DELETE",
-		fmt.Sprintf("/v1/projects/%s/public_tokens/%s", body.ProjectID, body.PublicToken),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/public_tokens/%s", body.Project, body.Environment, body.PublicToken),
 		nil,
 		nil,
 		&res)

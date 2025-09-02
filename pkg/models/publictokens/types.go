@@ -2,10 +2,8 @@ package publictokens
 
 import "time"
 
-// PublicToken represents a public token for a project. This token can be used for SDK authentication and OAuth integrations.
+// PublicToken represents a public token for an environment. This token can be used for SDK authentication and OAuth integrations.
 type PublicToken struct {
-	// ProjectID is the unique ID of the project to which the token belongs
-	ProjectID string `json:"project_id"`
 	// PublicToken is the public token value. This is a unique ID which is also the identifier for the token.
 	PublicToken string `json:"public_token"`
 	// CreatedAt is the ISO-8601 timestamp for when the object was created
@@ -13,8 +11,10 @@ type PublicToken struct {
 }
 
 type GetAllRequest struct {
-	// ProjectID is the project to retrieve the public tokens for
-	ProjectID string `json:"project_id"`
+	// Project is the project to retrieve the public tokens for
+	Project string `json:"-"`
+	// Environment is the environment to retrieve the public tokens for
+	Environment string `json:"-"`
 }
 
 type GetAllResponse struct {
@@ -22,13 +22,15 @@ type GetAllResponse struct {
 	StatusCode int `json:"status_code"`
 	// RequestID is a unique identifier to help with debugging the request
 	RequestID string `json:"request_id"`
-	// PublicTokens is all the public tokens that belong to the project
+	// PublicTokens is all the public tokens that belong to the environment
 	PublicTokens []PublicToken `json:"public_tokens"`
 }
 
 type CreateRequest struct {
-	// ProjectID is the project to create the public token for
-	ProjectID string `json:"project_id"`
+	// Project is the project to create the public token for
+	Project string `json:"-"`
+	// Environment is the environment to create the public token for
+	Environment string `json:"-"`
 }
 
 type CreateResponse struct {
@@ -41,8 +43,10 @@ type CreateResponse struct {
 }
 
 type DeleteRequest struct {
-	// ProjectID is the project where the public token is located
-	ProjectID string `json:"project_id"`
+	// Project is the project where the public token is located
+	Project string `json:"-"`
+	// Environment is the environment where the public token is located
+	Environment string `json:"-"`
 	// PublicToken is the public token to delete
 	PublicToken string `json:"public_token"`
 }

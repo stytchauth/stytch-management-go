@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/redirecturls"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/redirecturls"
 )
 
 type RedirectURLsClient struct {
@@ -17,7 +17,7 @@ func newRedirectURLsClient(c *internal.Client) *RedirectURLsClient {
 	return &RedirectURLsClient{client: c}
 }
 
-// Create creates a redirect URL for a project
+// Create creates a redirect URL for a project environment
 func (c *RedirectURLsClient) Create(
 	ctx context.Context,
 	body redirecturls.CreateRequest,
@@ -31,14 +31,14 @@ func (c *RedirectURLsClient) Create(
 	err = c.client.NewRequest(
 		ctx,
 		"POST",
-		fmt.Sprintf("/v1/projects/%s/redirect_urls", body.ProjectID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls", body.Project, body.Environment),
 		nil,
 		jsonBody,
 		&res)
 	return &res, err
 }
 
-// GetAll retrieves all redirect URLs for a project
+// GetAll retrieves all redirect URLs for a project environment
 func (c *RedirectURLsClient) GetAll(
 	ctx context.Context,
 	body redirecturls.GetAllRequest,
@@ -47,7 +47,7 @@ func (c *RedirectURLsClient) GetAll(
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v1/projects/%s/redirect_urls/all", body.ProjectID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls", body.Project, body.Environment),
 		nil,
 		nil,
 		&resp)
@@ -55,7 +55,7 @@ func (c *RedirectURLsClient) GetAll(
 	return &resp, err
 }
 
-// Get retrieves a redirect URL for a project
+// Get retrieves a redirect URL for a project environment
 func (c *RedirectURLsClient) Get(
 	ctx context.Context,
 	body redirecturls.GetRequest,
@@ -64,14 +64,14 @@ func (c *RedirectURLsClient) Get(
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v1/projects/%s/redirect_urls?url=%s", body.ProjectID, body.URL),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls?url=%s", body.Project, body.Environment, body.URL),
 		nil,
 		nil,
 		&res)
 	return &res, err
 }
 
-// Update updates the valid types for a redirect URL for a project
+// Update updates the valid types for a redirect URL for a project environment
 func (c *RedirectURLsClient) Update(
 	ctx context.Context,
 	body redirecturls.UpdateRequest,
@@ -85,14 +85,14 @@ func (c *RedirectURLsClient) Update(
 	err = c.client.NewRequest(
 		ctx,
 		"PUT",
-		fmt.Sprintf("/v1/projects/%s/redirect_urls?url=%s", body.ProjectID, body.RedirectURL.URL),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls?url=%s", body.Project, body.Environment, body.URL),
 		nil,
 		jsonBody,
 		&res)
 	return &res, err
 }
 
-// Delete deletes a redirect URL for a project
+// Delete deletes a redirect URL for a project environment
 func (c *RedirectURLsClient) Delete(
 	ctx context.Context,
 	body redirecturls.DeleteRequest,
@@ -101,7 +101,7 @@ func (c *RedirectURLsClient) Delete(
 	err := c.client.NewRequest(
 		ctx,
 		"DELETE",
-		fmt.Sprintf("/v1/projects/%s/redirect_urls?url=%s", body.ProjectID, body.URL),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls?url=%s", body.Project, body.Environment, body.URL),
 		nil,
 		nil,
 		&res)

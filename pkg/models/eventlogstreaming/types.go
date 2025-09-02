@@ -116,8 +116,10 @@ type GrafanaLokiConfigMasked struct {
 }
 
 type CreateEventLogStreamingRequest struct {
-	// ProjectID is the project to create the event log streaming config for
-	ProjectID string `json:"project_id"`
+	// Project is the project to create the event log streaming config for
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to create the event log streaming config for
+	Environment string `json:"-"`
 	// DestinationType is the type of destination to send events to
 	DestinationType DestinationType `json:"destination_type"`
 	// DestinationConfig is the configuration for the destination to send events to
@@ -134,8 +136,10 @@ type CreateEventLogStreamingResponse struct {
 }
 
 type GetEventLogStreamingRequest struct {
-	// ProjectID is the project to retrieve the event log streaming config for
-	ProjectID string `json:"project_id"`
+	// Project is the project to retrieve the event log streaming config for
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to retrieve the event log streaming config for
+	Environment string `json:"-"`
 	// DestinationType is the type of destination to retrieve the event log streaming config for
 	DestinationType DestinationType `json:"destination_type"`
 }
@@ -150,8 +154,10 @@ type GetEventLogStreamingResponse struct {
 }
 
 type UpdateEventLogStreamingRequest struct {
-	// ProjectID is the project to update the event log streaming config for
-	ProjectID string `json:"project_id"`
+	// Project is the project to update the event log streaming config for
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to update the event log streaming config for
+	Environment string `json:"-"`
 	// DestinationType is the type of destination to update the event log streaming config for
 	DestinationType DestinationType `json:"destination_type"`
 	// DestinationConfig is the configuration for the destination to update the event log streaming config for
@@ -168,8 +174,10 @@ type UpdateEventLogStreamingResponse struct {
 }
 
 type DeleteEventLogStreamingRequest struct {
-	// ProjectID is the project to delete the event log streaming config for
-	ProjectID string `json:"project_id"`
+	// Project is the project to delete the event log streaming config for
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to delete the event log streaming config for
+	Environment string `json:"-"`
 	// DestinationType is the type of destination to delete the event log streaming config for
 	DestinationType DestinationType `json:"destination_type"`
 }
@@ -182,8 +190,10 @@ type DeleteEventLogStreamingResponse struct {
 }
 
 type EnableEventLogStreamingRequest struct {
-	// ProjectID is the project to enable the event log streaming config for
-	ProjectID string `json:"project_id"`
+	// Project is the project to enable the event log streaming config for
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to enable the event log streaming config for
+	Environment string `json:"-"`
 	// DestinationType is the type of destination to enable the event log streaming config for
 	DestinationType DestinationType `json:"destination_type"`
 }
@@ -196,8 +206,10 @@ type EnableEventLogStreamingResponse struct {
 }
 
 type DisableEventLogStreamingRequest struct {
-	// ProjectID is the project to disable the event log streaming config for
-	ProjectID string `json:"project_id"`
+	// Project is the project to disable the event log streaming config for
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to disable the event log streaming config for
+	Environment string `json:"-"`
 	// DestinationType is the type of destination to disable the event log streaming config for
 	DestinationType DestinationType `json:"destination_type"`
 }

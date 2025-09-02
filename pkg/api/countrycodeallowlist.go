@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
-	cca "github.com/stytchauth/stytch-management-go/v2/pkg/models/countrycodeallowlist"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
+	cca "github.com/stytchauth/stytch-management-go/v3/pkg/models/countrycodeallowlist"
 )
 
 type CountryCodeAllowlistClient struct {
@@ -26,7 +26,7 @@ func (c *CountryCodeAllowlistClient) GetAllowedSMSCountryCodes(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/v1/projects/%s/allowed_country_codes/sms", body.ProjectID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/allowed_country_codes/sms", body.Project, body.Environment),
 		nil,
 		nil,
 		&resp)
@@ -44,7 +44,7 @@ func (c *CountryCodeAllowlistClient) GetAllowedWhatsAppCountryCodes(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/v1/projects/%s/allowed_country_codes/whatsapp", body.ProjectID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/allowed_country_codes/whatsapp", body.Project, body.Environment),
 		nil,
 		nil,
 		&resp)
@@ -67,7 +67,7 @@ func (c *CountryCodeAllowlistClient) SetAllowedSMSCountryCodes(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/v1/projects/%s/allowed_country_codes/sms", body.ProjectID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/allowed_country_codes/sms", body.Project, body.Environment),
 		nil,
 		jsonBody,
 		&resp)
@@ -90,7 +90,7 @@ func (c *CountryCodeAllowlistClient) SetAllowedWhatsAppCountryCodes(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/v1/projects/%s/allowed_country_codes/whatsapp", body.ProjectID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/allowed_country_codes/whatsapp", body.Project, body.Environment),
 		nil,
 		jsonBody,
 		&resp)

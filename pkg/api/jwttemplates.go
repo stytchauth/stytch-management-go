@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/jwttemplates"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/jwttemplates"
 )
 
 type JWTTemplatesClient struct {
@@ -26,7 +26,7 @@ func (c *JWTTemplatesClient) Get(
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v1/projects/%s/jwt_templates/%s", body.ProjectID, body.TemplateType),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/jwt_templates/%s", body.Project, body.Environment, body.TemplateType),
 		nil,
 		nil,
 		&resp)
@@ -48,7 +48,7 @@ func (c *JWTTemplatesClient) Set(
 	err = c.client.NewRequest(
 		ctx,
 		"PUT",
-		fmt.Sprintf("/v1/projects/%s/jwt_templates/%s", body.ProjectID, body.JWTTemplate.TemplateType),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/jwt_templates/%s", body.Project, body.Environment, body.JWTTemplate.TemplateType),
 		nil,
 		jsonBody,
 		&res)

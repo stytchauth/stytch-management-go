@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/rbacpolicy"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/rbacpolicy"
 )
 
 type RBACPolicyClient struct {
@@ -24,7 +24,7 @@ func (c *RBACPolicyClient) Get(
 	body rbacpolicy.GetRequest,
 ) (*rbacpolicy.GetResponse, error) {
 	var res rbacpolicy.GetResponse
-	err := c.client.NewRequest(ctx, "GET", "/v1/projects/"+body.ProjectID+"/rbac_policy", nil, nil, &res)
+	err := c.client.NewRequest(ctx, "GET", "/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/rbac_policy", nil, nil, &res)
 	return &res, err
 }
 
@@ -39,6 +39,6 @@ func (c *RBACPolicyClient) Set(
 	}
 
 	var res rbacpolicy.SetResponse
-	err = c.client.NewRequest(ctx, "PUT", "/v1/projects/"+body.ProjectID+"/rbac_policy", nil, jsonBody, &res)
+	err = c.client.NewRequest(ctx, "PUT", "/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/rbac_policy", nil, jsonBody, &res)
 	return &res, err
 }

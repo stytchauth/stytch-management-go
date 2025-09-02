@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 )
 
 type ProjectsClient struct {
@@ -18,7 +18,7 @@ func newProjectsClient(c *internal.Client) *ProjectsClient {
 	}
 }
 
-// Create creates a live and test project
+// Create creates a project, which includes a live and test environment
 func (c *ProjectsClient) Create(
 	ctx context.Context,
 	body projects.CreateRequest,
@@ -29,7 +29,7 @@ func (c *ProjectsClient) Create(
 	}
 
 	var res projects.CreateResponse
-	err = c.client.NewRequest(ctx, "POST", "/v1/projects", nil, jsonBody, &res)
+	err = c.client.NewRequest(ctx, "POST", "/pwa/v3/projects", nil, jsonBody, &res)
 	return &res, err
 }
 
@@ -39,7 +39,7 @@ func (c *ProjectsClient) Get(
 	body projects.GetRequest,
 ) (*projects.GetResponse, error) {
 	var res projects.GetResponse
-	err := c.client.NewRequest(ctx, "GET", "/v1/projects/"+body.ProjectID, nil, nil, &res)
+	err := c.client.NewRequest(ctx, "GET", "/pwa/v3/projects/"+body.Project, nil, nil, &res)
 	return &res, err
 }
 
@@ -49,21 +49,21 @@ func (c *ProjectsClient) GetAll(
 	body projects.GetAllRequest,
 ) (*projects.GetAllResponse, error) {
 	var res projects.GetAllResponse
-	err := c.client.NewRequest(ctx, "GET", "/v1/projects/", nil, nil, &res)
+	err := c.client.NewRequest(ctx, "GET", "/pwa/v3/projects", nil, nil, &res)
 	return &res, err
 }
 
-// Delete deletes a live project and its test counterpart
+// Delete deletes a project and all its environments
 func (c *ProjectsClient) Delete(
 	ctx context.Context,
 	body projects.DeleteRequest,
 ) (*projects.DeleteResponse, error) {
 	var res projects.DeleteResponse
-	err := c.client.NewRequest(ctx, "DELETE", "/v1/projects/"+body.ProjectID, nil, nil, &res)
+	err := c.client.NewRequest(ctx, "DELETE", "/pwa/v3/projects/"+body.Project, nil, nil, &res)
 	return &res, err
 }
 
-// Update updates the project. This endpoint is solely available on the live project.
+// Update updates the project.
 func (c *ProjectsClient) Update(
 	ctx context.Context,
 	body projects.UpdateRequest,
@@ -73,6 +73,6 @@ func (c *ProjectsClient) Update(
 		return nil, err
 	}
 	var res projects.UpdateResponse
-	err = c.client.NewRequest(ctx, "PUT", "/v1/projects/"+body.ProjectID, nil, jsonBody, &res)
+	err = c.client.NewRequest(ctx, "PATCH", "/pwa/v3/projects/"+body.Project, nil, jsonBody, &res)
 	return &res, err
 }

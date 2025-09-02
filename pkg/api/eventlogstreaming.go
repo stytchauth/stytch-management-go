@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/eventlogstreaming"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/eventlogstreaming"
 )
 
 type EventLogStreamingClient struct {
@@ -16,7 +16,7 @@ func newEventLogStreamingClient(c *internal.Client) *EventLogStreamingClient {
 	return &EventLogStreamingClient{client: c}
 }
 
-// Get retrieves the event log streaming config for a project
+// Get retrieves the event log streaming config for a project environment
 func (c *EventLogStreamingClient) Get(
 	ctx context.Context,
 	body eventlogstreaming.GetEventLogStreamingRequest,
@@ -25,7 +25,7 @@ func (c *EventLogStreamingClient) Get(
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		"/v1/projects/"+body.ProjectID+"/event_log_streaming/"+string(body.DestinationType),
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/event_log_streaming/"+string(body.DestinationType),
 		nil,
 		nil,
 		&resp,
@@ -36,7 +36,7 @@ func (c *EventLogStreamingClient) Get(
 	return &resp, err
 }
 
-// Create creates the event log streaming config for a project
+// Create creates the event log streaming config for a project environment
 func (c *EventLogStreamingClient) Create(
 	ctx context.Context,
 	body eventlogstreaming.CreateEventLogStreamingRequest,
@@ -50,7 +50,7 @@ func (c *EventLogStreamingClient) Create(
 	err = c.client.NewRequest(
 		ctx,
 		"POST",
-		"/v1/projects/"+body.ProjectID+"/event_log_streaming",
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/event_log_streaming",
 		nil,
 		jsonBody,
 		&resp,
@@ -61,7 +61,7 @@ func (c *EventLogStreamingClient) Create(
 	return &resp, err
 }
 
-// Update updates the event log streaming config for a project
+// Update updates the event log streaming config for a project environment
 func (c *EventLogStreamingClient) Update(
 	ctx context.Context,
 	body eventlogstreaming.UpdateEventLogStreamingRequest,
@@ -75,7 +75,7 @@ func (c *EventLogStreamingClient) Update(
 	err = c.client.NewRequest(
 		ctx,
 		"PUT",
-		"/v1/projects/"+body.ProjectID+"/event_log_streaming/"+string(body.DestinationType),
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/event_log_streaming/"+string(body.DestinationType),
 		nil,
 		jsonBody,
 		&resp,
@@ -86,7 +86,7 @@ func (c *EventLogStreamingClient) Update(
 	return &resp, err
 }
 
-// Delete deletes the event log streaming config for a project
+// Delete deletes the event log streaming config for a project environment
 func (c *EventLogStreamingClient) Delete(
 	ctx context.Context,
 	body eventlogstreaming.DeleteEventLogStreamingRequest,
@@ -95,7 +95,7 @@ func (c *EventLogStreamingClient) Delete(
 	err := c.client.NewRequest(
 		ctx,
 		"DELETE",
-		"/v1/projects/"+body.ProjectID+"/event_log_streaming/"+string(body.DestinationType),
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/event_log_streaming/"+string(body.DestinationType),
 		nil,
 		nil,
 		&resp,
@@ -114,7 +114,7 @@ func (c *EventLogStreamingClient) Enable(
 	err := c.client.NewRequest(
 		ctx,
 		"POST",
-		"/v1/projects/"+body.ProjectID+"/event_log_streaming/"+string(body.DestinationType)+"/enable",
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/event_log_streaming/"+string(body.DestinationType)+"/enable",
 		nil,
 		nil,
 		&resp,
@@ -133,7 +133,7 @@ func (c *EventLogStreamingClient) Disable(
 	err := c.client.NewRequest(
 		ctx,
 		"POST",
-		"/v1/projects/"+body.ProjectID+"/event_log_streaming/"+string(body.DestinationType)+"/disable",
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/event_log_streaming/"+string(body.DestinationType)+"/disable",
 		nil,
 		nil,
 		&resp,

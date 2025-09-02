@@ -34,15 +34,19 @@ type URLRedirectType struct {
 type RedirectURL struct {
 	// URL is the URL to redirect to.
 	URL string `json:"url"`
-	// ValidTypes is a list of all the URLRedirectType available for this object
+	// ValidTypes is a list of all the URLRedirectType available for this url
 	ValidTypes []URLRedirectType `json:"valid_types"`
 }
 
 type CreateRequest struct {
-	// ProjectID is the ID of the project to create the redirect URL for
-	ProjectID string `json:"project_id"`
-	// RedirectURL is the object that will be created
-	RedirectURL RedirectURL `json:"redirect_url"`
+	// Project is the project to create the redirect URL for
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to create the redirect URL for
+	Environment string `json:"-"`
+	// URL is the URL to redirect to.
+	URL string `json:"url"`
+	// ValidTypes is a list of all the URLRedirectType available for this url
+	ValidTypes []URLRedirectType `json:"valid_types"`
 	// DoNotPromoteDefaults is used to suppress the automatic "promotion" of a RedirectURL to the default if no other
 	// RedirectURL exists for the given type. This is primarily intended for use with stytchauth/terraform-provider-stytch
 	// to allow terraform provisioning to be idempotent. For a Create request, the default behavior is to promote the
@@ -64,8 +68,10 @@ type CreateResponse struct {
 }
 
 type GetRequest struct {
-	// ProjectID is the ID of the project to get the redirect URL from
-	ProjectID string `json:"project_id"`
+	// Project is the project to get the redirect URL from
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to get the redirect URL from
+	Environment string `json:"-"`
 	// URL is the redirect URL to get
 	URL string `json:"url"`
 }
@@ -80,8 +86,10 @@ type GetResponse struct {
 }
 
 type GetAllRequest struct {
-	// ProjectID is the ID of the project to get all the redirect URLs from
-	ProjectID string `json:"project_id"`
+	// Project is the project to get all the redirect URLs from
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to get all the redirect URLs from
+	Environment string `json:"-"`
 }
 
 type GetAllResponse struct {
@@ -89,15 +97,15 @@ type GetAllResponse struct {
 	StatusCode int `json:"status_code"`
 	// RequestID is a unique identifier to help with debugging the request
 	RequestID string `json:"request_id"`
-	// ProjectID is the ID of the project for the redirect URLs
-	ProjectID string `json:"project_id"`
 	// RedirectURLs is a list of all the redirect URLs for the project
 	RedirectURLs []RedirectURL `json:"redirect_urls"`
 }
 
 type DeleteRequest struct {
-	// ProjectID is the ID of the project to delete the redirect URL from
-	ProjectID string `json:"project_id"`
+	// Project is the project to delete the redirect URL from
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to delete the redirect URL from
+	Environment string `json:"-"`
 	// URL is the redirect URL to delete
 	URL string `json:"url"`
 	// DoNotPromoteDefaults is used to suppress the automatic "promotion" of a RedirectURL to the default if no other
@@ -119,10 +127,14 @@ type DeleteResponse struct {
 }
 
 type UpdateRequest struct {
-	// ProjectID is the ID of the project to update the redirect URL in
-	ProjectID string `json:"project_id"`
-	// RedirectURL is the object that will be updated
-	RedirectURL RedirectURL `json:"redirect_url"`
+	// Project is the project to update the redirect URL in
+	Project string `json:"-"`
+	// Environment is the environment (e.g., "test", "live") to update the redirect URL in
+	Environment string `json:"-"`
+	// URL is the URL to redirect to.
+	URL string `json:"url"`
+	// ValidTypes is a list of all the URLRedirectType available for this url
+	ValidTypes []URLRedirectType `json:"valid_types"`
 	// DoNotPromoteDefaults is used to suppress the automatic "promotion" of a RedirectURL to the default if no other
 	// RedirectURL exists for the given type. This is primarily intended for use with stytchauth/terraform-provider-stytch
 	// to allow terraform provisioning to be idempotent. For an Update request, the default behavior is a combination of

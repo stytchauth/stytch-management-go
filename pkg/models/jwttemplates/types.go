@@ -26,8 +26,10 @@ type JWTTemplate struct {
 }
 
 type GetRequest struct {
-	// ProjectID is the unique ID of the project for which to retrieve the JWT template
-	ProjectID string `json:"project_id"`
+	// Project is the project for which to retrieve the JWT template
+	Project string `json:"-"`
+	// Environment is the environment for which to retrieve the JWT template
+	Environment string `json:"environment"`
 	// TemplateType is the type of JWT template to retrieve
 	TemplateType TemplateType `json:"template_type"`
 }
@@ -42,8 +44,10 @@ type GetResponse struct {
 }
 
 type SetRequest struct {
-	// ProjectID is the unique ID of the project for which to set the JWT template
-	ProjectID string `json:"project_id"`
+	// Project is the project for which to set the JWT template
+	Project string `json:"-"`
+	// Environment is the environment for which to set the JWT template
+	Environment string `json:"environment"`
 	// JWTTemplate is the JWT template to set
 	JWTTemplate JWTTemplate `json:"jwt_template"`
 }

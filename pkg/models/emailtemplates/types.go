@@ -132,15 +132,26 @@ type EmailTemplate struct {
 }
 
 type CreateRequest struct {
-	// ProjectID is the *live* project ID for which to create the project. This endpoint only works with a live project ID.
-	// An email template will also be created for the respective test project.
-	ProjectID string `json:"project_id,omitempty"`
-	// EmailTemplate is the email template to be created
-	EmailTemplate EmailTemplate `json:"email_template,omitempty"`
+	// Project is the project for which to create the email template. This endpoint works across all environments.
+	// A change to the email template will be applied to all environments associated with this project.
+	Project string `json:"-"`
+	// TemplateID is a unique identifier to use for the template – this is how you'll refer to the template when sending
+	// emails from your project or managing this template. It can never be changed after creation.
+	TemplateID string `json:"template_id,omitempty"`
+	// Name is a human-readable name of the template. This does not have to be unique.
+	Name *string `json:"name,omitempty"`
+	// SenderInformation is information about the email sender, such as the reply address or rendered name.
+	// This is an optional field for PrebuiltCustomization, but required for CustomHTMLCustomization.
+	SenderInformation *SenderInformation `json:"sender_information,omitempty"`
+
+	// NOTE: Only *one of these fields* should be set.
+	// PrebuiltCustomization is customization related to prebuilt fields (such as button color) for prebuilt email templates
+	PrebuiltCustomization *PrebuiltCustomization `json:"prebuilt_customization,omitempty"`
+	// CustomHTMLCustomization is customization defined for completely custom HTML email templates
+	CustomHTMLCustomization *CustomHTMLCustomization `json:"custom_html_customization,omitempty"`
 }
 
 type CreateResponse struct {
-	//
 	// StatusCode is the HTTP status code for the response
 	StatusCode int `json:"status_code"`
 	// RequestID is a unique identifier to help with debugging the request
@@ -150,8 +161,8 @@ type CreateResponse struct {
 }
 
 type GetRequest struct {
-	// ProjectID is the project ID that owns the template to retrieve
-	ProjectID string `json:"project_id,omitempty"`
+	// Project is the project for which to retrieve the email template.
+	Project string `json:"-"`
 	// TemplateID is the unique template ID for the email template to retrieve
 	TemplateID string `json:"template_id,omitempty"`
 }
@@ -166,8 +177,8 @@ type GetResponse struct {
 }
 
 type GetAllRequest struct {
-	// ProjectID is the project ID for which to retrieve all email templates
-	ProjectID string `json:"project_id,omitempty"`
+	// Project is the project for which to retrieve all the email templates.
+	Project string `json:"-"`
 }
 
 type GetAllResponse struct {
@@ -180,12 +191,23 @@ type GetAllResponse struct {
 }
 
 type UpdateRequest struct {
-	// ProjectID is the project ID that owns the template to be updated
-	ProjectID string `json:"project_id,omitempty"`
-	// EmailTemplate contains the updated email template. The template ID must match the template being updated.
+	// Project is the project for which to update the email template.
+	Project string `json:"-"`
 	// NOTE: After creation, a Prebuilt template cannot be converted to a custom HTML template, and similarly, a
 	// custom HTML template cannot be converted to a Prebuilt template.
-	EmailTemplate EmailTemplate `json:"email_template,omitempty"`
+	// TemplateID is the unique identifier for the template in the project.
+	TemplateID string `json:"template_id,omitempty"`
+	// Name is a human-readable name of the template. This does not have to be unique.
+	Name *string `json:"name,omitempty"`
+	// SenderInformation is information about the email sender, such as the reply address or rendered name.
+	// This is an optional field for PrebuiltCustomization, but required for CustomHTMLCustomization.
+	SenderInformation *SenderInformation `json:"sender_information,omitempty"`
+
+	// NOTE: Only *one of these fields* should be set, and it must match the existing email template.
+	// PrebuiltCustomization is customization related to prebuilt fields (such as button color) for prebuilt email templates
+	PrebuiltCustomization *PrebuiltCustomization `json:"prebuilt_customization,omitempty"`
+	// CustomHTMLCustomization is customization defined for completely custom HTML email templates
+	CustomHTMLCustomization *CustomHTMLCustomization `json:"custom_html_customization,omitempty"`
 }
 
 type UpdateResponse struct {
@@ -198,8 +220,8 @@ type UpdateResponse struct {
 }
 
 type DeleteRequest struct {
-	// ProjectID is the project ID that owns the template to be deleted
-	ProjectID string `json:"project_id,omitempty"`
+	// Project is the project for which to delete the email template.
+	Project string `json:"-"`
 	// TemplateID is the unique template ID for the email template to be deleted
 	TemplateID string `json:"template_id,omitempty"`
 }
