@@ -5,30 +5,30 @@ import (
 	"encoding/json"
 
 	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
-	"github.com/stytchauth/stytch-management-go/v3/pkg/models/project"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 )
 
-type ProjectClient struct {
+type ProjectsClient struct {
 	client *internal.Client
 }
 
-func newProjectClient(c *internal.Client) *ProjectClient {
-	return &ProjectClient{
+func newProjectsClient(c *internal.Client) *ProjectsClient {
+	return &ProjectsClient{
 		client: c,
 	}
 }
 
 // Create creates a project, including both a live and test environment.
-func (c *ProjectClient) Create(
+func (c *ProjectsClient) Create(
 	ctx context.Context,
-	body project.CreateRequest,
-) (*project.CreateResponse, error) {
+	body projects.CreateRequest,
+) (*projects.CreateResponse, error) {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 
-	var res project.CreateResponse
+	var res projects.CreateResponse
 	err = c.client.NewRequest(ctx, "POST", "/pwa/v3/projects", nil, jsonBody, &res)
 	if err != nil {
 		return nil, err
@@ -37,11 +37,11 @@ func (c *ProjectClient) Create(
 }
 
 // Get retrieves a project.
-func (c *ProjectClient) Get(
+func (c *ProjectsClient) Get(
 	ctx context.Context,
-	body project.GetRequest,
-) (*project.GetResponse, error) {
-	var res project.GetResponse
+	body projects.GetRequest,
+) (*projects.GetResponse, error) {
+	var res projects.GetResponse
 	err := c.client.NewRequest(ctx, "GET", "/pwa/v3/projects/"+body.Project, nil, nil, &res)
 	if err != nil {
 		return nil, err
@@ -50,11 +50,11 @@ func (c *ProjectClient) Get(
 }
 
 // GetAll retrieves all projects in a workspace.
-func (c *ProjectClient) GetAll(
+func (c *ProjectsClient) GetAll(
 	ctx context.Context,
-	body project.GetAllRequest,
-) (*project.GetAllResponse, error) {
-	var res project.GetAllResponse
+	body projects.GetAllRequest,
+) (*projects.GetAllResponse, error) {
+	var res projects.GetAllResponse
 	err := c.client.NewRequest(ctx, "GET", "/pwa/v3/projects", nil, nil, &res)
 	if err != nil {
 		return nil, err
@@ -63,15 +63,15 @@ func (c *ProjectClient) GetAll(
 }
 
 // Update updates the project.
-func (c *ProjectClient) Update(
+func (c *ProjectsClient) Update(
 	ctx context.Context,
-	body project.UpdateRequest,
-) (*project.UpdateResponse, error) {
+	body projects.UpdateRequest,
+) (*projects.UpdateResponse, error) {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
-	var res project.UpdateResponse
+	var res projects.UpdateResponse
 	err = c.client.NewRequest(ctx, "PATCH", "/pwa/v3/projects/"+body.Project, nil, jsonBody, &res)
 	if err != nil {
 		return nil, err
@@ -80,11 +80,11 @@ func (c *ProjectClient) Update(
 }
 
 // Delete deletes a project and all of its environments.
-func (c *ProjectClient) Delete(
+func (c *ProjectsClient) Delete(
 	ctx context.Context,
-	body project.DeleteRequest,
-) (*project.DeleteResponse, error) {
-	var res project.DeleteResponse
+	body projects.DeleteRequest,
+) (*projects.DeleteResponse, error) {
+	var res projects.DeleteResponse
 	err := c.client.NewRequest(ctx, "DELETE", "/pwa/v3/projects/"+body.Project, nil, nil, &res)
 	if err != nil {
 		return nil, err

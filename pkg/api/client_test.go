@@ -37,17 +37,17 @@ func NewTestClient(t *testing.T) *testClient {
 	}
 }
 
-func (c *testClient) DisposableProject(vertical project.Vertical) project.Project {
+func (c *testClient) DisposableProject(vertical projects.Vertical) projects.Project {
 	c.t.Helper()
 	ctx := context.Background()
-	resp, err := c.Project.Create(ctx, project.CreateRequest{
+	resp, err := c.Projects.Create(ctx, projects.CreateRequest{
 		Name:     "Disposable Project",
 		Vertical: vertical,
 	})
 	require.NoError(c.t, err)
 
 	c.t.Cleanup(func() {
-		_, err := c.Project.Delete(ctx, project.DeleteRequest{
+		_, err := c.Projects.Delete(ctx, projects.DeleteRequest{
 			Project: resp.Project.Project,
 		})
 		require.NoError(c.t, err)
