@@ -31,7 +31,10 @@ func (c *JWTTemplatesClient) Get(
 		nil,
 		&resp)
 
-	return &resp, err
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
 // Set updates a specific JWT template for a project
@@ -48,9 +51,12 @@ func (c *JWTTemplatesClient) Set(
 	err = c.client.NewRequest(
 		ctx,
 		"PUT",
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/jwt_templates/%s", body.Project, body.Environment, body.JWTTemplate.TemplateType),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/jwt_templates/%s", body.Project, body.Environment, body.TemplateType),
 		nil,
 		jsonBody,
 		&res)
-	return &res, err
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
