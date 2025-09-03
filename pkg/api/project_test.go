@@ -16,12 +16,12 @@ func Test_ProjectsCreate(t *testing.T) {
 		ctx := context.Background()
 
 		// Act
-		resp, err := client.Project.Create(ctx, projects.CreateRequest{
+		resp, err := client.Project.Create(ctx, project.CreateRequest{
 			Name:     "Test Project",
-			Vertical: projects.VerticalB2B,
+			Vertical: project.VerticalB2B,
 		})
 		t.Cleanup(func() {
-			_, err := client.Project.Delete(ctx, projects.DeleteRequest{
+			_, err := client.Project.Delete(ctx, project.DeleteRequest{
 				Project: resp.Project.Project,
 			})
 			require.NoError(t, err)
@@ -30,7 +30,7 @@ func Test_ProjectsCreate(t *testing.T) {
 		// Assert
 		assert.NoError(t, err)
 		assert.Equal(t, "Test Project", resp.Project.Name)
-		assert.Equal(t, projects.VerticalB2B, resp.Project.Vertical)
+		assert.Equal(t, project.VerticalB2B, resp.Project.Vertical)
 	})
 }
 
@@ -38,18 +38,18 @@ func Test_ProjectsGet(t *testing.T) {
 	t.Run("base case", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		project := client.DisposableProject(project.VerticalB2B)
 		ctx := context.Background()
 
 		// Act
-		resp, err := client.Project.Get(ctx, projects.GetRequest{
+		resp, err := client.Project.Get(ctx, project.GetRequest{
 			Project: project.Project,
 		})
 
 		// Assert
 		assert.NoError(t, err)
 		assert.Equal(t, project.Name, resp.Project.Name)
-		assert.Equal(t, projects.VerticalB2B, resp.Project.Vertical)
+		assert.Equal(t, project.VerticalB2B, resp.Project.Vertical)
 	})
 	t.Run("project does not exist", func(t *testing.T) {
 		// Arrange
@@ -57,7 +57,7 @@ func Test_ProjectsGet(t *testing.T) {
 		ctx := context.Background()
 
 		// Act
-		resp, err := client.Project.Get(ctx, projects.GetRequest{
+		resp, err := client.Project.Get(ctx, project.GetRequest{
 			Project: "nonexistent-project",
 		})
 
@@ -71,12 +71,12 @@ func Test_ProjectsUpdate(t *testing.T) {
 	t.Run("base case", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		project := client.DisposableProject(project.VerticalB2B)
 		ctx := context.Background()
 		newProjectName := "Updated Project Name"
 
 		// Act
-		resp, err := client.Project.Update(ctx, projects.UpdateRequest{
+		resp, err := client.Project.Update(ctx, project.UpdateRequest{
 			Project: project.Project,
 			Name:    &newProjectName,
 		})
@@ -92,7 +92,7 @@ func Test_ProjectsUpdate(t *testing.T) {
 		newProjectName := "Updated Project Name"
 
 		// Act
-		resp, err := client.Project.Update(ctx, projects.UpdateRequest{
+		resp, err := client.Project.Update(ctx, project.UpdateRequest{
 			Project: "nonexistent-project",
 			Name:    &newProjectName,
 		})
@@ -108,14 +108,14 @@ func Test_ProjectsDelete(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
 		ctx := context.Background()
-		createResp, err := client.Project.Create(ctx, projects.CreateRequest{
+		createResp, err := client.Project.Create(ctx, project.CreateRequest{
 			Name:     "Test Project",
-			Vertical: projects.VerticalB2B,
+			Vertical: project.VerticalB2B,
 		})
 		require.NoError(t, err)
 
 		// Act
-		_, err = client.Project.Delete(ctx, projects.DeleteRequest{
+		_, err = client.Project.Delete(ctx, project.DeleteRequest{
 			Project: createResp.Project.Project,
 		})
 
@@ -128,7 +128,7 @@ func Test_ProjectsDelete(t *testing.T) {
 		ctx := context.Background()
 
 		// Act
-		_, err := client.Project.Delete(ctx, projects.DeleteRequest{
+		_, err := client.Project.Delete(ctx, project.DeleteRequest{
 			Project: "nonexistent-project",
 		})
 

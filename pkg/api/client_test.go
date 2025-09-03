@@ -10,10 +10,6 @@ import (
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 )
 
-func ptr[T any](v T) *T {
-	return &v
-}
-
 type testClient struct {
 	t *testing.T
 	*api.API
@@ -41,17 +37,17 @@ func NewTestClient(t *testing.T) *testClient {
 	}
 }
 
-func (c *testClient) DisposableProject(vertical projects.Vertical) projects.Project {
+func (c *testClient) DisposableProject(vertical project.Vertical) project.Project {
 	c.t.Helper()
 	ctx := context.Background()
-	resp, err := c.Project.Create(ctx, projects.CreateRequest{
+	resp, err := c.Project.Create(ctx, project.CreateRequest{
 		Name:     "Disposable Project",
 		Vertical: vertical,
 	})
 	require.NoError(c.t, err)
 
 	c.t.Cleanup(func() {
-		_, err := c.Project.Delete(ctx, projects.DeleteRequest{
+		_, err := c.Project.Delete(ctx, project.DeleteRequest{
 			Project: resp.Project.Project,
 		})
 		require.NoError(c.t, err)

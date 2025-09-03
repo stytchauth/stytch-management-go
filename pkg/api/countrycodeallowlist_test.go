@@ -14,7 +14,7 @@ func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 	t.Run("default country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		project := client.DisposableProject(project.VerticalB2B)
 		ctx := context.Background()
 		expected := []string{"CA", "US"}
 
@@ -32,7 +32,7 @@ func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 	t.Run("get country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		project := client.DisposableProject(project.VerticalConsumer)
 		ctx := context.Background()
 		expected := []string{"CA", "MX", "US"}
 		_, err := client.CountryCodeAllowlist.SetAllowedSMSCountryCodes(ctx,
@@ -76,7 +76,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 	t.Run("default country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		project := client.DisposableProject(project.VerticalConsumer)
 		ctx := context.Background()
 		expected := []string{"CA", "US"}
 
@@ -94,7 +94,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 	t.Run("get country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		project := client.DisposableProject(project.VerticalConsumer)
 		ctx := context.Background()
 		expected := []string{"CA", "MX", "US"}
 		_, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
@@ -119,7 +119,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 	t.Run("B2B WhatsApp not supported", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		project := client.DisposableProject(project.VerticalB2B)
 		ctx := context.Background()
 
 		// Act
@@ -154,7 +154,7 @@ func TestCountryCodeAllowlistClient_SetAllowedSMSCountryCodes(t *testing.T) {
 	t.Run("set country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		project := client.DisposableProject(project.VerticalConsumer)
 		ctx := context.Background()
 		expected := []string{"CA", "MX", "US"}
 
@@ -199,7 +199,7 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 	t.Run("set country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		project := client.DisposableProject(project.VerticalConsumer)
 		ctx := context.Background()
 		expected := []string{"CA", "MX", "US"}
 
@@ -226,7 +226,7 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 	t.Run("B2B WhatsApp not supported", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		project := client.DisposableProject(project.VerticalB2B)
 		ctx := context.Background()
 
 		// Act
