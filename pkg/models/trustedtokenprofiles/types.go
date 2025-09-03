@@ -73,7 +73,7 @@ type GetTrustedTokenProfileResponse struct {
 	// RequestID is a unique identifier to help with debugging the request
 	RequestID string `json:"request_id"`
 	// TrustedTokenProfile is the trusted token profile that was retrieved
-	TrustedTokenProfile TrustedTokenProfile `json:"trusted_token_profile"`
+	TrustedTokenProfile TrustedTokenProfile `json:"profile"`
 }
 
 type ListTrustedTokenProfilesRequest struct {
@@ -89,7 +89,7 @@ type ListTrustedTokenProfilesResponse struct {
 	// RequestID is a unique identifier to help with debugging the request
 	RequestID string `json:"request_id"`
 	// TrustedTokenProfiles is a list of all trusted token profiles for the project
-	TrustedTokenProfiles []TrustedTokenProfile `json:"trusted_token_profiles"`
+	TrustedTokenProfiles []TrustedTokenProfile `json:"profiles"`
 }
 
 type UpdateTrustedTokenProfileRequest struct {
