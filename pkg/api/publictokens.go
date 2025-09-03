@@ -28,7 +28,10 @@ func (c *PublicTokensClient) GetAll(ctx context.Context, body publictokens.GetAl
 		nil,
 		&resp)
 
-	return &resp, err
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
 // Create creates a new public token for a project.
@@ -46,7 +49,10 @@ func (c *PublicTokensClient) Create(ctx context.Context, body publictokens.Creat
 		nil,
 		jsonBody,
 		&res)
-	return &res, err
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
 
 // Delete deletes a public token for a project.
@@ -59,5 +65,8 @@ func (c *PublicTokensClient) Delete(ctx context.Context, body publictokens.Delet
 		nil,
 		nil,
 		&res)
-	return &res, err
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
