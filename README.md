@@ -21,7 +21,7 @@ potentially deleting important Stytch resources like projects or secrets that ar
 
 This library supports project-level actions on the following resources:
 
-- [x] Projects
+- [x] Project
 - [ ] Environments
 - [x] Email Templates
 - [x] JWT Templates
@@ -52,7 +52,7 @@ Create a new b2b project:
 
 ```go
     // Send the request
-    res, err := client.Projects.Create(ctx, projects.CreateRequest{
+    res, err := client.Project.Create(ctx, projects.CreateRequest{
         ProjectName: "My new project",
         Vertical: projects.VerticalB2B,
     })
