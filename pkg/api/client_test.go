@@ -10,10 +10,6 @@ import (
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 )
 
-func ptr[T any](v T) *T {
-	return &v
-}
-
 type testClient struct {
 	t *testing.T
 	*api.API
@@ -45,7 +41,7 @@ func (c *testClient) DisposableProject(vertical projects.Vertical) projects.Proj
 	c.t.Helper()
 	ctx := context.Background()
 	resp, err := c.Projects.Create(ctx, projects.CreateRequest{
-		Name:     "Disposable project",
+		Name:     "Disposable Project",
 		Vertical: vertical,
 	})
 	require.NoError(c.t, err)
