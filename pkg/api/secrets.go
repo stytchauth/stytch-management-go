@@ -26,7 +26,10 @@ func (c *SecretsClient) Get(ctx context.Context, body secrets.GetSecretRequest) 
 		nil,
 		&resp,
 	)
-	return &resp, err
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
 // GetAll retrieves all secrets for a project
@@ -40,7 +43,10 @@ func (c *SecretsClient) GetAll(ctx context.Context, body secrets.GetAllSecretsRe
 		nil,
 		&resp,
 	)
-	return &resp, err
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
 // Create creates a secret for a project. The response has the secret value, which
@@ -55,7 +61,10 @@ func (c *SecretsClient) Create(ctx context.Context, body secrets.CreateSecretReq
 		nil,
 		&resp,
 	)
-	return &resp, err
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
 // Delete deletes a secret for a project
@@ -69,5 +78,8 @@ func (c *SecretsClient) Delete(ctx context.Context, body secrets.DeleteSecretReq
 		nil,
 		&resp,
 	)
-	return &resp, err
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }

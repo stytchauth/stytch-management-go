@@ -47,9 +47,13 @@ type SetRequest struct {
 	// Project is the project for which to set the JWT template
 	Project string `json:"-"`
 	// Environment is the environment for which to set the JWT template
-	Environment string `json:"environment"`
-	// JWTTemplate is the JWT template to set
-	JWTTemplate JWTTemplate `json:"jwt_template"`
+	Environment string `json:"-"`
+	// TemplateType is the type of JWT template
+	TemplateType TemplateType `json:"template_type"`
+	// TemplateContent is the JWT template content
+	TemplateContent string `json:"template_content"`
+	// CustomAudience is an optional custom audience for the JWT template
+	CustomAudience string `json:"custom_audience"`
 }
 
 type SetResponse struct {

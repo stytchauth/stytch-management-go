@@ -71,7 +71,7 @@ type CreateSecretResponse struct {
 	// RequestID is a unique identifier to help with debugging the request
 	RequestID string `json:"request_id"`
 	// CreatedSecret is the newly created secret. The value of this secret is only visible in this response.
-	CreatedSecret CreatedSecret `json:"created_secret"`
+	CreatedSecret CreatedSecret `json:"secret"`
 }
 
 type DeleteSecretRequest struct {
