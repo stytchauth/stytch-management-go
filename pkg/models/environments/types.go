@@ -65,9 +65,9 @@ type Environment struct {
 
 type CreateEnvironmentRequest struct {
 	// Project is the unique identifier (alias) for the project to which the environment will belong.
-	Project string `json:"project"`
+	Project string `json:"-"`
 	// Name is the name of the environment.
-	Name string `json:"name"`
+	Name string `json:"-"`
 	// Type is the environment's type.
 	Type EnvironmentType `json:"type"`
 	// CrossOrgPasswordsEnabled indicates whether the environment should use cross-org passwords.
@@ -112,9 +112,9 @@ type CreateEnvironmentResponse struct {
 
 type GetEnvironmentRequest struct {
 	// Project is the unique identifier (alias) for the project to which the environment belongs.
-	Project string `json:"project"`
+	Project string `json:"-"`
 	// Environment is the unique identifier (alias) for the environment to retrieve.
-	Environment string `json:"environment"`
+	Environment string `json:"-"`
 }
 
 type GetEnvironmentResponse struct {
@@ -128,7 +128,7 @@ type GetEnvironmentResponse struct {
 
 type GetEnvironmentsRequest struct {
 	// Project is the unique identifier (alias) for the project whose environments are to be retrieved.
-	Project string `json:"project"`
+	Project string `json:"-"`
 }
 
 type GetEnvironmentsResponse struct {
@@ -142,7 +142,9 @@ type GetEnvironmentsResponse struct {
 
 type UpdateEnvironmentRequest struct {
 	// Project is the unique identifier (alias) for the project to which the environment belongs.
-	Project string `json:"project"`
+	Project string `json:"-"`
+	// Environment is the unique identifier (alias) for the environment to update.
+	Environment string `json:"-"`
 	// Name is the name of the environment.
 	Name string `json:"name"`
 	// CrossOrgPasswordsEnabled indicates whether the environment should use cross-org passwords.
@@ -187,9 +189,9 @@ type UpdateEnvironmentResponse struct {
 
 type DeleteEnvironmentRequest struct {
 	// Project is the unique identifier (alias) for the project to which the environment belongs.
-	Project string `json:"project"`
+	Project string `json:"-"`
 	// Environment is the unique identifier (alias) for the environment to delete.
-	Environment string `json:"environment"`
+	Environment string `json:"-"`
 }
 
 type DeleteEnvironmentResponse struct {
