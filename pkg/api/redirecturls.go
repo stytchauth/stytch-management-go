@@ -35,7 +35,10 @@ func (c *RedirectURLsClient) Create(
 		nil,
 		jsonBody,
 		&res)
-	return &res, err
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
 
 // GetAll retrieves all redirect URLs for a project environment
@@ -47,12 +50,15 @@ func (c *RedirectURLsClient) GetAll(
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls/all", body.Project, body.Environment),
 		nil,
 		nil,
 		&resp)
 
-	return &resp, err
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
 // Get retrieves a redirect URL for a project environment
@@ -68,7 +74,10 @@ func (c *RedirectURLsClient) Get(
 		nil,
 		nil,
 		&res)
-	return &res, err
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
 
 // Update updates the valid types for a redirect URL for a project environment
@@ -89,7 +98,10 @@ func (c *RedirectURLsClient) Update(
 		nil,
 		jsonBody,
 		&res)
-	return &res, err
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
 
 // Delete deletes a redirect URL for a project environment
@@ -105,5 +117,8 @@ func (c *RedirectURLsClient) Delete(
 		nil,
 		nil,
 		&res)
-	return &res, err
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
 }

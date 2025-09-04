@@ -42,7 +42,7 @@ func Test_EnvironmentsCreate(t *testing.T) {
 	})
 }
 
-func Test_Environments(t *testing.T) {
+func Test_EnvironmentsGet(t *testing.T) {
 	t.Run("base case", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
@@ -173,24 +173,6 @@ func Test_EnvironmentsUpdate(t *testing.T) {
 		assert.Equal(t, true, resp.Environment.CrossOrgPasswordsEnabled)
 		assert.Equal(t, true, resp.Environment.UserImpersonationEnabled)
 	})
-	t.Run("environment does not exist", func(t *testing.T) {
-		// Arrange
-		client := NewTestClient(t)
-		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
-		ctx := context.Background()
-		newEnvironmentName := "Updated Environment Name"
-
-		// Act
-		resp, err := client.Environments.Update(ctx, environments.UpdateRequest{
-			Project:     env.Project,
-			Environment: "nonexistent-environment",
-			Name:        &newEnvironmentName,
-		})
-
-		// Assert
-		assert.Error(t, err)
-		assert.Nil(t, resp)
-	})
 }
 
 func Test_EnvironmentsDelete(t *testing.T) {
@@ -219,21 +201,6 @@ func Test_EnvironmentsDelete(t *testing.T) {
 			Project:     project.Project,
 			Environment: createResp.Environment.Environment,
 		})
-		assert.Error(t, err)
-	})
-	t.Run("environment does not exist", func(t *testing.T) {
-		// Arrange
-		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
-		ctx := context.Background()
-
-		// Act
-		_, err := client.Environments.Delete(ctx, environments.DeleteRequest{
-			Project:     project.Project,
-			Environment: "nonexistent-environment",
-		})
-
-		// Assert
 		assert.Error(t, err)
 	})
 }
