@@ -288,6 +288,41 @@ func TestRedirectURLsClient_Get(t *testing.T) {
 		assert.True(t, typeMap[redirecturls.RedirectTypeLogin])
 		assert.False(t, typeMap[redirecturls.RedirectTypeInvite])
 	})
+	t.Run("get existing redirect URL using query params", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalB2B)
+		ctx := context.Background()
+
+		urlWithQueryParams := "https://localhost:3002/login?expires_at={}"
+		// Create redirect URL first
+		_, err := client.RedirectURLs.Create(ctx, redirecturls.CreateRequest{
+			Project:     project.Project,
+			Environment: TestEnvironment,
+			// Use one with query params to check that escaping is correct
+			URL: urlWithQueryParams,
+			ValidTypes: []redirecturls.URLRedirectType{
+				{
+					Type:      redirecturls.RedirectTypeInvite,
+					IsDefault: false,
+				},
+			},
+		})
+		require.NoError(t, err)
+
+		// Act
+		resp, err := client.RedirectURLs.Get(ctx, redirecturls.GetRequest{
+			Project:     project.Project,
+			Environment: TestEnvironment,
+			URL:         urlWithQueryParams,
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.NotNil(t, resp)
+		assert.Equal(t, urlWithQueryParams, resp.RedirectURL.URL)
+		assert.Len(t, resp.RedirectURL.ValidTypes, 1)
+	})
 
 	t.Run("get non-existent redirect URL", func(t *testing.T) {
 		// Arrange
