@@ -32,5 +32,8 @@ func (c *EnvironmentMetricsClient) Get(
 		nil,
 		nil,
 		&resp)
+	if err != nil {
+		return nil, err
+	}
 	return &resp, err
 }
