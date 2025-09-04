@@ -17,12 +17,12 @@ type API struct {
 	// alphabetical order.
 	CountryCodeAllowlist   *CountryCodeAllowlistClient
 	EmailTemplates         *EmailTemplatesClient
+	EnvironmentMetrics     *EnvironmentMetricsClient
 	Environments           *EnvironmentsClient
 	EventLogStreaming      *EventLogStreamingClient
 	JWTTemplates           *JWTTemplatesClient
 	PasswordStrengthConfig *PasswordStrengthConfigClient
 	Projects               *ProjectsClient
-	ProjectMetrics         *ProjectMetricsClient
 	PublicTokens           *PublicTokensClient
 	RBACPolicy             *RBACPolicyClient
 	RedirectURLs           *RedirectURLsClient
@@ -86,12 +86,12 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 		client:                 client,
 		CountryCodeAllowlist:   newCountryCodeAllowlistClient(client),
 		EmailTemplates:         newEmailTemplatesClient(client),
+		EnvironmentMetrics:     newEnvironmentMetricsClient(client),
 		Environments:           newEnvironmentsClient(client),
 		EventLogStreaming:      newEventLogStreamingClient(client),
 		JWTTemplates:           newJWTTemplatesClient(client),
 		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
 		Projects:               newProjectsClient(client),
-		ProjectMetrics:         newProjectMetricsClient(client),
 		PublicTokens:           newPublicTokensClient(client),
 		RBACPolicy:             newRBACPolicyClient(client),
 		RedirectURLs:           newRedirectURLsClient(client),
@@ -122,12 +122,12 @@ func NewAccessTokenClient(accessToken string, opts ...APIOption) *API {
 		client:                 client,
 		CountryCodeAllowlist:   newCountryCodeAllowlistClient(client),
 		EmailTemplates:         newEmailTemplatesClient(client),
+		EnvironmentMetrics:     newEnvironmentMetricsClient(client),
 		Environments:           newEnvironmentsClient(client),
 		EventLogStreaming:      newEventLogStreamingClient(client),
 		JWTTemplates:           newJWTTemplatesClient(client),
 		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
 		Projects:               newProjectsClient(client),
-		ProjectMetrics:         newProjectMetricsClient(client),
 		PublicTokens:           newPublicTokensClient(client),
 		RBACPolicy:             newRBACPolicyClient(client),
 		RedirectURLs:           newRedirectURLsClient(client),
