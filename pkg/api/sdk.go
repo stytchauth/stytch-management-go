@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 
 	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/sdk"
@@ -25,7 +26,7 @@ func (c *SDKClient) GetConsumerConfig(
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/sdk/consumer",
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/consumer", body.Project, body.Environment),
 		nil,
 		nil,
 		&res,
@@ -50,7 +51,7 @@ func (c *SDKClient) SetConsumerConfig(
 	err = c.client.NewRequest(
 		ctx,
 		"PUT",
-		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/sdk/consumer",
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/consumer", body.Project, body.Environment),
 		nil,
 		jsonBody,
 		&res,
@@ -70,7 +71,7 @@ func (c *SDKClient) GetB2BConfig(
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/sdk/b2b",
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/b2b", body.Project, body.Environment),
 		nil,
 		nil,
 		&res,
@@ -95,7 +96,7 @@ func (c *SDKClient) SetB2BConfig(
 	err = c.client.NewRequest(
 		ctx,
 		"PUT",
-		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/sdk/b2b",
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/b2b", body.Project, body.Environment),
 		nil,
 		jsonBody,
 		&res,
