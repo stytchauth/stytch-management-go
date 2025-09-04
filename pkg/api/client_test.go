@@ -17,8 +17,10 @@ type testClient struct {
 
 // These are the names of the first test and live environments created
 // when a new project is created. These are used in tests.
-var LiveEnvironment string = "production"
-var TestEnvironment string = "test"
+var (
+	LiveEnvironment string = "production"
+	TestEnvironment string = "test"
+)
 
 // NewTestClient is a test helper function that returns a new API client.
 // It relies on the environment variables STYTCH_WORKSPACE_KEY_ID and STYTCH_WORKSPACE_KEY_SECRET being set.

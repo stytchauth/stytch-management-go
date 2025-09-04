@@ -54,7 +54,6 @@ func (c *RedirectURLsClient) GetAll(
 		nil,
 		nil,
 		&resp)
-
 	if err != nil {
 		return nil, err
 	}

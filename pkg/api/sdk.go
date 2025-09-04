@@ -22,8 +22,18 @@ func (c *SDKClient) GetConsumerConfig(
 	body sdk.GetConsumerConfigRequest,
 ) (*sdk.GetConsumerConfigResponse, error) {
 	var res sdk.GetConsumerConfigResponse
-	err := c.client.NewRequest(ctx, "GET", "/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/sdk/consumer", nil, nil, &res)
-	return &res, err
+	err := c.client.NewRequest(
+		ctx,
+		"GET",
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/sdk/consumer",
+		nil,
+		nil,
+		&res,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
 
 // SetConsumerConfig updates the SDK configuration for a B2C project environment
@@ -37,8 +47,18 @@ func (c *SDKClient) SetConsumerConfig(
 	}
 
 	var res sdk.SetConsumerConfigResponse
-	err = c.client.NewRequest(ctx, "PUT", "/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/sdk/consumer", nil, jsonBody, &res)
-	return &res, err
+	err = c.client.NewRequest(
+		ctx,
+		"PUT",
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/sdk/consumer",
+		nil,
+		jsonBody,
+		&res,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
 
 // GetB2BConfig retrieves the SDK configuration for a B2B project environment
@@ -47,8 +67,18 @@ func (c *SDKClient) GetB2BConfig(
 	body sdk.GetB2BConfigRequest,
 ) (*sdk.GetB2BConfigResponse, error) {
 	var res sdk.GetB2BConfigResponse
-	err := c.client.NewRequest(ctx, "GET", "/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/sdk/b2b", nil, nil, &res)
-	return &res, err
+	err := c.client.NewRequest(
+		ctx,
+		"GET",
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/sdk/b2b",
+		nil,
+		nil,
+		&res,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
 
 // SetB2BConfig updates the SDK configuration for a B2B project environment
@@ -62,6 +92,16 @@ func (c *SDKClient) SetB2BConfig(
 	}
 
 	var res sdk.SetB2BConfigResponse
-	err = c.client.NewRequest(ctx, "PUT", "/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/sdk/b2b", nil, jsonBody, &res)
-	return &res, err
+	err = c.client.NewRequest(
+		ctx,
+		"PUT",
+		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/sdk/b2b",
+		nil,
+		jsonBody,
+		&res,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
