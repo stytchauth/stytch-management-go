@@ -15,7 +15,9 @@ type API struct {
 
 	// These are the clients for all the different
 	// resources available via the management API
+	CountryCodeAllowlist   *CountryCodeAllowlistClient
 	EmailTemplates         *EmailTemplatesClient
+	EventLogStreaming      *EventLogStreamingClient
 	JWTTemplates           *JWTTemplatesClient
 	PasswordStrengthConfig *PasswordStrengthConfigClient
 	Projects               *ProjectsClient
@@ -25,6 +27,7 @@ type API struct {
 	RedirectURLs           *RedirectURLsClient
 	SDK                    *SDKClient
 	Secrets                *SecretsClient
+	TrustedTokenProfiles   *TrustedTokenProfilesClient
 }
 
 type apiConfig struct {
@@ -34,8 +37,9 @@ type apiConfig struct {
 	WorkspaceKeyID     string
 	WorkspaceKeySecret string
 
-	baseURI    string
-	httpClient *http.Client
+	baseURI         string
+	httpClient      *http.Client
+	userAgentSuffix string
 }
 
 type APIOption func(*apiConfig)
@@ -49,6 +53,12 @@ func WithBaseURI(baseURI string) APIOption {
 func WithHTTPClient(client *http.Client) APIOption {
 	return func(a *apiConfig) {
 		a.httpClient = client
+	}
+}
+
+func WithUserAgentSuffix(userAgentSuffix string) APIOption {
+	return func(a *apiConfig) {
+		a.userAgentSuffix = userAgentSuffix
 	}
 }
 
@@ -68,11 +78,14 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 		WorkspaceKeySecret: workspaceKeySecret,
 		BaseURI:            c.baseURI,
 		HTTPClient:         c.httpClient,
+		UserAgentSuffix:    c.userAgentSuffix,
 	})
 
 	return &API{
 		client:                 client,
+		CountryCodeAllowlist:   newCountryCodeAllowlistClient(client),
 		EmailTemplates:         newEmailTemplatesClient(client),
+		EventLogStreaming:      newEventLogStreamingClient(client),
 		JWTTemplates:           newJWTTemplatesClient(client),
 		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
 		Projects:               newProjectsClient(client),
@@ -82,10 +95,11 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 		RedirectURLs:           newRedirectURLsClient(client),
 		SDK:                    newSDKClient(client),
 		Secrets:                newSecretsClient(client),
+		TrustedTokenProfiles:   newTrustedTokenProfilesClient(client),
 	}
 }
 
-// NewClient creates a new API client with an access token.
+// NewAccessTokenClient creates a new API client with an access token.
 func NewAccessTokenClient(accessToken string, opts ...APIOption) *API {
 	c := apiConfig{
 		baseURI:    defaultBaseURI,
@@ -104,7 +118,9 @@ func NewAccessTokenClient(accessToken string, opts ...APIOption) *API {
 
 	return &API{
 		client:                 client,
+		CountryCodeAllowlist:   newCountryCodeAllowlistClient(client),
 		EmailTemplates:         newEmailTemplatesClient(client),
+		EventLogStreaming:      newEventLogStreamingClient(client),
 		JWTTemplates:           newJWTTemplatesClient(client),
 		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
 		Projects:               newProjectsClient(client),
@@ -114,5 +130,6 @@ func NewAccessTokenClient(accessToken string, opts ...APIOption) *API {
 		RedirectURLs:           newRedirectURLsClient(client),
 		SDK:                    newSDKClient(client),
 		Secrets:                newSecretsClient(client),
+		TrustedTokenProfiles:   newTrustedTokenProfilesClient(client),
 	}
 }

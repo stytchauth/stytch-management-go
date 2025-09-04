@@ -3,9 +3,11 @@ on:
   push:
     branches:
       - "main"
+      - "v2"
   pull_request:
     branches:
       - "main"
+      - "v2"
 
 jobs:
   lint:
@@ -35,6 +37,10 @@ jobs:
           # And test the latest Go release
           - "1.22"
 
+    env:
+      STYTCH_WORKSPACE_KEY_ID: ${{ secrets.STYTCH_WORKSPACE_KEY_ID }}
+      STYTCH_WORKSPACE_KEY_SECRET: ${{ secrets.STYTCH_WORKSPACE_KEY_SECRET }}
+      STYTCH_WORKSPACE_BASE_URI: ${{ secrets.STYTCH_WORKSPACE_BASE_URI }}
     steps:
       - uses: actions/checkout@v3
 
