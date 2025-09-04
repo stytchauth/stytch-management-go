@@ -19,9 +19,11 @@ func Test_EnvironmentsCreate(t *testing.T) {
 
 		// Act
 		resp, err := client.Environments.Create(ctx, environments.CreateRequest{
-			Project: project.Project,
-			Name:    "Test Environment",
-			Type:    environments.EnvironmentTypeTest,
+			Project:                  project.Project,
+			Name:                     "Test Environment",
+			Type:                     environments.EnvironmentTypeTest,
+			CrossOrgPasswordsEnabled: ptr(true),
+			UserImpersonationEnabled: ptr(true),
 		})
 		t.Cleanup(func() {
 			_, err := client.Environments.Delete(ctx, environments.DeleteRequest{
@@ -35,6 +37,8 @@ func Test_EnvironmentsCreate(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "Test Environment", resp.Environment.Name)
 		assert.Equal(t, environments.EnvironmentTypeTest, resp.Environment.Type)
+		assert.Equal(t, true, resp.Environment.CrossOrgPasswordsEnabled)
+		assert.Equal(t, true, resp.Environment.UserImpersonationEnabled)
 	})
 }
 
@@ -120,6 +124,43 @@ func Test_EnvironmentsUpdate(t *testing.T) {
 
 		// Act
 		resp, err := client.Environments.Update(ctx, environments.UpdateRequest{
+			Project:                  env.Project,
+			Environment:              env.Environment,
+			Name:                     &newEnvironmentName,
+			CrossOrgPasswordsEnabled: ptr(true),
+			UserImpersonationEnabled: ptr(true),
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, newEnvironmentName, resp.Environment.Name)
+		assert.Equal(t, true, resp.Environment.CrossOrgPasswordsEnabled)
+		assert.Equal(t, true, resp.Environment.UserImpersonationEnabled)
+	})
+	t.Run("does not overwrite existing values", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+		newEnvironmentName := "Updated Environment Name"
+
+		// Act
+		resp, err := client.Environments.Update(ctx, environments.UpdateRequest{
+			Project:                  env.Project,
+			Environment:              env.Environment,
+			CrossOrgPasswordsEnabled: ptr(true),
+			UserImpersonationEnabled: ptr(true),
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, env.Name, resp.Environment.Name)
+		assert.Equal(t, true, resp.Environment.CrossOrgPasswordsEnabled)
+		assert.Equal(t, true, resp.Environment.UserImpersonationEnabled)
+
+		// Act
+		// Update again, but specify only the name.
+		resp, err = client.Environments.Update(ctx, environments.UpdateRequest{
 			Project:     env.Project,
 			Environment: env.Environment,
 			Name:        &newEnvironmentName,
@@ -127,7 +168,10 @@ func Test_EnvironmentsUpdate(t *testing.T) {
 
 		// Assert
 		assert.NoError(t, err)
+		// The other values should remain unchanged.
 		assert.Equal(t, newEnvironmentName, resp.Environment.Name)
+		assert.Equal(t, true, resp.Environment.CrossOrgPasswordsEnabled)
+		assert.Equal(t, true, resp.Environment.UserImpersonationEnabled)
 	})
 	t.Run("environment does not exist", func(t *testing.T) {
 		// Arrange

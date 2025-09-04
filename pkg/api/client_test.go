@@ -5,12 +5,15 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
-
 	"github.com/stretchr/testify/require"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/api"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 )
+
+func ptr[T any](v T) *T {
+	return &v
+}
 
 type testClient struct {
 	t *testing.T
