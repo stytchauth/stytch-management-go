@@ -7,8 +7,13 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/api"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 )
+
+func ptr[T any](v T) *T {
+	return &v
+}
 
 type testClient struct {
 	t *testing.T
@@ -17,8 +22,10 @@ type testClient struct {
 
 // These are the names of the first test and live environments created
 // when a new project is created. These are used in tests.
-var LiveEnvironment string = "production"
-var TestEnvironment string = "test"
+var (
+	LiveEnvironment string = "production"
+	TestEnvironment string = "test"
+)
 
 // NewTestClient is a test helper function that returns a new API client.
 // It relies on the environment variables STYTCH_WORKSPACE_KEY_ID and STYTCH_WORKSPACE_KEY_SECRET being set.
@@ -59,4 +66,28 @@ func (c *testClient) DisposableProject(vertical projects.Vertical) projects.Proj
 	})
 
 	return resp.Project
+}
+
+func (c *testClient) DisposableEnvironment(
+	vertical projects.Vertical, environmentType environments.EnvironmentType,
+) environments.Environment {
+	c.t.Helper()
+	project := c.DisposableProject(vertical)
+	ctx := context.Background()
+
+	envResp, err := c.Environments.GetAll(ctx, environments.GetAllRequest{
+		Project: project.Project,
+	})
+	require.NoError(c.t, err)
+
+	// Projects are created with both a live and test environment, so return the one that matches the
+	// requested type.
+	var disposableEnv environments.Environment
+	for _, env := range envResp.Environments {
+		if env.Type == environmentType {
+			disposableEnv = env
+			break
+		}
+	}
+	return disposableEnv
 }

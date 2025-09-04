@@ -7,16 +7,17 @@ import (
 	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
 )
 
-// This is the main entrypoint for interacting with the Stytch Management API
+// This is the main entrypoint for interacting with the Stytch Management API.
 const defaultBaseURI = "https://management.stytch.com"
 
 type API struct {
 	client *internal.Client
 
-	// These are the clients for all the different
-	// resources available via the management API
+	// These are the clients for all the different resources available via the management API, in
+	// alphabetical order.
 	CountryCodeAllowlist   *CountryCodeAllowlistClient
 	EmailTemplates         *EmailTemplatesClient
+	Environments           *EnvironmentsClient
 	EventLogStreaming      *EventLogStreamingClient
 	JWTTemplates           *JWTTemplatesClient
 	PasswordStrengthConfig *PasswordStrengthConfigClient
@@ -85,6 +86,7 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 		client:                 client,
 		CountryCodeAllowlist:   newCountryCodeAllowlistClient(client),
 		EmailTemplates:         newEmailTemplatesClient(client),
+		Environments:           newEnvironmentsClient(client),
 		EventLogStreaming:      newEventLogStreamingClient(client),
 		JWTTemplates:           newJWTTemplatesClient(client),
 		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
@@ -120,6 +122,7 @@ func NewAccessTokenClient(accessToken string, opts ...APIOption) *API {
 		client:                 client,
 		CountryCodeAllowlist:   newCountryCodeAllowlistClient(client),
 		EmailTemplates:         newEmailTemplatesClient(client),
+		Environments:           newEnvironmentsClient(client),
 		EventLogStreaming:      newEventLogStreamingClient(client),
 		JWTTemplates:           newJWTTemplatesClient(client),
 		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
