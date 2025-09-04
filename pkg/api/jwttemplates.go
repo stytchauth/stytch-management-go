@@ -30,7 +30,6 @@ func (c *JWTTemplatesClient) Get(
 		nil,
 		nil,
 		&resp)
-
 	if err != nil {
 		return nil, err
 	}

@@ -244,7 +244,6 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 		// Assert
 		assert.Error(t, err)
 		assert.Nil(t, resp)
-
 	})
 
 	t.Run("config does not exist", func(t *testing.T) {

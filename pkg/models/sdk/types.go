@@ -49,10 +49,19 @@ type AuthorizedB2BDomain struct {
 	SlugPattern string `json:"slug_pattern,omitempty"`
 }
 
+type SMSAutofillMetadataType string
+
+const (
+	// SMSAutofillMetadataTypeDomain is the metadata type for the domain.
+	SMSAutofillMetadataTypeDomain SMSAutofillMetadataType = "domain"
+	// SMSAutofillMetadataTypeHash is the metadata type for the hash.
+	SMSAutofillMetadataTypeHash SMSAutofillMetadataType = "hash"
+)
+
 // SMSAutofillMetadata is a type specifying the metadata to use for autofill of SMS OTPs.
 type SMSAutofillMetadata struct {
 	// MetadataType is the type of metadata to use for autofill. This should be either "domain" or "hash".
-	MetadataType string `json:"metadata_type"`
+	MetadataType SMSAutofillMetadataType `json:"metadata_type"`
 	// MetadataValue is the value of the metadata to use for autofill. This should be the associated domain name (for MetadataType "domain")
 	// or application hash (for MetadataType "hash").
 	MetadataValue string `json:"metadata_value"`

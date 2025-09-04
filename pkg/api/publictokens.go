@@ -27,7 +27,6 @@ func (c *PublicTokensClient) GetAll(ctx context.Context, body publictokens.GetAl
 		nil,
 		nil,
 		&resp)
-
 	if err != nil {
 		return nil, err
 	}
