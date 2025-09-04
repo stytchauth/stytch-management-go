@@ -86,7 +86,7 @@ func (c *RedirectURLsClient) Update(
 	err = c.client.NewRequest(
 		ctx,
 		"PUT",
-		fmt.Sprintf("/v1/projects/%s/redirect_urls?url=%s", body.ProjectID, body.RedirectURL.URL),
+		fmt.Sprintf("/v1/projects/%s/redirect_urls?url=%s", body.ProjectID, url.QueryEscape(body.RedirectURL.URL)),
 		nil,
 		jsonBody,
 		&res)
@@ -102,7 +102,7 @@ func (c *RedirectURLsClient) Delete(
 	err := c.client.NewRequest(
 		ctx,
 		"DELETE",
-		fmt.Sprintf("/v1/projects/%s/redirect_urls?url=%s", body.ProjectID, body.URL),
+		fmt.Sprintf("/v1/projects/%s/redirect_urls?url=%s", body.ProjectID, url.QueryEscape(body.URL)),
 		nil,
 		nil,
 		&res)
