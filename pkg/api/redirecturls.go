@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/url"
 
 	"github.com/stytchauth/stytch-management-go/v2/pkg/api/internal"
 	"github.com/stytchauth/stytch-management-go/v2/pkg/models/redirecturls"
@@ -64,7 +65,7 @@ func (c *RedirectURLsClient) Get(
 	err := c.client.NewRequest(
 		ctx,
 		"GET",
-		fmt.Sprintf("/v1/projects/%s/redirect_urls?url=%s", body.ProjectID, body.URL),
+		fmt.Sprintf("/v1/projects/%s/redirect_urls?url=%s", body.ProjectID, url.QueryEscape(body.URL)),
 		nil,
 		nil,
 		&res)
