@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"net/url"
 
 	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
@@ -31,7 +32,7 @@ func (c *RedirectURLsClient) Create(
 	var res redirecturls.CreateResponse
 	err = c.client.NewRequest(
 		ctx,
-		"POST",
+		http.MethodPost,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls", body.Project, body.Environment),
 		nil,
 		jsonBody,
@@ -50,7 +51,7 @@ func (c *RedirectURLsClient) GetAll(
 	var resp redirecturls.GetAllResponse
 	err := c.client.NewRequest(
 		ctx,
-		"GET",
+		http.MethodGet,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls/all", body.Project, body.Environment),
 		nil,
 		nil,
@@ -69,7 +70,7 @@ func (c *RedirectURLsClient) Get(
 	var res redirecturls.GetResponse
 	err := c.client.NewRequest(
 		ctx,
-		"GET",
+		http.MethodGet,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls?url=%s", body.Project, body.Environment, url.QueryEscape(body.URL)),
 		nil,
 		nil,
@@ -93,7 +94,7 @@ func (c *RedirectURLsClient) Update(
 	var res redirecturls.UpdateResponse
 	err = c.client.NewRequest(
 		ctx,
-		"PUT",
+		http.MethodPut,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls?url=%s", body.Project, body.Environment, url.QueryEscape(body.URL)),
 		nil,
 		jsonBody,
@@ -112,7 +113,7 @@ func (c *RedirectURLsClient) Delete(
 	var res redirecturls.DeleteResponse
 	err := c.client.NewRequest(
 		ctx,
-		"DELETE",
+		http.MethodDelete,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls?url=%s", body.Project, body.Environment, url.QueryEscape(body.URL)),
 		nil,
 		nil,

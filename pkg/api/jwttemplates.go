@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/http"
 
 	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/jwttemplates"
@@ -25,7 +26,7 @@ func (c *JWTTemplatesClient) Get(
 	var resp jwttemplates.GetResponse
 	err := c.client.NewRequest(
 		ctx,
-		"GET",
+		http.MethodGet,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/jwt_templates/%s", body.Project, body.Environment, body.TemplateType),
 		nil,
 		nil,
@@ -49,7 +50,7 @@ func (c *JWTTemplatesClient) Set(
 	var res jwttemplates.SetResponse
 	err = c.client.NewRequest(
 		ctx,
-		"PUT",
+		http.MethodPut,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/jwt_templates/%s", body.Project, body.Environment, body.TemplateType),
 		nil,
 		jsonBody,

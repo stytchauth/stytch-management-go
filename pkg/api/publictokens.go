@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/http"
 
 	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/publictokens"
@@ -22,7 +23,7 @@ func (c *PublicTokensClient) GetAll(ctx context.Context, body publictokens.GetAl
 	var resp publictokens.GetAllResponse
 	err := c.client.NewRequest(
 		ctx,
-		"GET",
+		http.MethodGet,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/public_tokens", body.Project, body.Environment),
 		nil,
 		nil,
@@ -43,7 +44,7 @@ func (c *PublicTokensClient) Create(ctx context.Context, body publictokens.Creat
 	var res publictokens.CreateResponse
 	err = c.client.NewRequest(
 		ctx,
-		"POST",
+		http.MethodPost,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/public_tokens", body.Project, body.Environment),
 		nil,
 		jsonBody,
@@ -59,7 +60,7 @@ func (c *PublicTokensClient) Delete(ctx context.Context, body publictokens.Delet
 	var res publictokens.DeleteResponse
 	err := c.client.NewRequest(
 		ctx,
-		"DELETE",
+		http.MethodDelete,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/public_tokens/%s", body.Project, body.Environment, body.PublicToken),
 		nil,
 		nil,

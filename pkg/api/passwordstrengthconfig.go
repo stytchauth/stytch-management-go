@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"encoding/json"
+	"net/http"
 
 	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/passwordstrengthconfig"
@@ -24,7 +25,7 @@ func (c *PasswordStrengthConfigClient) Get(
 	body passwordstrengthconfig.GetRequest,
 ) (*passwordstrengthconfig.GetResponse, error) {
 	var res passwordstrengthconfig.GetResponse
-	err := c.client.NewRequest(ctx, "GET", "/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/password_strength_config", nil, nil, &res)
+	err := c.client.NewRequest(ctx, http.MethodGet, "/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/password_strength_config", nil, nil, &res)
 	return &res, err
 }
 
@@ -38,6 +39,6 @@ func (c *PasswordStrengthConfigClient) Set(
 		return nil, err
 	}
 	var res passwordstrengthconfig.SetResponse
-	err = c.client.NewRequest(ctx, "PUT", "/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/password_strength_config", nil, jsonBody, &res)
+	err = c.client.NewRequest(ctx, http.MethodPut, "/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/password_strength_config", nil, jsonBody, &res)
 	return &res, err
 }

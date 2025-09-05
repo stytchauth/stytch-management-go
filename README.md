@@ -22,7 +22,7 @@ potentially deleting important Stytch resources like projects or secrets that ar
 This library supports project-level actions on the following resources:
 
 - [x] Projects
-- [ ] Environments
+- [x] Environments
 - [x] Email Templates
 - [x] JWT Templates
 - [x] Password strength configuration
