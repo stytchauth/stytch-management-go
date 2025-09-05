@@ -19,7 +19,7 @@ func newRedirectURLsClient(c *internal.Client) *RedirectURLsClient {
 	return &RedirectURLsClient{client: c}
 }
 
-// Create creates a redirect URL for a project environment
+// Create creates a redirect URL for an environment.
 func (c *RedirectURLsClient) Create(
 	ctx context.Context,
 	body redirecturls.CreateRequest,
@@ -43,7 +43,7 @@ func (c *RedirectURLsClient) Create(
 	return &res, nil
 }
 
-// GetAll retrieves all redirect URLs for a project environment
+// GetAll retrieves all redirect URLs for an environment.
 func (c *RedirectURLsClient) GetAll(
 	ctx context.Context,
 	body redirecturls.GetAllRequest,
@@ -62,7 +62,7 @@ func (c *RedirectURLsClient) GetAll(
 	return &resp, nil
 }
 
-// Get retrieves a redirect URL for a project environment
+// Get retrieves a redirect URL for an environment.
 func (c *RedirectURLsClient) Get(
 	ctx context.Context,
 	body redirecturls.GetRequest,
@@ -81,7 +81,7 @@ func (c *RedirectURLsClient) Get(
 	return &res, nil
 }
 
-// Update updates the valid types for a redirect URL for a project environment
+// Update updates the valid types for a redirect URL for an environment.
 func (c *RedirectURLsClient) Update(
 	ctx context.Context,
 	body redirecturls.UpdateRequest,
@@ -105,7 +105,7 @@ func (c *RedirectURLsClient) Update(
 	return &res, nil
 }
 
-// Delete deletes a redirect URL for a project environment
+// Delete deletes a redirect URL for an environment.
 func (c *RedirectURLsClient) Delete(
 	ctx context.Context,
 	body redirecturls.DeleteRequest,

@@ -18,7 +18,7 @@ func newEventLogStreamingClient(c *internal.Client) *EventLogStreamingClient {
 	return &EventLogStreamingClient{client: c}
 }
 
-// Get retrieves the event log streaming config for a project environment
+// Get retrieves an event log streaming config for an environment.
 func (c *EventLogStreamingClient) Get(
 	ctx context.Context,
 	body eventlogstreaming.GetEventLogStreamingRequest,
@@ -38,7 +38,7 @@ func (c *EventLogStreamingClient) Get(
 	return &resp, err
 }
 
-// Create creates the event log streaming config for a project environment
+// Create creates an event log streaming config for an environment.
 func (c *EventLogStreamingClient) Create(
 	ctx context.Context,
 	body eventlogstreaming.CreateEventLogStreamingRequest,
@@ -63,7 +63,7 @@ func (c *EventLogStreamingClient) Create(
 	return &resp, err
 }
 
-// Update updates the event log streaming config for a project environment
+// Update updates an event log streaming config for an environment.
 func (c *EventLogStreamingClient) Update(
 	ctx context.Context,
 	body eventlogstreaming.UpdateEventLogStreamingRequest,
@@ -88,7 +88,7 @@ func (c *EventLogStreamingClient) Update(
 	return &resp, err
 }
 
-// Delete deletes the event log streaming config for a project environment
+// Delete deletes an event log streaming config for an environment.
 func (c *EventLogStreamingClient) Delete(
 	ctx context.Context,
 	body eventlogstreaming.DeleteEventLogStreamingRequest,
@@ -108,6 +108,7 @@ func (c *EventLogStreamingClient) Delete(
 	return &resp, err
 }
 
+// Enable starts streaming event logs for an environment to a destination.
 func (c *EventLogStreamingClient) Enable(
 	ctx context.Context,
 	body eventlogstreaming.EnableEventLogStreamingRequest,
@@ -127,6 +128,7 @@ func (c *EventLogStreamingClient) Enable(
 	return &resp, err
 }
 
+// Disable stops streaming event logs for an environment to a destination.
 func (c *EventLogStreamingClient) Disable(
 	ctx context.Context,
 	body eventlogstreaming.DisableEventLogStreamingRequest,
