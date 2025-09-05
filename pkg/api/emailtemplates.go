@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/http"
 
 	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/emailtemplates"
@@ -17,7 +18,7 @@ func newEmailTemplatesClient(c *internal.Client) *EmailTemplatesClient {
 	return &EmailTemplatesClient{client: c}
 }
 
-// GetAll retrieves all email templates for a project
+// GetAll retrieves all email templates for a project.
 func (c *EmailTemplatesClient) GetAll(
 	ctx context.Context,
 	body emailtemplates.GetAllRequest,
@@ -25,16 +26,18 @@ func (c *EmailTemplatesClient) GetAll(
 	var resp emailtemplates.GetAllResponse
 	err := c.client.NewRequest(
 		ctx,
-		"GET",
+		http.MethodGet,
 		fmt.Sprintf("/pwa/v3/projects/%s/email_templates", body.Project),
 		nil,
 		nil,
 		&resp)
-
-	return &resp, err
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
-// Get retrieves an email template for a project
+// Get retrieves an email template for a project.
 func (c *EmailTemplatesClient) Get(
 	ctx context.Context,
 	body emailtemplates.GetRequest,
@@ -42,16 +45,18 @@ func (c *EmailTemplatesClient) Get(
 	var resp emailtemplates.GetResponse
 	err := c.client.NewRequest(
 		ctx,
-		"GET",
+		http.MethodGet,
 		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.Project, body.TemplateID),
 		nil,
 		nil,
 		&resp)
-
-	return &resp, err
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
-// Create creates an email template for a project
+// Create creates an email template for a project.
 func (c *EmailTemplatesClient) Create(
 	ctx context.Context,
 	body emailtemplates.CreateRequest,
@@ -61,34 +66,40 @@ func (c *EmailTemplatesClient) Create(
 		return nil, err
 	}
 
-	var res emailtemplates.CreateResponse
+	var resp emailtemplates.CreateResponse
 	err = c.client.NewRequest(
 		ctx,
-		"POST",
+		http.MethodPost,
 		fmt.Sprintf("/pwa/v3/projects/%s/email_templates", body.Project),
 		nil,
 		jsonBody,
-		&res)
-	return &res, err
+		&resp)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
-// Delete deletes an email template for a project
+// Delete deletes an email template for a project.
 func (c *EmailTemplatesClient) Delete(
 	ctx context.Context,
 	body emailtemplates.DeleteRequest,
 ) (*emailtemplates.DeleteResponse, error) {
-	var res emailtemplates.DeleteResponse
+	var resp emailtemplates.DeleteResponse
 	err := c.client.NewRequest(
 		ctx,
-		"DELETE",
+		http.MethodDelete,
 		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.Project, body.TemplateID),
 		nil,
 		nil,
-		&res)
-	return &res, err
+		&resp)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
-// Update updates an email template for a project
+// Update updates an email template for a project.
 func (c *EmailTemplatesClient) Update(
 	ctx context.Context,
 	body emailtemplates.UpdateRequest,
@@ -98,13 +109,16 @@ func (c *EmailTemplatesClient) Update(
 		return nil, err
 	}
 
-	var res emailtemplates.UpdateResponse
+	var resp emailtemplates.UpdateResponse
 	err = c.client.NewRequest(
 		ctx,
-		"PUT",
+		http.MethodPut,
 		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.Project, body.TemplateID),
 		nil,
 		jsonBody,
-		&res)
-	return &res, err
+		&resp)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
