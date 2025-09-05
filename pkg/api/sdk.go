@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/http"
 
 	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/sdk"
@@ -25,7 +26,7 @@ func (c *SDKClient) GetConsumerConfig(
 	var res sdk.GetConsumerConfigResponse
 	err := c.client.NewRequest(
 		ctx,
-		"GET",
+		http.MethodGet,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/consumer", body.Project, body.Environment),
 		nil,
 		nil,
@@ -50,7 +51,7 @@ func (c *SDKClient) SetConsumerConfig(
 	var res sdk.SetConsumerConfigResponse
 	err = c.client.NewRequest(
 		ctx,
-		"PUT",
+		http.MethodPut,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/consumer", body.Project, body.Environment),
 		nil,
 		jsonBody,
@@ -70,7 +71,7 @@ func (c *SDKClient) GetB2BConfig(
 	var res sdk.GetB2BConfigResponse
 	err := c.client.NewRequest(
 		ctx,
-		"GET",
+		http.MethodGet,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/b2b", body.Project, body.Environment),
 		nil,
 		nil,
@@ -95,7 +96,7 @@ func (c *SDKClient) SetB2BConfig(
 	var res sdk.SetB2BConfigResponse
 	err = c.client.NewRequest(
 		ctx,
-		"PUT",
+		http.MethodPut,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/b2b", body.Project, body.Environment),
 		nil,
 		jsonBody,

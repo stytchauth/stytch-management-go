@@ -2,6 +2,8 @@ package api
 
 import (
 	"context"
+	"fmt"
+	"net/http"
 
 	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/secrets"
@@ -20,8 +22,8 @@ func (c *SecretsClient) Get(ctx context.Context, body secrets.GetSecretRequest) 
 	var resp secrets.GetSecretResponse
 	err := c.client.NewRequest(
 		ctx,
-		"GET",
-		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/secrets/"+body.SecretID,
+		http.MethodGet,
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets/%s", body.Project, body.Environment, body.SecretID),
 		nil,
 		nil,
 		&resp,
@@ -37,8 +39,8 @@ func (c *SecretsClient) GetAll(ctx context.Context, body secrets.GetAllSecretsRe
 	var resp secrets.GetAllSecretsResponse
 	err := c.client.NewRequest(
 		ctx,
-		"GET",
-		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/secrets",
+		http.MethodGet,
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets", body.Project, body.Environment),
 		nil,
 		nil,
 		&resp,
@@ -55,8 +57,8 @@ func (c *SecretsClient) Create(ctx context.Context, body secrets.CreateSecretReq
 	var resp secrets.CreateSecretResponse
 	err := c.client.NewRequest(
 		ctx,
-		"POST",
-		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/secrets",
+		http.MethodPost,
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets", body.Project, body.Environment),
 		nil,
 		nil,
 		&resp,
@@ -72,8 +74,8 @@ func (c *SecretsClient) Delete(ctx context.Context, body secrets.DeleteSecretReq
 	var resp secrets.DeleteSecretResponse
 	err := c.client.NewRequest(
 		ctx,
-		"DELETE",
-		"/pwa/v3/projects/"+body.Project+"/environments/"+body.Environment+"/secrets/"+body.SecretID,
+		http.MethodDelete,
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets/%s", body.Project, body.Environment, body.SecretID),
 		nil,
 		nil,
 		&resp,

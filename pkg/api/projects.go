@@ -3,6 +3,8 @@ package api
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"net/http"
 
 	"github.com/stytchauth/stytch-management-go/v3/pkg/api/internal"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
@@ -29,7 +31,7 @@ func (c *ProjectsClient) Create(
 	}
 
 	var res projects.CreateResponse
-	err = c.client.NewRequest(ctx, "POST", "/pwa/v3/projects", nil, jsonBody, &res)
+	err = c.client.NewRequest(ctx, http.MethodPost, "/pwa/v3/projects", nil, jsonBody, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +44,7 @@ func (c *ProjectsClient) Get(
 	body projects.GetRequest,
 ) (*projects.GetResponse, error) {
 	var res projects.GetResponse
-	err := c.client.NewRequest(ctx, "GET", "/pwa/v3/projects/"+body.Project, nil, nil, &res)
+	err := c.client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/pwa/v3/projects/%s", body.Project), nil, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +57,7 @@ func (c *ProjectsClient) GetAll(
 	body projects.GetAllRequest,
 ) (*projects.GetAllResponse, error) {
 	var res projects.GetAllResponse
-	err := c.client.NewRequest(ctx, "GET", "/pwa/v3/projects", nil, nil, &res)
+	err := c.client.NewRequest(ctx, http.MethodGet, "/pwa/v3/projects", nil, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +74,7 @@ func (c *ProjectsClient) Update(
 		return nil, err
 	}
 	var res projects.UpdateResponse
-	err = c.client.NewRequest(ctx, "PATCH", "/pwa/v3/projects/"+body.Project, nil, jsonBody, &res)
+	err = c.client.NewRequest(ctx, http.MethodPatch, fmt.Sprintf("/pwa/v3/projects/%s", body.Project), nil, jsonBody, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +87,7 @@ func (c *ProjectsClient) Delete(
 	body projects.DeleteRequest,
 ) (*projects.DeleteResponse, error) {
 	var res projects.DeleteResponse
-	err := c.client.NewRequest(ctx, "DELETE", "/pwa/v3/projects/"+body.Project, nil, nil, &res)
+	err := c.client.NewRequest(ctx, http.MethodDelete, fmt.Sprintf("/pwa/v3/projects/%s", body.Project), nil, nil, &res)
 	if err != nil {
 		return nil, err
 	}

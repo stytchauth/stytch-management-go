@@ -18,6 +18,7 @@ func newCountryCodeAllowlistClient(c *internal.Client) *CountryCodeAllowlistClie
 	return &CountryCodeAllowlistClient{client: c}
 }
 
+// GetAllowedSMSCountryCodes retrieves the allowed SMS country codes for an environment.
 func (c *CountryCodeAllowlistClient) GetAllowedSMSCountryCodes(
 	ctx context.Context,
 	body *cca.GetAllowedSMSCountryCodesRequest,
@@ -36,6 +37,7 @@ func (c *CountryCodeAllowlistClient) GetAllowedSMSCountryCodes(
 	return &resp, err
 }
 
+// GetAllowedWhatsAppCountryCodes retrieves the allowed WhatsApp country codes for an environment.
 func (c *CountryCodeAllowlistClient) GetAllowedWhatsAppCountryCodes(
 	ctx context.Context,
 	body *cca.GetAllowedWhatsAppCountryCodesRequest,
@@ -54,6 +56,7 @@ func (c *CountryCodeAllowlistClient) GetAllowedWhatsAppCountryCodes(
 	return &resp, err
 }
 
+// SetAllowedSMSCountryCodes sets the allowed SMS country codes for an environment.
 func (c *CountryCodeAllowlistClient) SetAllowedSMSCountryCodes(
 	ctx context.Context,
 	body *cca.SetAllowedSMSCountryCodesRequest,
@@ -77,6 +80,7 @@ func (c *CountryCodeAllowlistClient) SetAllowedSMSCountryCodes(
 	return &resp, err
 }
 
+// SetAllowedWhatsAppCountryCodes sets the allowed WhatsApp country codes for an environment.
 func (c *CountryCodeAllowlistClient) SetAllowedWhatsAppCountryCodes(
 	ctx context.Context,
 	body *cca.SetAllowedWhatsAppCountryCodesRequest,
