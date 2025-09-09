@@ -49,6 +49,9 @@ func (c *EnvironmentsClient) Get(
 	ctx context.Context,
 	body environments.GetRequest,
 ) (*environments.GetResponse, error) {
+	if body.Environment == "" {
+		return nil, fmt.Errorf("missing environment")
+	}
 	var resp environments.GetResponse
 	err := c.client.NewRequest(
 		ctx,

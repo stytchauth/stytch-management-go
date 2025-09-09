@@ -18,44 +18,6 @@ func newEmailTemplatesClient(c *internal.Client) *EmailTemplatesClient {
 	return &EmailTemplatesClient{client: c}
 }
 
-// GetAll retrieves all email templates for a project.
-func (c *EmailTemplatesClient) GetAll(
-	ctx context.Context,
-	body emailtemplates.GetAllRequest,
-) (*emailtemplates.GetAllResponse, error) {
-	var resp emailtemplates.GetAllResponse
-	err := c.client.NewRequest(
-		ctx,
-		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/email_templates", body.Project),
-		nil,
-		nil,
-		&resp)
-	if err != nil {
-		return nil, err
-	}
-	return &resp, nil
-}
-
-// Get retrieves an email template for a project.
-func (c *EmailTemplatesClient) Get(
-	ctx context.Context,
-	body emailtemplates.GetRequest,
-) (*emailtemplates.GetResponse, error) {
-	var resp emailtemplates.GetResponse
-	err := c.client.NewRequest(
-		ctx,
-		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.Project, body.TemplateID),
-		nil,
-		nil,
-		&resp)
-	if err != nil {
-		return nil, err
-	}
-	return &resp, nil
-}
-
 // Create creates an email template for a project.
 func (c *EmailTemplatesClient) Create(
 	ctx context.Context,
@@ -80,16 +42,38 @@ func (c *EmailTemplatesClient) Create(
 	return &resp, nil
 }
 
-// Delete deletes an email template for a project.
-func (c *EmailTemplatesClient) Delete(
+// Get retrieves an email template for a project.
+func (c *EmailTemplatesClient) Get(
 	ctx context.Context,
-	body emailtemplates.DeleteRequest,
-) (*emailtemplates.DeleteResponse, error) {
-	var resp emailtemplates.DeleteResponse
+	body emailtemplates.GetRequest,
+) (*emailtemplates.GetResponse, error) {
+	if body.TemplateID == "" {
+		return nil, fmt.Errorf("missing template ID")
+	}
+	var resp emailtemplates.GetResponse
 	err := c.client.NewRequest(
 		ctx,
-		http.MethodDelete,
+		http.MethodGet,
 		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.Project, body.TemplateID),
+		nil,
+		nil,
+		&resp)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// GetAll retrieves all email templates for a project.
+func (c *EmailTemplatesClient) GetAll(
+	ctx context.Context,
+	body emailtemplates.GetAllRequest,
+) (*emailtemplates.GetAllResponse, error) {
+	var resp emailtemplates.GetAllResponse
+	err := c.client.NewRequest(
+		ctx,
+		http.MethodGet,
+		fmt.Sprintf("/pwa/v3/projects/%s/email_templates", body.Project),
 		nil,
 		nil,
 		&resp)
@@ -116,6 +100,25 @@ func (c *EmailTemplatesClient) Update(
 		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.Project, body.TemplateID),
 		nil,
 		jsonBody,
+		&resp)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// Delete deletes an email template for a project.
+func (c *EmailTemplatesClient) Delete(
+	ctx context.Context,
+	body emailtemplates.DeleteRequest,
+) (*emailtemplates.DeleteResponse, error) {
+	var resp emailtemplates.DeleteResponse
+	err := c.client.NewRequest(
+		ctx,
+		http.MethodDelete,
+		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.Project, body.TemplateID),
+		nil,
+		nil,
 		&resp)
 	if err != nil {
 		return nil, err

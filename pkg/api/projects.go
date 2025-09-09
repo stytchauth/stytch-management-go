@@ -43,6 +43,9 @@ func (c *ProjectsClient) Get(
 	ctx context.Context,
 	body projects.GetRequest,
 ) (*projects.GetResponse, error) {
+	if body.Project == "" {
+		return nil, fmt.Errorf("missing project")
+	}
 	var res projects.GetResponse
 	err := c.client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/pwa/v3/projects/%s", body.Project), nil, nil, &res)
 	if err != nil {
@@ -54,7 +57,7 @@ func (c *ProjectsClient) Get(
 // GetAll retrieves all projects in a workspace.
 func (c *ProjectsClient) GetAll(
 	ctx context.Context,
-	body projects.GetAllRequest,
+	_ projects.GetAllRequest,
 ) (*projects.GetAllResponse, error) {
 	var res projects.GetAllResponse
 	err := c.client.NewRequest(ctx, http.MethodGet, "/pwa/v3/projects", nil, nil, &res)

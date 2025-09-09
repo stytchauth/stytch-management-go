@@ -65,6 +65,20 @@ func Test_ProjectsGet(t *testing.T) {
 		assert.Error(t, err)
 		assert.Nil(t, resp)
 	})
+	t.Run("missing project", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		ctx := context.Background()
+
+		// Act
+		resp, err := client.Projects.Get(ctx, projects.GetRequest{
+			// Project is intentionally omitted.
+		})
+
+		// Assert
+		assert.ErrorContains(t, err, "project")
+		assert.Nil(t, resp)
+	})
 }
 
 func hasProject(projects []projects.Project, target projects.Project) bool {

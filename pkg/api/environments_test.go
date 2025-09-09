@@ -75,6 +75,22 @@ func Test_EnvironmentsGet(t *testing.T) {
 		assert.Error(t, err)
 		assert.Nil(t, resp)
 	})
+	t.Run("missing environment", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalB2B)
+		ctx := context.Background()
+
+		// Act
+		resp, err := client.Environments.Get(ctx, environments.GetRequest{
+			Project: project.Project,
+			// Environment is intentionally omitted.
+		})
+
+		// Assert
+		assert.ErrorContains(t, err, "environment")
+		assert.Nil(t, resp)
+	})
 }
 
 func hasEnvironment(environments []environments.Environment, target environments.Environment) bool {
