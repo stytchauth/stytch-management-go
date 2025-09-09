@@ -18,12 +18,14 @@ func Test_EnvironmentsCreate(t *testing.T) {
 		ctx := context.Background()
 
 		// Act
+		zeroDowntimeSessionMigrationURL := "https://example.com/migration"
 		resp, err := client.Environments.Create(ctx, environments.CreateRequest{
-			Project:                  project.Project,
-			Name:                     "Test Environment",
-			Type:                     environments.EnvironmentTypeTest,
-			CrossOrgPasswordsEnabled: ptr(true),
-			UserImpersonationEnabled: ptr(true),
+			Project:                         project.Project,
+			Name:                            "Test Environment",
+			Type:                            environments.EnvironmentTypeTest,
+			CrossOrgPasswordsEnabled:        ptr(true),
+			UserImpersonationEnabled:        ptr(true),
+			ZeroDowntimeSessionMigrationURL: ptr(zeroDowntimeSessionMigrationURL),
 		})
 		t.Cleanup(func() {
 			_, err := client.Environments.Delete(ctx, environments.DeleteRequest{
@@ -37,8 +39,75 @@ func Test_EnvironmentsCreate(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "Test Environment", resp.Environment.Name)
 		assert.Equal(t, environments.EnvironmentTypeTest, resp.Environment.Type)
-		assert.Equal(t, true, resp.Environment.CrossOrgPasswordsEnabled)
-		assert.Equal(t, true, resp.Environment.UserImpersonationEnabled)
+		assert.True(t, resp.Environment.CrossOrgPasswordsEnabled)
+		assert.True(t, resp.Environment.UserImpersonationEnabled)
+		assert.Equal(t, zeroDowntimeSessionMigrationURL, resp.Environment.ZeroDowntimeSessionMigrationURL)
+	})
+	t.Run("user locking fields", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalB2B)
+		ctx := context.Background()
+
+		// Act
+		userLockThreshold := int32(5)
+		userLockTTL := int32(600)
+		resp, err := client.Environments.Create(ctx, environments.CreateRequest{
+			Project:                  project.Project,
+			Name:                     "Test Environment",
+			Type:                     environments.EnvironmentTypeTest,
+			UserLockSelfServeEnabled: ptr(true),
+			UserLockThreshold:        ptr(userLockThreshold),
+			UserLockTTL:              ptr(userLockTTL),
+		})
+		t.Cleanup(func() {
+			_, err := client.Environments.Delete(ctx, environments.DeleteRequest{
+				Project:     project.Project,
+				Environment: resp.Environment.Environment,
+			})
+			require.NoError(t, err)
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, "Test Environment", resp.Environment.Name)
+		assert.Equal(t, environments.EnvironmentTypeTest, resp.Environment.Type)
+		assert.True(t, resp.Environment.UserLockSelfServeEnabled)
+		assert.Equal(t, userLockThreshold, resp.Environment.UserLockThreshold)
+		assert.Equal(t, userLockTTL, resp.Environment.UserLockTTL)
+	})
+	t.Run("IDP fields", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalConsumer)
+		ctx := context.Background()
+
+		// Act
+		idpAuthorizationURL := "https://example.com/idp"
+		idpTemplateContent := "{\"field\": {{ user.user_id }} }"
+		resp, err := client.Environments.Create(ctx, environments.CreateRequest{
+			Project:                             project.Project,
+			Name:                                "Test Environment",
+			Type:                                environments.EnvironmentTypeTest,
+			IDPAuthorizationURL:                 &idpAuthorizationURL,
+			IDPDynamicClientRegistrationEnabled: ptr(true),
+			IDPDynamicClientRegistrationAccessTokenTemplateContent: ptr(idpTemplateContent),
+		})
+		t.Cleanup(func() {
+			_, err := client.Environments.Delete(ctx, environments.DeleteRequest{
+				Project:     project.Project,
+				Environment: resp.Environment.Environment,
+			})
+			require.NoError(t, err)
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, "Test Environment", resp.Environment.Name)
+		assert.Equal(t, environments.EnvironmentTypeTest, resp.Environment.Type)
+		assert.Equal(t, idpAuthorizationURL, resp.Environment.IDPAuthorizationURL)
+		assert.True(t, resp.Environment.IDPDynamicClientRegistrationEnabled)
+		assert.Equal(t, idpTemplateContent, resp.Environment.IDPDynamicClientRegistrationAccessTokenTemplateContent)
 	})
 }
 
@@ -123,19 +192,68 @@ func Test_EnvironmentsUpdate(t *testing.T) {
 		newEnvironmentName := "Updated Environment Name"
 
 		// Act
+		zeroDowntimeSessionMigrationURL := "https://example.com/migration"
 		resp, err := client.Environments.Update(ctx, environments.UpdateRequest{
-			Project:                  env.Project,
-			Environment:              env.Environment,
-			Name:                     &newEnvironmentName,
-			CrossOrgPasswordsEnabled: ptr(true),
-			UserImpersonationEnabled: ptr(true),
+			Project:                         env.Project,
+			Environment:                     env.Environment,
+			Name:                            &newEnvironmentName,
+			CrossOrgPasswordsEnabled:        ptr(true),
+			UserImpersonationEnabled:        ptr(true),
+			ZeroDowntimeSessionMigrationURL: &zeroDowntimeSessionMigrationURL,
 		})
 
 		// Assert
 		assert.NoError(t, err)
 		assert.Equal(t, newEnvironmentName, resp.Environment.Name)
-		assert.Equal(t, true, resp.Environment.CrossOrgPasswordsEnabled)
-		assert.Equal(t, true, resp.Environment.UserImpersonationEnabled)
+		assert.True(t, resp.Environment.CrossOrgPasswordsEnabled)
+		assert.True(t, resp.Environment.UserImpersonationEnabled)
+		assert.Equal(t, zeroDowntimeSessionMigrationURL, resp.Environment.ZeroDowntimeSessionMigrationURL)
+	})
+	t.Run("user locking fields", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+
+		// Act
+		userLockThreshold := int32(5)
+		userLockTTL := int32(600)
+		resp, err := client.Environments.Update(ctx, environments.UpdateRequest{
+			Project:                  env.Project,
+			Environment:              env.Environment,
+			UserLockSelfServeEnabled: ptr(true),
+			UserLockThreshold:        ptr(userLockThreshold),
+			UserLockTTL:              ptr(userLockTTL),
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.True(t, resp.Environment.UserLockSelfServeEnabled)
+		assert.Equal(t, userLockThreshold, resp.Environment.UserLockThreshold)
+		assert.Equal(t, userLockTTL, resp.Environment.UserLockTTL)
+	})
+	t.Run("IDP fields", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+
+		// Act
+		idpAuthorizationURL := "https://example.com/idp"
+		idpTemplateContent := "{\"field\": {{ user.user_id }} }"
+		resp, err := client.Environments.Update(ctx, environments.UpdateRequest{
+			Project:                             env.Project,
+			Environment:                         env.Environment,
+			IDPAuthorizationURL:                 &idpAuthorizationURL,
+			IDPDynamicClientRegistrationEnabled: ptr(true),
+			IDPDynamicClientRegistrationAccessTokenTemplateContent: ptr(idpTemplateContent),
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, idpAuthorizationURL, resp.Environment.IDPAuthorizationURL)
+		assert.True(t, resp.Environment.IDPDynamicClientRegistrationEnabled)
+		assert.Equal(t, idpTemplateContent, resp.Environment.IDPDynamicClientRegistrationAccessTokenTemplateContent)
 	})
 	t.Run("does not overwrite existing values", func(t *testing.T) {
 		// Arrange
@@ -155,8 +273,8 @@ func Test_EnvironmentsUpdate(t *testing.T) {
 		// Assert
 		assert.NoError(t, err)
 		assert.Equal(t, env.Name, resp.Environment.Name)
-		assert.Equal(t, true, resp.Environment.CrossOrgPasswordsEnabled)
-		assert.Equal(t, true, resp.Environment.UserImpersonationEnabled)
+		assert.True(t, resp.Environment.CrossOrgPasswordsEnabled)
+		assert.True(t, resp.Environment.UserImpersonationEnabled)
 
 		// Act
 		// Update again, but specify only the name.
@@ -170,8 +288,8 @@ func Test_EnvironmentsUpdate(t *testing.T) {
 		assert.NoError(t, err)
 		// The other values should remain unchanged.
 		assert.Equal(t, newEnvironmentName, resp.Environment.Name)
-		assert.Equal(t, true, resp.Environment.CrossOrgPasswordsEnabled)
-		assert.Equal(t, true, resp.Environment.UserImpersonationEnabled)
+		assert.True(t, resp.Environment.CrossOrgPasswordsEnabled)
+		assert.True(t, resp.Environment.UserImpersonationEnabled)
 	})
 }
 
