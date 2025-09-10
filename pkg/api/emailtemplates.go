@@ -125,3 +125,65 @@ func (c *EmailTemplatesClient) Delete(
 	}
 	return &resp, nil
 }
+
+// SetDefault sets the default email template for a specific template type in a project.
+func (c *EmailTemplatesClient) SetDefault(
+	ctx context.Context,
+	body emailtemplates.SetDefaultRequest,
+) (*emailtemplates.SetDefaultResponse, error) {
+	jsonBody, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+
+	var resp emailtemplates.SetDefaultResponse
+	err = c.client.NewRequest(
+		ctx,
+		http.MethodPost,
+		fmt.Sprintf("/pwa/v3/projects/%s/default_email_templates/%s", body.Project, body.EmailTemplateType),
+		nil,
+		jsonBody,
+		&resp)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// GetDefault retrieves the default email template for a specific template type in a project.
+func (c *EmailTemplatesClient) GetDefault(
+	ctx context.Context,
+	body emailtemplates.GetDefaultRequest,
+) (*emailtemplates.GetDefaultResponse, error) {
+	var resp emailtemplates.GetDefaultResponse
+	err := c.client.NewRequest(
+		ctx,
+		http.MethodGet,
+		fmt.Sprintf("/pwa/v3/projects/%s/default_email_templates/%s", body.Project, body.EmailTemplateType),
+		nil,
+		nil,
+		&resp)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// UnsetDefault removes the default email template for a specific template type in a project.
+func (c *EmailTemplatesClient) UnsetDefault(
+	ctx context.Context,
+	body emailtemplates.UnsetDefaultRequest,
+) (*emailtemplates.UnsetDefaultResponse, error) {
+	var resp emailtemplates.UnsetDefaultResponse
+	err := c.client.NewRequest(
+		ctx,
+		http.MethodDelete,
+		fmt.Sprintf("/pwa/v3/projects/%s/default_email_templates/%s", body.Project, body.EmailTemplateType),
+		nil,
+		nil,
+		&resp)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}

@@ -10,7 +10,8 @@ const (
 	TemplateTypeOneTimePasscode          TemplateType = "ONE_TIME_PASSCODE"
 	TemplateTypeOneTimePasscodeSignup    TemplateType = "ONE_TIME_PASSCODE_SIGNUP"
 	TemplateTypeVerifyEmailPasswordReset TemplateType = "VERIFY_EMAIL_PASSWORD_RESET"
-	TemplateTypeAll                      TemplateType = "ALL"
+	TemplateTypeUnlock                   TemplateType = "UNLOCK"
+	TemplateTypePrebuilt                 TemplateType = "PREBUILT"
 )
 
 func TemplateTypes() []TemplateType {
@@ -22,7 +23,8 @@ func TemplateTypes() []TemplateType {
 		TemplateTypeOneTimePasscode,
 		TemplateTypeOneTimePasscodeSignup,
 		TemplateTypeVerifyEmailPasswordReset,
-		TemplateTypeAll,
+		TemplateTypeUnlock,
+		TemplateTypePrebuilt,
 	}
 }
 
@@ -227,6 +229,53 @@ type DeleteRequest struct {
 }
 
 type DeleteResponse struct {
+	// StatusCode is the HTTP status code for the response
+	StatusCode int `json:"status_code"`
+	// RequestID is a unique identifier to help with debugging the request
+	RequestID string `json:"request_id,omitempty"`
+}
+
+type SetDefaultRequest struct {
+	// Project is the project for which to set the default email template.
+	Project string `json:"-"`
+	// EmailTemplateType is the template type for which to set the default email template
+	EmailTemplateType TemplateType `json:"email_template_type,omitempty"`
+	// TemplateID is the unique template ID for the email template to set as default
+	TemplateID string `json:"template_id,omitempty"`
+}
+
+type SetDefaultResponse struct {
+	// StatusCode is the HTTP status code for the response
+	StatusCode int `json:"status_code"`
+	// RequestID is a unique identifier to help with debugging the request
+	RequestID string `json:"request_id,omitempty"`
+}
+
+type GetDefaultRequest struct {
+	// Project is the project for which to get the default email template.
+	Project string `json:"-"`
+	// EmailTemplateType is the template type for which to get the default email template
+	EmailTemplateType TemplateType `json:"email_template_type,omitempty"`
+}
+
+type GetDefaultResponse struct {
+	// StatusCode is the HTTP status code for the response
+	StatusCode int `json:"status_code"`
+	// RequestID is a unique identifier to help with debugging the request
+	RequestID string `json:"request_id,omitempty"`
+	// TemplateID is the unique template ID for the default email template
+	TemplateID string `json:"template_id,omitempty"`
+}
+
+type UnsetDefaultRequest struct {
+	// Project is the project for which to unset the default email template.
+	Project string `json:"-"`
+	// EmailTemplateType is the template type for which to unset the default email template
+	// Note that unsetting the PREBUILT type is not supported
+	EmailTemplateType TemplateType `json:"email_template_type,omitempty"`
+}
+
+type UnsetDefaultResponse struct {
 	// StatusCode is the HTTP status code for the response
 	StatusCode int `json:"status_code"`
 	// RequestID is a unique identifier to help with debugging the request
