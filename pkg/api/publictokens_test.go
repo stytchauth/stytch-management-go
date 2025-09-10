@@ -31,6 +31,50 @@ func TestPublicTokensClient_Create(t *testing.T) {
 	})
 }
 
+func TestPublicTokensClient_Get(t *testing.T) {
+	t.Run("base case", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalConsumer)
+		ctx := context.Background()
+
+		// Create a public token.
+		createResp, err := client.PublicTokens.Create(ctx, publictokens.CreateRequest{
+			Project:     project.Project,
+			Environment: TestEnvironment,
+		})
+		require.NoError(t, err)
+
+		// Act
+		resp, err := client.PublicTokens.Get(ctx, publictokens.GetRequest{
+			Project:     project.Project,
+			Environment: TestEnvironment,
+			PublicToken: createResp.PublicToken.PublicToken,
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, createResp.PublicToken, resp.PublicToken)
+	})
+	t.Run("missing public token", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalConsumer)
+		ctx := context.Background()
+
+		// Act
+		resp, err := client.PublicTokens.Get(ctx, publictokens.GetRequest{
+			Project:     project.Project,
+			Environment: TestEnvironment,
+			// PublicToken field is intentionally omitted.
+		})
+
+		// Assert
+		assert.ErrorContains(t, err, "public token")
+		assert.Nil(t, resp)
+	})
+}
+
 func TestPublicTokensClient_GetAll(t *testing.T) {
 	t.Run("get all public tokens", func(t *testing.T) {
 		// Arrange
