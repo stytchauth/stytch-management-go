@@ -18,46 +18,6 @@ func newTrustedTokenProfilesClient(c *internal.Client) *TrustedTokenProfilesClie
 	return &TrustedTokenProfilesClient{client: c}
 }
 
-// Get retrieves the trusted token profile for an environment.
-func (c *TrustedTokenProfilesClient) Get(
-	ctx context.Context,
-	body *trustedtokenprofiles.GetTrustedTokenProfileRequest,
-) (*trustedtokenprofiles.GetTrustedTokenProfileResponse, error) {
-	var resp trustedtokenprofiles.GetTrustedTokenProfileResponse
-	err := c.client.NewRequest(
-		ctx,
-		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles/%s", body.Project, body.Environment, body.ProfileID),
-		nil,
-		nil,
-		&resp,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return &resp, err
-}
-
-// List retrieves all the trusted token profiles for an environment.
-func (c *TrustedTokenProfilesClient) List(
-	ctx context.Context,
-	body *trustedtokenprofiles.ListTrustedTokenProfilesRequest,
-) (*trustedtokenprofiles.ListTrustedTokenProfilesResponse, error) {
-	var resp trustedtokenprofiles.ListTrustedTokenProfilesResponse
-	err := c.client.NewRequest(
-		ctx,
-		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles", body.Project, body.Environment),
-		nil,
-		nil,
-		&resp,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return &resp, err
-}
-
 // Create creates a trusted token profile for an environment.
 func (c *TrustedTokenProfilesClient) Create(
 	ctx context.Context,
@@ -75,6 +35,50 @@ func (c *TrustedTokenProfilesClient) Create(
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles", body.Project, body.Environment),
 		nil,
 		jsonBody,
+		&resp,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, err
+}
+
+// Get retrieves the trusted token profile for an environment.
+func (c *TrustedTokenProfilesClient) Get(
+	ctx context.Context,
+	body *trustedtokenprofiles.GetTrustedTokenProfileRequest,
+) (*trustedtokenprofiles.GetTrustedTokenProfileResponse, error) {
+	if body.ProfileID == "" {
+		return nil, fmt.Errorf("missing profile ID")
+	}
+
+	var resp trustedtokenprofiles.GetTrustedTokenProfileResponse
+	err := c.client.NewRequest(
+		ctx,
+		http.MethodGet,
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles/%s", body.Project, body.Environment, body.ProfileID),
+		nil,
+		nil,
+		&resp,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, err
+}
+
+// GetAll retrieves all the trusted token profiles for an environment.
+func (c *TrustedTokenProfilesClient) GetAll(
+	ctx context.Context,
+	body *trustedtokenprofiles.GetAllTrustedTokenProfilesRequest,
+) (*trustedtokenprofiles.GetAllTrustedTokenProfilesResponse, error) {
+	var resp trustedtokenprofiles.GetAllTrustedTokenProfilesResponse
+	err := c.client.NewRequest(
+		ctx,
+		http.MethodGet,
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles", body.Project, body.Environment),
+		nil,
+		nil,
 		&resp,
 	)
 	if err != nil {

@@ -141,10 +141,28 @@ func TestTrustedTokenProfilesClient_Get(t *testing.T) {
 		assert.Error(t, err)
 		assert.Nil(t, resp)
 	})
+
+	t.Run("missing profile ID", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalB2B)
+		ctx := context.Background()
+
+		// Act
+		resp, err := client.TrustedTokenProfiles.Get(ctx, &trustedtokenprofiles.GetTrustedTokenProfileRequest{
+			Project:     project.Project,
+			Environment: TestEnvironment,
+			// ProfileID is intentionally omitted.
+		})
+
+		// Assert
+		assert.ErrorContains(t, err, "profile ID")
+		assert.Nil(t, resp)
+	})
 }
 
-func TestTrustedTokenProfilesClient_List(t *testing.T) {
-	t.Run("list profiles", func(t *testing.T) {
+func TestTrustedTokenProfilesClient_GetAll(t *testing.T) {
+	t.Run("get all profiles", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
 		project := client.DisposableProject(projects.VerticalB2B)
@@ -178,7 +196,7 @@ func TestTrustedTokenProfilesClient_List(t *testing.T) {
 		require.NoError(t, err)
 
 		// Act
-		resp, err := client.TrustedTokenProfiles.List(ctx, &trustedtokenprofiles.ListTrustedTokenProfilesRequest{
+		resp, err := client.TrustedTokenProfiles.GetAll(ctx, &trustedtokenprofiles.GetAllTrustedTokenProfilesRequest{
 			Project:     project.Project,
 			Environment: TestEnvironment,
 		})
