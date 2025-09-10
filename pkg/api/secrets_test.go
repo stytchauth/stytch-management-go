@@ -61,7 +61,6 @@ func TestSecretsClient_GetSecret(t *testing.T) {
 		assert.Equal(t, createResp.CreatedSecret.Secret[len(createResp.CreatedSecret.Secret)-4:], resp.Secret.LastFour)
 		assert.Equal(t, createResp.CreatedSecret.CreatedAt, resp.Secret.CreatedAt)
 	})
-
 	t.Run("secret does not exist", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
@@ -77,6 +76,23 @@ func TestSecretsClient_GetSecret(t *testing.T) {
 
 		// Assert
 		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
+	t.Run("missing secret ID", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalConsumer)
+		ctx := context.Background()
+
+		// Act
+		resp, err := client.Secrets.Get(ctx, secrets.GetSecretRequest{
+			Project:     project.Project,
+			Environment: TestEnvironment,
+			// SecretID is intentionally omitted.
+		})
+
+		// Assert
+		assert.ErrorContains(t, err, "secret ID")
 		assert.Nil(t, resp)
 	})
 }

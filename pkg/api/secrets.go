@@ -17,42 +17,8 @@ func newSecretsClient(c *internal.Client) *SecretsClient {
 	return &SecretsClient{client: c}
 }
 
-// Get retrieves a secret for a project
-func (c *SecretsClient) Get(ctx context.Context, body secrets.GetSecretRequest) (*secrets.GetSecretResponse, error) {
-	var resp secrets.GetSecretResponse
-	err := c.client.NewRequest(
-		ctx,
-		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets/%s", body.Project, body.Environment, body.SecretID),
-		nil,
-		nil,
-		&resp,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return &resp, nil
-}
-
-// GetAll retrieves all secrets for a project
-func (c *SecretsClient) GetAll(ctx context.Context, body secrets.GetAllSecretsRequest) (*secrets.GetAllSecretsResponse, error) {
-	var resp secrets.GetAllSecretsResponse
-	err := c.client.NewRequest(
-		ctx,
-		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets", body.Project, body.Environment),
-		nil,
-		nil,
-		&resp,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return &resp, nil
-}
-
-// Create creates a secret for a project. The response has the secret value, which
-// will not be exposed in future Get requests
+// Create creates a secret for an environment. The response contains the full secret value, which
+// will not be exposed in future Get requests.
 func (c *SecretsClient) Create(ctx context.Context, body secrets.CreateSecretRequest) (*secrets.CreateSecretResponse, error) {
 	var resp secrets.CreateSecretResponse
 	err := c.client.NewRequest(
@@ -69,7 +35,44 @@ func (c *SecretsClient) Create(ctx context.Context, body secrets.CreateSecretReq
 	return &resp, nil
 }
 
-// Delete deletes a secret for a project
+// Get retrieves a secret for an environment.
+func (c *SecretsClient) Get(ctx context.Context, body secrets.GetSecretRequest) (*secrets.GetSecretResponse, error) {
+	if body.SecretID == "" {
+		return nil, fmt.Errorf("missing secret ID")
+	}
+	var resp secrets.GetSecretResponse
+	err := c.client.NewRequest(
+		ctx,
+		http.MethodGet,
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets/%s", body.Project, body.Environment, body.SecretID),
+		nil,
+		nil,
+		&resp,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// GetAll retrieves all secrets for an environment.
+func (c *SecretsClient) GetAll(ctx context.Context, body secrets.GetAllSecretsRequest) (*secrets.GetAllSecretsResponse, error) {
+	var resp secrets.GetAllSecretsResponse
+	err := c.client.NewRequest(
+		ctx,
+		http.MethodGet,
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets", body.Project, body.Environment),
+		nil,
+		nil,
+		&resp,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// Delete deletes a secret for an environment.
 func (c *SecretsClient) Delete(ctx context.Context, body secrets.DeleteSecretRequest) (*secrets.DeleteSecretResponse, error) {
 	var resp secrets.DeleteSecretResponse
 	err := c.client.NewRequest(

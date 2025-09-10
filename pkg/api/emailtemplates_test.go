@@ -101,7 +101,6 @@ func TestEmailTemplatesClient_Get(t *testing.T) {
 		assert.NotNil(t, resp.EmailTemplate.PrebuiltCustomization)
 		assert.Nil(t, resp.EmailTemplate.CustomHTMLCustomization)
 	})
-
 	t.Run("get non-existent template", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
@@ -116,6 +115,22 @@ func TestEmailTemplatesClient_Get(t *testing.T) {
 
 		// Assert
 		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
+	t.Run("missing template ID", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalConsumer)
+		ctx := context.Background()
+
+		// Act
+		resp, err := client.EmailTemplates.Get(ctx, emailtemplates.GetRequest{
+			Project: project.Project,
+			// TemplateID is intentionally omitted.
+		})
+
+		// Assert
+		assert.ErrorContains(t, err, "template ID")
 		assert.Nil(t, resp)
 	})
 }
