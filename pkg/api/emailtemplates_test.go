@@ -288,3 +288,157 @@ func TestEmailTemplatesClient_Delete(t *testing.T) {
 		assert.Error(t, err)
 	})
 }
+
+func TestEmailTemplatesClient_SetDefault(t *testing.T) {
+	t.Run("set default template", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalConsumer)
+		ctx := context.Background()
+		templateID := randomID()
+		template := makeTestPrebuiltTemplate(templateID)
+
+		// Create template first
+		_, err := client.EmailTemplates.Create(ctx, emailtemplates.CreateRequest{
+			Project:               project.Project,
+			TemplateID:            templateID,
+			Name:                  ptr("Test Default Template"),
+			SenderInformation:     senderInformation(),
+			PrebuiltCustomization: &template,
+		})
+		require.NoError(t, err)
+
+		// Act - set as default
+		resp, err := client.EmailTemplates.SetDefault(ctx, emailtemplates.SetDefaultRequest{
+			Project:           project.Project,
+			EmailTemplateType: emailtemplates.TemplateTypePrebuilt,
+			TemplateID:        templateID,
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.NotNil(t, resp)
+	})
+
+	t.Run("set default with non-existent template", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalConsumer)
+		ctx := context.Background()
+
+		// Act
+		resp, err := client.EmailTemplates.SetDefault(ctx, emailtemplates.SetDefaultRequest{
+			Project:           project.Project,
+			EmailTemplateType: emailtemplates.TemplateTypeLogin,
+			TemplateID:        "non-existent-template",
+		})
+
+		// Assert
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
+}
+
+func TestEmailTemplatesClient_GetDefault(t *testing.T) {
+	t.Run("get default template", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalConsumer)
+		ctx := context.Background()
+		templateID := randomID()
+		template := makeTestPrebuiltTemplate(templateID)
+
+		// Create template first
+		_, err := client.EmailTemplates.Create(ctx, emailtemplates.CreateRequest{
+			Project:               project.Project,
+			TemplateID:            templateID,
+			Name:                  ptr("Test Default Template"),
+			SenderInformation:     senderInformation(),
+			PrebuiltCustomization: &template,
+		})
+		require.NoError(t, err)
+
+		// Set as default
+		_, err = client.EmailTemplates.SetDefault(ctx, emailtemplates.SetDefaultRequest{
+			Project:           project.Project,
+			EmailTemplateType: emailtemplates.TemplateTypePrebuilt,
+			TemplateID:        templateID,
+		})
+		require.NoError(t, err)
+
+		// Act - get default
+		resp, err := client.EmailTemplates.GetDefault(ctx, emailtemplates.GetDefaultRequest{
+			Project:           project.Project,
+			EmailTemplateType: emailtemplates.TemplateTypePrebuilt,
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, templateID, resp.TemplateID)
+	})
+
+	t.Run("get default for type with no default set", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalConsumer)
+		ctx := context.Background()
+
+		// Act
+		resp, err := client.EmailTemplates.GetDefault(ctx, emailtemplates.GetDefaultRequest{
+			Project:           project.Project,
+			EmailTemplateType: emailtemplates.TemplateTypeSignup,
+		})
+
+		// Assert - this should return an error when no default is set
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
+}
+
+func TestEmailTemplatesClient_UnsetDefault(t *testing.T) {
+	t.Run("unsetting prebuilt template returns error", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalConsumer)
+		ctx := context.Background()
+		templateID := randomID()
+		template := makeTestPrebuiltTemplate(templateID)
+
+		// Create template first
+		_, err := client.EmailTemplates.Create(ctx, emailtemplates.CreateRequest{
+			Project:               project.Project,
+			TemplateID:            templateID,
+			Name:                  ptr("Test Default Template"),
+			SenderInformation:     senderInformation(),
+			PrebuiltCustomization: &template,
+		})
+		require.NoError(t, err)
+
+		// Act - unset default
+		resp, err := client.EmailTemplates.UnsetDefault(ctx, emailtemplates.UnsetDefaultRequest{
+			Project:           project.Project,
+			EmailTemplateType: emailtemplates.TemplateTypePrebuilt,
+		})
+
+		// Assert
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
+
+	t.Run("unset default for type with no default set", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		project := client.DisposableProject(projects.VerticalConsumer)
+		ctx := context.Background()
+
+		// Act
+		resp, err := client.EmailTemplates.UnsetDefault(ctx, emailtemplates.UnsetDefaultRequest{
+			Project:           project.Project,
+			EmailTemplateType: emailtemplates.TemplateTypeSignup,
+		})
+
+		// Assert - this succeeds even if no default was set
+		assert.NoError(t, err)
+		assert.NotNil(t, resp)
+	})
+}
