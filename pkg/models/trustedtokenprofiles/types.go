@@ -17,6 +17,8 @@ type TrustedTokenProfile struct {
 	PEMFiles []PEMFile `json:"pem_files"`
 	// PublicKeyType is the type of public key.
 	PublicKeyType string `json:"public_key_type"`
+	// CanJITProvision indicates whether the trusted token profile can be provisioned JIT.
+	CanJITProvision bool `json:"can_jit_provision"`
 }
 
 type PEMFile struct {
