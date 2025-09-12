@@ -1,16 +1,16 @@
 package jwttemplates
 
-type TemplateType string
+type JWTTemplateType string
 
 const (
-	TemplateTypeSession TemplateType = "SESSION"
-	TemplateTypeM2M     TemplateType = "M2M"
+	JWTTemplateTypeSession JWTTemplateType = "SESSION"
+	JWTTemplateTypeM2M     JWTTemplateType = "M2M"
 )
 
-func TemplateTypes() []TemplateType {
-	return []TemplateType{
-		TemplateTypeSession,
-		TemplateTypeM2M,
+func JWTTemplateTypes() []JWTTemplateType {
+	return []JWTTemplateType{
+		JWTTemplateTypeSession,
+		JWTTemplateTypeM2M,
 	}
 }
 
@@ -21,8 +21,8 @@ type JWTTemplate struct {
 	TemplateContent string `json:"template_content"`
 	// CustomAudience is an optional custom audience for the JWT template
 	CustomAudience string `json:"custom_audience"`
-	// TemplateType is the type of JWT template
-	TemplateType TemplateType `json:"template_type"`
+	// JWTTemplateType is the type of JWT template
+	JWTTemplateType JWTTemplateType `json:"jwt_template_type"`
 }
 
 type GetRequest struct {
@@ -30,8 +30,8 @@ type GetRequest struct {
 	Project string `json:"-"`
 	// Environment is the environment for which to retrieve the JWT template
 	Environment string `json:"environment"`
-	// TemplateType is the type of JWT template to retrieve
-	TemplateType TemplateType `json:"template_type"`
+	// JWTTemplateType is the type of JWT template to retrieve
+	JWTTemplateType JWTTemplateType `json:"jwt_template_type"`
 }
 
 type GetResponse struct {
@@ -39,7 +39,7 @@ type GetResponse struct {
 	RequestID string `json:"request_id"`
 	// StatusCode is the HTTP status code for the response
 	StatusCode int `json:"status_code"`
-	// JWTTemplate is the JWT template for the requested TemplateType
+	// JWTTemplate is the JWT template for the requested JWTTemplateType
 	JWTTemplate JWTTemplate `json:"jwt_template"`
 }
 
@@ -48,8 +48,8 @@ type SetRequest struct {
 	Project string `json:"-"`
 	// Environment is the environment for which to set the JWT template
 	Environment string `json:"-"`
-	// TemplateType is the type of JWT template
-	TemplateType TemplateType `json:"template_type"`
+	// JWTTemplateType is the type of JWT template
+	JWTTemplateType JWTTemplateType `json:"jwt_template_type"`
 	// TemplateContent is the JWT template content
 	TemplateContent string `json:"template_content"`
 	// CustomAudience is an optional custom audience for the JWT template
