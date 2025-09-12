@@ -23,7 +23,7 @@ func TestJWTTemplatesClient_GetJWTTemplate(t *testing.T) {
 		_, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
 			Project:         project.Project,
 			Environment:     TestEnvironment,
-			TemplateType:    jwttemplates.TemplateTypeSession,
+			JWTTemplateType: jwttemplates.TemplateTypeSession,
 			TemplateContent: templateContent,
 			CustomAudience:  customAudience,
 		})
@@ -31,16 +31,16 @@ func TestJWTTemplatesClient_GetJWTTemplate(t *testing.T) {
 
 		// Act
 		resp, err := client.JWTTemplates.Get(ctx, &jwttemplates.GetRequest{
-			Project:      project.Project,
-			Environment:  TestEnvironment,
-			TemplateType: jwttemplates.TemplateTypeSession,
+			Project:         project.Project,
+			Environment:     TestEnvironment,
+			JWTTemplateType: jwttemplates.TemplateTypeSession,
 		})
 
 		// Assert
 		assert.NoError(t, err)
 		assert.Equal(t, templateContent, resp.JWTTemplate.TemplateContent)
 		assert.Equal(t, customAudience, resp.JWTTemplate.CustomAudience)
-		assert.Equal(t, jwttemplates.TemplateTypeSession, resp.JWTTemplate.TemplateType)
+		assert.Equal(t, jwttemplates.TemplateTypeSession, resp.JWTTemplate.JWTTemplateType)
 	})
 
 	t.Run("get m2m template", func(t *testing.T) {
@@ -55,7 +55,7 @@ func TestJWTTemplatesClient_GetJWTTemplate(t *testing.T) {
 		_, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
 			Project:         project.Project,
 			Environment:     TestEnvironment,
-			TemplateType:    jwttemplates.TemplateTypeM2M,
+			JWTTemplateType: jwttemplates.TemplateTypeM2M,
 			TemplateContent: templateContent,
 			CustomAudience:  customAudience,
 		})
@@ -63,16 +63,16 @@ func TestJWTTemplatesClient_GetJWTTemplate(t *testing.T) {
 
 		// Act
 		resp, err := client.JWTTemplates.Get(ctx, &jwttemplates.GetRequest{
-			Project:      project.Project,
-			Environment:  TestEnvironment,
-			TemplateType: jwttemplates.TemplateTypeM2M,
+			Project:         project.Project,
+			Environment:     TestEnvironment,
+			JWTTemplateType: jwttemplates.TemplateTypeM2M,
 		})
 
 		// Assert
 		assert.NoError(t, err)
 		assert.Equal(t, templateContent, resp.JWTTemplate.TemplateContent)
 		assert.Equal(t, customAudience, resp.JWTTemplate.CustomAudience)
-		assert.Equal(t, jwttemplates.TemplateTypeM2M, resp.JWTTemplate.TemplateType)
+		assert.Equal(t, jwttemplates.TemplateTypeM2M, resp.JWTTemplate.JWTTemplateType)
 	})
 }
 
@@ -89,7 +89,7 @@ func TestJWTTemplatesClient_SetJWTTemplate(t *testing.T) {
 		setResp, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
 			Project:         project.Project,
 			Environment:     TestEnvironment,
-			TemplateType:    jwttemplates.TemplateTypeSession,
+			JWTTemplateType: jwttemplates.TemplateTypeSession,
 			TemplateContent: templateContent,
 			CustomAudience:  customAudience,
 		})
@@ -98,7 +98,7 @@ func TestJWTTemplatesClient_SetJWTTemplate(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, templateContent, setResp.JWTTemplate.TemplateContent)
 		assert.Equal(t, customAudience, setResp.JWTTemplate.CustomAudience)
-		assert.Equal(t, jwttemplates.TemplateTypeSession, setResp.JWTTemplate.TemplateType)
+		assert.Equal(t, jwttemplates.TemplateTypeSession, setResp.JWTTemplate.JWTTemplateType)
 	})
 
 	t.Run("set m2m template", func(t *testing.T) {
@@ -113,7 +113,7 @@ func TestJWTTemplatesClient_SetJWTTemplate(t *testing.T) {
 		setResp, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
 			Project:         project.Project,
 			Environment:     TestEnvironment,
-			TemplateType:    jwttemplates.TemplateTypeM2M,
+			JWTTemplateType: jwttemplates.TemplateTypeM2M,
 			TemplateContent: templateContent,
 			CustomAudience:  customAudience,
 		})
@@ -122,6 +122,6 @@ func TestJWTTemplatesClient_SetJWTTemplate(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, templateContent, setResp.JWTTemplate.TemplateContent)
 		assert.Equal(t, customAudience, setResp.JWTTemplate.CustomAudience)
-		assert.Equal(t, jwttemplates.TemplateTypeM2M, setResp.JWTTemplate.TemplateType)
+		assert.Equal(t, jwttemplates.TemplateTypeM2M, setResp.JWTTemplate.JWTTemplateType)
 	})
 }
