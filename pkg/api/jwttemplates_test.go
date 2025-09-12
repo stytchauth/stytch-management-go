@@ -23,7 +23,7 @@ func TestJWTTemplatesClient_GetJWTTemplate(t *testing.T) {
 		_, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
 			Project:         project.Project,
 			Environment:     TestEnvironment,
-			JWTTemplateType: jwttemplates.TemplateTypeSession,
+			JWTTemplateType: jwttemplates.JWTTemplateTypeSession,
 			TemplateContent: templateContent,
 			CustomAudience:  customAudience,
 		})
@@ -33,14 +33,14 @@ func TestJWTTemplatesClient_GetJWTTemplate(t *testing.T) {
 		resp, err := client.JWTTemplates.Get(ctx, &jwttemplates.GetRequest{
 			Project:         project.Project,
 			Environment:     TestEnvironment,
-			JWTTemplateType: jwttemplates.TemplateTypeSession,
+			JWTTemplateType: jwttemplates.JWTTemplateTypeSession,
 		})
 
 		// Assert
 		assert.NoError(t, err)
 		assert.Equal(t, templateContent, resp.JWTTemplate.TemplateContent)
 		assert.Equal(t, customAudience, resp.JWTTemplate.CustomAudience)
-		assert.Equal(t, jwttemplates.TemplateTypeSession, resp.JWTTemplate.JWTTemplateType)
+		assert.Equal(t, jwttemplates.JWTTemplateTypeSession, resp.JWTTemplate.JWTTemplateType)
 	})
 
 	t.Run("get m2m template", func(t *testing.T) {
@@ -55,7 +55,7 @@ func TestJWTTemplatesClient_GetJWTTemplate(t *testing.T) {
 		_, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
 			Project:         project.Project,
 			Environment:     TestEnvironment,
-			JWTTemplateType: jwttemplates.TemplateTypeM2M,
+			JWTTemplateType: jwttemplates.JWTTemplateTypeM2M,
 			TemplateContent: templateContent,
 			CustomAudience:  customAudience,
 		})
@@ -65,14 +65,14 @@ func TestJWTTemplatesClient_GetJWTTemplate(t *testing.T) {
 		resp, err := client.JWTTemplates.Get(ctx, &jwttemplates.GetRequest{
 			Project:         project.Project,
 			Environment:     TestEnvironment,
-			JWTTemplateType: jwttemplates.TemplateTypeM2M,
+			JWTTemplateType: jwttemplates.JWTTemplateTypeM2M,
 		})
 
 		// Assert
 		assert.NoError(t, err)
 		assert.Equal(t, templateContent, resp.JWTTemplate.TemplateContent)
 		assert.Equal(t, customAudience, resp.JWTTemplate.CustomAudience)
-		assert.Equal(t, jwttemplates.TemplateTypeM2M, resp.JWTTemplate.JWTTemplateType)
+		assert.Equal(t, jwttemplates.JWTTemplateTypeM2M, resp.JWTTemplate.JWTTemplateType)
 	})
 }
 
@@ -89,7 +89,7 @@ func TestJWTTemplatesClient_SetJWTTemplate(t *testing.T) {
 		setResp, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
 			Project:         project.Project,
 			Environment:     TestEnvironment,
-			JWTTemplateType: jwttemplates.TemplateTypeSession,
+			JWTTemplateType: jwttemplates.JWTTemplateTypeSession,
 			TemplateContent: templateContent,
 			CustomAudience:  customAudience,
 		})
@@ -98,7 +98,7 @@ func TestJWTTemplatesClient_SetJWTTemplate(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, templateContent, setResp.JWTTemplate.TemplateContent)
 		assert.Equal(t, customAudience, setResp.JWTTemplate.CustomAudience)
-		assert.Equal(t, jwttemplates.TemplateTypeSession, setResp.JWTTemplate.JWTTemplateType)
+		assert.Equal(t, jwttemplates.JWTTemplateTypeSession, setResp.JWTTemplate.JWTTemplateType)
 	})
 
 	t.Run("set m2m template", func(t *testing.T) {
@@ -113,7 +113,7 @@ func TestJWTTemplatesClient_SetJWTTemplate(t *testing.T) {
 		setResp, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
 			Project:         project.Project,
 			Environment:     TestEnvironment,
-			JWTTemplateType: jwttemplates.TemplateTypeM2M,
+			JWTTemplateType: jwttemplates.JWTTemplateTypeM2M,
 			TemplateContent: templateContent,
 			CustomAudience:  customAudience,
 		})
@@ -122,6 +122,6 @@ func TestJWTTemplatesClient_SetJWTTemplate(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, templateContent, setResp.JWTTemplate.TemplateContent)
 		assert.Equal(t, customAudience, setResp.JWTTemplate.CustomAudience)
-		assert.Equal(t, jwttemplates.TemplateTypeM2M, setResp.JWTTemplate.JWTTemplateType)
+		assert.Equal(t, jwttemplates.JWTTemplateTypeM2M, setResp.JWTTemplate.JWTTemplateType)
 	})
 }
