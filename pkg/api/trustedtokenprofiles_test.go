@@ -55,6 +55,7 @@ func TestTrustedTokenProfilesClient_Create(t *testing.T) {
 		assert.Equal(t, testJWKSURL, resp.TrustedTokenProfile.JwksURL)
 		assert.Equal(t, "jwk", resp.TrustedTokenProfile.PublicKeyType)
 		assert.NotEmpty(t, resp.TrustedTokenProfile.ID)
+		assert.True(t, resp.TrustedTokenProfile.CanJITProvision)
 	})
 
 	t.Run("create with PEM files", func(t *testing.T) {
@@ -83,6 +84,7 @@ func TestTrustedTokenProfilesClient_Create(t *testing.T) {
 		assert.Equal(t, "test-issuer-pem", resp.TrustedTokenProfile.Issuer)
 		assert.Equal(t, "pem", resp.TrustedTokenProfile.PublicKeyType)
 		assert.NotEmpty(t, resp.TrustedTokenProfile.ID)
+		assert.False(t, resp.TrustedTokenProfile.CanJITProvision)
 		assert.Len(t, resp.TrustedTokenProfile.PEMFiles, 1)
 	})
 }
