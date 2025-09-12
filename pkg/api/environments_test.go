@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/stytcherror"
 )
 
 func Test_EnvironmentsCreate(t *testing.T) {
@@ -143,6 +144,13 @@ func Test_EnvironmentsGet(t *testing.T) {
 		// Assert
 		assert.Error(t, err)
 		assert.Nil(t, resp)
+
+		// Check that the error is well-formatted.
+		var stytchErr stytcherror.Error
+		assert.ErrorAs(t, err, &stytchErr)
+		assert.NotEmpty(t, stytchErr.RequestID)
+		assert.Equal(t, 404, stytchErr.StatusCode)
+		assert.Contains(t, stytchErr.ErrorType, "not_found")
 	})
 	t.Run("missing environment", func(t *testing.T) {
 		// Arrange
