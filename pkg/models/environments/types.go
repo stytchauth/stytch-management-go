@@ -21,9 +21,9 @@ func EnvironmentTypes() []EnvironmentType {
 // Environment represents an Environment within a Stytch Project.
 type Environment struct {
 	// EnvironmentSlug is the immutable unique identifier (slug) of the environment.
-	EnvironmentSlug string `json:"environment"`
+	EnvironmentSlug string `json:"environment_slug"`
 	// ProjectSlug is the immutable unique identifier (slug) of the project.
-	ProjectSlug string `json:"project"`
+	ProjectSlug string `json:"project_slug"`
 	// Name is the environment's name.
 	Name string `json:"name"`
 	// Type is the environment's type. See EnvironmentTypes() for possible values.

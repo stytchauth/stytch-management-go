@@ -19,7 +19,7 @@ func Verticals() []Vertical {
 // Project represents a Stytch Project.
 type Project struct {
 	// ProjectSlug is the immutable unique identifier (slug) of the project.
-	ProjectSlug string `json:"project"`
+	ProjectSlug string `json:"project_slug"`
 	// Name is the project's name.
 	Name string `json:"name"`
 	// Vertical is the project's vertical.
