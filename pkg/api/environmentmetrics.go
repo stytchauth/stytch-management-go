@@ -28,7 +28,7 @@ func (c *EnvironmentMetricsClient) Get(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/metrics", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/metrics", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		nil,
 		&resp)

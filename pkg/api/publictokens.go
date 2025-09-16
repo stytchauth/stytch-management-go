@@ -32,7 +32,7 @@ func (c *PublicTokensClient) Create(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/public_tokens", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/public_tokens", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		jsonBody,
 		&res)
@@ -54,7 +54,7 @@ func (c *PublicTokensClient) Get(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/public_tokens/%s", body.Project, body.Environment, body.PublicToken),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/public_tokens/%s", body.ProjectSlug, body.EnvironmentSlug, body.PublicToken),
 		nil,
 		nil,
 		&resp)
@@ -73,7 +73,7 @@ func (c *PublicTokensClient) GetAll(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/public_tokens", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/public_tokens", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		nil,
 		&resp)
@@ -92,7 +92,7 @@ func (c *PublicTokensClient) Delete(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodDelete,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/public_tokens/%s", body.Project, body.Environment, body.PublicToken),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/public_tokens/%s", body.ProjectSlug, body.EnvironmentSlug, body.PublicToken),
 		nil,
 		nil,
 		&res)

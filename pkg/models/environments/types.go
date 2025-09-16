@@ -20,10 +20,10 @@ func EnvironmentTypes() []EnvironmentType {
 
 // Environment represents an Environment within a Stytch Project.
 type Environment struct {
-	// Environment is the immutable unique identifier (alias) for the environment.
-	Environment string `json:"environment"`
-	// Project is the immutable unique identifier (alias) for the project.
-	Project string `json:"project"`
+	// EnvironmentSlug is the immutable unique identifier (slug) of the environment.
+	EnvironmentSlug string `json:"environment"`
+	// ProjectSlug is the immutable unique identifier (slug) of the project.
+	ProjectSlug string `json:"project"`
 	// Name is the environment's name.
 	Name string `json:"name"`
 	// Type is the environment's type. See EnvironmentTypes() for possible values.
@@ -66,8 +66,8 @@ type Environment struct {
 }
 
 type CreateRequest struct {
-	// Project is the unique identifier (alias) for the project to which the environment will belong.
-	Project string `json:"-"`
+	// ProjectSlug is the slug of the project for which to create the environment.
+	ProjectSlug string `json:"-"`
 	// Name is the name of the environment.
 	Name string `json:"name"`
 	// Type is the environment's type.
@@ -113,10 +113,10 @@ type CreateResponse struct {
 }
 
 type GetRequest struct {
-	// Project is the unique identifier (alias) for the project to which the environment belongs.
-	Project string `json:"-"`
-	// Environment is the unique identifier (alias) for the environment to retrieve.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to retrieve the environment.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment to retrieve.
+	EnvironmentSlug string `json:"-"`
 }
 
 type GetResponse struct {
@@ -129,8 +129,8 @@ type GetResponse struct {
 }
 
 type GetAllRequest struct {
-	// Project is the unique identifier (alias) for the project whose environments are to be retrieved.
-	Project string `json:"-"`
+	// ProjectSlug is the slug of the project for which to retrieve environments.
+	ProjectSlug string `json:"-"`
 }
 
 type GetAllResponse struct {
@@ -143,10 +143,10 @@ type GetAllResponse struct {
 }
 
 type UpdateRequest struct {
-	// Project is the unique identifier (alias) for the project to which the environment belongs.
-	Project string `json:"-"`
-	// Environment is the unique identifier (alias) for the environment to update.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to update the environment.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment to update.
+	EnvironmentSlug string `json:"-"`
 	// Name is the name of the environment.
 	Name *string `json:"name"`
 	// CrossOrgPasswordsEnabled indicates whether the environment should use cross-org passwords.
@@ -190,10 +190,10 @@ type UpdateResponse struct {
 }
 
 type DeleteRequest struct {
-	// Project is the unique identifier (alias) for the project to which the environment belongs.
-	Project string `json:"-"`
-	// Environment is the unique identifier (alias) for the environment to delete.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to delete the environment.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment to delete.
+	EnvironmentSlug string `json:"-"`
 }
 
 type DeleteResponse struct {

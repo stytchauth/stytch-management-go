@@ -18,10 +18,10 @@ func DeliveryMethods() []DeliveryMethod {
 var DefaultCountryCodes = []string{"CA", "US"}
 
 type GetAllowedSMSCountryCodesRequest struct {
-	// Project is the project for which to retrieve allowed SMS country codes.
-	Project string `json:"-"`
-	// Environment is the environment (e.g., "test", "live") to retrieve allowed SMS country codes for
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to retrieve allowed SMS country codes.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	EnvironmentSlug string `json:"-"`
 }
 
 type GetAllowedSMSCountryCodesResponse struct {
@@ -32,10 +32,11 @@ type GetAllowedSMSCountryCodesResponse struct {
 }
 
 type GetAllowedWhatsAppCountryCodesRequest struct {
-	// Project is the project for which to retrieve allowed WhatsApp country codes.
-	Project string `json:"-"`
-	// Environment is the environment (e.g., "test", "live") to retrieve allowed WhatsApp country codes for
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to retrieve allowed WhatsApp country codes.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to retrieve allowed WhatsApp country
+	// codes.
+	EnvironmentSlug string `json:"-"`
 }
 
 type GetAllowedWhatsAppCountryCodesResponse struct {
@@ -46,10 +47,10 @@ type GetAllowedWhatsAppCountryCodesResponse struct {
 }
 
 type SetAllowedSMSCountryCodesRequest struct {
-	// Project is the project for which to set allowed SMS country codes.
-	Project string `json:"-"`
-	// Environment is the environment (e.g., "test", "live") to set allowed SMS country codes for
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to set allowed SMS country codes.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to set allowed SMS country codes.
+	EnvironmentSlug string `json:"-"`
 	// CountryCodes is a list of country codes to set as allowed for SMS.
 	CountryCodes []string `json:"country_codes"`
 }
@@ -62,10 +63,10 @@ type SetAllowedSMSCountryCodesResponse struct {
 }
 
 type SetAllowedWhatsAppCountryCodesRequest struct {
-	// Project is the project for which to set allowed WhatsApp country codes.
-	Project string `json:"-"`
-	// Environment is the environment (e.g., "test", "live") to set allowed WhatsApp country codes for
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to set allowed WhatsApp country codes.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to set allowed WhatsApp country codes.
+	EnvironmentSlug string `json:"-"`
 	// CountryCodes is a list of country codes to set as allowed for WhatsApp.
 	CountryCodes []string `json:"country_codes"`
 }

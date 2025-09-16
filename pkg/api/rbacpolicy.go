@@ -29,7 +29,7 @@ func (c *RBACPolicyClient) Get(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/rbac_policy", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/rbac_policy", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		nil,
 		&resp)
@@ -53,7 +53,7 @@ func (c *RBACPolicyClient) Set(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPut,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/rbac_policy", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/rbac_policy", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		jsonBody,
 		&resp)

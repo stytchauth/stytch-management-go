@@ -27,7 +27,7 @@ func (c *JWTTemplatesClient) Get(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/jwt_templates/%s", body.Project, body.Environment, body.JWTTemplateType),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/jwt_templates/%s", body.ProjectSlug, body.EnvironmentSlug, body.JWTTemplateType),
 		nil,
 		nil,
 		&resp)
@@ -51,7 +51,7 @@ func (c *JWTTemplatesClient) Set(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPut,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/jwt_templates/%s", body.Project, body.Environment, body.JWTTemplateType),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/jwt_templates/%s", body.ProjectSlug, body.EnvironmentSlug, body.JWTTemplateType),
 		nil,
 		jsonBody,
 		&res)

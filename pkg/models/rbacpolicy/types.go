@@ -61,10 +61,10 @@ type Permission struct {
 }
 
 type GetRequest struct {
-	// Project is the project for which to retrieve the RBAC policy.
-	Project string `json:"-"`
-	// Environment is the environment for which to retrieve the RBAC policy.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to retrieve the RBAC policy.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to retrieve the RBAC policy.
+	EnvironmentSlug string `json:"-"`
 }
 
 type GetResponse struct {
@@ -77,10 +77,10 @@ type GetResponse struct {
 }
 
 type SetRequest struct {
-	// Project is the project for which to set the RBAC policy.
-	Project string `json:"-"`
-	// Environment is the environment for which to set the RBAC policy/
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to set the RBAC policy.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to set the RBAC policy.
+	EnvironmentSlug string `json:"-"`
 
 	// The following fields are valid for B2B projects only:
 	// StytchMember is the default role given to members within the environment.

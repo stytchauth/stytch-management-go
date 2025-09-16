@@ -34,7 +34,7 @@ func (c *EnvironmentsClient) Create(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments", body.Project),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments", body.ProjectSlug),
 		nil,
 		jsonBody,
 		&resp)
@@ -49,14 +49,14 @@ func (c *EnvironmentsClient) Get(
 	ctx context.Context,
 	body environments.GetRequest,
 ) (*environments.GetResponse, error) {
-	if body.Environment == "" {
+	if body.EnvironmentSlug == "" {
 		return nil, fmt.Errorf("missing environment")
 	}
 	var resp environments.GetResponse
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		nil,
 		&resp)
@@ -75,7 +75,7 @@ func (c *EnvironmentsClient) GetAll(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments", body.Project),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments", body.ProjectSlug),
 		nil,
 		nil,
 		&resp)
@@ -98,7 +98,7 @@ func (c *EnvironmentsClient) Update(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPatch,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		jsonBody,
 		&resp)
@@ -117,7 +117,7 @@ func (c *EnvironmentsClient) Delete(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodDelete,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		nil,
 		&resp)

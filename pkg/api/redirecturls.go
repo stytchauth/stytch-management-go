@@ -33,9 +33,28 @@ func (c *RedirectURLsClient) Create(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		jsonBody,
+		&res)
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
+
+// Get retrieves a redirect URL for an environment.
+func (c *RedirectURLsClient) Get(
+	ctx context.Context,
+	body redirecturls.GetRequest,
+) (*redirecturls.GetResponse, error) {
+	var res redirecturls.GetResponse
+	err := c.client.NewRequest(
+		ctx,
+		http.MethodGet,
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls?url=%s", body.ProjectSlug, body.EnvironmentSlug, url.QueryEscape(body.URL)),
+		nil,
+		nil,
 		&res)
 	if err != nil {
 		return nil, err
@@ -52,7 +71,7 @@ func (c *RedirectURLsClient) GetAll(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls/all", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls/all", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		nil,
 		&resp)
@@ -60,25 +79,6 @@ func (c *RedirectURLsClient) GetAll(
 		return nil, err
 	}
 	return &resp, nil
-}
-
-// Get retrieves a redirect URL for an environment.
-func (c *RedirectURLsClient) Get(
-	ctx context.Context,
-	body redirecturls.GetRequest,
-) (*redirecturls.GetResponse, error) {
-	var res redirecturls.GetResponse
-	err := c.client.NewRequest(
-		ctx,
-		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls?url=%s", body.Project, body.Environment, url.QueryEscape(body.URL)),
-		nil,
-		nil,
-		&res)
-	if err != nil {
-		return nil, err
-	}
-	return &res, nil
 }
 
 // Update updates the valid types for a redirect URL for an environment.
@@ -95,7 +95,7 @@ func (c *RedirectURLsClient) Update(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPut,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls?url=%s", body.Project, body.Environment, url.QueryEscape(body.URL)),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls?url=%s", body.ProjectSlug, body.EnvironmentSlug, url.QueryEscape(body.URL)),
 		nil,
 		jsonBody,
 		&res)
@@ -114,7 +114,7 @@ func (c *RedirectURLsClient) Delete(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodDelete,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls?url=%s", body.Project, body.Environment, url.QueryEscape(body.URL)),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls?url=%s", body.ProjectSlug, body.EnvironmentSlug, url.QueryEscape(body.URL)),
 		nil,
 		nil,
 		&res)

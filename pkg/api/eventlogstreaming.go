@@ -18,26 +18,6 @@ func newEventLogStreamingClient(c *internal.Client) *EventLogStreamingClient {
 	return &EventLogStreamingClient{client: c}
 }
 
-// Get retrieves an event log streaming config for an environment.
-func (c *EventLogStreamingClient) Get(
-	ctx context.Context,
-	body eventlogstreaming.GetEventLogStreamingRequest,
-) (*eventlogstreaming.GetEventLogStreamingResponse, error) {
-	var resp eventlogstreaming.GetEventLogStreamingResponse
-	err := c.client.NewRequest(
-		ctx,
-		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/event_log_streaming/%s", body.Project, body.Environment, string(body.DestinationType)),
-		nil,
-		nil,
-		&resp,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return &resp, err
-}
-
 // Create creates an event log streaming config for an environment.
 func (c *EventLogStreamingClient) Create(
 	ctx context.Context,
@@ -52,9 +32,29 @@ func (c *EventLogStreamingClient) Create(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/event_log_streaming", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/event_log_streaming", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		jsonBody,
+		&resp,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, err
+}
+
+// Get retrieves an event log streaming config for an environment.
+func (c *EventLogStreamingClient) Get(
+	ctx context.Context,
+	body eventlogstreaming.GetEventLogStreamingRequest,
+) (*eventlogstreaming.GetEventLogStreamingResponse, error) {
+	var resp eventlogstreaming.GetEventLogStreamingResponse
+	err := c.client.NewRequest(
+		ctx,
+		http.MethodGet,
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/event_log_streaming/%s", body.ProjectSlug, body.EnvironmentSlug, string(body.DestinationType)),
+		nil,
+		nil,
 		&resp,
 	)
 	if err != nil {
@@ -77,7 +77,7 @@ func (c *EventLogStreamingClient) Update(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPut,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/event_log_streaming/%s", body.Project, body.Environment, string(body.DestinationType)),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/event_log_streaming/%s", body.ProjectSlug, body.EnvironmentSlug, string(body.DestinationType)),
 		nil,
 		jsonBody,
 		&resp,
@@ -97,7 +97,7 @@ func (c *EventLogStreamingClient) Delete(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodDelete,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/event_log_streaming/%s", body.Project, body.Environment, string(body.DestinationType)),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/event_log_streaming/%s", body.ProjectSlug, body.EnvironmentSlug, string(body.DestinationType)),
 		nil,
 		nil,
 		&resp,
@@ -117,7 +117,7 @@ func (c *EventLogStreamingClient) Enable(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/event_log_streaming/%s/enable", body.Project, body.Environment, string(body.DestinationType)),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/event_log_streaming/%s/enable", body.ProjectSlug, body.EnvironmentSlug, string(body.DestinationType)),
 		nil,
 		nil,
 		&resp,
@@ -137,7 +137,7 @@ func (c *EventLogStreamingClient) Disable(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/event_log_streaming/%s/disable", body.Project, body.Environment, string(body.DestinationType)),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/event_log_streaming/%s/disable", body.ProjectSlug, body.EnvironmentSlug, string(body.DestinationType)),
 		nil,
 		nil,
 		&resp,
