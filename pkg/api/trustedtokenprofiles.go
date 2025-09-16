@@ -32,7 +32,7 @@ func (c *TrustedTokenProfilesClient) Create(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		jsonBody,
 		&resp,
@@ -56,7 +56,7 @@ func (c *TrustedTokenProfilesClient) Get(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles/%s", body.Project, body.Environment, body.ProfileID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles/%s", body.ProjectSlug, body.EnvironmentSlug, body.ProfileID),
 		nil,
 		nil,
 		&resp,
@@ -76,7 +76,7 @@ func (c *TrustedTokenProfilesClient) GetAll(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		nil,
 		&resp,
@@ -101,7 +101,7 @@ func (c *TrustedTokenProfilesClient) Update(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPatch,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles/%s", body.Project, body.Environment, body.ProfileID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles/%s", body.ProjectSlug, body.EnvironmentSlug, body.ProfileID),
 		nil,
 		jsonBody,
 		&resp,
@@ -121,7 +121,7 @@ func (c *TrustedTokenProfilesClient) Delete(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodDelete,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles/%s", body.Project, body.Environment, body.ProfileID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles/%s", body.ProjectSlug, body.EnvironmentSlug, body.ProfileID),
 		nil,
 		nil,
 		&resp,
@@ -146,7 +146,7 @@ func (c *TrustedTokenProfilesClient) CreatePEM(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles/%s/keys", body.Project, body.Environment, body.ProfileID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles/%s/keys", body.ProjectSlug, body.EnvironmentSlug, body.ProfileID),
 		nil,
 		jsonBody,
 		&resp,
@@ -166,7 +166,7 @@ func (c *TrustedTokenProfilesClient) GetPEM(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles/%s/keys/%s", body.Project, body.Environment, body.ProfileID, body.PEMFileID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles/%s/keys/%s", body.ProjectSlug, body.EnvironmentSlug, body.ProfileID, body.PEMFileID),
 		nil,
 		nil,
 		&resp,
@@ -186,7 +186,7 @@ func (c *TrustedTokenProfilesClient) DeletePEM(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodDelete,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles/%s/keys/%s", body.Project, body.Environment, body.ProfileID, body.PEMFileID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/trusted_token_profiles/%s/keys/%s", body.ProjectSlug, body.EnvironmentSlug, body.ProfileID, body.PEMFileID),
 		nil,
 		nil,
 		&resp,

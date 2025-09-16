@@ -21,8 +21,8 @@ func TestJWTTemplatesClient_GetJWTTemplate(t *testing.T) {
 
 		// First set a template
 		_, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			JWTTemplateType: jwttemplates.JWTTemplateTypeSession,
 			TemplateContent: templateContent,
 			CustomAudience:  customAudience,
@@ -31,8 +31,8 @@ func TestJWTTemplatesClient_GetJWTTemplate(t *testing.T) {
 
 		// Act
 		resp, err := client.JWTTemplates.Get(ctx, &jwttemplates.GetRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			JWTTemplateType: jwttemplates.JWTTemplateTypeSession,
 		})
 
@@ -53,8 +53,8 @@ func TestJWTTemplatesClient_GetJWTTemplate(t *testing.T) {
 
 		// First set a template
 		_, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			JWTTemplateType: jwttemplates.JWTTemplateTypeM2M,
 			TemplateContent: templateContent,
 			CustomAudience:  customAudience,
@@ -63,8 +63,8 @@ func TestJWTTemplatesClient_GetJWTTemplate(t *testing.T) {
 
 		// Act
 		resp, err := client.JWTTemplates.Get(ctx, &jwttemplates.GetRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			JWTTemplateType: jwttemplates.JWTTemplateTypeM2M,
 		})
 
@@ -87,8 +87,8 @@ func TestJWTTemplatesClient_SetJWTTemplate(t *testing.T) {
 
 		// Act
 		setResp, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			JWTTemplateType: jwttemplates.JWTTemplateTypeSession,
 			TemplateContent: templateContent,
 			CustomAudience:  customAudience,
@@ -111,8 +111,8 @@ func TestJWTTemplatesClient_SetJWTTemplate(t *testing.T) {
 
 		// Act
 		setResp, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			JWTTemplateType: jwttemplates.JWTTemplateTypeM2M,
 			TemplateContent: templateContent,
 			CustomAudience:  customAudience,

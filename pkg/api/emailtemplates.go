@@ -32,7 +32,7 @@ func (c *EmailTemplatesClient) Create(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/pwa/v3/projects/%s/email_templates", body.Project),
+		fmt.Sprintf("/pwa/v3/projects/%s/email_templates", body.ProjectSlug),
 		nil,
 		jsonBody,
 		&resp)
@@ -54,7 +54,7 @@ func (c *EmailTemplatesClient) Get(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.Project, body.TemplateID),
+		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.ProjectSlug, body.TemplateID),
 		nil,
 		nil,
 		&resp)
@@ -73,7 +73,7 @@ func (c *EmailTemplatesClient) GetAll(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/email_templates", body.Project),
+		fmt.Sprintf("/pwa/v3/projects/%s/email_templates", body.ProjectSlug),
 		nil,
 		nil,
 		&resp)
@@ -97,7 +97,7 @@ func (c *EmailTemplatesClient) Update(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPut,
-		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.Project, body.TemplateID),
+		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.ProjectSlug, body.TemplateID),
 		nil,
 		jsonBody,
 		&resp)
@@ -116,7 +116,26 @@ func (c *EmailTemplatesClient) Delete(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodDelete,
-		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.Project, body.TemplateID),
+		fmt.Sprintf("/pwa/v3/projects/%s/email_templates/%s", body.ProjectSlug, body.TemplateID),
+		nil,
+		nil,
+		&resp)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// GetDefault retrieves the default email template for a specific template type in a project.
+func (c *EmailTemplatesClient) GetDefault(
+	ctx context.Context,
+	body emailtemplates.GetDefaultRequest,
+) (*emailtemplates.GetDefaultResponse, error) {
+	var resp emailtemplates.GetDefaultResponse
+	err := c.client.NewRequest(
+		ctx,
+		http.MethodGet,
+		fmt.Sprintf("/pwa/v3/projects/%s/default_email_templates/%s", body.ProjectSlug, body.EmailTemplateType),
 		nil,
 		nil,
 		&resp)
@@ -140,28 +159,9 @@ func (c *EmailTemplatesClient) SetDefault(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/pwa/v3/projects/%s/default_email_templates/%s", body.Project, body.EmailTemplateType),
+		fmt.Sprintf("/pwa/v3/projects/%s/default_email_templates/%s", body.ProjectSlug, body.EmailTemplateType),
 		nil,
 		jsonBody,
-		&resp)
-	if err != nil {
-		return nil, err
-	}
-	return &resp, nil
-}
-
-// GetDefault retrieves the default email template for a specific template type in a project.
-func (c *EmailTemplatesClient) GetDefault(
-	ctx context.Context,
-	body emailtemplates.GetDefaultRequest,
-) (*emailtemplates.GetDefaultResponse, error) {
-	var resp emailtemplates.GetDefaultResponse
-	err := c.client.NewRequest(
-		ctx,
-		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/default_email_templates/%s", body.Project, body.EmailTemplateType),
-		nil,
-		nil,
 		&resp)
 	if err != nil {
 		return nil, err
@@ -178,7 +178,7 @@ func (c *EmailTemplatesClient) UnsetDefault(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodDelete,
-		fmt.Sprintf("/pwa/v3/projects/%s/default_email_templates/%s", body.Project, body.EmailTemplateType),
+		fmt.Sprintf("/pwa/v3/projects/%s/default_email_templates/%s", body.ProjectSlug, body.EmailTemplateType),
 		nil,
 		nil,
 		&resp)

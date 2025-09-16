@@ -21,7 +21,7 @@ func Test_EnvironmentsCreate(t *testing.T) {
 		// Act
 		zeroDowntimeSessionMigrationURL := "https://example.com/migration"
 		resp, err := client.Environments.Create(ctx, environments.CreateRequest{
-			Project:                         project.Project,
+			ProjectSlug:                     project.ProjectSlug,
 			Name:                            "Test Environment",
 			Type:                            environments.EnvironmentTypeTest,
 			CrossOrgPasswordsEnabled:        ptr(true),
@@ -30,8 +30,8 @@ func Test_EnvironmentsCreate(t *testing.T) {
 		})
 		t.Cleanup(func() {
 			_, err := client.Environments.Delete(ctx, environments.DeleteRequest{
-				Project:     project.Project,
-				Environment: resp.Environment.Environment,
+				ProjectSlug:     project.ProjectSlug,
+				EnvironmentSlug: resp.Environment.EnvironmentSlug,
 			})
 			require.NoError(t, err)
 		})
@@ -54,7 +54,7 @@ func Test_EnvironmentsCreate(t *testing.T) {
 		userLockThreshold := int32(5)
 		userLockTTL := int32(600)
 		resp, err := client.Environments.Create(ctx, environments.CreateRequest{
-			Project:                  project.Project,
+			ProjectSlug:              project.ProjectSlug,
 			Name:                     "Test Environment",
 			Type:                     environments.EnvironmentTypeTest,
 			UserLockSelfServeEnabled: ptr(true),
@@ -63,8 +63,8 @@ func Test_EnvironmentsCreate(t *testing.T) {
 		})
 		t.Cleanup(func() {
 			_, err := client.Environments.Delete(ctx, environments.DeleteRequest{
-				Project:     project.Project,
-				Environment: resp.Environment.Environment,
+				ProjectSlug:     project.ProjectSlug,
+				EnvironmentSlug: resp.Environment.EnvironmentSlug,
 			})
 			require.NoError(t, err)
 		})
@@ -87,7 +87,7 @@ func Test_EnvironmentsCreate(t *testing.T) {
 		idpAuthorizationURL := "https://example.com/idp"
 		idpTemplateContent := "{\"field\": {{ user.user_id }} }"
 		resp, err := client.Environments.Create(ctx, environments.CreateRequest{
-			Project:                             project.Project,
+			ProjectSlug:                         project.ProjectSlug,
 			Name:                                "Test Environment",
 			Type:                                environments.EnvironmentTypeTest,
 			IDPAuthorizationURL:                 &idpAuthorizationURL,
@@ -96,8 +96,8 @@ func Test_EnvironmentsCreate(t *testing.T) {
 		})
 		t.Cleanup(func() {
 			_, err := client.Environments.Delete(ctx, environments.DeleteRequest{
-				Project:     project.Project,
-				Environment: resp.Environment.Environment,
+				ProjectSlug:     project.ProjectSlug,
+				EnvironmentSlug: resp.Environment.EnvironmentSlug,
 			})
 			require.NoError(t, err)
 		})
@@ -121,8 +121,8 @@ func Test_EnvironmentsGet(t *testing.T) {
 
 		// Act
 		resp, err := client.Environments.Get(ctx, environments.GetRequest{
-			Project:     env.Project,
-			Environment: env.Environment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 
 		// Assert
@@ -137,8 +137,8 @@ func Test_EnvironmentsGet(t *testing.T) {
 
 		// Act
 		resp, err := client.Environments.Get(ctx, environments.GetRequest{
-			Project:     project.Project,
-			Environment: "nonexistent-environment",
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: "nonexistent-environment",
 		})
 
 		// Assert
@@ -160,7 +160,7 @@ func Test_EnvironmentsGet(t *testing.T) {
 
 		// Act
 		resp, err := client.Environments.Get(ctx, environments.GetRequest{
-			Project: project.Project,
+			ProjectSlug: project.ProjectSlug,
 			// Environment is intentionally omitted.
 		})
 
@@ -172,7 +172,7 @@ func Test_EnvironmentsGet(t *testing.T) {
 
 func hasEnvironment(environments []environments.Environment, target environments.Environment) bool {
 	for _, e := range environments {
-		if e.Environment == target.Environment {
+		if e.EnvironmentSlug == target.EnvironmentSlug {
 			return e.Name == target.Name && e.Type == target.Type
 		}
 	}
@@ -186,15 +186,15 @@ func Test_EnvironmentsGetAll(t *testing.T) {
 		project := client.DisposableProject(projects.VerticalB2B)
 		ctx := context.Background()
 		createEnvResp, err := client.Environments.Create(ctx, environments.CreateRequest{
-			Project: project.Project,
-			Name:    "Another Test Environment",
-			Type:    environments.EnvironmentTypeTest,
+			ProjectSlug: project.ProjectSlug,
+			Name:        "Another Test Environment",
+			Type:        environments.EnvironmentTypeTest,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.Environments.GetAll(ctx, environments.GetAllRequest{
-			Project: project.Project,
+			ProjectSlug: project.ProjectSlug,
 		})
 
 		// Assert
@@ -218,8 +218,8 @@ func Test_EnvironmentsUpdate(t *testing.T) {
 		// Act
 		zeroDowntimeSessionMigrationURL := "https://example.com/migration"
 		resp, err := client.Environments.Update(ctx, environments.UpdateRequest{
-			Project:                         env.Project,
-			Environment:                     env.Environment,
+			ProjectSlug:                     env.ProjectSlug,
+			EnvironmentSlug:                 env.EnvironmentSlug,
 			Name:                            &newEnvironmentName,
 			CrossOrgPasswordsEnabled:        ptr(true),
 			UserImpersonationEnabled:        ptr(true),
@@ -243,8 +243,8 @@ func Test_EnvironmentsUpdate(t *testing.T) {
 		userLockThreshold := int32(5)
 		userLockTTL := int32(600)
 		resp, err := client.Environments.Update(ctx, environments.UpdateRequest{
-			Project:                  env.Project,
-			Environment:              env.Environment,
+			ProjectSlug:              env.ProjectSlug,
+			EnvironmentSlug:          env.EnvironmentSlug,
 			UserLockSelfServeEnabled: ptr(true),
 			UserLockThreshold:        ptr(userLockThreshold),
 			UserLockTTL:              ptr(userLockTTL),
@@ -266,8 +266,8 @@ func Test_EnvironmentsUpdate(t *testing.T) {
 		idpAuthorizationURL := "https://example.com/idp"
 		idpTemplateContent := "{\"field\": {{ user.user_id }} }"
 		resp, err := client.Environments.Update(ctx, environments.UpdateRequest{
-			Project:                             env.Project,
-			Environment:                         env.Environment,
+			ProjectSlug:                         env.ProjectSlug,
+			EnvironmentSlug:                     env.EnvironmentSlug,
 			IDPAuthorizationURL:                 &idpAuthorizationURL,
 			IDPDynamicClientRegistrationEnabled: ptr(true),
 			IDPDynamicClientRegistrationAccessTokenTemplateContent: ptr(idpTemplateContent),
@@ -288,8 +288,8 @@ func Test_EnvironmentsUpdate(t *testing.T) {
 
 		// Act
 		resp, err := client.Environments.Update(ctx, environments.UpdateRequest{
-			Project:                  env.Project,
-			Environment:              env.Environment,
+			ProjectSlug:              env.ProjectSlug,
+			EnvironmentSlug:          env.EnvironmentSlug,
 			CrossOrgPasswordsEnabled: ptr(true),
 			UserImpersonationEnabled: ptr(true),
 		})
@@ -303,9 +303,9 @@ func Test_EnvironmentsUpdate(t *testing.T) {
 		// Act
 		// Update again, but specify only the name.
 		resp, err = client.Environments.Update(ctx, environments.UpdateRequest{
-			Project:     env.Project,
-			Environment: env.Environment,
-			Name:        &newEnvironmentName,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			Name:            &newEnvironmentName,
 		})
 
 		// Assert
@@ -324,24 +324,24 @@ func Test_EnvironmentsDelete(t *testing.T) {
 		project := client.DisposableProject(projects.VerticalB2B)
 		ctx := context.Background()
 		createResp, err := client.Environments.Create(ctx, environments.CreateRequest{
-			Project: project.Project,
-			Name:    "Test Environment",
-			Type:    environments.EnvironmentTypeTest,
+			ProjectSlug: project.ProjectSlug,
+			Name:        "Test Environment",
+			Type:        environments.EnvironmentTypeTest,
 		})
 		require.NoError(t, err)
 
 		// Act
 		_, err = client.Environments.Delete(ctx, environments.DeleteRequest{
-			Project:     project.Project,
-			Environment: createResp.Environment.Environment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: createResp.Environment.EnvironmentSlug,
 		})
 
 		// Assert
 		assert.NoError(t, err)
 		// Verify the environment is actually deleted.
 		_, err = client.Environments.Get(ctx, environments.GetRequest{
-			Project:     project.Project,
-			Environment: createResp.Environment.Environment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: createResp.Environment.EnvironmentSlug,
 		})
 		assert.Error(t, err)
 	})

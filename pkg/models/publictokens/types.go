@@ -12,10 +12,10 @@ type PublicToken struct {
 }
 
 type CreateRequest struct {
-	// Project is the project for which to create the public token.
-	Project string `json:"-"`
-	// Environment is the environment for which to create the public token.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to create the public token.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to create the public token.
+	EnvironmentSlug string `json:"-"`
 }
 
 type CreateResponse struct {
@@ -28,10 +28,10 @@ type CreateResponse struct {
 }
 
 type GetRequest struct {
-	// Project is the project for which to retrieve the public token.
-	Project string `json:"-"`
-	// Environment is the environment for which to retrieve the public token.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to retrieve the public token.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to retrieve the public token.
+	EnvironmentSlug string `json:"-"`
 	// PublicToken is the identifier of the public token to retrieve.
 	PublicToken string `json:"public_token"`
 }
@@ -46,10 +46,10 @@ type GetResponse struct {
 }
 
 type GetAllRequest struct {
-	// Project is the project for which to retrieve the public tokens.
-	Project string `json:"-"`
-	// Environment is the environment for which to retrieve the public tokens.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to retrieve the public tokens.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to retrieve the public tokens.
+	EnvironmentSlug string `json:"-"`
 }
 
 type GetAllResponse struct {
@@ -62,10 +62,10 @@ type GetAllResponse struct {
 }
 
 type DeleteRequest struct {
-	// Project is the project where the public token is located.
-	Project string `json:"-"`
-	// Environment is the environment where the public token is located.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to delete the public token.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to delete the public token.
+	EnvironmentSlug string `json:"-"`
 	// PublicToken is the public token to delete.
 	PublicToken string `json:"public_token"`
 }

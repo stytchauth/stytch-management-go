@@ -29,10 +29,10 @@ type PEMFile struct {
 }
 
 type CreateTrustedTokenProfileRequest struct {
-	// Project is the project for which to create the trusted token profile.
-	Project string `json:"-"`
-	// Environment is the environment for which to create the trusted token profile.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to create the trusted token profile.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to create the trusted token profile.
+	EnvironmentSlug string `json:"-"`
 	// Name is the name of the trusted token profile.
 	Name string `json:"name"`
 	// Audience is the audience for the trusted token profile.
@@ -61,10 +61,10 @@ type CreateTrustedTokenProfileResponse struct {
 }
 
 type GetTrustedTokenProfileRequest struct {
-	// Project is the project for which to retrieve the trusted token profile.
-	Project string `json:"-"`
-	// Environment is the environment for which to retrieve the trusted token profile.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to retrieve the trusted token profile.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to retrieve the trusted token profile.
+	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"profile_id"`
 }
@@ -79,10 +79,11 @@ type GetTrustedTokenProfileResponse struct {
 }
 
 type GetAllTrustedTokenProfilesRequest struct {
-	// Project is the project for which to retrieve the trusted token profiles.
-	Project string `json:"-"`
-	// Environment is the environment for which to retrieve the trusted token profiles.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to retrieve the trusted token profiles.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to retrieve the trusted token
+	// profiles.
+	EnvironmentSlug string `json:"-"`
 }
 
 type GetAllTrustedTokenProfilesResponse struct {
@@ -95,10 +96,10 @@ type GetAllTrustedTokenProfilesResponse struct {
 }
 
 type UpdateTrustedTokenProfileRequest struct {
-	// Project is the project for which to update the trusted token profile.
-	Project string `json:"-"`
-	// Environment is the environment for which to update the trusted token profile.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to update the trusted token profile.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to update the trusted token profile.
+	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"profile_id"`
 	// Name is the name of the trusted token profile (optional).
@@ -125,10 +126,10 @@ type UpdateTrustedTokenProfileResponse struct {
 }
 
 type DeleteTrustedTokenProfileRequest struct {
-	// Project is the project for which to delete the trusted token profile.
-	Project string `json:"-"`
-	// Environment is the environment for which to delete the trusted token profile.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to delete the trusted token profile.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to delete the trusted token profile.
+	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"profile_id"`
 }
@@ -143,10 +144,10 @@ type DeleteTrustedTokenProfileResponse struct {
 // PEM File management.
 
 type CreatePEMFileRequest struct {
-	// Project is the project for which to create the PEM file.
-	Project string `json:"-"`
-	// Environment is the environment for which to create the PEM file.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to create the PEM file.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to create the PEM file.
+	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"profile_id"`
 	// PublicKey is the public key to create.
@@ -163,10 +164,10 @@ type CreatePEMFileResponse struct {
 }
 
 type GetPEMFileRequest struct {
-	// Project is the project for which to get the PEM file.
-	Project string `json:"-"`
-	// Environment is the environment for which to get the PEM file.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to retrieve the PEM file.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to retrieve the PEM file.
+	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"profile_id"`
 	// PEMFileID is the unique identifier for the PEM file.
@@ -183,10 +184,10 @@ type GetPEMFileResponse struct {
 }
 
 type DeletePEMFileRequest struct {
-	// Project is the project for which to delete the PEM file.
-	Project string `json:"-"`
-	// Environment is the environment for which to delete the PEM file.
-	Environment string `json:"-"`
+	// ProjectSlug is the slug of the project for which to delete the PEM file.
+	ProjectSlug string `json:"-"`
+	// EnvironmentSlug is the slug of the environment for which to delete the PEM file.
+	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"profile_id"`
 	// PEMFileID is the unique identifier for the PEM file.

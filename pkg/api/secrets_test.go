@@ -19,8 +19,8 @@ func TestSecretsClient_CreateSecret(t *testing.T) {
 
 		// Act
 		resp, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 
 		// Assert
@@ -41,16 +41,16 @@ func TestSecretsClient_GetSecret(t *testing.T) {
 
 		// Create a secret first
 		createResp, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.Secrets.Get(ctx, secrets.GetSecretRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			SecretID:    createResp.CreatedSecret.SecretID,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			SecretID:        createResp.CreatedSecret.SecretID,
 		})
 
 		// Assert
@@ -69,9 +69,9 @@ func TestSecretsClient_GetSecret(t *testing.T) {
 
 		// Act
 		resp, err := client.Secrets.Get(ctx, secrets.GetSecretRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			SecretID:    "secret-does-not-exist",
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			SecretID:        "secret-does-not-exist",
 		})
 
 		// Assert
@@ -86,8 +86,8 @@ func TestSecretsClient_GetSecret(t *testing.T) {
 
 		// Act
 		resp, err := client.Secrets.Get(ctx, secrets.GetSecretRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			// SecretID is intentionally omitted.
 		})
 
@@ -108,8 +108,8 @@ func TestSecretsClient_GetAllSecrets(t *testing.T) {
 		var createdSecrets []secrets.CreatedSecret
 		for i := 0; i < 3; i++ {
 			createResp, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
-				Project:     project.Project,
-				Environment: TestEnvironment,
+				ProjectSlug:     project.ProjectSlug,
+				EnvironmentSlug: TestEnvironment,
 			})
 			require.NoError(t, err)
 			createdSecrets = append(createdSecrets, createResp.CreatedSecret)
@@ -117,8 +117,8 @@ func TestSecretsClient_GetAllSecrets(t *testing.T) {
 
 		// Act
 		resp, err := client.Secrets.GetAll(ctx, secrets.GetAllSecretsRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 
 		// Assert
@@ -146,8 +146,8 @@ func TestSecretsClient_GetAllSecrets(t *testing.T) {
 
 		// Act
 		resp, err := client.Secrets.GetAll(ctx, secrets.GetAllSecretsRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 
 		// Assert
@@ -165,16 +165,16 @@ func TestSecretsClient_DeleteSecret(t *testing.T) {
 
 		// Create a secret first
 		createResp, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.Secrets.Delete(ctx, secrets.DeleteSecretRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			SecretID:    createResp.CreatedSecret.SecretID,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			SecretID:        createResp.CreatedSecret.SecretID,
 		})
 
 		// Assert
@@ -183,9 +183,9 @@ func TestSecretsClient_DeleteSecret(t *testing.T) {
 
 		// Verify secret is deleted by trying to get it
 		getResp, err := client.Secrets.Get(ctx, secrets.GetSecretRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			SecretID:    createResp.CreatedSecret.SecretID,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			SecretID:        createResp.CreatedSecret.SecretID,
 		})
 		assert.Error(t, err)
 		assert.Nil(t, getResp)
@@ -199,9 +199,9 @@ func TestSecretsClient_DeleteSecret(t *testing.T) {
 
 		// Act
 		_, err := client.Secrets.Delete(ctx, secrets.DeleteSecretRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			SecretID:    "secret-does-not-exist",
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			SecretID:        "secret-does-not-exist",
 		})
 
 		// Assert

@@ -24,7 +24,7 @@ func (c *SecretsClient) Create(ctx context.Context, body secrets.CreateSecretReq
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		nil,
 		&resp,
@@ -44,7 +44,7 @@ func (c *SecretsClient) Get(ctx context.Context, body secrets.GetSecretRequest) 
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets/%s", body.Project, body.Environment, body.SecretID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets/%s", body.ProjectSlug, body.EnvironmentSlug, body.SecretID),
 		nil,
 		nil,
 		&resp,
@@ -61,7 +61,7 @@ func (c *SecretsClient) GetAll(ctx context.Context, body secrets.GetAllSecretsRe
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		nil,
 		&resp,
@@ -78,7 +78,7 @@ func (c *SecretsClient) Delete(ctx context.Context, body secrets.DeleteSecretReq
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodDelete,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets/%s", body.Project, body.Environment, body.SecretID),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/secrets/%s", body.ProjectSlug, body.EnvironmentSlug, body.SecretID),
 		nil,
 		nil,
 		&resp,

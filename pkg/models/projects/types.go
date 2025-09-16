@@ -18,8 +18,8 @@ func Verticals() []Vertical {
 
 // Project represents a Stytch Project.
 type Project struct {
-	// Project is the immutable unique identifier (alias) for the project.
-	Project string `json:"project"`
+	// ProjectSlug is the immutable unique identifier (slug) of the project.
+	ProjectSlug string `json:"project_slug"`
 	// Name is the project's name.
 	Name string `json:"name"`
 	// Vertical is the project's vertical.
@@ -45,8 +45,8 @@ type CreateResponse struct {
 }
 
 type GetRequest struct {
-	// Project is the unique identifier for the project to retrieve.
-	Project string `json:"-"`
+	// ProjectSlug is the slug of the project to retrieve.
+	ProjectSlug string `json:"-"`
 }
 
 type GetResponse struct {
@@ -69,21 +69,9 @@ type GetAllResponse struct {
 	Projects []Project `json:"projects"`
 }
 
-type DeleteRequest struct {
-	// Project is the unique identifier for the project to delete.
-	Project string `json:"-"`
-}
-
-type DeleteResponse struct {
-	// StatusCode is the HTTP status code for the response.
-	StatusCode int `json:"status_code"`
-	// RequestID is a unique identifier to help with debugging the request.
-	RequestID string `json:"request_id"`
-}
-
 type UpdateRequest struct {
-	// Project is the unique identifier for the project to update.
-	Project string `json:"-"`
+	// ProjectSlug is the slug of the project to update.
+	ProjectSlug string `json:"-"`
 	// Name is the new name for the project.
 	Name *string `json:"name,omitempty"`
 }
@@ -95,4 +83,16 @@ type UpdateResponse struct {
 	RequestID string `json:"request_id"`
 	// Project contains the updated project details.
 	Project Project `json:"project"`
+}
+
+type DeleteRequest struct {
+	// ProjectSlug is the slug of the project to delete.
+	ProjectSlug string `json:"-"`
+}
+
+type DeleteResponse struct {
+	// StatusCode is the HTTP status code for the response.
+	StatusCode int `json:"status_code"`
+	// RequestID is a unique identifier to help with debugging the request.
+	RequestID string `json:"request_id"`
 }

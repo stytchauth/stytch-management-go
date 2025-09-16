@@ -27,7 +27,7 @@ func (c *CountryCodeAllowlistClient) GetAllowedSMSCountryCodes(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/allowed_country_codes/sms", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/allowed_country_codes/sms", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		nil,
 		&resp)
@@ -46,7 +46,7 @@ func (c *CountryCodeAllowlistClient) GetAllowedWhatsAppCountryCodes(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/allowed_country_codes/whatsapp", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/allowed_country_codes/whatsapp", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		nil,
 		&resp)
@@ -70,7 +70,7 @@ func (c *CountryCodeAllowlistClient) SetAllowedSMSCountryCodes(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/allowed_country_codes/sms", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/allowed_country_codes/sms", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		jsonBody,
 		&resp)
@@ -94,7 +94,7 @@ func (c *CountryCodeAllowlistClient) SetAllowedWhatsAppCountryCodes(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPost,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/allowed_country_codes/whatsapp", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/allowed_country_codes/whatsapp", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		jsonBody,
 		&resp)

@@ -52,7 +52,7 @@ func TestEmailTemplatesClient_Create(t *testing.T) {
 
 		// Act
 		resp, err := client.EmailTemplates.Create(ctx, emailtemplates.CreateRequest{
-			Project:               project.Project,
+			ProjectSlug:           project.ProjectSlug,
 			TemplateID:            templateID,
 			Name:                  ptr("Test Prebuilt Template"),
 			SenderInformation:     senderInformation(),
@@ -80,7 +80,7 @@ func TestEmailTemplatesClient_Get(t *testing.T) {
 
 		// Create template first
 		createResp, err := client.EmailTemplates.Create(ctx, emailtemplates.CreateRequest{
-			Project:               project.Project,
+			ProjectSlug:           project.ProjectSlug,
 			TemplateID:            templateID,
 			Name:                  ptr("Test Prebuilt Template"),
 			SenderInformation:     senderInformation(),
@@ -90,8 +90,8 @@ func TestEmailTemplatesClient_Get(t *testing.T) {
 
 		// Act
 		resp, err := client.EmailTemplates.Get(ctx, emailtemplates.GetRequest{
-			Project:    project.Project,
-			TemplateID: templateID,
+			ProjectSlug: project.ProjectSlug,
+			TemplateID:  templateID,
 		})
 
 		// Assert
@@ -109,8 +109,8 @@ func TestEmailTemplatesClient_Get(t *testing.T) {
 
 		// Act
 		resp, err := client.EmailTemplates.Get(ctx, emailtemplates.GetRequest{
-			Project:    project.Project,
-			TemplateID: "non-existent-template",
+			ProjectSlug: project.ProjectSlug,
+			TemplateID:  "non-existent-template",
 		})
 
 		// Assert
@@ -125,7 +125,7 @@ func TestEmailTemplatesClient_Get(t *testing.T) {
 
 		// Act
 		resp, err := client.EmailTemplates.Get(ctx, emailtemplates.GetRequest{
-			Project: project.Project,
+			ProjectSlug: project.ProjectSlug,
 			// TemplateID is intentionally omitted.
 		})
 
@@ -150,7 +150,7 @@ func TestEmailTemplatesClient_GetAll(t *testing.T) {
 		template2 := makeTestPrebuiltTemplate(template2ID)
 
 		_, err := client.EmailTemplates.Create(ctx, emailtemplates.CreateRequest{
-			Project:               project.Project,
+			ProjectSlug:           project.ProjectSlug,
 			TemplateID:            template1ID,
 			Name:                  ptr("Test Prebuilt Template"),
 			SenderInformation:     senderInformation(),
@@ -159,7 +159,7 @@ func TestEmailTemplatesClient_GetAll(t *testing.T) {
 		require.NoError(t, err)
 
 		_, err = client.EmailTemplates.Create(ctx, emailtemplates.CreateRequest{
-			Project:               project.Project,
+			ProjectSlug:           project.ProjectSlug,
 			TemplateID:            template2ID,
 			Name:                  ptr("Test Prebuilt Template 2"),
 			SenderInformation:     senderInformation(),
@@ -169,7 +169,7 @@ func TestEmailTemplatesClient_GetAll(t *testing.T) {
 
 		// Act
 		resp, err := client.EmailTemplates.GetAll(ctx, emailtemplates.GetAllRequest{
-			Project: project.Project,
+			ProjectSlug: project.ProjectSlug,
 		})
 
 		// Assert
@@ -197,7 +197,7 @@ func TestEmailTemplatesClient_Update(t *testing.T) {
 
 		// Create template first
 		_, err := client.EmailTemplates.Create(ctx, emailtemplates.CreateRequest{
-			Project:               project.Project,
+			ProjectSlug:           project.ProjectSlug,
 			TemplateID:            templateID,
 			Name:                  ptr("Test Prebuilt Template"),
 			SenderInformation:     senderInformation(),
@@ -216,7 +216,7 @@ func TestEmailTemplatesClient_Update(t *testing.T) {
 		}
 
 		resp, err := client.EmailTemplates.Update(ctx, emailtemplates.UpdateRequest{
-			Project:               project.Project,
+			ProjectSlug:           project.ProjectSlug,
 			TemplateID:            templateID,
 			Name:                  &newName,
 			PrebuiltCustomization: &updatedTemplate,
@@ -240,9 +240,9 @@ func TestEmailTemplatesClient_Update(t *testing.T) {
 		// Act
 		newName := "Non-existent Template"
 		resp, err := client.EmailTemplates.Update(ctx, emailtemplates.UpdateRequest{
-			Project:    project.Project,
-			TemplateID: "non-existent-template",
-			Name:       &newName,
+			ProjectSlug: project.ProjectSlug,
+			TemplateID:  "non-existent-template",
+			Name:        &newName,
 		})
 
 		// Assert
@@ -262,7 +262,7 @@ func TestEmailTemplatesClient_Delete(t *testing.T) {
 
 		// Create template first
 		_, err := client.EmailTemplates.Create(ctx, emailtemplates.CreateRequest{
-			Project:               project.Project,
+			ProjectSlug:           project.ProjectSlug,
 			TemplateID:            templateID,
 			Name:                  ptr("Test Prebuilt Template"),
 			SenderInformation:     senderInformation(),
@@ -272,8 +272,8 @@ func TestEmailTemplatesClient_Delete(t *testing.T) {
 
 		// Act
 		resp, err := client.EmailTemplates.Delete(ctx, emailtemplates.DeleteRequest{
-			Project:    project.Project,
-			TemplateID: templateID,
+			ProjectSlug: project.ProjectSlug,
+			TemplateID:  templateID,
 		})
 
 		// Assert
@@ -282,8 +282,8 @@ func TestEmailTemplatesClient_Delete(t *testing.T) {
 
 		// Verify template is deleted by trying to get it
 		_, err = client.EmailTemplates.Get(ctx, emailtemplates.GetRequest{
-			Project:    project.Project,
-			TemplateID: templateID,
+			ProjectSlug: project.ProjectSlug,
+			TemplateID:  templateID,
 		})
 		assert.Error(t, err)
 	})
@@ -300,7 +300,7 @@ func TestEmailTemplatesClient_SetDefault(t *testing.T) {
 
 		// Create template first
 		_, err := client.EmailTemplates.Create(ctx, emailtemplates.CreateRequest{
-			Project:               project.Project,
+			ProjectSlug:           project.ProjectSlug,
 			TemplateID:            templateID,
 			Name:                  ptr("Test Default Template"),
 			SenderInformation:     senderInformation(),
@@ -310,7 +310,7 @@ func TestEmailTemplatesClient_SetDefault(t *testing.T) {
 
 		// Act - set as default
 		resp, err := client.EmailTemplates.SetDefault(ctx, emailtemplates.SetDefaultRequest{
-			Project:           project.Project,
+			ProjectSlug:       project.ProjectSlug,
 			EmailTemplateType: emailtemplates.TemplateTypePrebuilt,
 			TemplateID:        templateID,
 		})
@@ -328,7 +328,7 @@ func TestEmailTemplatesClient_SetDefault(t *testing.T) {
 
 		// Act
 		resp, err := client.EmailTemplates.SetDefault(ctx, emailtemplates.SetDefaultRequest{
-			Project:           project.Project,
+			ProjectSlug:       project.ProjectSlug,
 			EmailTemplateType: emailtemplates.TemplateTypeLogin,
 			TemplateID:        "non-existent-template",
 		})
@@ -350,7 +350,7 @@ func TestEmailTemplatesClient_GetDefault(t *testing.T) {
 
 		// Create template first
 		_, err := client.EmailTemplates.Create(ctx, emailtemplates.CreateRequest{
-			Project:               project.Project,
+			ProjectSlug:           project.ProjectSlug,
 			TemplateID:            templateID,
 			Name:                  ptr("Test Default Template"),
 			SenderInformation:     senderInformation(),
@@ -360,7 +360,7 @@ func TestEmailTemplatesClient_GetDefault(t *testing.T) {
 
 		// Set as default
 		_, err = client.EmailTemplates.SetDefault(ctx, emailtemplates.SetDefaultRequest{
-			Project:           project.Project,
+			ProjectSlug:       project.ProjectSlug,
 			EmailTemplateType: emailtemplates.TemplateTypePrebuilt,
 			TemplateID:        templateID,
 		})
@@ -368,7 +368,7 @@ func TestEmailTemplatesClient_GetDefault(t *testing.T) {
 
 		// Act - get default
 		resp, err := client.EmailTemplates.GetDefault(ctx, emailtemplates.GetDefaultRequest{
-			Project:           project.Project,
+			ProjectSlug:       project.ProjectSlug,
 			EmailTemplateType: emailtemplates.TemplateTypePrebuilt,
 		})
 
@@ -385,7 +385,7 @@ func TestEmailTemplatesClient_GetDefault(t *testing.T) {
 
 		// Act
 		resp, err := client.EmailTemplates.GetDefault(ctx, emailtemplates.GetDefaultRequest{
-			Project:           project.Project,
+			ProjectSlug:       project.ProjectSlug,
 			EmailTemplateType: emailtemplates.TemplateTypeSignup,
 		})
 
@@ -406,7 +406,7 @@ func TestEmailTemplatesClient_UnsetDefault(t *testing.T) {
 
 		// Create template first
 		_, err := client.EmailTemplates.Create(ctx, emailtemplates.CreateRequest{
-			Project:               project.Project,
+			ProjectSlug:           project.ProjectSlug,
 			TemplateID:            templateID,
 			Name:                  ptr("Test Default Template"),
 			SenderInformation:     senderInformation(),
@@ -416,7 +416,7 @@ func TestEmailTemplatesClient_UnsetDefault(t *testing.T) {
 
 		// Act - unset default
 		resp, err := client.EmailTemplates.UnsetDefault(ctx, emailtemplates.UnsetDefaultRequest{
-			Project:           project.Project,
+			ProjectSlug:       project.ProjectSlug,
 			EmailTemplateType: emailtemplates.TemplateTypePrebuilt,
 		})
 
@@ -433,7 +433,7 @@ func TestEmailTemplatesClient_UnsetDefault(t *testing.T) {
 
 		// Act
 		resp, err := client.EmailTemplates.UnsetDefault(ctx, emailtemplates.UnsetDefaultRequest{
-			Project:           project.Project,
+			ProjectSlug:       project.ProjectSlug,
 			EmailTemplateType: emailtemplates.TemplateTypeSignup,
 		})
 

@@ -27,7 +27,7 @@ func (c *SDKClient) GetConsumerConfig(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/consumer", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/consumer", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		nil,
 		&res,
@@ -52,7 +52,7 @@ func (c *SDKClient) SetConsumerConfig(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPut,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/consumer", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/consumer", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		jsonBody,
 		&res,
@@ -72,7 +72,7 @@ func (c *SDKClient) GetB2BConfig(
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/b2b", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/b2b", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		nil,
 		&res,
@@ -97,7 +97,7 @@ func (c *SDKClient) SetB2BConfig(
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPut,
-		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/b2b", body.Project, body.Environment),
+		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/sdk/b2b", body.ProjectSlug, body.EnvironmentSlug),
 		nil,
 		jsonBody,
 		&res,

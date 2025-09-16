@@ -43,11 +43,11 @@ func (c *ProjectsClient) Get(
 	ctx context.Context,
 	body projects.GetRequest,
 ) (*projects.GetResponse, error) {
-	if body.Project == "" {
-		return nil, fmt.Errorf("missing project")
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("missing project slug")
 	}
 	var res projects.GetResponse
-	err := c.client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/pwa/v3/projects/%s", body.Project), nil, nil, &res)
+	err := c.client.NewRequest(ctx, http.MethodGet, fmt.Sprintf("/pwa/v3/projects/%s", body.ProjectSlug), nil, nil, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (c *ProjectsClient) Update(
 		return nil, err
 	}
 	var res projects.UpdateResponse
-	err = c.client.NewRequest(ctx, http.MethodPatch, fmt.Sprintf("/pwa/v3/projects/%s", body.Project), nil, jsonBody, &res)
+	err = c.client.NewRequest(ctx, http.MethodPatch, fmt.Sprintf("/pwa/v3/projects/%s", body.ProjectSlug), nil, jsonBody, &res)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +90,7 @@ func (c *ProjectsClient) Delete(
 	body projects.DeleteRequest,
 ) (*projects.DeleteResponse, error) {
 	var res projects.DeleteResponse
-	err := c.client.NewRequest(ctx, http.MethodDelete, fmt.Sprintf("/pwa/v3/projects/%s", body.Project), nil, nil, &res)
+	err := c.client.NewRequest(ctx, http.MethodDelete, fmt.Sprintf("/pwa/v3/projects/%s", body.ProjectSlug), nil, nil, &res)
 	if err != nil {
 		return nil, err
 	}

@@ -18,8 +18,8 @@ func getTestB2BPolicy(
 	// The StytchMember and StytchAdmin RoleIDs and Descriptions cannot be modified, so we first
 	// look up their current values when constructing our new RBAC policy.
 	resp, err := client.RBACPolicy.Get(context.Background(), rbacpolicy.GetRequest{
-		Project:     project,
-		Environment: env,
+		ProjectSlug:     project,
+		EnvironmentSlug: env,
 	})
 	require.NoError(t, err)
 
@@ -129,8 +129,8 @@ func getTestB2CPolicy(
 	// The StytchUser RoleID and Description cannot be modified, so we first look up its current
 	// values when constructing our new RBAC policy.
 	resp, err := client.RBACPolicy.Get(context.Background(), rbacpolicy.GetRequest{
-		Project:     project,
-		Environment: env,
+		ProjectSlug:     project,
+		EnvironmentSlug: env,
 	})
 	require.NoError(t, err)
 
@@ -224,10 +224,10 @@ func TestRBACPolicyClient_Get(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
 		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
-		policy := getTestB2BPolicy(t, client, env.Project, env.Environment)
+		policy := getTestB2BPolicy(t, client, env.ProjectSlug, env.EnvironmentSlug)
 		_, err := client.RBACPolicy.Set(context.Background(), rbacpolicy.SetRequest{
-			Project:         env.Project,
-			Environment:     env.Environment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			StytchMember:    policy.StytchMember,
 			StytchAdmin:     policy.StytchAdmin,
 			CustomRoles:     policy.CustomRoles,
@@ -238,8 +238,8 @@ func TestRBACPolicyClient_Get(t *testing.T) {
 
 		// Act
 		resp, err := client.RBACPolicy.Get(context.Background(), rbacpolicy.GetRequest{
-			Project:     env.Project,
-			Environment: env.Environment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 
 		// Assert
@@ -254,10 +254,10 @@ func TestRBACPolicyClient_Get(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
 		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
-		policy := getTestB2CPolicy(t, client, env.Project, env.Environment)
+		policy := getTestB2CPolicy(t, client, env.ProjectSlug, env.EnvironmentSlug)
 		_, err := client.RBACPolicy.Set(context.Background(), rbacpolicy.SetRequest{
-			Project:         env.Project,
-			Environment:     env.Environment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			StytchUser:      policy.StytchUser,
 			CustomRoles:     policy.CustomRoles,
 			CustomResources: policy.CustomResources,
@@ -267,8 +267,8 @@ func TestRBACPolicyClient_Get(t *testing.T) {
 
 		// Act
 		resp, err := client.RBACPolicy.Get(context.Background(), rbacpolicy.GetRequest{
-			Project:     env.Project,
-			Environment: env.Environment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 
 		// Assert
@@ -285,12 +285,12 @@ func TestRBACClient_SetPolicy(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
 		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
-		policy := getTestB2BPolicy(t, client, env.Project, env.Environment)
+		policy := getTestB2BPolicy(t, client, env.ProjectSlug, env.EnvironmentSlug)
 
 		// Act
 		resp, err := client.RBACPolicy.Set(context.Background(), rbacpolicy.SetRequest{
-			Project:         env.Project,
-			Environment:     env.Environment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			StytchMember:    policy.StytchMember,
 			StytchAdmin:     policy.StytchAdmin,
 			CustomRoles:     policy.CustomRoles,
@@ -310,12 +310,12 @@ func TestRBACClient_SetPolicy(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
 		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
-		policy := getTestB2CPolicy(t, client, env.Project, env.Environment)
+		policy := getTestB2CPolicy(t, client, env.ProjectSlug, env.EnvironmentSlug)
 
 		// Act
 		resp, err := client.RBACPolicy.Set(context.Background(), rbacpolicy.SetRequest{
-			Project:         env.Project,
-			Environment:     env.Environment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			StytchUser:      policy.StytchUser,
 			CustomRoles:     policy.CustomRoles,
 			CustomResources: policy.CustomResources,
@@ -333,13 +333,13 @@ func TestRBACClient_SetPolicy(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
 		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
-		policy := getTestB2CPolicy(t, client, env.Project, env.Environment)
+		policy := getTestB2CPolicy(t, client, env.ProjectSlug, env.EnvironmentSlug)
 
 		// Act
 		resp, err := client.RBACPolicy.Set(context.Background(), rbacpolicy.SetRequest{
-			Project:     env.Project,
-			Environment: env.Environment,
-			StytchUser:  policy.StytchUser,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			StytchUser:      policy.StytchUser,
 			// Set StytchMember, which is irrelevant for Consumer projects.
 			StytchMember:    policy.StytchUser,
 			CustomRoles:     policy.CustomRoles,

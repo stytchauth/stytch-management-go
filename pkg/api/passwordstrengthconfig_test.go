@@ -18,8 +18,8 @@ func TestPasswordStrengthConfigClient_Get(t *testing.T) {
 
 		// Act
 		resp, err := client.PasswordStrengthConfig.Get(ctx, passwordstrengthconfig.GetRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 
 		// Assert
@@ -38,8 +38,8 @@ func TestPasswordStrengthConfigClient_Set(t *testing.T) {
 
 		// Act
 		resp, err := client.PasswordStrengthConfig.Set(ctx, passwordstrengthconfig.SetRequest{
-			Project:                     project.Project,
-			Environment:                 TestEnvironment,
+			ProjectSlug:                 project.ProjectSlug,
+			EnvironmentSlug:             TestEnvironment,
 			CheckBreachOnCreation:       true,
 			CheckBreachOnAuthentication: true,
 			ValidateOnAuthentication:    true,
@@ -66,8 +66,8 @@ func TestPasswordStrengthConfigClient_Set(t *testing.T) {
 
 		// Act
 		resp, err := client.PasswordStrengthConfig.Set(ctx, passwordstrengthconfig.SetRequest{
-			Project:                     project.Project,
-			Environment:                 TestEnvironment,
+			ProjectSlug:                 project.ProjectSlug,
+			EnvironmentSlug:             TestEnvironment,
 			CheckBreachOnCreation:       false,
 			CheckBreachOnAuthentication: false,
 			ValidateOnAuthentication:    false,
