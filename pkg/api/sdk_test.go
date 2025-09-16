@@ -150,16 +150,16 @@ func TestSDKClient_GetConsumerConfig(t *testing.T) {
 
 		// First set the configuration
 		_, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			Config:      expectedConfig,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			Config:          expectedConfig,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.SDK.GetConsumerConfig(ctx, sdk.GetConsumerConfigRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 
 		// Assert
@@ -178,9 +178,9 @@ func TestSDKClient_SetConsumerConfig(t *testing.T) {
 
 		// Act
 		resp, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			Config:      config,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			Config:          config,
 		})
 
 		// Assert
@@ -197,9 +197,9 @@ func TestSDKClient_SetConsumerConfig(t *testing.T) {
 
 		// Act
 		resp, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			Config:      config,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			Config:          config,
 		})
 
 		// Assert
@@ -218,16 +218,16 @@ func TestSDKClient_GetB2BConfig(t *testing.T) {
 
 		// First set the configuration
 		_, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			Config:      expectedConfig,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			Config:          expectedConfig,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.SDK.GetB2BConfig(ctx, sdk.GetB2BConfigRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 
 		// Assert
@@ -246,9 +246,9 @@ func TestSDKClient_SetB2BConfig(t *testing.T) {
 
 		// Act
 		resp, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			Config:      config,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			Config:          config,
 		})
 
 		// Assert
@@ -265,9 +265,9 @@ func TestSDKClient_SetB2BConfig(t *testing.T) {
 
 		// Act
 		resp, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			Config:      config,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			Config:          config,
 		})
 
 		// Assert

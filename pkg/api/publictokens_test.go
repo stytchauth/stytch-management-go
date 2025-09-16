@@ -19,8 +19,8 @@ func TestPublicTokensClient_Create(t *testing.T) {
 
 		// Act
 		resp, err := client.PublicTokens.Create(ctx, publictokens.CreateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 
 		// Assert
@@ -40,16 +40,16 @@ func TestPublicTokensClient_Get(t *testing.T) {
 
 		// Create a public token.
 		createResp, err := client.PublicTokens.Create(ctx, publictokens.CreateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.PublicTokens.Get(ctx, publictokens.GetRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			PublicToken: createResp.PublicToken.PublicToken,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			PublicToken:     createResp.PublicToken.PublicToken,
 		})
 
 		// Assert
@@ -64,8 +64,8 @@ func TestPublicTokensClient_Get(t *testing.T) {
 
 		// Act
 		resp, err := client.PublicTokens.Get(ctx, publictokens.GetRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			// PublicToken field is intentionally omitted.
 		})
 
@@ -86,8 +86,8 @@ func TestPublicTokensClient_GetAll(t *testing.T) {
 		var createdTokens []publictokens.PublicToken
 		for i := 0; i < 3; i++ {
 			createResp, err := client.PublicTokens.Create(ctx, publictokens.CreateRequest{
-				Project:     project.Project,
-				Environment: TestEnvironment,
+				ProjectSlug:     project.ProjectSlug,
+				EnvironmentSlug: TestEnvironment,
 			})
 			require.NoError(t, err)
 			createdTokens = append(createdTokens, createResp.PublicToken)
@@ -95,8 +95,8 @@ func TestPublicTokensClient_GetAll(t *testing.T) {
 
 		// Act
 		resp, err := client.PublicTokens.GetAll(ctx, publictokens.GetAllRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 
 		// Assert
@@ -126,16 +126,16 @@ func TestPublicTokensClient_Delete(t *testing.T) {
 
 		// Create a public token first
 		createResp, err := client.PublicTokens.Create(ctx, publictokens.CreateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.PublicTokens.Delete(ctx, publictokens.DeleteRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			PublicToken: createResp.PublicToken.PublicToken,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			PublicToken:     createResp.PublicToken.PublicToken,
 		})
 
 		// Assert
@@ -144,8 +144,8 @@ func TestPublicTokensClient_Delete(t *testing.T) {
 
 		// Verify token is deleted by checking GetAll doesn't include it
 		getAllResp, err := client.PublicTokens.GetAll(ctx, publictokens.GetAllRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 		require.NoError(t, err)
 
@@ -162,9 +162,9 @@ func TestPublicTokensClient_Delete(t *testing.T) {
 
 		// Act
 		resp, err := client.PublicTokens.Delete(ctx, publictokens.DeleteRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			PublicToken: "public-token-does-not-exist",
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			PublicToken:     "public-token-does-not-exist",
 		})
 
 		// Assert

@@ -25,9 +25,9 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 
 		// Act
 		resp, err := client.RedirectURLs.Create(ctx, redirecturls.CreateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         testRedirectURL1,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             testRedirectURL1,
 			ValidTypes: []redirecturls.URLRedirectType{
 				{
 					Type:      redirecturls.RedirectTypeLogin,
@@ -54,9 +54,9 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 
 		// Act
 		resp, err := client.RedirectURLs.Create(ctx, redirecturls.CreateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         testRedirectURL2,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             testRedirectURL2,
 			ValidTypes: []redirecturls.URLRedirectType{
 				{
 					Type:      redirecturls.RedirectTypeLogin,
@@ -98,9 +98,9 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 
 		// Act
 		resp, err := client.RedirectURLs.Create(ctx, redirecturls.CreateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         testRedirectURL3,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             testRedirectURL3,
 			ValidTypes: []redirecturls.URLRedirectType{
 				{
 					Type:      redirecturls.RedirectTypeResetPassword,
@@ -128,9 +128,9 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 
 		// Create first redirect URL
 		_, err := client.RedirectURLs.Create(ctx, redirecturls.CreateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         duplicateURL,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             duplicateURL,
 			ValidTypes: []redirecturls.URLRedirectType{
 				{
 					Type:      redirecturls.RedirectTypeLogin,
@@ -143,9 +143,9 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 		// Act
 		// Try to create the same URL again - should succeed but update the existing one
 		_, err = client.RedirectURLs.Create(ctx, redirecturls.CreateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         duplicateURL,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             duplicateURL,
 			ValidTypes: []redirecturls.URLRedirectType{
 				{
 					Type:      redirecturls.RedirectTypeSignup,
@@ -155,9 +155,9 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 		})
 
 		getresp, geterr := client.RedirectURLs.Get(ctx, redirecturls.GetRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         duplicateURL,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             duplicateURL,
 		})
 		require.NoError(t, geterr)
 
@@ -178,9 +178,9 @@ func TestRedirectURLsClient_GetAll(t *testing.T) {
 		url2 := "https://getall2.example.com/callback"
 
 		_, err := client.RedirectURLs.Create(ctx, redirecturls.CreateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         url1,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             url1,
 			ValidTypes: []redirecturls.URLRedirectType{
 				{
 					Type:      redirecturls.RedirectTypeLogin,
@@ -191,9 +191,9 @@ func TestRedirectURLsClient_GetAll(t *testing.T) {
 		require.NoError(t, err)
 
 		_, err = client.RedirectURLs.Create(ctx, redirecturls.CreateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         url2,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             url2,
 			ValidTypes: []redirecturls.URLRedirectType{
 				{
 					Type:      redirecturls.RedirectTypeSignup,
@@ -204,8 +204,8 @@ func TestRedirectURLsClient_GetAll(t *testing.T) {
 		require.NoError(t, err)
 
 		resp, err := client.RedirectURLs.GetAll(ctx, redirecturls.GetAllRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 
 		assert.NoError(t, err)
@@ -227,8 +227,8 @@ func TestRedirectURLsClient_GetAll(t *testing.T) {
 		ctx := context.Background()
 
 		resp, err := client.RedirectURLs.GetAll(ctx, redirecturls.GetAllRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 		})
 
 		require.NoError(t, err)
@@ -249,9 +249,9 @@ func TestRedirectURLsClient_Get(t *testing.T) {
 
 		// Create redirect URL first
 		createResp, err := client.RedirectURLs.Create(ctx, redirecturls.CreateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         getURL,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             getURL,
 			ValidTypes: []redirecturls.URLRedirectType{
 				{
 					Type:      redirecturls.RedirectTypeLogin,
@@ -267,9 +267,9 @@ func TestRedirectURLsClient_Get(t *testing.T) {
 
 		// Act
 		resp, err := client.RedirectURLs.Get(ctx, redirecturls.GetRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         getURL,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             getURL,
 		})
 
 		// Assert
@@ -297,8 +297,8 @@ func TestRedirectURLsClient_Get(t *testing.T) {
 		urlWithQueryParams := "https://localhost:3002/login?expires_at={}"
 		// Create redirect URL first
 		_, err := client.RedirectURLs.Create(ctx, redirecturls.CreateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			// Use one with query params to check that escaping is correct
 			URL: urlWithQueryParams,
 			ValidTypes: []redirecturls.URLRedirectType{
@@ -312,9 +312,9 @@ func TestRedirectURLsClient_Get(t *testing.T) {
 
 		// Act
 		resp, err := client.RedirectURLs.Get(ctx, redirecturls.GetRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         urlWithQueryParams,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             urlWithQueryParams,
 		})
 
 		// Assert
@@ -332,9 +332,9 @@ func TestRedirectURLsClient_Get(t *testing.T) {
 
 		// Act
 		resp, err := client.RedirectURLs.Get(ctx, redirecturls.GetRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         "https://nonexistent.example.com/callback",
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             "https://nonexistent.example.com/callback",
 		})
 
 		// Assert
@@ -354,9 +354,9 @@ func TestRedirectURLsClient_Update(t *testing.T) {
 
 		// Create redirect URL first
 		_, err := client.RedirectURLs.Create(ctx, redirecturls.CreateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         updateURL,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             updateURL,
 			ValidTypes: []redirecturls.URLRedirectType{
 				{
 					Type:      redirecturls.RedirectTypeLogin,
@@ -369,9 +369,9 @@ func TestRedirectURLsClient_Update(t *testing.T) {
 		// Act
 		// Update with different types
 		resp, err := client.RedirectURLs.Update(ctx, redirecturls.UpdateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         updateURL,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             updateURL,
 			ValidTypes: []redirecturls.URLRedirectType{
 				{
 					Type:      redirecturls.RedirectTypeLogin,
@@ -413,9 +413,9 @@ func TestRedirectURLsClient_Update(t *testing.T) {
 
 		// Act
 		resp, err := client.RedirectURLs.Update(ctx, redirecturls.UpdateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         "https://nonexistent-update.example.com/callback",
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             "https://nonexistent-update.example.com/callback",
 			ValidTypes: []redirecturls.URLRedirectType{
 				{
 					Type:      redirecturls.RedirectTypeLogin,
@@ -441,9 +441,9 @@ func TestRedirectURLsClient_Delete(t *testing.T) {
 
 		// Create redirect URL first
 		_, err := client.RedirectURLs.Create(ctx, redirecturls.CreateRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         deleteURL,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             deleteURL,
 			ValidTypes: []redirecturls.URLRedirectType{
 				{
 					Type:      redirecturls.RedirectTypeLogin,
@@ -455,8 +455,8 @@ func TestRedirectURLsClient_Delete(t *testing.T) {
 
 		// Act
 		resp, err := client.RedirectURLs.Delete(ctx, redirecturls.DeleteRequest{
-			Project:              project.Project,
-			Environment:          TestEnvironment,
+			ProjectSlug:          project.ProjectSlug,
+			EnvironmentSlug:      TestEnvironment,
 			URL:                  deleteURL,
 			DoNotPromoteDefaults: false,
 		})
@@ -467,9 +467,9 @@ func TestRedirectURLsClient_Delete(t *testing.T) {
 
 		// Verify redirect URL is deleted
 		_, err = client.RedirectURLs.Get(ctx, redirecturls.GetRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         deleteURL,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             deleteURL,
 		})
 		assert.Error(t, err)
 		assert.ErrorContains(t, err, "404")
@@ -483,9 +483,9 @@ func TestRedirectURLsClient_Delete(t *testing.T) {
 
 		// Act
 		resp, err := client.RedirectURLs.Delete(ctx, redirecturls.DeleteRequest{
-			Project:     project.Project,
-			Environment: TestEnvironment,
-			URL:         "https://nonexistent-delete.example.com/callback",
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
+			URL:             "https://nonexistent-delete.example.com/callback",
 		})
 
 		// Assert

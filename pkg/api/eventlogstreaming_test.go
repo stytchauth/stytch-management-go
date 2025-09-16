@@ -19,8 +19,8 @@ func TestEventLogStreamingClient_Create(t *testing.T) {
 
 		// Act
 		resp, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
@@ -46,8 +46,8 @@ func TestEventLogStreamingClient_Create(t *testing.T) {
 
 		// Act
 		resp, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeGrafanaLoki,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				GrafanaLoki: &eventlogstreaming.GrafanaLokiConfig{
@@ -77,8 +77,8 @@ func TestEventLogStreamingClient_Get(t *testing.T) {
 
 		// Create config first
 		_, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
@@ -91,8 +91,8 @@ func TestEventLogStreamingClient_Get(t *testing.T) {
 
 		// Act
 		resp, err := client.EventLogStreaming.Get(ctx, eventlogstreaming.GetEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 		})
 
@@ -112,8 +112,8 @@ func TestEventLogStreamingClient_Get(t *testing.T) {
 
 		// Act
 		resp, err := client.EventLogStreaming.Get(ctx, eventlogstreaming.GetEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 		})
 
@@ -132,8 +132,8 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 
 		// Create config first
 		_, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
@@ -146,8 +146,8 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 
 		// Act
 		resp, err := client.EventLogStreaming.Update(ctx, eventlogstreaming.UpdateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
@@ -172,8 +172,8 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 
 		// Create Loki config first
 		_, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeGrafanaLoki,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				GrafanaLoki: &eventlogstreaming.GrafanaLokiConfig{
@@ -187,8 +187,8 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 
 		// Act
 		resp, err := client.EventLogStreaming.Update(ctx, eventlogstreaming.UpdateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeGrafanaLoki,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				GrafanaLoki: &eventlogstreaming.GrafanaLokiConfig{
@@ -215,8 +215,8 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 
 		// Create Datadog config first
 		_, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
@@ -229,8 +229,8 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 
 		// Act - Try to update with Loki config when Datadog exists
 		resp, err := client.EventLogStreaming.Update(ctx, eventlogstreaming.UpdateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeGrafanaLoki,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				GrafanaLoki: &eventlogstreaming.GrafanaLokiConfig{
@@ -254,8 +254,8 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 
 		// Act
 		resp, err := client.EventLogStreaming.Update(ctx, eventlogstreaming.UpdateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
@@ -280,8 +280,8 @@ func TestEventLogStreamingClient_Enable(t *testing.T) {
 
 		// Create config first
 		_, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
@@ -294,8 +294,8 @@ func TestEventLogStreamingClient_Enable(t *testing.T) {
 
 		// Act
 		resp, err := client.EventLogStreaming.Enable(ctx, eventlogstreaming.EnableEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 		})
 
@@ -312,8 +312,8 @@ func TestEventLogStreamingClient_Enable(t *testing.T) {
 
 		// Act
 		resp, err := client.EventLogStreaming.Enable(ctx, eventlogstreaming.EnableEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 		})
 
@@ -332,8 +332,8 @@ func TestEventLogStreamingClient_Disable(t *testing.T) {
 
 		// Create and enable config first
 		_, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
@@ -345,16 +345,16 @@ func TestEventLogStreamingClient_Disable(t *testing.T) {
 		require.NoError(t, err)
 
 		_, err = client.EventLogStreaming.Enable(ctx, eventlogstreaming.EnableEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.EventLogStreaming.Disable(ctx, eventlogstreaming.DisableEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 		})
 
@@ -371,8 +371,8 @@ func TestEventLogStreamingClient_Disable(t *testing.T) {
 
 		// Act
 		resp, err := client.EventLogStreaming.Disable(ctx, eventlogstreaming.DisableEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 		})
 
@@ -391,8 +391,8 @@ func TestEventLogStreamingClient_Delete(t *testing.T) {
 
 		// Create config first
 		_, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
@@ -405,8 +405,8 @@ func TestEventLogStreamingClient_Delete(t *testing.T) {
 
 		// Act
 		resp, err := client.EventLogStreaming.Delete(ctx, eventlogstreaming.DeleteEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 		})
 
@@ -416,8 +416,8 @@ func TestEventLogStreamingClient_Delete(t *testing.T) {
 
 		// Verify config is deleted by trying to get it
 		getResp, err := client.EventLogStreaming.Get(ctx, eventlogstreaming.GetEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 		})
 		assert.Error(t, err)
@@ -432,8 +432,8 @@ func TestEventLogStreamingClient_Delete(t *testing.T) {
 
 		// Act
 		resp, err := client.EventLogStreaming.Delete(ctx, eventlogstreaming.DeleteEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 		})
 

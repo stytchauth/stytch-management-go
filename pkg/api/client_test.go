@@ -60,7 +60,7 @@ func (c *testClient) DisposableProject(vertical projects.Vertical) projects.Proj
 
 	c.t.Cleanup(func() {
 		_, err := c.Projects.Delete(ctx, projects.DeleteRequest{
-			Project: resp.Project.Project,
+			ProjectSlug: resp.Project.ProjectSlug,
 		})
 		require.NoError(c.t, err)
 	})
@@ -76,7 +76,7 @@ func (c *testClient) DisposableEnvironment(
 	ctx := context.Background()
 
 	envResp, err := c.Environments.GetAll(ctx, environments.GetAllRequest{
-		Project: project.Project,
+		ProjectSlug: project.ProjectSlug,
 	})
 	require.NoError(c.t, err)
 

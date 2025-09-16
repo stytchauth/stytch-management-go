@@ -20,8 +20,8 @@ func Test_EnvironmentMetricsGet(t *testing.T) {
 
 	// Act
 	resp, err := client.EnvironmentMetrics.Get(ctx, environmentmetrics.GetRequest{
-		Project:     env.Project,
-		Environment: env.Environment,
+		ProjectSlug:     env.ProjectSlug,
+		EnvironmentSlug: env.EnvironmentSlug,
 	})
 
 	// Assert

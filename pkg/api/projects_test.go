@@ -22,7 +22,7 @@ func Test_ProjectsCreate(t *testing.T) {
 		})
 		t.Cleanup(func() {
 			_, err := client.Projects.Delete(ctx, projects.DeleteRequest{
-				Project: resp.Project.Project,
+				ProjectSlug: resp.Project.ProjectSlug,
 			})
 			require.NoError(t, err)
 		})
@@ -43,7 +43,7 @@ func Test_ProjectsGet(t *testing.T) {
 
 		// Act
 		resp, err := client.Projects.Get(ctx, projects.GetRequest{
-			Project: project.Project,
+			ProjectSlug: project.ProjectSlug,
 		})
 
 		// Assert
@@ -58,7 +58,7 @@ func Test_ProjectsGet(t *testing.T) {
 
 		// Act
 		resp, err := client.Projects.Get(ctx, projects.GetRequest{
-			Project: "nonexistent-project",
+			ProjectSlug: "nonexistent-project",
 		})
 
 		// Assert
@@ -83,7 +83,7 @@ func Test_ProjectsGet(t *testing.T) {
 
 func hasProject(projects []projects.Project, target projects.Project) bool {
 	for _, p := range projects {
-		if p.Project == target.Project {
+		if p.ProjectSlug == target.ProjectSlug {
 			return p.Name == target.Name && p.Vertical == target.Vertical
 		}
 	}
@@ -122,8 +122,8 @@ func Test_ProjectsUpdate(t *testing.T) {
 
 		// Act
 		resp, err := client.Projects.Update(ctx, projects.UpdateRequest{
-			Project: project.Project,
-			Name:    &newProjectName,
+			ProjectSlug: project.ProjectSlug,
+			Name:        &newProjectName,
 		})
 
 		// Assert
@@ -138,8 +138,8 @@ func Test_ProjectsUpdate(t *testing.T) {
 
 		// Act
 		resp, err := client.Projects.Update(ctx, projects.UpdateRequest{
-			Project: "nonexistent-project",
-			Name:    &newProjectName,
+			ProjectSlug: "nonexistent-project",
+			Name:        &newProjectName,
 		})
 
 		// Assert
@@ -161,7 +161,7 @@ func Test_ProjectsDelete(t *testing.T) {
 
 		// Act
 		_, err = client.Projects.Delete(ctx, projects.DeleteRequest{
-			Project: createResp.Project.Project,
+			ProjectSlug: createResp.Project.ProjectSlug,
 		})
 
 		// Assert
@@ -174,7 +174,7 @@ func Test_ProjectsDelete(t *testing.T) {
 
 		// Act
 		_, err := client.Projects.Delete(ctx, projects.DeleteRequest{
-			Project: "nonexistent-project",
+			ProjectSlug: "nonexistent-project",
 		})
 
 		// Assert
