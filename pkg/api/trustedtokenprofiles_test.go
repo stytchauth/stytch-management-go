@@ -37,7 +37,7 @@ func TestTrustedTokenProfilesClient_Create(t *testing.T) {
 			Audience:        "test-audience",
 			Issuer:          "test-issuer",
 			JwksURL:         &jwksURL,
-			PublicKeyType:   "jwk",
+			PublicKeyType:   trustedtokenprofiles.PublicKeyTypeJWK,
 			PEMFiles:        []string{},
 			CanJITProvision: true,
 			AttributeMapping: map[string]interface{}{
@@ -53,7 +53,7 @@ func TestTrustedTokenProfilesClient_Create(t *testing.T) {
 		assert.Equal(t, "test-audience", resp.TrustedTokenProfile.Audience)
 		assert.Equal(t, "test-issuer", resp.TrustedTokenProfile.Issuer)
 		assert.Equal(t, testJWKSURL, resp.TrustedTokenProfile.JwksURL)
-		assert.Equal(t, "jwk", resp.TrustedTokenProfile.PublicKeyType)
+		assert.Equal(t, trustedtokenprofiles.PublicKeyTypeJWK, resp.TrustedTokenProfile.PublicKeyType)
 		assert.NotEmpty(t, resp.TrustedTokenProfile.ID)
 		assert.True(t, resp.TrustedTokenProfile.CanJITProvision)
 	})
@@ -71,7 +71,7 @@ func TestTrustedTokenProfilesClient_Create(t *testing.T) {
 			Name:            "Test PEM Profile",
 			Audience:        "test-audience-pem",
 			Issuer:          "test-issuer-pem",
-			PublicKeyType:   "pem",
+			PublicKeyType:   trustedtokenprofiles.PublicKeyTypePEM,
 			PEMFiles:        []string{testPEMKey},
 			CanJITProvision: false,
 		})
@@ -82,7 +82,7 @@ func TestTrustedTokenProfilesClient_Create(t *testing.T) {
 		assert.Equal(t, "Test PEM Profile", resp.TrustedTokenProfile.Name)
 		assert.Equal(t, "test-audience-pem", resp.TrustedTokenProfile.Audience)
 		assert.Equal(t, "test-issuer-pem", resp.TrustedTokenProfile.Issuer)
-		assert.Equal(t, "pem", resp.TrustedTokenProfile.PublicKeyType)
+		assert.Equal(t, trustedtokenprofiles.PublicKeyTypePEM, resp.TrustedTokenProfile.PublicKeyType)
 		assert.NotEmpty(t, resp.TrustedTokenProfile.ID)
 		assert.False(t, resp.TrustedTokenProfile.CanJITProvision)
 		assert.Len(t, resp.TrustedTokenProfile.PEMFiles, 1)
@@ -104,7 +104,7 @@ func TestTrustedTokenProfilesClient_Get(t *testing.T) {
 			Audience:        "get-test-audience",
 			Issuer:          "get-test-issuer.com",
 			JwksURL:         &jwksURL,
-			PublicKeyType:   "jwk",
+			PublicKeyType:   trustedtokenprofiles.PublicKeyTypeJWK,
 			PEMFiles:        []string{},
 			CanJITProvision: false,
 		})
@@ -179,7 +179,7 @@ func TestTrustedTokenProfilesClient_GetAll(t *testing.T) {
 			Audience:        "list-test-audience-1",
 			Issuer:          "list-test-issuer-1",
 			JwksURL:         &jwksURL,
-			PublicKeyType:   "jwk",
+			PublicKeyType:   trustedtokenprofiles.PublicKeyTypeJWK,
 			PEMFiles:        []string{},
 			CanJITProvision: true,
 		})
@@ -191,7 +191,7 @@ func TestTrustedTokenProfilesClient_GetAll(t *testing.T) {
 			Name:            "List Test Profile 2",
 			Audience:        "list-test-audience-2",
 			Issuer:          "list-test-issuer-2",
-			PublicKeyType:   "pem",
+			PublicKeyType:   trustedtokenprofiles.PublicKeyTypePEM,
 			PEMFiles:        []string{testPEMKey},
 			CanJITProvision: false,
 		})
@@ -239,7 +239,7 @@ func TestTrustedTokenProfilesClient_Update(t *testing.T) {
 			Audience:        "update-test-audience",
 			Issuer:          "update-test-issuer",
 			JwksURL:         &jwksURL,
-			PublicKeyType:   "jwk",
+			PublicKeyType:   trustedtokenprofiles.PublicKeyTypeJWK,
 			PEMFiles:        []string{},
 			CanJITProvision: true,
 		})
@@ -284,7 +284,7 @@ func TestTrustedTokenProfilesClient_Delete(t *testing.T) {
 			Audience:        "delete-test-audience",
 			Issuer:          "delete-test-issuer",
 			JwksURL:         &jwksURL,
-			PublicKeyType:   "jwk",
+			PublicKeyType:   trustedtokenprofiles.PublicKeyTypeJWK,
 			PEMFiles:        []string{},
 			CanJITProvision: true,
 		})
@@ -326,7 +326,7 @@ func TestTrustedTokenProfilesClient_CreatePEM(t *testing.T) {
 			Name:            "PEM Test Profile",
 			Audience:        "pem-test-audience",
 			Issuer:          "pem-test-issuer",
-			PublicKeyType:   "pem",
+			PublicKeyType:   trustedtokenprofiles.PublicKeyTypePEM,
 			PEMFiles:        []string{testPEMKey},
 			CanJITProvision: true,
 		})
@@ -363,7 +363,7 @@ func TestTrustedTokenProfilesClient_CreatePEM(t *testing.T) {
 			Audience:        "jwk-pem-test-audience",
 			Issuer:          "jwk-pem-test-issuer",
 			JwksURL:         &jwksURL,
-			PublicKeyType:   "jwk",
+			PublicKeyType:   trustedtokenprofiles.PublicKeyTypeJWK,
 			PEMFiles:        []string{},
 			CanJITProvision: true,
 		})
@@ -418,7 +418,7 @@ func TestTrustedTokenProfilesClient_GetPEM(t *testing.T) {
 			Name:            "PEM Get Test Profile",
 			Audience:        "pem-get-test-audience",
 			Issuer:          "pem-get-test-issuer",
-			PublicKeyType:   "pem",
+			PublicKeyType:   trustedtokenprofiles.PublicKeyTypePEM,
 			PEMFiles:        []string{testPEMKey},
 			CanJITProvision: true,
 		})
@@ -455,7 +455,7 @@ func TestTrustedTokenProfilesClient_GetPEM(t *testing.T) {
 			Name:            "PEM Get Test Profile",
 			Audience:        "pem-get-test-audience",
 			Issuer:          "pem-get-test-issuer",
-			PublicKeyType:   "pem",
+			PublicKeyType:   trustedtokenprofiles.PublicKeyTypePEM,
 			PEMFiles:        []string{testPEMKey},
 			CanJITProvision: true,
 		})
@@ -488,7 +488,7 @@ func TestTrustedTokenProfilesClient_DeletePEM(t *testing.T) {
 			Name:            "PEM Delete Test Profile",
 			Audience:        "pem-delete-test-audience",
 			Issuer:          "pem-delete-test-issuer",
-			PublicKeyType:   "pem",
+			PublicKeyType:   trustedtokenprofiles.PublicKeyTypePEM,
 			PEMFiles:        []string{testPEMKey},
 			CanJITProvision: true,
 		})
