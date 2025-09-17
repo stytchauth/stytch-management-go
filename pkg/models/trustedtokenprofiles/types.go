@@ -1,5 +1,12 @@
 package trustedtokenprofiles
 
+type PublicKeyType string
+
+const (
+	PublicKeyTypeJWK PublicKeyType = "JWK"
+	PublicKeyTypePEM PublicKeyType = "PEM"
+)
+
 type TrustedTokenProfile struct {
 	// ID is the unique identifier for the trusted token profile.
 	ID string `json:"profile_id"`
@@ -16,7 +23,7 @@ type TrustedTokenProfile struct {
 	// PEMFiles is a list of PEM files.
 	PEMFiles []PEMFile `json:"pem_files"`
 	// PublicKeyType is the type of public key.
-	PublicKeyType string `json:"public_key_type"`
+	PublicKeyType PublicKeyType `json:"public_key_type"`
 	// CanJITProvision indicates whether the trusted token profile can be provisioned JIT.
 	CanJITProvision bool `json:"can_jit_provision"`
 }
@@ -44,7 +51,7 @@ type CreateTrustedTokenProfileRequest struct {
 	// AttributeMapping is the attribute mapping for the trusted token profile (optional).
 	AttributeMapping map[string]interface{} `json:"attribute_mapping,omitempty"`
 	// PublicKeyType is the type of public key.
-	PublicKeyType string `json:"public_key_type"`
+	PublicKeyType PublicKeyType `json:"public_key_type"`
 	// PEMFiles is a list of PEM files.
 	PEMFiles []string `json:"pem_files"`
 	// CanJITProvision indicates whether the trusted token profile can be provisioned JIT.
