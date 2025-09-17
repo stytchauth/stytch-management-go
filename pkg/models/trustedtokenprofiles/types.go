@@ -19,7 +19,7 @@ type TrustedTokenProfile struct {
 	// JwksURL is the JWKS URL for the trusted token profile.
 	JwksURL string `json:"jwks_url"`
 	// AttributeMapping is the attribute mapping for the trusted token profile.
-	AttributeMapping map[string]interface{} `json:"attribute_mapping"`
+	AttributeMapping map[string]string `json:"attribute_mapping"`
 	// PEMFiles is a list of PEM files.
 	PEMFiles []PEMFile `json:"pem_files"`
 	// PublicKeyType is the type of public key.
@@ -49,7 +49,7 @@ type CreateTrustedTokenProfileRequest struct {
 	// JwksURL is the JWKS URL for the trusted token profile (optional).
 	JwksURL *string `json:"jwks_url,omitempty"`
 	// AttributeMapping is the attribute mapping for the trusted token profile (optional).
-	AttributeMapping map[string]interface{} `json:"attribute_mapping,omitempty"`
+	AttributeMapping map[string]string `json:"attribute_mapping,omitempty"`
 	// PublicKeyType is the type of public key.
 	PublicKeyType PublicKeyType `json:"public_key_type"`
 	// PEMFiles is a list of PEM files.
@@ -118,7 +118,7 @@ type UpdateTrustedTokenProfileRequest struct {
 	// JwksURL is the JWKS URL for the trusted token profile (optional).
 	JwksURL *string `json:"jwks_url"`
 	// AttributeMapping is the attribute mapping for the trusted token profile (optional).
-	AttributeMapping map[string]interface{} `json:"attribute_mapping"`
+	AttributeMapping map[string]string `json:"attribute_mapping"`
 	// CanJITProvision indicates whether the trusted token profile can be provisioned JIT.
 	CanJITProvision *bool `json:"can_jit_provision,omitempty"`
 }

@@ -40,7 +40,7 @@ func TestTrustedTokenProfilesClient_Create(t *testing.T) {
 			PublicKeyType:   trustedtokenprofiles.PublicKeyTypeJWK,
 			PEMFiles:        []string{},
 			CanJITProvision: true,
-			AttributeMapping: map[string]interface{}{
+			AttributeMapping: map[string]string{
 				"user_id": "sub",
 				"email":   "email",
 			},
