@@ -17,8 +17,9 @@ func Test_ProjectsCreate(t *testing.T) {
 
 		// Act
 		resp, err := client.Projects.Create(ctx, projects.CreateRequest{
-			Name:     "Test Project",
-			Vertical: projects.VerticalB2B,
+			Name:        "Test Project",
+			Vertical:    projects.VerticalB2B,
+			ProjectSlug: "custom-slug",
 		})
 		t.Cleanup(func() {
 			_, err := client.Projects.Delete(ctx, projects.DeleteRequest{
@@ -31,6 +32,7 @@ func Test_ProjectsCreate(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "Test Project", resp.Project.Name)
 		assert.Equal(t, projects.VerticalB2B, resp.Project.Vertical)
+		assert.Equal(t, "custom-slug", resp.Project.ProjectSlug)
 	})
 }
 

@@ -33,6 +33,9 @@ type CreateRequest struct {
 	Name string `json:"name"`
 	// Vertical is the project's vertical.
 	Vertical Vertical `json:"vertical"`
+	// ProjectSlug is the immutable unique identifier (slug) of the project, and cannot be changed
+	// after the project is created. If not provided, a slug will be generated.
+	ProjectSlug string `json:"project_slug"`
 }
 
 type CreateResponse struct {
