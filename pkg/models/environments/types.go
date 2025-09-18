@@ -72,6 +72,9 @@ type CreateRequest struct {
 	Name string `json:"name"`
 	// Type is the environment's type.
 	Type EnvironmentType `json:"type"`
+	// EnvironmentSlug is the immutable unique identifier (slug) of the environment, and cannot be
+	// changed after the environment is created. If not provided, a slug will be generated.
+	EnvironmentSlug *string `json:"environment_slug"`
 	// CrossOrgPasswordsEnabled indicates whether the environment should use cross-org passwords.
 	CrossOrgPasswordsEnabled *bool `json:"cross_org_passwords_enabled,omitempty"`
 	// UserImpersonationEnabled indicates whether user impersonation should be enabled for the

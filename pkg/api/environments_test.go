@@ -19,11 +19,13 @@ func Test_EnvironmentsCreate(t *testing.T) {
 		ctx := context.Background()
 
 		// Act
+		slug := "custom-slug"
 		zeroDowntimeSessionMigrationURL := "https://example.com/migration"
 		resp, err := client.Environments.Create(ctx, environments.CreateRequest{
 			ProjectSlug:                     project.ProjectSlug,
 			Name:                            "Test Environment",
 			Type:                            environments.EnvironmentTypeTest,
+			EnvironmentSlug:                 &slug,
 			CrossOrgPasswordsEnabled:        ptr(true),
 			UserImpersonationEnabled:        ptr(true),
 			ZeroDowntimeSessionMigrationURL: ptr(zeroDowntimeSessionMigrationURL),
@@ -40,6 +42,7 @@ func Test_EnvironmentsCreate(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "Test Environment", resp.Environment.Name)
 		assert.Equal(t, environments.EnvironmentTypeTest, resp.Environment.Type)
+		assert.Equal(t, slug, resp.Environment.EnvironmentSlug)
 		assert.True(t, resp.Environment.CrossOrgPasswordsEnabled)
 		assert.True(t, resp.Environment.UserImpersonationEnabled)
 		assert.Equal(t, zeroDowntimeSessionMigrationURL, resp.Environment.ZeroDowntimeSessionMigrationURL)
