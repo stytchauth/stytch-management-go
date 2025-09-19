@@ -30,14 +30,14 @@ func Test_Integration(t *testing.T) {
 	project := client.DisposableProject(projects.VerticalB2B)
 
 	// Get the project
-	getResp, err := client.Projects.Get(ctx, projects.GetRequest{Project: project.Project})
+	getResp, err := client.Projects.Get(ctx, projects.GetRequest{ProjectSlug: project.ProjectSlug})
 	require.NoError(t, err)
-	assert.Equal(t, project.Project, getResp.Project.Project)
+	assert.Equal(t, project.ProjectSlug, getResp.Project.ProjectSlug)
 
 	// Update the project
 	updateResp, err := client.Projects.Update(ctx, projects.UpdateRequest{
-		Project: project.Project,
-		Name:    ptr("Updated Project"),
+		ProjectSlug: project.ProjectSlug,
+		Name:        ptr("Updated Project"),
 	})
 	require.NoError(t, err)
 	assert.Equal(t, "Updated Project", updateResp.Project.Name)
@@ -49,7 +49,7 @@ func Test_Integration(t *testing.T) {
 
 	// Get all environments (should have live and test by default)
 	envGetAllResp, err := client.Environments.GetAll(ctx, environments.GetAllRequest{
-		Project: project.Project,
+		ProjectSlug: project.ProjectSlug,
 	})
 	require.NoError(t, err)
 	assert.Len(t, envGetAllResp.Environments, 2) // live and test
@@ -64,60 +64,60 @@ func Test_Integration(t *testing.T) {
 
 	// Get individual environments
 	liveGetResp, err := client.Environments.Get(ctx, environments.GetRequest{
-		Project:     project.Project,
-		Environment: liveEnv.Environment,
+		ProjectSlug:     project.ProjectSlug,
+		EnvironmentSlug: liveEnv.EnvironmentSlug,
 	})
 	require.NoError(t, err)
-	assert.Equal(t, liveEnv.Environment, liveGetResp.Environment.Environment)
+	assert.Equal(t, liveEnv.EnvironmentSlug, liveGetResp.Environment.EnvironmentSlug)
 
 	// Create a custom environment
 	customEnvResp, err := client.Environments.Create(ctx, environments.CreateRequest{
-		Project: project.Project,
-		Name:    "Custom Env",
-		Type:    environments.EnvironmentTypeTest,
+		ProjectSlug: project.ProjectSlug,
+		Name:        "Custom Env",
+		Type:        environments.EnvironmentTypeTest,
 	})
 	require.NoError(t, err)
 	customEnv := customEnvResp.Environment
 
 	// Update the custom environment
 	_, err = client.Environments.Update(ctx, environments.UpdateRequest{
-		Project:     project.Project,
-		Environment: customEnv.Environment,
-		Name:        ptr("Updated Custom Env"),
+		ProjectSlug:     project.ProjectSlug,
+		EnvironmentSlug: customEnv.EnvironmentSlug,
+		Name:            ptr("Updated Custom Env"),
 	})
 	require.NoError(t, err)
 
 	t.Run("Secrets", func(t *testing.T) {
 		// Create a secret in the custom environment
 		secretResp, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 		assert.NotEmpty(t, secretResp.CreatedSecret.SecretID)
 
 		// Get the secret
 		getSecretResp, err := client.Secrets.Get(ctx, secrets.GetSecretRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
-			SecretID:    secretResp.CreatedSecret.SecretID,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
+			SecretID:        secretResp.CreatedSecret.SecretID,
 		})
 		require.NoError(t, err)
 		assert.Equal(t, secretResp.CreatedSecret.SecretID, getSecretResp.Secret.SecretID)
 
 		// Get all secrets
 		getAllSecretsResp, err := client.Secrets.GetAll(ctx, secrets.GetAllSecretsRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 		assert.GreaterOrEqual(t, len(getAllSecretsResp.Secrets), 1)
 
 		// Delete the secret
 		_, err = client.Secrets.Delete(ctx, secrets.DeleteSecretRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
-			SecretID:    secretResp.CreatedSecret.SecretID,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
+			SecretID:        secretResp.CreatedSecret.SecretID,
 		})
 		require.NoError(t, err)
 	})
@@ -125,8 +125,8 @@ func Test_Integration(t *testing.T) {
 	t.Run("PublicTokens", func(t *testing.T) {
 		// Get all public tokens
 		pubTokensResp, err := client.PublicTokens.GetAll(ctx, publictokens.GetAllRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 		assert.GreaterOrEqual(t, len(pubTokensResp.PublicTokens), 0)
@@ -135,9 +135,9 @@ func Test_Integration(t *testing.T) {
 		if len(pubTokensResp.PublicTokens) > 0 {
 			firstToken := pubTokensResp.PublicTokens[0]
 			getTokenResp, err := client.PublicTokens.Get(ctx, publictokens.GetRequest{
-				Project:     project.Project,
-				Environment: customEnv.Environment,
-				PublicToken: firstToken.PublicToken,
+				ProjectSlug:     project.ProjectSlug,
+				EnvironmentSlug: customEnv.EnvironmentSlug,
+				PublicToken:     firstToken.PublicToken,
 			})
 			require.NoError(t, err)
 			assert.Equal(t, firstToken.PublicToken, getTokenResp.PublicToken.PublicToken)
@@ -149,9 +149,9 @@ func Test_Integration(t *testing.T) {
 
 		// Create a redirect URL
 		createURLResp, err := client.RedirectURLs.Create(ctx, redirecturls.CreateRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
-			URL:         testURL,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
+			URL:             testURL,
 			ValidTypes: []redirecturls.URLRedirectType{
 				{Type: redirecturls.RedirectTypeLogin, IsDefault: true},
 			},
@@ -161,26 +161,26 @@ func Test_Integration(t *testing.T) {
 
 		// Get all redirect URLs
 		getAllURLsResp, err := client.RedirectURLs.GetAll(ctx, redirecturls.GetAllRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 		assert.GreaterOrEqual(t, len(getAllURLsResp.RedirectURLs), 1)
 
 		// Get the specific redirect URL
 		getURLResp, err := client.RedirectURLs.Get(ctx, redirecturls.GetRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
-			URL:         testURL,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
+			URL:             testURL,
 		})
 		require.NoError(t, err)
 		assert.Equal(t, testURL, getURLResp.RedirectURL.URL)
 
 		// Update the redirect URL
 		updateURLResp, err := client.RedirectURLs.Update(ctx, redirecturls.UpdateRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
-			URL:         testURL,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
+			URL:             testURL,
 			ValidTypes: []redirecturls.URLRedirectType{
 				{Type: redirecturls.RedirectTypeLogin, IsDefault: true},
 				{Type: redirecturls.RedirectTypeSignup, IsDefault: false},
@@ -192,9 +192,9 @@ func Test_Integration(t *testing.T) {
 
 		// Delete the redirect URL
 		_, err = client.RedirectURLs.Delete(ctx, redirecturls.DeleteRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
-			URL:         testURL,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
+			URL:             testURL,
 		})
 		require.NoError(t, err)
 	})
@@ -202,17 +202,17 @@ func Test_Integration(t *testing.T) {
 	t.Run("CountryCodeAllowlist", func(t *testing.T) {
 		// Get current SMS allowlist
 		getSMSResp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx, &countrycodeallowlist.GetAllowedSMSCountryCodesRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 		assert.NotNil(t, getSMSResp.CountryCodes)
 
 		// Set SMS allowlist
 		setSMSResp, err := client.CountryCodeAllowlist.SetAllowedSMSCountryCodes(ctx, &countrycodeallowlist.SetAllowedSMSCountryCodesRequest{
-			Project:      project.Project,
-			Environment:  customEnv.Environment,
-			CountryCodes: []string{"US", "CA", "GB", "AU"},
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
+			CountryCodes:    []string{"US", "CA", "GB", "AU"},
 		})
 		require.NoError(t, err)
 		assert.Contains(t, setSMSResp.CountryCodes, "US")
@@ -220,9 +220,9 @@ func Test_Integration(t *testing.T) {
 
 		// Reset SMS allowlist
 		_, err = client.CountryCodeAllowlist.SetAllowedSMSCountryCodes(ctx, &countrycodeallowlist.SetAllowedSMSCountryCodesRequest{
-			Project:      project.Project,
-			Environment:  customEnv.Environment,
-			CountryCodes: countrycodeallowlist.DefaultCountryCodes,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
+			CountryCodes:    countrycodeallowlist.DefaultCountryCodes,
 		})
 		require.NoError(t, err)
 	})
@@ -230,7 +230,7 @@ func Test_Integration(t *testing.T) {
 	t.Run("EmailTemplates", func(t *testing.T) {
 		// Get all email templates
 		getTemplatesResp, err := client.EmailTemplates.GetAll(ctx, emailtemplates.GetAllRequest{
-			Project: project.Project,
+			ProjectSlug: project.ProjectSlug,
 		})
 		require.NoError(t, err)
 
@@ -240,15 +240,15 @@ func Test_Integration(t *testing.T) {
 
 			// Update the template
 			_, err = client.EmailTemplates.Update(ctx, emailtemplates.UpdateRequest{
-				Project:    project.Project,
-				TemplateID: template.TemplateID,
+				ProjectSlug: project.ProjectSlug,
+				TemplateID:  template.TemplateID,
 			})
 			require.NoError(t, err)
 
 			// Get the updated template
 			getTemplateResp, err := client.EmailTemplates.Get(ctx, emailtemplates.GetRequest{
-				Project:    project.Project,
-				TemplateID: template.TemplateID,
+				ProjectSlug: project.ProjectSlug,
+				TemplateID:  template.TemplateID,
 			})
 			require.NoError(t, err)
 			assert.Equal(t, template.TemplateID, getTemplateResp.EmailTemplate.TemplateID)
@@ -259,37 +259,37 @@ func Test_Integration(t *testing.T) {
 		// Set/Update JWT template
 		jwtContent := `{"custom_user_id": "user-123", "custom_email": "test@example.com"}`
 		_, err = client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
-			Project:         project.Project,
-			Environment:     customEnv.Environment,
-			TemplateType:    jwttemplates.TemplateTypeSession,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
+			JWTTemplateType: jwttemplates.JWTTemplateTypeSession,
 			TemplateContent: jwtContent,
 		})
 		require.NoError(t, err)
 
 		// Get JWT template for session type
 		getJWTTemplateResp, err := client.JWTTemplates.Get(ctx, &jwttemplates.GetRequest{
-			Project:      project.Project,
-			Environment:  customEnv.Environment,
-			TemplateType: jwttemplates.TemplateTypeSession,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
+			JWTTemplateType: jwttemplates.JWTTemplateTypeSession,
 		})
 		require.NoError(t, err)
-		assert.Equal(t, jwttemplates.TemplateTypeSession, getJWTTemplateResp.JWTTemplate.TemplateType)
+		assert.Equal(t, jwttemplates.JWTTemplateTypeSession, getJWTTemplateResp.JWTTemplate.JWTTemplateType)
 		assert.Equal(t, jwtContent, getJWTTemplateResp.JWTTemplate.TemplateContent)
 	})
 
 	t.Run("PasswordStrengthConfig", func(t *testing.T) {
 		// Get current password strength config
 		getPSCResp, err := client.PasswordStrengthConfig.Get(ctx, passwordstrengthconfig.GetRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 		assert.NotNil(t, getPSCResp.PasswordStrengthConfig)
 
 		// Set/Update password strength config (just ensure it can be set)
 		_, err = client.PasswordStrengthConfig.Set(ctx, passwordstrengthconfig.SetRequest{
-			Project:                   project.Project,
-			Environment:               customEnv.Environment,
+			ProjectSlug:               project.ProjectSlug,
+			EnvironmentSlug:           customEnv.EnvironmentSlug,
 			ValidationPolicy:          passwordstrengthconfig.ValidationPolicyLUDS,
 			LudsMinPasswordLength:     ptr(12),
 			LudsMinPasswordComplexity: ptr(4),
@@ -300,8 +300,8 @@ func Test_Integration(t *testing.T) {
 	t.Run("RBACPolicy", func(t *testing.T) {
 		// Get RBAC policy
 		getRBACResp, err := client.RBACPolicy.Get(ctx, rbacpolicy.GetRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 		assert.NotNil(t, getRBACResp.Policy)
@@ -310,16 +310,16 @@ func Test_Integration(t *testing.T) {
 	t.Run("SDK", func(t *testing.T) {
 		// Get B2B SDK config since we're testing a B2B project
 		getB2BSDKResp, err := client.SDK.GetB2BConfig(ctx, sdk.GetB2BConfigRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 		assert.NotNil(t, getB2BSDKResp)
 
 		// Set B2B SDK config
 		_, err = client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 	})
@@ -327,8 +327,8 @@ func Test_Integration(t *testing.T) {
 	t.Run("TrustedTokenProfiles", func(t *testing.T) {
 		// Get all trusted token profiles
 		getTTPResp, err := client.TrustedTokenProfiles.GetAll(ctx, &trustedtokenprofiles.GetAllTrustedTokenProfilesRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 		assert.GreaterOrEqual(t, len(getTTPResp.TrustedTokenProfiles), 0)
@@ -345,12 +345,12 @@ QIDAQAB
 -----END PUBLIC KEY-----`
 
 		createTTPResp, err := client.TrustedTokenProfiles.Create(ctx, &trustedtokenprofiles.CreateTrustedTokenProfileRequest{
-			Project:         project.Project,
-			Environment:     customEnv.Environment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
 			Name:            "Test Profile",
 			Audience:        "audience-test",
 			Issuer:          "test-issuer",
-			PublicKeyType:   "RSA",
+			PublicKeyType:   trustedtokenprofiles.PublicKeyTypePEM,
 			PEMFiles:        []string{sampleRSAPublicKey},
 			CanJITProvision: false,
 		})
@@ -361,28 +361,28 @@ QIDAQAB
 
 		// Get the trusted token profile
 		getTTPByIDResp, err := client.TrustedTokenProfiles.Get(ctx, &trustedtokenprofiles.GetTrustedTokenProfileRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
-			ProfileID:   profileID,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
+			ProfileID:       profileID,
 		})
 		require.NoError(t, err)
 		assert.Equal(t, profileID, getTTPByIDResp.TrustedTokenProfile.ID)
 
 		// Update the trusted token profile
 		updateTTPResp, err := client.TrustedTokenProfiles.Update(ctx, &trustedtokenprofiles.UpdateTrustedTokenProfileRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
-			ProfileID:   profileID,
-			Name:        ptr("Updated Profile"),
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
+			ProfileID:       profileID,
+			Name:            ptr("Updated Profile"),
 		})
 		require.NoError(t, err)
 		assert.Equal(t, "Updated Profile", updateTTPResp.TrustedTokenProfile.Name)
 
 		// Delete the trusted token profile
 		_, err = client.TrustedTokenProfiles.Delete(ctx, &trustedtokenprofiles.DeleteTrustedTokenProfileRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
-			ProfileID:   profileID,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
+			ProfileID:       profileID,
 		})
 		require.NoError(t, err)
 	})
@@ -390,8 +390,8 @@ QIDAQAB
 	t.Run("EnvironmentMetrics", func(t *testing.T) {
 		// Get environment metrics
 		getMetricsResp, err := client.EnvironmentMetrics.Get(ctx, environmentmetrics.GetRequest{
-			Project:     project.Project,
-			Environment: customEnv.Environment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: customEnv.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 		assert.NotNil(t, getMetricsResp.Metrics)
@@ -400,8 +400,8 @@ QIDAQAB
 	t.Run("EventLogStreaming", func(t *testing.T) {
 		// Create a Datadog event log streaming configuration
 		createELSResp, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
@@ -415,8 +415,8 @@ QIDAQAB
 
 		// Get the event log streaming configuration
 		getELSResp, err := client.EventLogStreaming.Get(ctx, eventlogstreaming.GetEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 		})
 		require.NoError(t, err)
@@ -424,8 +424,8 @@ QIDAQAB
 
 		// Update the event log streaming configuration
 		_, err = client.EventLogStreaming.Update(ctx, eventlogstreaming.UpdateEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 			DestinationConfig: eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
@@ -438,8 +438,8 @@ QIDAQAB
 
 		// Delete the event log streaming configuration
 		_, err = client.EventLogStreaming.Delete(ctx, eventlogstreaming.DeleteEventLogStreamingRequest{
-			Project:         project.Project,
-			Environment:     TestEnvironment,
+			ProjectSlug:     project.ProjectSlug,
+			EnvironmentSlug: TestEnvironment,
 			DestinationType: eventlogstreaming.DestinationTypeDatadog,
 		})
 		require.NoError(t, err)
@@ -447,8 +447,8 @@ QIDAQAB
 
 	// Clean up the custom environment
 	_, err = client.Environments.Delete(ctx, environments.DeleteRequest{
-		Project:     project.Project,
-		Environment: customEnv.Environment,
+		ProjectSlug:     project.ProjectSlug,
+		EnvironmentSlug: customEnv.EnvironmentSlug,
 	})
 	require.NoError(t, err)
 }
