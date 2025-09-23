@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/publictokens"
 )
@@ -14,13 +15,13 @@ func TestPublicTokensClient_Create(t *testing.T) {
 	t.Run("create public token", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		resp, err := client.PublicTokens.Create(ctx, publictokens.CreateRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 
 		// Assert
@@ -35,20 +36,20 @@ func TestPublicTokensClient_Get(t *testing.T) {
 	t.Run("base case", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Create a public token.
 		createResp, err := client.PublicTokens.Create(ctx, publictokens.CreateRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.PublicTokens.Get(ctx, publictokens.GetRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			PublicToken:     createResp.PublicToken.PublicToken,
 		})
 
@@ -59,13 +60,13 @@ func TestPublicTokensClient_Get(t *testing.T) {
 	t.Run("missing public token", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		resp, err := client.PublicTokens.Get(ctx, publictokens.GetRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			// PublicToken field is intentionally omitted.
 		})
 
@@ -79,15 +80,15 @@ func TestPublicTokensClient_GetAll(t *testing.T) {
 	t.Run("get all public tokens", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Create a few public tokens first
 		var createdTokens []publictokens.PublicToken
 		for i := 0; i < 3; i++ {
 			createResp, err := client.PublicTokens.Create(ctx, publictokens.CreateRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: TestEnvironment,
+				ProjectSlug:     env.ProjectSlug,
+				EnvironmentSlug: env.EnvironmentSlug,
 			})
 			require.NoError(t, err)
 			createdTokens = append(createdTokens, createResp.PublicToken)
@@ -95,8 +96,8 @@ func TestPublicTokensClient_GetAll(t *testing.T) {
 
 		// Act
 		resp, err := client.PublicTokens.GetAll(ctx, publictokens.GetAllRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 
 		// Assert
@@ -121,20 +122,20 @@ func TestPublicTokensClient_Delete(t *testing.T) {
 	t.Run("delete existing public token", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Create a public token first
 		createResp, err := client.PublicTokens.Create(ctx, publictokens.CreateRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.PublicTokens.Delete(ctx, publictokens.DeleteRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			PublicToken:     createResp.PublicToken.PublicToken,
 		})
 
@@ -144,8 +145,8 @@ func TestPublicTokensClient_Delete(t *testing.T) {
 
 		// Verify token is deleted by checking GetAll doesn't include it
 		getAllResp, err := client.PublicTokens.GetAll(ctx, publictokens.GetAllRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 
@@ -157,13 +158,13 @@ func TestPublicTokensClient_Delete(t *testing.T) {
 	t.Run("public token does not exist", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		resp, err := client.PublicTokens.Delete(ctx, publictokens.DeleteRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			PublicToken:     "public-token-does-not-exist",
 		})
 

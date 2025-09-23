@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/sdk"
 )
@@ -144,22 +145,22 @@ func TestSDKClient_GetConsumerConfig(t *testing.T) {
 	t.Run("base case", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 		expectedConfig := makeTestConsumerConfig()
 
 		// First set the configuration
 		_, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Config:          expectedConfig,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.SDK.GetConsumerConfig(ctx, sdk.GetConsumerConfigRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 
 		// Assert
@@ -172,14 +173,14 @@ func TestSDKClient_SetConsumerConfig(t *testing.T) {
 	t.Run("base case", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 		config := makeTestConsumerConfig()
 
 		// Act
 		resp, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Config:          config,
 		})
 
@@ -190,15 +191,15 @@ func TestSDKClient_SetConsumerConfig(t *testing.T) {
 	t.Run("invalid vertical config returns error", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 		config := makeTestB2BConfig()
 		config.Basic.Enabled = false
 
 		// Act
 		resp, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Config:          config,
 		})
 
@@ -212,22 +213,22 @@ func TestSDKClient_GetB2BConfig(t *testing.T) {
 	t.Run("base case", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 		expectedConfig := makeTestB2BConfig()
 
 		// First set the configuration
 		_, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Config:          expectedConfig,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.SDK.GetB2BConfig(ctx, sdk.GetB2BConfigRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 
 		// Assert
@@ -240,14 +241,14 @@ func TestSDKClient_SetB2BConfig(t *testing.T) {
 	t.Run("base case", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 		config := makeTestB2BConfig()
 
 		// Act
 		resp, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Config:          config,
 		})
 
@@ -258,15 +259,15 @@ func TestSDKClient_SetB2BConfig(t *testing.T) {
 	t.Run("invalid vertical config returns error", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 		config := makeTestConsumerConfig()
 		config.Basic.Enabled = false
 
 		// Act
 		resp, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Config:          config,
 		})
 

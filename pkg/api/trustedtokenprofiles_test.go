@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/trustedtokenprofiles"
 )
@@ -24,15 +25,15 @@ func TestTrustedTokenProfilesClient_Create(t *testing.T) {
 	t.Run("create with JWK", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		jwksURL := testJWKSURL
 
 		// Act
 		resp, err := client.TrustedTokenProfiles.Create(ctx, &trustedtokenprofiles.CreateTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Name:            "Test JWK Profile",
 			Audience:        "test-audience",
 			Issuer:          "test-issuer",
@@ -61,13 +62,13 @@ func TestTrustedTokenProfilesClient_Create(t *testing.T) {
 	t.Run("create with PEM files", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		resp, err := client.TrustedTokenProfiles.Create(ctx, &trustedtokenprofiles.CreateTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Name:            "Test PEM Profile",
 			Audience:        "test-audience-pem",
 			Issuer:          "test-issuer-pem",
@@ -93,13 +94,13 @@ func TestTrustedTokenProfilesClient_Get(t *testing.T) {
 	t.Run("get existing profile", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		jwksURL := testJWKSURL
 		createResp, err := client.TrustedTokenProfiles.Create(ctx, &trustedtokenprofiles.CreateTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Name:            "Test Get Profile",
 			Audience:        "get-test-audience",
 			Issuer:          "get-test-issuer.com",
@@ -112,8 +113,8 @@ func TestTrustedTokenProfilesClient_Get(t *testing.T) {
 
 		// Act
 		resp, err := client.TrustedTokenProfiles.Get(ctx, &trustedtokenprofiles.GetTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			ProfileID:       createResp.TrustedTokenProfile.ID,
 		})
 
@@ -129,13 +130,13 @@ func TestTrustedTokenProfilesClient_Get(t *testing.T) {
 	t.Run("get non-existent profile", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		resp, err := client.TrustedTokenProfiles.Get(ctx, &trustedtokenprofiles.GetTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			ProfileID:       "non-existent-profile-id",
 		})
 
@@ -147,13 +148,13 @@ func TestTrustedTokenProfilesClient_Get(t *testing.T) {
 	t.Run("missing profile ID", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		resp, err := client.TrustedTokenProfiles.Get(ctx, &trustedtokenprofiles.GetTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			// ProfileID is intentionally omitted.
 		})
 
@@ -167,14 +168,14 @@ func TestTrustedTokenProfilesClient_GetAll(t *testing.T) {
 	t.Run("get all profiles", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		jwksURL := testJWKSURL
 
 		profile1, err := client.TrustedTokenProfiles.Create(ctx, &trustedtokenprofiles.CreateTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Name:            "List Test Profile 1",
 			Audience:        "list-test-audience-1",
 			Issuer:          "list-test-issuer-1",
@@ -186,8 +187,8 @@ func TestTrustedTokenProfilesClient_GetAll(t *testing.T) {
 		require.NoError(t, err)
 
 		profile2, err := client.TrustedTokenProfiles.Create(ctx, &trustedtokenprofiles.CreateTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Name:            "List Test Profile 2",
 			Audience:        "list-test-audience-2",
 			Issuer:          "list-test-issuer-2",
@@ -199,8 +200,8 @@ func TestTrustedTokenProfilesClient_GetAll(t *testing.T) {
 
 		// Act
 		resp, err := client.TrustedTokenProfiles.GetAll(ctx, &trustedtokenprofiles.GetAllTrustedTokenProfilesRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 
 		// Assert
@@ -228,13 +229,13 @@ func TestTrustedTokenProfilesClient_Update(t *testing.T) {
 	t.Run("update profile name and audience", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		jwksURL := testJWKSURL
 		createResp, err := client.TrustedTokenProfiles.Create(ctx, &trustedtokenprofiles.CreateTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Name:            "Update Test Profile",
 			Audience:        "update-test-audience",
 			Issuer:          "update-test-issuer",
@@ -251,8 +252,8 @@ func TestTrustedTokenProfilesClient_Update(t *testing.T) {
 
 		// Act
 		resp, err := client.TrustedTokenProfiles.Update(ctx, &trustedtokenprofiles.UpdateTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			ProfileID:       createResp.TrustedTokenProfile.ID,
 			Name:            &updatedName,
 			Audience:        &updatedAudience,
@@ -273,13 +274,13 @@ func TestTrustedTokenProfilesClient_Delete(t *testing.T) {
 	t.Run("delete existing profile", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		jwksURL := testJWKSURL
 		createResp, err := client.TrustedTokenProfiles.Create(ctx, &trustedtokenprofiles.CreateTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Name:            "Delete Test Profile",
 			Audience:        "delete-test-audience",
 			Issuer:          "delete-test-issuer",
@@ -292,8 +293,8 @@ func TestTrustedTokenProfilesClient_Delete(t *testing.T) {
 
 		// Act
 		resp, err := client.TrustedTokenProfiles.Delete(ctx, &trustedtokenprofiles.DeleteTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			ProfileID:       createResp.TrustedTokenProfile.ID,
 		})
 
@@ -303,8 +304,8 @@ func TestTrustedTokenProfilesClient_Delete(t *testing.T) {
 
 		// Verify profile is deleted
 		getResp, err := client.TrustedTokenProfiles.Get(ctx, &trustedtokenprofiles.GetTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			ProfileID:       createResp.TrustedTokenProfile.ID,
 		})
 		assert.Error(t, err)
@@ -316,13 +317,13 @@ func TestTrustedTokenProfilesClient_CreatePEM(t *testing.T) {
 	t.Run("create PEM file for existing PEM profile", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Create a profile first with initial PEM file
 		profileResp, err := client.TrustedTokenProfiles.Create(ctx, &trustedtokenprofiles.CreateTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Name:            "PEM Test Profile",
 			Audience:        "pem-test-audience",
 			Issuer:          "pem-test-issuer",
@@ -335,8 +336,8 @@ func TestTrustedTokenProfilesClient_CreatePEM(t *testing.T) {
 		// Act
 		// Add another PEM file to the profile
 		resp, err := client.TrustedTokenProfiles.CreatePEM(ctx, &trustedtokenprofiles.CreatePEMFileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			ProfileID:       profileResp.TrustedTokenProfile.ID,
 			PublicKey:       testPEMKey,
 		})
@@ -351,14 +352,14 @@ func TestTrustedTokenProfilesClient_CreatePEM(t *testing.T) {
 	t.Run("create PEM file for JWK profile", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		jwksURL := testJWKSURL
 		// Create a JWK profile first
 		profileResp, err := client.TrustedTokenProfiles.Create(ctx, &trustedtokenprofiles.CreateTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Name:            "JWK to PEM Test Profile",
 			Audience:        "jwk-pem-test-audience",
 			Issuer:          "jwk-pem-test-issuer",
@@ -372,8 +373,8 @@ func TestTrustedTokenProfilesClient_CreatePEM(t *testing.T) {
 		// Act
 		// Try to add a PEM file to the JWK profile
 		resp, err := client.TrustedTokenProfiles.CreatePEM(ctx, &trustedtokenprofiles.CreatePEMFileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			ProfileID:       profileResp.TrustedTokenProfile.ID,
 			PublicKey:       testPEMKey,
 		})
@@ -387,13 +388,13 @@ func TestTrustedTokenProfilesClient_CreatePEM(t *testing.T) {
 	t.Run("create PEM file for non-existent profile", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		resp, err := client.TrustedTokenProfiles.CreatePEM(ctx, &trustedtokenprofiles.CreatePEMFileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			ProfileID:       "non-existent-profile-id",
 			PublicKey:       testPEMKey,
 		})
@@ -408,13 +409,13 @@ func TestTrustedTokenProfilesClient_GetPEM(t *testing.T) {
 	t.Run("get existing PEM file", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Create a profile first with initial PEM file
 		profileResp, err := client.TrustedTokenProfiles.Create(ctx, &trustedtokenprofiles.CreateTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Name:            "PEM Get Test Profile",
 			Audience:        "pem-get-test-audience",
 			Issuer:          "pem-get-test-issuer",
@@ -429,8 +430,8 @@ func TestTrustedTokenProfilesClient_GetPEM(t *testing.T) {
 
 		// Act
 		resp, err := client.TrustedTokenProfiles.GetPEM(ctx, &trustedtokenprofiles.GetPEMFileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			ProfileID:       profileResp.TrustedTokenProfile.ID,
 			PEMFileID:       pemFileID,
 		})
@@ -445,13 +446,13 @@ func TestTrustedTokenProfilesClient_GetPEM(t *testing.T) {
 	t.Run("get non-existent PEM file", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Create a profile first with initial PEM file
 		profileResp, err := client.TrustedTokenProfiles.Create(ctx, &trustedtokenprofiles.CreateTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Name:            "PEM Get Test Profile",
 			Audience:        "pem-get-test-audience",
 			Issuer:          "pem-get-test-issuer",
@@ -463,8 +464,8 @@ func TestTrustedTokenProfilesClient_GetPEM(t *testing.T) {
 
 		// Act
 		resp, err := client.TrustedTokenProfiles.GetPEM(ctx, &trustedtokenprofiles.GetPEMFileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			ProfileID:       profileResp.TrustedTokenProfile.ID,
 			PEMFileID:       "non-existent-pem-file-id",
 		})
@@ -478,13 +479,13 @@ func TestTrustedTokenProfilesClient_GetPEM(t *testing.T) {
 func TestTrustedTokenProfilesClient_DeletePEM(t *testing.T) {
 	t.Run("delete existing PEM file", func(t *testing.T) {
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Create a profile first with two PEM files so we can delete one
 		profileResp, err := client.TrustedTokenProfiles.Create(ctx, &trustedtokenprofiles.CreateTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			Name:            "PEM Delete Test Profile",
 			Audience:        "pem-delete-test-audience",
 			Issuer:          "pem-delete-test-issuer",
@@ -496,8 +497,8 @@ func TestTrustedTokenProfilesClient_DeletePEM(t *testing.T) {
 
 		// Add another PEM file so we can delete one
 		createPEMResp, err := client.TrustedTokenProfiles.CreatePEM(ctx, &trustedtokenprofiles.CreatePEMFileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			ProfileID:       profileResp.TrustedTokenProfile.ID,
 			PublicKey:       testPEMKey,
 		})
@@ -505,8 +506,8 @@ func TestTrustedTokenProfilesClient_DeletePEM(t *testing.T) {
 
 		// Act
 		resp, err := client.TrustedTokenProfiles.DeletePEM(ctx, &trustedtokenprofiles.DeletePEMFileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			ProfileID:       profileResp.TrustedTokenProfile.ID,
 			PEMFileID:       createPEMResp.PEMFile.ID,
 		})
@@ -518,8 +519,8 @@ func TestTrustedTokenProfilesClient_DeletePEM(t *testing.T) {
 		// Assert
 		// Verify PEM file is deleted
 		getProfileResp, err := client.TrustedTokenProfiles.Get(ctx, &trustedtokenprofiles.GetTrustedTokenProfileRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			ProfileID:       profileResp.TrustedTokenProfile.ID,
 		})
 		require.NoError(t, err)
