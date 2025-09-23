@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/secrets"
 )
@@ -14,13 +15,13 @@ func TestSecretsClient_CreateSecret(t *testing.T) {
 	t.Run("create secret", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		resp, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 
 		// Assert
@@ -36,20 +37,20 @@ func TestSecretsClient_GetSecret(t *testing.T) {
 	t.Run("get existing secret", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Create a secret first
 		createResp, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.Secrets.Get(ctx, secrets.GetSecretRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			SecretID:        createResp.CreatedSecret.SecretID,
 		})
 
@@ -64,13 +65,13 @@ func TestSecretsClient_GetSecret(t *testing.T) {
 	t.Run("secret does not exist", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		resp, err := client.Secrets.Get(ctx, secrets.GetSecretRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			SecretID:        "secret-does-not-exist",
 		})
 
@@ -81,13 +82,13 @@ func TestSecretsClient_GetSecret(t *testing.T) {
 	t.Run("missing secret ID", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		resp, err := client.Secrets.Get(ctx, secrets.GetSecretRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			// SecretID is intentionally omitted.
 		})
 
@@ -101,15 +102,15 @@ func TestSecretsClient_GetAllSecrets(t *testing.T) {
 	t.Run("get all secrets", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Create a few secrets first
 		var createdSecrets []secrets.CreatedSecret
 		for i := 0; i < 3; i++ {
 			createResp, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: TestEnvironment,
+				ProjectSlug:     env.ProjectSlug,
+				EnvironmentSlug: env.EnvironmentSlug,
 			})
 			require.NoError(t, err)
 			createdSecrets = append(createdSecrets, createResp.CreatedSecret)
@@ -117,8 +118,8 @@ func TestSecretsClient_GetAllSecrets(t *testing.T) {
 
 		// Act
 		resp, err := client.Secrets.GetAll(ctx, secrets.GetAllSecretsRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 
 		// Assert
@@ -141,13 +142,13 @@ func TestSecretsClient_GetAllSecrets(t *testing.T) {
 	t.Run("only the default secret exists", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		resp, err := client.Secrets.GetAll(ctx, secrets.GetAllSecretsRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 
 		// Assert
@@ -160,20 +161,20 @@ func TestSecretsClient_DeleteSecret(t *testing.T) {
 	t.Run("delete existing secret", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Create a secret first
 		createResp, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 		require.NoError(t, err)
 
 		// Act
 		resp, err := client.Secrets.Delete(ctx, secrets.DeleteSecretRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			SecretID:        createResp.CreatedSecret.SecretID,
 		})
 
@@ -183,8 +184,8 @@ func TestSecretsClient_DeleteSecret(t *testing.T) {
 
 		// Verify secret is deleted by trying to get it
 		getResp, err := client.Secrets.Get(ctx, secrets.GetSecretRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			SecretID:        createResp.CreatedSecret.SecretID,
 		})
 		assert.Error(t, err)
@@ -194,13 +195,13 @@ func TestSecretsClient_DeleteSecret(t *testing.T) {
 	t.Run("secret does not exist", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		_, err := client.Secrets.Delete(ctx, secrets.DeleteSecretRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 			SecretID:        "secret-does-not-exist",
 		})
 

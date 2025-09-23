@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/passwordstrengthconfig"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 )
@@ -13,13 +14,13 @@ func TestPasswordStrengthConfigClient_Get(t *testing.T) {
 	t.Run("get password strength config", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		resp, err := client.PasswordStrengthConfig.Get(ctx, passwordstrengthconfig.GetRequest{
-			ProjectSlug:     project.ProjectSlug,
-			EnvironmentSlug: TestEnvironment,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
 		})
 
 		// Assert
@@ -33,13 +34,13 @@ func TestPasswordStrengthConfigClient_Set(t *testing.T) {
 	t.Run("set password strength config with LUDS policy", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		resp, err := client.PasswordStrengthConfig.Set(ctx, passwordstrengthconfig.SetRequest{
-			ProjectSlug:                 project.ProjectSlug,
-			EnvironmentSlug:             TestEnvironment,
+			ProjectSlug:                 env.ProjectSlug,
+			EnvironmentSlug:             env.EnvironmentSlug,
 			CheckBreachOnCreation:       true,
 			CheckBreachOnAuthentication: true,
 			ValidateOnAuthentication:    true,
@@ -61,13 +62,13 @@ func TestPasswordStrengthConfigClient_Set(t *testing.T) {
 	t.Run("set password strength config with ZXCVBN policy", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		resp, err := client.PasswordStrengthConfig.Set(ctx, passwordstrengthconfig.SetRequest{
-			ProjectSlug:                 project.ProjectSlug,
-			EnvironmentSlug:             TestEnvironment,
+			ProjectSlug:                 env.ProjectSlug,
+			EnvironmentSlug:             env.EnvironmentSlug,
 			CheckBreachOnCreation:       false,
 			CheckBreachOnAuthentication: false,
 			ValidateOnAuthentication:    false,

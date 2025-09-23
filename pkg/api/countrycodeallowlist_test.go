@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	cca "github.com/stytchauth/stytch-management-go/v3/pkg/models/countrycodeallowlist"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 )
 
@@ -14,15 +15,15 @@ func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 	t.Run("default country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 		expected := []string{"CA", "US"}
 
 		// Act
 		resp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx,
 			&cca.GetAllowedSMSCountryCodesRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: TestEnvironment,
+				ProjectSlug:     env.ProjectSlug,
+				EnvironmentSlug: env.EnvironmentSlug,
 			})
 
 		// Assert
@@ -32,13 +33,13 @@ func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 	t.Run("get country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 		expected := []string{"CA", "MX", "US"}
 		_, err := client.CountryCodeAllowlist.SetAllowedSMSCountryCodes(ctx,
 			&cca.SetAllowedSMSCountryCodesRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: TestEnvironment,
+				ProjectSlug:     env.ProjectSlug,
+				EnvironmentSlug: env.EnvironmentSlug,
 				CountryCodes:    expected,
 			})
 		require.NoError(t, err)
@@ -46,8 +47,8 @@ func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 		// Act
 		resp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx,
 			&cca.GetAllowedSMSCountryCodesRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: TestEnvironment,
+				ProjectSlug:     env.ProjectSlug,
+				EnvironmentSlug: env.EnvironmentSlug,
 			})
 
 		// Assert
@@ -63,7 +64,7 @@ func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 		resp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx,
 			&cca.GetAllowedSMSCountryCodesRequest{
 				ProjectSlug:     "project-does-not-exist",
-				EnvironmentSlug: TestEnvironment,
+				EnvironmentSlug: "test",
 			})
 
 		// Assert
@@ -76,15 +77,15 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 	t.Run("default country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 		expected := []string{"CA", "US"}
 
 		// Act
 		resp, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
 			&cca.GetAllowedWhatsAppCountryCodesRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: TestEnvironment,
+				ProjectSlug:     env.ProjectSlug,
+				EnvironmentSlug: env.EnvironmentSlug,
 			})
 
 		// Assert
@@ -94,13 +95,13 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 	t.Run("get country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 		expected := []string{"CA", "MX", "US"}
 		_, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
 			&cca.SetAllowedWhatsAppCountryCodesRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: TestEnvironment,
+				ProjectSlug:     env.ProjectSlug,
+				EnvironmentSlug: env.EnvironmentSlug,
 				CountryCodes:    expected,
 			})
 		require.NoError(t, err)
@@ -108,8 +109,8 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 		// Act
 		resp, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
 			&cca.GetAllowedWhatsAppCountryCodesRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: TestEnvironment,
+				ProjectSlug:     env.ProjectSlug,
+				EnvironmentSlug: env.EnvironmentSlug,
 			})
 
 		// Assert
@@ -119,14 +120,14 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 	t.Run("B2B WhatsApp not supported", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		_, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
 			&cca.GetAllowedWhatsAppCountryCodesRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: TestEnvironment,
+				ProjectSlug:     env.ProjectSlug,
+				EnvironmentSlug: env.EnvironmentSlug,
 			})
 
 		// Assert
@@ -141,7 +142,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 		resp, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
 			&cca.GetAllowedWhatsAppCountryCodesRequest{
 				ProjectSlug:     "project-does-not-exist",
-				EnvironmentSlug: TestEnvironment,
+				EnvironmentSlug: "test",
 			})
 
 		// Assert
@@ -154,15 +155,15 @@ func TestCountryCodeAllowlistClient_SetAllowedSMSCountryCodes(t *testing.T) {
 	t.Run("set country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 		expected := []string{"CA", "MX", "US"}
 
 		// Act
 		setResp, err := client.CountryCodeAllowlist.SetAllowedSMSCountryCodes(ctx,
 			&cca.SetAllowedSMSCountryCodesRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: TestEnvironment,
+				ProjectSlug:     env.ProjectSlug,
+				EnvironmentSlug: env.EnvironmentSlug,
 				CountryCodes:    expected,
 			})
 
@@ -172,8 +173,8 @@ func TestCountryCodeAllowlistClient_SetAllowedSMSCountryCodes(t *testing.T) {
 
 		getResp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx,
 			&cca.GetAllowedSMSCountryCodesRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: TestEnvironment,
+				ProjectSlug:     env.ProjectSlug,
+				EnvironmentSlug: env.EnvironmentSlug,
 			})
 		require.NoError(t, err)
 		assert.Equal(t, expected, getResp.CountryCodes)
@@ -187,7 +188,7 @@ func TestCountryCodeAllowlistClient_SetAllowedSMSCountryCodes(t *testing.T) {
 		_, err := client.CountryCodeAllowlist.SetAllowedSMSCountryCodes(ctx,
 			&cca.SetAllowedSMSCountryCodesRequest{
 				ProjectSlug:     "project-does-not-exist",
-				EnvironmentSlug: TestEnvironment,
+				EnvironmentSlug: "test",
 				CountryCodes:    []string{"CA", "MX", "US"},
 			})
 
@@ -199,15 +200,15 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 	t.Run("set country codes", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalConsumer)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 		expected := []string{"CA", "MX", "US"}
 
 		// Act
 		setResp, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
 			&cca.SetAllowedWhatsAppCountryCodesRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: TestEnvironment,
+				ProjectSlug:     env.ProjectSlug,
+				EnvironmentSlug: env.EnvironmentSlug,
 				CountryCodes:    expected,
 			})
 
@@ -217,8 +218,8 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 
 		getResp, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
 			&cca.GetAllowedWhatsAppCountryCodesRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: TestEnvironment,
+				ProjectSlug:     env.ProjectSlug,
+				EnvironmentSlug: env.EnvironmentSlug,
 			})
 		require.NoError(t, err)
 		assert.Equal(t, expected, getResp.CountryCodes)
@@ -226,14 +227,14 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 	t.Run("B2B WhatsApp not supported", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
 		// Act
 		_, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
 			&cca.SetAllowedWhatsAppCountryCodesRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: TestEnvironment,
+				ProjectSlug:     env.ProjectSlug,
+				EnvironmentSlug: env.EnvironmentSlug,
 				CountryCodes:    []string{"CA", "MX", "US"},
 			})
 
@@ -249,7 +250,7 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 		_, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
 			&cca.SetAllowedWhatsAppCountryCodesRequest{
 				ProjectSlug:     "project-does-not-exist",
-				EnvironmentSlug: TestEnvironment,
+				EnvironmentSlug: "test",
 				CountryCodes:    []string{"CA", "MX", "US"},
 			})
 

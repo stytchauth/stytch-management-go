@@ -329,7 +329,7 @@ func TestRBACClient_SetPolicy(t *testing.T) {
 		assert.Equal(t, policy.CustomResources, resp.Policy.CustomResources)
 		assert.Equal(t, policy.CustomScopes, resp.Policy.CustomScopes)
 	})
-	t.Run("ignore fields irrelevant to vertical", func(t *testing.T) {
+	t.Run("errors when fields irrelevant to vertical", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
 		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
@@ -348,12 +348,7 @@ func TestRBACClient_SetPolicy(t *testing.T) {
 		})
 
 		// Assert
-		assert.NoError(t, err)
-		assert.Equal(t, policy.StytchUser, resp.Policy.StytchUser)
-		// StytchMember should be ignored and not set in the response.
-		assert.Nil(t, resp.Policy.StytchMember)
-		assert.Equal(t, policy.CustomRoles, resp.Policy.CustomRoles)
-		assert.Equal(t, policy.CustomResources, resp.Policy.CustomResources)
-		assert.Equal(t, policy.CustomScopes, resp.Policy.CustomScopes)
+		assert.ErrorContains(t, err, "invalid_role_for_vertical")
+		assert.Nil(t, resp)
 	})
 }
