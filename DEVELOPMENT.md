@@ -11,16 +11,20 @@ Thanks for contributing to Stytch's Management Go library! If you run into troub
 ## Local Testing
 
 1. Create a workspace management key and secret from your Stytch workspace
-1. Use the template in .env.example to create a file .env with these credentials
-1. run `make test`
+1. Copy `.env.example` to `.env` and fill in your credentials:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your STYTCH_WORKSPACE_KEY_ID and STYTCH_WORKSPACE_KEY_SECRET
+   ```
+1. Run `make test` to execute all tests
 
 If using an IDE to test, you must add that environment to your test setup, otherwise the tests will be skipped. 
 
-There are helper functions built in to our tests (see `DisposableProject()` in client_test.go) that will create temporary projects and then delete them in order to test all the endpoints. This will not affect any existing projects.
+There are helper functions built in to our tests (see `DisposableProject()` and `DisposableEnvironment()` in client_test.go) that will create temporary projects or environments and then delete them in order to test all the endpoints. This will not affect any existing projects.
 
 ## Issues and Pull Requests
 
-Please file issues in this repo. We don't have an issue template yet, but for now, say whatever you think is important!
+Please file issues in this repo. We don't have an issue template yet, but for now, say whatever you think is important! Please let us know how to replicate the issue or bug that you found.
 
 If you have non-trivial changes you'd like us to incorporate, please open an issue first so we can discuss the changes before starting on a pull request. (It's fine to start with the PR for a typo or simple bug.) If we think the changes align with the direction of the project, we'll either ask you to open the PR or assign someone on the Stytch team to make the changes.
 
