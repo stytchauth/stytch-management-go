@@ -30,7 +30,7 @@ This library supports project- and environment-level actions on the following re
 - [x] Environments
 - [x] Country Code Allowlists
 - [x] Email Templates
-  - [x] Default email templates 
+  - [x] Default Email Templates 
 - [x] Environment Metrics
 - [x] Event Log Streaming
 - [x] JWT Templates
