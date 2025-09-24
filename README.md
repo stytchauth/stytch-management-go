@@ -4,6 +4,10 @@ The Stytch Management Go library makes it easy to use Stytch's Programmatic Work
 
 This library is tested with go 1.22.
 
+> [!WARNING]
+> The v3 of this SDK is currently in development and only available as an alpha version, with unnanounced breaking changes. For the current major release, see our [v2 branch](https://github.com/stytchauth/stytch-management-go/tree/v2). 
+
+
 ## Install
 
 ```
@@ -26,16 +30,18 @@ This library supports project- and environment-level actions on the following re
 - [x] Environments
 - [x] Country Code Allowlists
 - [x] Email Templates
+  - [x] Default Email Templates 
 - [x] Environment Metrics
 - [x] Event Log Streaming
 - [x] JWT Templates
 - [x] Password Strength Configuration
 - [x] Public Tokens
-- [x] RBAC Policies
+- [x] RBAC Policies (B2B & Consumer)
 - [x] Redirect URLs
-- [x] SDK Configuration
-- [x] (Environment) Secrets
-- [x] Trusted Token Profiles / PEM Files
+- [x] SDK Configuration (B2B & Consumer)
+- [x] Secrets
+- [x] Trusted Token Profiles
+  - [x] PEM Files
 
 ## Examples
 
@@ -67,14 +73,14 @@ Get the live environment in the new project:
 
 ```go
     resp, err := client.Environments.GetAll(ctx, environments.GetAllRequest{
-        ProjectID: newProject.Project,
+        ProjectSlug: newProject.ProjectSlug,
     })
 
-    var liveEnv string
-    for _, env := range resp.Environments
-        if env.EnvironmentType == environments.EnvironmentTypeLive {
-            liveEnv = env.Environment
-			break
+    var liveEnvSlug string
+    for _, env := range resp.Environments {
+        if env.Type == environments.EnvironmentTypeLive {
+            liveEnvSlug = env.EnvironmentSlug
+            break
         }
     }
 ```
@@ -83,20 +89,20 @@ Alternatively, create a new custom environment in the new project:
 
 ```go
     resp, err := client.Environments.Create(ctx, environments.CreateRequest{
-        Project: newProject.Project,
+        ProjectSlug: newProject.ProjectSlug,
         Name: "My custom environment",
-		Type: EnvironmentTypeTest,
+        Type: environments.EnvironmentTypeTest,
     })
 
-    customEnv := resp.Environment
+    customEnvSlug := resp.Environment.EnvironmentSlug
 ```
 
 Create a new secret in the live environment:
 
 ```go
     resp, err := client.Secrets.Create(ctx, secrets.CreateSecretRequest{
-        Project: newProject.Project,
-		Environment: liveEnv,
+        ProjectSlug: newProject.ProjectSlug,
+        EnvironmentSlug: liveEnvSlug,
     })
 ```
 
@@ -104,8 +110,8 @@ Get all public tokens in the custom test environment:
 
 ```go
     resp, err := client.PublicTokens.GetAll(ctx, publictokens.GetAllRequest{
-        Project: newProject.Project,
-        Environment: customEnv,
+        ProjectSlug: newProject.ProjectSlug,
+        EnvironmentSlug: customEnvSlug,
     })
 ```
 
@@ -113,8 +119,8 @@ Delete a redirect URL in the custom test environment:
 
 ```go
     resp, err := client.RedirectURLs.Delete(ctx, redirecturls.DeleteRequest{
-        Project: newProject.Project,
-		Environment: customEnv,
+        ProjectSlug: newProject.ProjectSlug,
+        EnvironmentSlug: customEnvSlug,
         URL: "http://localhost:3000/authenticate",
     })
 ```
