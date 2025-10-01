@@ -125,8 +125,13 @@ func TestPublicTokensClient_Delete(t *testing.T) {
 		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
 
-		// Create a public token first
+		// Create 2 public tokens first. Note that you cannot delete all the public tokens in an environment.
 		createResp, err := client.PublicTokens.Create(ctx, publictokens.CreateRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+		})
+		require.NoError(t, err)
+		_, err = client.PublicTokens.Create(ctx, publictokens.CreateRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 		})

@@ -20,12 +20,9 @@ type testClient struct {
 	*api.API
 }
 
-// These are the names of the first test and live environments created
-// when a new project is created. These are used in tests.
-var (
-	LiveEnvironment string = "production"
-	TestEnvironment string = "test"
-)
+// This is the name of the first live environment created
+// when a new project is created from the dashboard. We choose the same name in tests.
+const LiveEnvironment string = "production"
 
 // NewTestClient is a test helper function that returns a new API client.
 // It relies on the environment variables STYTCH_WORKSPACE_KEY_ID and STYTCH_WORKSPACE_KEY_SECRET being set.
@@ -58,6 +55,15 @@ func (c *testClient) DisposableProject(vertical projects.Vertical) projects.Proj
 	})
 	require.NoError(c.t, err)
 
+	// Create a live environment since otherwise we cannot create disposable test environments.
+	_, err = c.Environments.Create(ctx, environments.CreateRequest{
+		ProjectSlug:     resp.Project.ProjectSlug,
+		Name:            LiveEnvironment,
+		Type:            environments.EnvironmentTypeLive,
+		EnvironmentSlug: ptr(LiveEnvironment),
+	})
+	require.NoError(c.t, err)
+
 	c.t.Cleanup(func() {
 		_, err := c.Projects.Delete(ctx, projects.DeleteRequest{
 			ProjectSlug: resp.Project.ProjectSlug,
@@ -81,13 +87,19 @@ func (c *testClient) DisposableEnvironment(
 	require.NoError(c.t, err)
 
 	// Projects are created with both a live and test environment, so return the one that matches the
-	// requested type.
-	var disposableEnv environments.Environment
+	// requested type (if it exists).
 	for _, env := range envResp.Environments {
 		if env.Type == environmentType {
-			disposableEnv = env
-			break
+			return env
 		}
 	}
-	return disposableEnv
+
+	// Otherwise, we need to create a new one because one of that type does not exist
+	createResp, err := c.Environments.Create(ctx, environments.CreateRequest{
+		ProjectSlug: project.ProjectSlug,
+		Name:        "Disposable Environment",
+		Type:        environmentType,
+	})
+	require.NoError(c.t, err)
+	return createResp.Environment
 }
