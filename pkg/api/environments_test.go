@@ -30,13 +30,6 @@ func Test_EnvironmentsCreate(t *testing.T) {
 			UserImpersonationEnabled:        ptr(true),
 			ZeroDowntimeSessionMigrationURL: ptr(zeroDowntimeSessionMigrationURL),
 		})
-		t.Cleanup(func() {
-			_, err := client.Environments.Delete(ctx, environments.DeleteRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: resp.Environment.EnvironmentSlug,
-			})
-			require.NoError(t, err)
-		})
 
 		// Assert
 		assert.NoError(t, err)
@@ -64,13 +57,6 @@ func Test_EnvironmentsCreate(t *testing.T) {
 			UserLockThreshold:        ptr(userLockThreshold),
 			UserLockTTL:              ptr(userLockTTL),
 		})
-		t.Cleanup(func() {
-			_, err := client.Environments.Delete(ctx, environments.DeleteRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: resp.Environment.EnvironmentSlug,
-			})
-			require.NoError(t, err)
-		})
 
 		// Assert
 		assert.NoError(t, err)
@@ -96,13 +82,6 @@ func Test_EnvironmentsCreate(t *testing.T) {
 			IDPAuthorizationURL:                 &idpAuthorizationURL,
 			IDPDynamicClientRegistrationEnabled: ptr(true),
 			IDPDynamicClientRegistrationAccessTokenTemplateContent: ptr(idpTemplateContent),
-		})
-		t.Cleanup(func() {
-			_, err := client.Environments.Delete(ctx, environments.DeleteRequest{
-				ProjectSlug:     project.ProjectSlug,
-				EnvironmentSlug: resp.Environment.EnvironmentSlug,
-			})
-			require.NoError(t, err)
 		})
 
 		// Assert
@@ -202,9 +181,9 @@ func Test_EnvironmentsGetAll(t *testing.T) {
 
 		// Assert
 		assert.NoError(t, err)
-		// The project is created with both a live and test environment, and we additionally created a
-		// test environment, so we expect at least 3 environments to be returned.
-		assert.Equal(t, 3, len(resp.Environments))
+		// The disposable project is created with only a live environment, and we additionally created a
+		// test environment, so we expect 2 environments to be returned.
+		assert.Equal(t, 2, len(resp.Environments))
 		// Check that the created environment is in the returned list.
 		assert.True(t, hasEnvironment(resp.Environments, createEnvResp.Environment))
 	})

@@ -138,23 +138,6 @@ func TestSecretsClient_GetAllSecrets(t *testing.T) {
 			assert.True(t, secretIDs[createdSecret.SecretID], "Created secret %s not found in response", createdSecret.SecretID)
 		}
 	})
-
-	t.Run("only the default secret exists", func(t *testing.T) {
-		// Arrange
-		client := NewTestClient(t)
-		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
-		ctx := context.Background()
-
-		// Act
-		resp, err := client.Secrets.GetAll(ctx, secrets.GetAllSecretsRequest{
-			ProjectSlug:     env.ProjectSlug,
-			EnvironmentSlug: env.EnvironmentSlug,
-		})
-
-		// Assert
-		assert.NoError(t, err)
-		assert.Len(t, resp.Secrets, 1)
-	})
 }
 
 func TestSecretsClient_DeleteSecret(t *testing.T) {

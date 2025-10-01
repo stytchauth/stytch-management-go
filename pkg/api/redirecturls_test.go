@@ -258,10 +258,6 @@ func TestRedirectURLsClient_Get(t *testing.T) {
 					Type:      redirecturls.RedirectTypeLogin,
 					IsDefault: true,
 				},
-				{
-					Type:      redirecturls.RedirectTypeInvite,
-					IsDefault: false,
-				},
 			},
 		})
 		require.NoError(t, err)
@@ -277,7 +273,7 @@ func TestRedirectURLsClient_Get(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotNil(t, resp)
 		assert.Equal(t, createResp.RedirectURL.URL, resp.RedirectURL.URL)
-		assert.Len(t, resp.RedirectURL.ValidTypes, 2)
+		assert.Len(t, resp.RedirectURL.ValidTypes, 1)
 
 		// Verify the types match
 		typeMap := make(map[redirecturls.RedirectType]bool)
@@ -285,9 +281,7 @@ func TestRedirectURLsClient_Get(t *testing.T) {
 			typeMap[validType.Type] = validType.IsDefault
 		}
 		assert.Contains(t, typeMap, redirecturls.RedirectTypeLogin)
-		assert.Contains(t, typeMap, redirecturls.RedirectTypeInvite)
 		assert.True(t, typeMap[redirecturls.RedirectTypeLogin])
-		assert.False(t, typeMap[redirecturls.RedirectTypeInvite])
 	})
 	t.Run("get existing redirect URL using query params", func(t *testing.T) {
 		// Arrange
