@@ -66,6 +66,14 @@ const (
 	SMSAutofillMetadataTypeHash SMSAutofillMetadataType = "hash"
 )
 
+// SMSAutofillMetadataTypes returns a list of all possible SMS autofill metadata types.
+func SMSAutofillMetadataTypes() []SMSAutofillMetadataType {
+	return []SMSAutofillMetadataType{
+		SMSAutofillMetadataTypeDomain,
+		SMSAutofillMetadataTypeHash,
+	}
+}
+
 // SMSAutofillMetadata is a type specifying the metadata to use for autofill of SMS OTPs.
 type SMSAutofillMetadata struct {
 	// MetadataType is the type of metadata to use for autofill. This should be either "domain" or
