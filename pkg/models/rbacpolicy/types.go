@@ -3,16 +3,19 @@ package rbacpolicy
 type Policy struct {
 	// The following fields are valid for B2B projects only:
 	// StytchMember is the default role given to members within the environment.
-	StytchMember *Role `json:"stytch_member,omitempty"`
+	// Only permissions are returned; role_id and description are managed by Stytch.
+	StytchMember *DefaultRole `json:"stytch_member,omitempty"`
 	// StytchAdmin is the role assigned to admins within an organization.
-	StytchAdmin *Role `json:"stytch_admin,omitempty"`
+	// Only permissions are returned; role_id and description are managed by Stytch.
+	StytchAdmin *DefaultRole `json:"stytch_admin,omitempty"`
 	// StytchResources consists of resources created by Stytch that always exist.
 	// This field will be returned in relevant Policy objects but can never be overridden or deleted.
 	StytchResources []Resource `json:"stytch_resources,omitempty"`
 
 	// The following field is valid for Consumer projects only:
 	// StytchUser is the default role given to users within the environment.
-	StytchUser *Role `json:"stytch_user,omitempty"`
+	// Only permissions are returned; role_id and description are managed by Stytch.
+	StytchUser *DefaultRole `json:"stytch_user,omitempty"`
 
 	// The following fields are valid for both B2B and Consumer projects:
 	// CustomRoles are additional roles that exist within the environment beyond the stytch_member,
@@ -31,6 +34,13 @@ type Role struct {
 	RoleID string `json:"role_id"`
 	// Description is a description for the role.
 	Description string `json:"description"`
+	// Permissions are the permissions granted to this role for resources within the environment.
+	Permissions []Permission `json:"permissions"`
+}
+
+// DefaultRole represents a default role (stytch_member, stytch_admin, stytch_user) where only
+// the permissions can be customized. The role_id or description is not exposed nor customizable.
+type DefaultRole struct {
 	// Permissions are the permissions granted to this role for resources within the environment.
 	Permissions []Permission `json:"permissions"`
 }
@@ -84,13 +94,16 @@ type SetRequest struct {
 
 	// The following fields are valid for B2B projects only:
 	// StytchMember is the default role given to members within the environment.
-	StytchMember *Role `json:"stytch_member,omitempty"`
+	// Only the permissions can be customized; role_id and description are managed by Stytch.
+	StytchMember *DefaultRole `json:"stytch_member,omitempty"`
 	// StytchAdmin is the role assigned to admins within an organization.
-	StytchAdmin *Role `json:"stytch_admin,omitempty"`
+	// Only the permissions can be customized; role_id and description are managed by Stytch.
+	StytchAdmin *DefaultRole `json:"stytch_admin,omitempty"`
 
 	// The following field is valid for Consumer projects only:
 	// StytchUser is the default role given to users within the environment.
-	StytchUser *Role `json:"stytch_user,omitempty"`
+	// Only the permissions can be customized; role_id and description are managed by Stytch.
+	StytchUser *DefaultRole `json:"stytch_user,omitempty"`
 
 	// The following fields are valid for both B2B and Consumer projects:
 	// CustomRoles are additional roles that exist within the environment beyond the stytch_member,
