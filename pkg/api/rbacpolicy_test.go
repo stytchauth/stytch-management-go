@@ -11,6 +11,33 @@ import (
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/rbacpolicy"
 )
 
+// Helper function to convert []Role to []*Role for requests
+func rolesToPointers(roles []rbacpolicy.Role) []*rbacpolicy.Role {
+	result := make([]*rbacpolicy.Role, len(roles))
+	for i := range roles {
+		result[i] = &roles[i]
+	}
+	return result
+}
+
+// Helper function to convert []Resource to []*Resource for requests
+func resourcesToPointers(resources []rbacpolicy.Resource) []*rbacpolicy.Resource {
+	result := make([]*rbacpolicy.Resource, len(resources))
+	for i := range resources {
+		result[i] = &resources[i]
+	}
+	return result
+}
+
+// Helper function to convert []Scope to []*Scope for requests
+func scopesToPointers(scopes []rbacpolicy.Scope) []*rbacpolicy.Scope {
+	result := make([]*rbacpolicy.Scope, len(scopes))
+	for i := range scopes {
+		result[i] = &scopes[i]
+	}
+	return result
+}
+
 func getTestB2BPolicy() rbacpolicy.Policy {
 	// Define some custom resources.
 	resources := []rbacpolicy.Resource{
@@ -202,9 +229,9 @@ func TestRBACPolicyClient_Get(t *testing.T) {
 			EnvironmentSlug: env.EnvironmentSlug,
 			StytchMember:    policy.StytchMember,
 			StytchAdmin:     policy.StytchAdmin,
-			CustomRoles:     policy.CustomRoles,
-			CustomResources: policy.CustomResources,
-			CustomScopes:    policy.CustomScopes,
+			CustomRoles:     rolesToPointers(policy.CustomRoles),
+			CustomResources: resourcesToPointers(policy.CustomResources),
+			CustomScopes:    scopesToPointers(policy.CustomScopes),
 		})
 		require.NoError(t, err)
 
@@ -231,9 +258,9 @@ func TestRBACPolicyClient_Get(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			StytchUser:      policy.StytchUser,
-			CustomRoles:     policy.CustomRoles,
-			CustomResources: policy.CustomResources,
-			CustomScopes:    policy.CustomScopes,
+			CustomRoles:     rolesToPointers(policy.CustomRoles),
+			CustomResources: resourcesToPointers(policy.CustomResources),
+			CustomScopes:    scopesToPointers(policy.CustomScopes),
 		})
 		require.NoError(t, err)
 
@@ -265,9 +292,9 @@ func TestRBACClient_SetPolicy(t *testing.T) {
 			EnvironmentSlug: env.EnvironmentSlug,
 			StytchMember:    policy.StytchMember,
 			StytchAdmin:     policy.StytchAdmin,
-			CustomRoles:     policy.CustomRoles,
-			CustomResources: policy.CustomResources,
-			CustomScopes:    policy.CustomScopes,
+			CustomRoles:     rolesToPointers(policy.CustomRoles),
+			CustomResources: resourcesToPointers(policy.CustomResources),
+			CustomScopes:    scopesToPointers(policy.CustomScopes),
 		})
 
 		// Assert
@@ -289,9 +316,9 @@ func TestRBACClient_SetPolicy(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			StytchUser:      policy.StytchUser,
-			CustomRoles:     policy.CustomRoles,
-			CustomResources: policy.CustomResources,
-			CustomScopes:    policy.CustomScopes,
+			CustomRoles:     rolesToPointers(policy.CustomRoles),
+			CustomResources: resourcesToPointers(policy.CustomResources),
+			CustomScopes:    scopesToPointers(policy.CustomScopes),
 		})
 
 		// Assert
@@ -314,9 +341,9 @@ func TestRBACClient_SetPolicy(t *testing.T) {
 			StytchUser:      policy.StytchUser,
 			// Set StytchMember, which is irrelevant for Consumer projects.
 			StytchMember:    policy.StytchUser,
-			CustomRoles:     policy.CustomRoles,
-			CustomResources: policy.CustomResources,
-			CustomScopes:    policy.CustomScopes,
+			CustomRoles:     rolesToPointers(policy.CustomRoles),
+			CustomResources: resourcesToPointers(policy.CustomResources),
+			CustomScopes:    scopesToPointers(policy.CustomScopes),
 		})
 
 		// Assert

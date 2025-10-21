@@ -21,7 +21,7 @@ func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 
 		// Act
 		resp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx,
-			&cca.GetAllowedSMSCountryCodesRequest{
+			cca.GetAllowedSMSCountryCodesRequest{
 				ProjectSlug:     env.ProjectSlug,
 				EnvironmentSlug: env.EnvironmentSlug,
 			})
@@ -37,7 +37,7 @@ func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 		ctx := context.Background()
 		expected := []string{"CA", "MX", "US"}
 		_, err := client.CountryCodeAllowlist.SetAllowedSMSCountryCodes(ctx,
-			&cca.SetAllowedSMSCountryCodesRequest{
+			cca.SetAllowedSMSCountryCodesRequest{
 				ProjectSlug:     env.ProjectSlug,
 				EnvironmentSlug: env.EnvironmentSlug,
 				CountryCodes:    expected,
@@ -46,7 +46,7 @@ func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 
 		// Act
 		resp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx,
-			&cca.GetAllowedSMSCountryCodesRequest{
+			cca.GetAllowedSMSCountryCodesRequest{
 				ProjectSlug:     env.ProjectSlug,
 				EnvironmentSlug: env.EnvironmentSlug,
 			})
@@ -62,7 +62,7 @@ func TestCountryCodeAllowlistClient_GetAllowedSMSCountryCodes(t *testing.T) {
 
 		// Act
 		resp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx,
-			&cca.GetAllowedSMSCountryCodesRequest{
+			cca.GetAllowedSMSCountryCodesRequest{
 				ProjectSlug:     "project-does-not-exist",
 				EnvironmentSlug: "test",
 			})
@@ -83,7 +83,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 
 		// Act
 		resp, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
-			&cca.GetAllowedWhatsAppCountryCodesRequest{
+			cca.GetAllowedWhatsAppCountryCodesRequest{
 				ProjectSlug:     env.ProjectSlug,
 				EnvironmentSlug: env.EnvironmentSlug,
 			})
@@ -99,7 +99,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 		ctx := context.Background()
 		expected := []string{"CA", "MX", "US"}
 		_, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
-			&cca.SetAllowedWhatsAppCountryCodesRequest{
+			cca.SetAllowedWhatsAppCountryCodesRequest{
 				ProjectSlug:     env.ProjectSlug,
 				EnvironmentSlug: env.EnvironmentSlug,
 				CountryCodes:    expected,
@@ -108,7 +108,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 
 		// Act
 		resp, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
-			&cca.GetAllowedWhatsAppCountryCodesRequest{
+			cca.GetAllowedWhatsAppCountryCodesRequest{
 				ProjectSlug:     env.ProjectSlug,
 				EnvironmentSlug: env.EnvironmentSlug,
 			})
@@ -125,7 +125,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 
 		// Act
 		_, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
-			&cca.GetAllowedWhatsAppCountryCodesRequest{
+			cca.GetAllowedWhatsAppCountryCodesRequest{
 				ProjectSlug:     env.ProjectSlug,
 				EnvironmentSlug: env.EnvironmentSlug,
 			})
@@ -140,7 +140,7 @@ func TestCountryCodeAllowlistClient_GetAllowedWhatsAppCountryCodes(t *testing.T)
 
 		// Act
 		resp, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
-			&cca.GetAllowedWhatsAppCountryCodesRequest{
+			cca.GetAllowedWhatsAppCountryCodesRequest{
 				ProjectSlug:     "project-does-not-exist",
 				EnvironmentSlug: "test",
 			})
@@ -161,7 +161,7 @@ func TestCountryCodeAllowlistClient_SetAllowedSMSCountryCodes(t *testing.T) {
 
 		// Act
 		setResp, err := client.CountryCodeAllowlist.SetAllowedSMSCountryCodes(ctx,
-			&cca.SetAllowedSMSCountryCodesRequest{
+			cca.SetAllowedSMSCountryCodesRequest{
 				ProjectSlug:     env.ProjectSlug,
 				EnvironmentSlug: env.EnvironmentSlug,
 				CountryCodes:    expected,
@@ -172,7 +172,7 @@ func TestCountryCodeAllowlistClient_SetAllowedSMSCountryCodes(t *testing.T) {
 		assert.Equal(t, expected, setResp.CountryCodes)
 
 		getResp, err := client.CountryCodeAllowlist.GetAllowedSMSCountryCodes(ctx,
-			&cca.GetAllowedSMSCountryCodesRequest{
+			cca.GetAllowedSMSCountryCodesRequest{
 				ProjectSlug:     env.ProjectSlug,
 				EnvironmentSlug: env.EnvironmentSlug,
 			})
@@ -186,7 +186,7 @@ func TestCountryCodeAllowlistClient_SetAllowedSMSCountryCodes(t *testing.T) {
 
 		// Act
 		_, err := client.CountryCodeAllowlist.SetAllowedSMSCountryCodes(ctx,
-			&cca.SetAllowedSMSCountryCodesRequest{
+			cca.SetAllowedSMSCountryCodesRequest{
 				ProjectSlug:     "project-does-not-exist",
 				EnvironmentSlug: "test",
 				CountryCodes:    []string{"CA", "MX", "US"},
@@ -206,7 +206,7 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 
 		// Act
 		setResp, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
-			&cca.SetAllowedWhatsAppCountryCodesRequest{
+			cca.SetAllowedWhatsAppCountryCodesRequest{
 				ProjectSlug:     env.ProjectSlug,
 				EnvironmentSlug: env.EnvironmentSlug,
 				CountryCodes:    expected,
@@ -217,7 +217,7 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 		assert.Equal(t, expected, setResp.CountryCodes)
 
 		getResp, err := client.CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes(ctx,
-			&cca.GetAllowedWhatsAppCountryCodesRequest{
+			cca.GetAllowedWhatsAppCountryCodesRequest{
 				ProjectSlug:     env.ProjectSlug,
 				EnvironmentSlug: env.EnvironmentSlug,
 			})
@@ -232,7 +232,7 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 
 		// Act
 		_, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
-			&cca.SetAllowedWhatsAppCountryCodesRequest{
+			cca.SetAllowedWhatsAppCountryCodesRequest{
 				ProjectSlug:     env.ProjectSlug,
 				EnvironmentSlug: env.EnvironmentSlug,
 				CountryCodes:    []string{"CA", "MX", "US"},
@@ -248,7 +248,7 @@ func TestCountryCodeAllowlistClient_SetAllowedWhatsAppCountryCodes(t *testing.T)
 
 		// Act
 		_, err := client.CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes(ctx,
-			&cca.SetAllowedWhatsAppCountryCodesRequest{
+			cca.SetAllowedWhatsAppCountryCodesRequest{
 				ProjectSlug:     "project-does-not-exist",
 				EnvironmentSlug: "test",
 				CountryCodes:    []string{"CA", "MX", "US"},

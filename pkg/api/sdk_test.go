@@ -16,7 +16,7 @@ func makeTestConsumerConfig() sdk.ConsumerConfig {
 		Basic: &sdk.ConsumerBasicConfig{
 			Enabled:   true,
 			Domains:   []string{"https://example.com"},
-			BundleIDs: []string{"com.example.myapp"},
+			BundleIds: []string{"com.example.myapp"},
 		},
 		Sessions: &sdk.ConsumerSessionsConfig{
 			MaxSessionDurationMinutes: 120,
@@ -24,18 +24,18 @@ func makeTestConsumerConfig() sdk.ConsumerConfig {
 		MagicLinks: &sdk.ConsumerMagicLinksConfig{
 			LoginOrCreateEnabled: true,
 			SendEnabled:          true,
-			PKCERequired:         false,
+			PkceRequired:         false,
 		},
 		OTPs: &sdk.ConsumerOTPsConfig{
 			SMSLoginOrCreateEnabled:      true,
-			WhatsAppLoginOrCreateEnabled: false,
+			WhatsappLoginOrCreateEnabled: false,
 			EmailLoginOrCreateEnabled:    true,
 			SMSSendEnabled:               true,
-			WhatsAppSendEnabled:          false,
+			WhatsappSendEnabled:          false,
 			EmailSendEnabled:             true,
 			SMSAutofillMetadata: []sdk.SMSAutofillMetadata{
 				{
-					MetadataType:  sdk.SMSAutofillMetadataTypeDomain,
+					MetadataType:  "domain",
 					MetadataValue: "myapp.com",
 					BundleID:      "com.example.myapp",
 				},
@@ -43,7 +43,7 @@ func makeTestConsumerConfig() sdk.ConsumerConfig {
 		},
 		OAuth: &sdk.ConsumerOAuthConfig{
 			Enabled:      true,
-			PKCERequired: false,
+			PkceRequired: false,
 		},
 		TOTPs: &sdk.ConsumerTOTPsConfig{
 			Enabled:     true,
@@ -51,11 +51,11 @@ func makeTestConsumerConfig() sdk.ConsumerConfig {
 		},
 		WebAuthn: &sdk.ConsumerWebAuthnConfig{
 			Enabled:         true,
-			CreateWebAuthns: true,
+			CreateWebAuthnS: true,
 		},
 		CryptoWallets: &sdk.ConsumerCryptoWalletsConfig{
 			Enabled:      true,
-			SIWERequired: false,
+			SiweRequired: false,
 		},
 		// DFPPA sdk settings cannot be modified beyond defaults
 		// unless the project has DFPPA enabled by Stytch.
@@ -69,12 +69,12 @@ func makeTestConsumerConfig() sdk.ConsumerConfig {
 		},
 		Passwords: &sdk.ConsumerPasswordsConfig{
 			Enabled:                       true,
-			PKCERequiredForPasswordResets: false,
+			PkceRequiredForPasswordResets: false,
 		},
 		Cookies: &sdk.ConsumerCookiesConfig{
 			// Only disabled is supported, unless the project has
 			// CNAMEs configured.
-			HttpOnlyCookies: sdk.HttpOnlyCookiesSettingDisabled,
+			HTTPOnly: "disabled",
 		},
 	}
 }
@@ -91,18 +91,18 @@ func makeTestB2BConfig() sdk.B2BConfig {
 					SlugPattern: "https://{{slug}}.myb2bapp.com",
 				},
 			},
-			BundleIDs: []string{"com.example.b2bapp"},
+			BundleIds: []string{"com.example.b2bapp"},
 		},
 		Sessions: &sdk.B2BSessionsConfig{
 			MaxSessionDurationMinutes: 180,
 		},
 		MagicLinks: &sdk.B2BMagicLinksConfig{
 			Enabled:      true,
-			PKCERequired: true,
+			PkceRequired: true,
 		},
 		OAuth: &sdk.B2BOAuthConfig{
 			Enabled:      true,
-			PKCERequired: true,
+			PkceRequired: true,
 		},
 		TOTPs: &sdk.B2BTOTPsConfig{
 			Enabled:     true,
@@ -110,14 +110,14 @@ func makeTestB2BConfig() sdk.B2BConfig {
 		},
 		SSO: &sdk.B2BSSOConfig{
 			Enabled:      true,
-			PKCERequired: false,
+			PkceRequired: false,
 		},
 		OTPs: &sdk.B2BOTPsConfig{
 			SMSEnabled:   true,
 			EmailEnabled: true,
 			SMSAutofillMetadata: []sdk.SMSAutofillMetadata{
 				{
-					MetadataType:  sdk.SMSAutofillMetadataTypeHash,
+					MetadataType:  "hash",
 					MetadataValue: "abc123hash",
 					BundleID:      "com.example.b2bapp",
 				},
@@ -131,12 +131,12 @@ func makeTestB2BConfig() sdk.B2BConfig {
 		},
 		Passwords: &sdk.B2BPasswordsConfig{
 			Enabled:                       true,
-			PKCERequiredForPasswordResets: true,
+			PkceRequiredForPasswordResets: true,
 		},
 		Cookies: &sdk.B2BCookiesConfig{
 			// Only disabled is supported, unless the project has
 			// CNAMEs configured.
-			HttpOnlyCookies: sdk.HttpOnlyCookiesSettingDisabled,
+			HTTPOnly: "disabled",
 		},
 	}
 }
@@ -150,15 +150,15 @@ func TestSDKClient_GetConsumerConfig(t *testing.T) {
 		expectedConfig := makeTestConsumerConfig()
 
 		// First set the configuration
-		_, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
+		_, err := client.SDK.SetConsumerSDKConfig(ctx, sdk.SetConsumerSDKConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
-			Config:          expectedConfig,
+			Config:          &expectedConfig,
 		})
 		require.NoError(t, err)
 
 		// Act
-		resp, err := client.SDK.GetConsumerConfig(ctx, sdk.GetConsumerConfigRequest{
+		resp, err := client.SDK.GetConsumerSDKConfig(ctx, sdk.GetConsumerSDKConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 		})
@@ -178,10 +178,10 @@ func TestSDKClient_SetConsumerConfig(t *testing.T) {
 		config := makeTestConsumerConfig()
 
 		// Act
-		resp, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
+		resp, err := client.SDK.SetConsumerSDKConfig(ctx, sdk.SetConsumerSDKConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
-			Config:          config,
+			Config:          &config,
 		})
 
 		// Assert
@@ -197,10 +197,10 @@ func TestSDKClient_SetConsumerConfig(t *testing.T) {
 		config.Basic.Enabled = false
 
 		// Act
-		resp, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
+		resp, err := client.SDK.SetB2BSDKConfig(ctx, sdk.SetB2BSDKConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
-			Config:          config,
+			Config:          &config,
 		})
 
 		// Assert
@@ -218,15 +218,15 @@ func TestSDKClient_GetB2BConfig(t *testing.T) {
 		expectedConfig := makeTestB2BConfig()
 
 		// First set the configuration
-		_, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
+		_, err := client.SDK.SetB2BSDKConfig(ctx, sdk.SetB2BSDKConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
-			Config:          expectedConfig,
+			Config:          &expectedConfig,
 		})
 		require.NoError(t, err)
 
 		// Act
-		resp, err := client.SDK.GetB2BConfig(ctx, sdk.GetB2BConfigRequest{
+		resp, err := client.SDK.GetB2BSDKConfig(ctx, sdk.GetB2BSDKConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 		})
@@ -246,10 +246,10 @@ func TestSDKClient_SetB2BConfig(t *testing.T) {
 		config := makeTestB2BConfig()
 
 		// Act
-		resp, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
+		resp, err := client.SDK.SetB2BSDKConfig(ctx, sdk.SetB2BSDKConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
-			Config:          config,
+			Config:          &config,
 		})
 
 		// Assert
@@ -265,10 +265,10 @@ func TestSDKClient_SetB2BConfig(t *testing.T) {
 		config.Basic.Enabled = false
 
 		// Act
-		resp, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
+		resp, err := client.SDK.SetConsumerSDKConfig(ctx, sdk.SetConsumerSDKConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
-			Config:          config,
+			Config:          &config,
 		})
 
 		// Assert
