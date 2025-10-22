@@ -118,7 +118,7 @@ func (c *Client) RawRequest(
 		return nil, fmt.Errorf("error sending http request: %w", err)
 	}
 	defer func() {
-		res.Body.Close()
+		_ = res.Body.Close()
 	}()
 
 	// Successful response
