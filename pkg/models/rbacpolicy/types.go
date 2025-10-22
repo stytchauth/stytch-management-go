@@ -76,12 +76,12 @@ type SetRequest struct {
 	// CustomRoles: The following fields are valid for both B2B and Consumer projects: CustomRoles are
 	// additional roles that exist within the environment beyond the stytch_member, stytch_admin, or
 	// stytch_user roles.
-	CustomRoles []*Role `json:"custom_roles,omitempty"`
+	CustomRoles []Role `json:"custom_roles,omitempty"`
 	// CustomResources are resources that exist within the environment beyond those defined within the
 	// stytch_resources.
-	CustomResources []*Resource `json:"custom_resources,omitempty"`
+	CustomResources []Resource `json:"custom_resources,omitempty"`
 	// CustomScopes are additional scopes that exist within the environment beyond those defined by default.
-	CustomScopes []*Scope `json:"custom_scopes,omitempty"`
+	CustomScopes []Scope `json:"custom_scopes,omitempty"`
 }
 
 // SetResponse: Response type for `RBACPolicy.Set`.

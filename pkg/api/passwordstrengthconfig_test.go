@@ -44,7 +44,7 @@ func TestPasswordStrengthConfigClient_Set(t *testing.T) {
 			CheckBreachOnCreation:       true,
 			CheckBreachOnAuthentication: true,
 			ValidateOnAuthentication:    true,
-			ValidationPolicy:            passwordstrengthconfig.ValidationPolicyLuds,
+			ValidationPolicy:            passwordstrengthconfig.ValidationPolicyLUDS,
 			LudsMinPasswordLength:       ptr(int32(10)),
 			LudsMinPasswordComplexity:   ptr(int32(3)),
 		})
@@ -54,7 +54,7 @@ func TestPasswordStrengthConfigClient_Set(t *testing.T) {
 		assert.Equal(t, true, resp.PasswordStrengthConfig.CheckBreachOnCreation)
 		assert.Equal(t, true, resp.PasswordStrengthConfig.CheckBreachOnAuthentication)
 		assert.Equal(t, true, resp.PasswordStrengthConfig.ValidateOnAuthentication)
-		assert.Equal(t, passwordstrengthconfig.ValidationPolicyLuds, resp.PasswordStrengthConfig.ValidationPolicy)
+		assert.Equal(t, passwordstrengthconfig.ValidationPolicyLUDS, resp.PasswordStrengthConfig.ValidationPolicy)
 		assert.Equal(t, int32(10), *resp.PasswordStrengthConfig.LudsMinPasswordLength)
 		assert.Equal(t, int32(3), *resp.PasswordStrengthConfig.LudsMinPasswordComplexity)
 	})
@@ -72,7 +72,7 @@ func TestPasswordStrengthConfigClient_Set(t *testing.T) {
 			CheckBreachOnCreation:       false,
 			CheckBreachOnAuthentication: false,
 			ValidateOnAuthentication:    false,
-			ValidationPolicy:            passwordstrengthconfig.ValidationPolicyZxcvbn,
+			ValidationPolicy:            passwordstrengthconfig.ValidationPolicyZXCVBN,
 		})
 
 		// Assert
@@ -80,7 +80,7 @@ func TestPasswordStrengthConfigClient_Set(t *testing.T) {
 		assert.Equal(t, false, resp.PasswordStrengthConfig.CheckBreachOnCreation)
 		assert.Equal(t, false, resp.PasswordStrengthConfig.CheckBreachOnAuthentication)
 		assert.Equal(t, false, resp.PasswordStrengthConfig.ValidateOnAuthentication)
-		assert.Equal(t, passwordstrengthconfig.ValidationPolicyZxcvbn, resp.PasswordStrengthConfig.ValidationPolicy)
+		assert.Equal(t, passwordstrengthconfig.ValidationPolicyZXCVBN, resp.PasswordStrengthConfig.ValidationPolicy)
 		assert.Nil(t, resp.PasswordStrengthConfig.LudsMinPasswordLength)
 		assert.Nil(t, resp.PasswordStrengthConfig.LudsMinPasswordComplexity)
 	})

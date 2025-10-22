@@ -15,7 +15,7 @@ type B2BBasicConfig struct {
 	AllowSelfOnboarding     bool                  `json:"allow_self_onboarding,omitempty"`
 	EnableMemberPermissions bool                  `json:"enable_member_permissions,omitempty"`
 	Domains                 []AuthorizedB2BDomain `json:"domains,omitempty"`
-	BundleIds               []string              `json:"bundle_ids,omitempty"`
+	BundleIDs               []string              `json:"bundle_ids,omitempty"`
 }
 type B2BConfig struct {
 	Basic      *B2BBasicConfig      `json:"basic,omitempty"`
@@ -38,11 +38,11 @@ type B2BDFPPAConfig struct {
 }
 type B2BMagicLinksConfig struct {
 	Enabled      bool `json:"enabled,omitempty"`
-	PkceRequired bool `json:"pkce_required,omitempty"`
+	PKCERequired bool `json:"pkce_required,omitempty"`
 }
 type B2BOAuthConfig struct {
 	Enabled      bool `json:"enabled,omitempty"`
-	PkceRequired bool `json:"pkce_required,omitempty"`
+	PKCERequired bool `json:"pkce_required,omitempty"`
 }
 type B2BOTPsConfig struct {
 	SMSEnabled          bool                  `json:"sms_enabled,omitempty"`
@@ -51,11 +51,11 @@ type B2BOTPsConfig struct {
 }
 type B2BPasswordsConfig struct {
 	Enabled                       bool `json:"enabled,omitempty"`
-	PkceRequiredForPasswordResets bool `json:"pkce_required_for_password_resets,omitempty"`
+	PKCERequiredForPasswordResets bool `json:"pkce_required_for_password_resets,omitempty"`
 }
 type B2BSSOConfig struct {
 	Enabled      bool `json:"enabled,omitempty"`
-	PkceRequired bool `json:"pkce_required,omitempty"`
+	PKCERequired bool `json:"pkce_required,omitempty"`
 }
 type B2BSessionsConfig struct {
 	MaxSessionDurationMinutes int `json:"max_session_duration_minutes,omitempty"`
@@ -67,7 +67,7 @@ type B2BTOTPsConfig struct {
 type ConsumerBasicConfig struct {
 	Enabled   bool     `json:"enabled,omitempty"`
 	Domains   []string `json:"domains,omitempty"`
-	BundleIds []string `json:"bundle_ids,omitempty"`
+	BundleIDs []string `json:"bundle_ids,omitempty"`
 }
 type ConsumerBiometricsConfig struct {
 	CreateBiometricsEnabled bool `json:"create_biometrics_enabled,omitempty"`
@@ -92,7 +92,7 @@ type ConsumerCookiesConfig struct {
 }
 type ConsumerCryptoWalletsConfig struct {
 	Enabled      bool `json:"enabled,omitempty"`
-	SiweRequired bool `json:"siwe_required,omitempty"`
+	SIWERequired bool `json:"siwe_required,omitempty"`
 }
 type ConsumerDFPPAConfig struct {
 	Enabled     DFPPASetting           `json:"enabled,omitempty"`
@@ -101,24 +101,24 @@ type ConsumerDFPPAConfig struct {
 type ConsumerMagicLinksConfig struct {
 	LoginOrCreateEnabled bool `json:"login_or_create_enabled,omitempty"`
 	SendEnabled          bool `json:"send_enabled,omitempty"`
-	PkceRequired         bool `json:"pkce_required,omitempty"`
+	PKCERequired         bool `json:"pkce_required,omitempty"`
 }
 type ConsumerOAuthConfig struct {
 	Enabled      bool `json:"enabled,omitempty"`
-	PkceRequired bool `json:"pkce_required,omitempty"`
+	PKCERequired bool `json:"pkce_required,omitempty"`
 }
 type ConsumerOTPsConfig struct {
 	SMSLoginOrCreateEnabled      bool                  `json:"sms_login_or_create_enabled,omitempty"`
-	WhatsappLoginOrCreateEnabled bool                  `json:"whatsapp_login_or_create_enabled,omitempty"`
+	WhatsAppLoginOrCreateEnabled bool                  `json:"whatsapp_login_or_create_enabled,omitempty"`
 	EmailLoginOrCreateEnabled    bool                  `json:"email_login_or_create_enabled,omitempty"`
 	SMSSendEnabled               bool                  `json:"sms_send_enabled,omitempty"`
-	WhatsappSendEnabled          bool                  `json:"whatsapp_send_enabled,omitempty"`
+	WhatsAppSendEnabled          bool                  `json:"whatsapp_send_enabled,omitempty"`
 	EmailSendEnabled             bool                  `json:"email_send_enabled,omitempty"`
 	SMSAutofillMetadata          []SMSAutofillMetadata `json:"sms_autofill_metadata,omitempty"`
 }
 type ConsumerPasswordsConfig struct {
 	Enabled                       bool `json:"enabled,omitempty"`
-	PkceRequiredForPasswordResets bool `json:"pkce_required_for_password_resets,omitempty"`
+	PKCERequiredForPasswordResets bool `json:"pkce_required_for_password_resets,omitempty"`
 }
 type ConsumerSessionsConfig struct {
 	MaxSessionDurationMinutes int `json:"max_session_duration_minutes,omitempty"`
@@ -128,7 +128,7 @@ type ConsumerTOTPsConfig struct {
 	Enabled     bool `json:"enabled,omitempty"`
 }
 type ConsumerWebAuthnConfig struct {
-	CreateWebAuthnS bool `json:"create_webauthn_s,omitempty"`
+	CreateWebAuthns bool `json:"create_webauthn_s,omitempty"`
 	Enabled         bool `json:"enabled,omitempty"`
 }
 type SMSAutofillMetadata struct {
@@ -138,16 +138,16 @@ type SMSAutofillMetadata struct {
 	ID            int    `json:"id,omitempty"`
 }
 
-// GetB2BSDKConfigRequest: Request type for `SDK.GetB2BSDKConfig`.
-type GetB2BSDKConfigRequest struct {
+// GetB2BConfigRequest: Request type for `SDK.GetB2BConfig`.
+type GetB2BConfigRequest struct {
 	// ProjectSlug is the slug of the project for which to retrieve allowed SMS country codes.
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
 	EnvironmentSlug string `json:"-"`
 }
 
-// GetB2BSDKConfigResponse: Response type for `SDK.GetB2BSDKConfig`.
-type GetB2BSDKConfigResponse struct {
+// GetB2BConfigResponse: Response type for `SDK.GetB2BConfig`.
+type GetB2BConfigResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
 	// Config is the consumer project SDK configuration.
@@ -156,16 +156,16 @@ type GetB2BSDKConfigResponse struct {
 	StatusCode int `json:"status_code,omitempty"`
 }
 
-// GetConsumerSDKConfigRequest: Request type for `SDK.GetConsumerSDKConfig`.
-type GetConsumerSDKConfigRequest struct {
+// GetConsumerConfigRequest: Request type for `SDK.GetConsumerConfig`.
+type GetConsumerConfigRequest struct {
 	// ProjectSlug is the slug of the project for which to get the B2B SDK config.
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment for which to get the B2B SDK config.
 	EnvironmentSlug string `json:"-"`
 }
 
-// GetConsumerSDKConfigResponse: Response type for `SDK.GetConsumerSDKConfig`.
-type GetConsumerSDKConfigResponse struct {
+// GetConsumerConfigResponse: Response type for `SDK.GetConsumerConfig`.
+type GetConsumerConfigResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
 	// Config is the consumer project SDK configuration.
@@ -174,8 +174,8 @@ type GetConsumerSDKConfigResponse struct {
 	StatusCode int `json:"status_code,omitempty"`
 }
 
-// SetB2BSDKConfigRequest: Request type for `SDK.SetB2BSDKConfig`.
-type SetB2BSDKConfigRequest struct {
+// SetB2BConfigRequest: Request type for `SDK.SetB2BConfig`.
+type SetB2BConfigRequest struct {
 	// ProjectSlug is the slug of the project for which to retrieve allowed SMS country codes.
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
@@ -184,8 +184,8 @@ type SetB2BSDKConfigRequest struct {
 	Config *B2BConfig `json:"config,omitempty"`
 }
 
-// SetB2BSDKConfigResponse: Response type for `SDK.SetB2BSDKConfig`.
-type SetB2BSDKConfigResponse struct {
+// SetB2BConfigResponse: Response type for `SDK.SetB2BConfig`.
+type SetB2BConfigResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
 	// Config is the consumer project SDK configuration.
@@ -194,8 +194,8 @@ type SetB2BSDKConfigResponse struct {
 	StatusCode int `json:"status_code,omitempty"`
 }
 
-// SetConsumerSDKConfigRequest: Request type for `SDK.SetConsumerSDKConfig`.
-type SetConsumerSDKConfigRequest struct {
+// SetConsumerConfigRequest: Request type for `SDK.SetConsumerConfig`.
+type SetConsumerConfigRequest struct {
 	// ProjectSlug is the slug of the project for which to set the B2B SDK config.
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment for which to set the B2B SDK config.
@@ -204,8 +204,8 @@ type SetConsumerSDKConfigRequest struct {
 	Config *ConsumerConfig `json:"config,omitempty"`
 }
 
-// SetConsumerSDKConfigResponse: Response type for `SDK.SetConsumerSDKConfig`.
-type SetConsumerSDKConfigResponse struct {
+// SetConsumerConfigResponse: Response type for `SDK.SetConsumerConfig`.
+type SetConsumerConfigResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
 	// Config is the consumer project SDK configuration.

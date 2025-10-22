@@ -55,7 +55,7 @@ func Test_EnvironmentsCreate(t *testing.T) {
 			Type:                     environments.EnvironmentTypeTest,
 			UserLockSelfServeEnabled: ptr(true),
 			UserLockThreshold:        ptr(userLockThreshold),
-			UserLockTtl:              ptr(userLockTTL),
+			UserLockTTL:              ptr(userLockTTL),
 		})
 
 		// Assert
@@ -64,7 +64,7 @@ func Test_EnvironmentsCreate(t *testing.T) {
 		assert.Equal(t, environments.EnvironmentTypeTest, resp.Environment.Type)
 		assert.True(t, resp.Environment.UserLockSelfServeEnabled)
 		assert.Equal(t, userLockThreshold, resp.Environment.UserLockThreshold)
-		assert.Equal(t, userLockTTL, resp.Environment.UserLockTtl)
+		assert.Equal(t, userLockTTL, resp.Environment.UserLockTTL)
 	})
 	t.Run("IDP fields", func(t *testing.T) {
 		// Arrange
@@ -229,14 +229,14 @@ func Test_EnvironmentsUpdate(t *testing.T) {
 			EnvironmentSlug:          env.EnvironmentSlug,
 			UserLockSelfServeEnabled: ptr(true),
 			UserLockThreshold:        ptr(userLockThreshold),
-			UserLockTtl:              ptr(userLockTTL),
+			UserLockTTL:              ptr(userLockTTL),
 		})
 
 		// Assert
 		assert.NoError(t, err)
 		assert.True(t, resp.Environment.UserLockSelfServeEnabled)
 		assert.Equal(t, userLockThreshold, resp.Environment.UserLockThreshold)
-		assert.Equal(t, userLockTTL, resp.Environment.UserLockTtl)
+		assert.Equal(t, userLockTTL, resp.Environment.UserLockTTL)
 	})
 	t.Run("IDP fields", func(t *testing.T) {
 		// Arrange

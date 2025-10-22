@@ -73,13 +73,13 @@ type ValidationPolicy string
 
 const (
 	ValidationPolicyUnknown ValidationPolicy = "UNKNOWN_VALIDATION_POLICY"
-	ValidationPolicyZxcvbn  ValidationPolicy = "ZXCVBN"
-	ValidationPolicyLuds    ValidationPolicy = "LUDS"
+	ValidationPolicyZXCVBN  ValidationPolicy = "ZXCVBN"
+	ValidationPolicyLUDS    ValidationPolicy = "LUDS"
 )
 
 func ValidationPolicys() []ValidationPolicy {
 	return []ValidationPolicy{
-		ValidationPolicyZxcvbn,
-		ValidationPolicyLuds,
+		ValidationPolicyZXCVBN,
+		ValidationPolicyLUDS,
 	}
 }

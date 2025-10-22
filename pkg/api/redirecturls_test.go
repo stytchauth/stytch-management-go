@@ -29,7 +29,7 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             testRedirectURL1,
-			ValidTypes: []*redirecturls.URLType{
+			ValidTypes: []redirecturls.URLType{
 				{
 					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
@@ -58,7 +58,7 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             testRedirectURL2,
-			ValidTypes: []*redirecturls.URLType{
+			ValidTypes: []redirecturls.URLType{
 				{
 					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
@@ -102,7 +102,7 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             testRedirectURL3,
-			ValidTypes: []*redirecturls.URLType{
+			ValidTypes: []redirecturls.URLType{
 				{
 					Type:      redirecturls.RedirectURLTypeResetPassword,
 					IsDefault: false,
@@ -132,7 +132,7 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             duplicateURL,
-			ValidTypes: []*redirecturls.URLType{
+			ValidTypes: []redirecturls.URLType{
 				{
 					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
@@ -147,7 +147,7 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             duplicateURL,
-			ValidTypes: []*redirecturls.URLType{
+			ValidTypes: []redirecturls.URLType{
 				{
 					Type:      redirecturls.RedirectURLTypeSignup,
 					IsDefault: true,
@@ -182,7 +182,7 @@ func TestRedirectURLsClient_GetAll(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             url1,
-			ValidTypes: []*redirecturls.URLType{
+			ValidTypes: []redirecturls.URLType{
 				{
 					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
@@ -195,7 +195,7 @@ func TestRedirectURLsClient_GetAll(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             url2,
-			ValidTypes: []*redirecturls.URLType{
+			ValidTypes: []redirecturls.URLType{
 				{
 					Type:      redirecturls.RedirectURLTypeSignup,
 					IsDefault: true,
@@ -253,7 +253,7 @@ func TestRedirectURLsClient_Get(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             getURL,
-			ValidTypes: []*redirecturls.URLType{
+			ValidTypes: []redirecturls.URLType{
 				{
 					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
@@ -296,7 +296,7 @@ func TestRedirectURLsClient_Get(t *testing.T) {
 			EnvironmentSlug: env.EnvironmentSlug,
 			// Use one with query params to check that escaping is correct
 			URL: urlWithQueryParams,
-			ValidTypes: []*redirecturls.URLType{
+			ValidTypes: []redirecturls.URLType{
 				{
 					Type:      redirecturls.RedirectURLTypeInvite,
 					IsDefault: false,
@@ -352,7 +352,7 @@ func TestRedirectURLsClient_Update(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             updateURL,
-			ValidTypes: []*redirecturls.URLType{
+			ValidTypes: []redirecturls.URLType{
 				{
 					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
@@ -367,7 +367,7 @@ func TestRedirectURLsClient_Update(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             updateURL,
-			ValidTypes: []*redirecturls.URLType{
+			ValidTypes: []redirecturls.URLType{
 				{
 					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
@@ -411,7 +411,7 @@ func TestRedirectURLsClient_Update(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             "https://nonexistent-update.example.com/callback",
-			ValidTypes: []*redirecturls.URLType{
+			ValidTypes: []redirecturls.URLType{
 				{
 					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
@@ -439,7 +439,7 @@ func TestRedirectURLsClient_Delete(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             deleteURL,
-			ValidTypes: []*redirecturls.URLType{
+			ValidTypes: []redirecturls.URLType{
 				{
 					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,

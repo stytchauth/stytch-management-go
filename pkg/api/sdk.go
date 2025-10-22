@@ -26,12 +26,12 @@ func newSDKClient(c *internal.Client) *SDKClient {
 	}
 }
 
-// GetB2BSDKConfig: GetB2BConfig retrieves the SDK configuration for a B2B project environment
-func (c *SDKClient) GetB2BSDKConfig(
+// GetB2BConfig retrieves the SDK configuration for a B2B project environment
+func (c *SDKClient) GetB2BConfig(
 	ctx context.Context,
-	body sdk.GetB2BSDKConfigRequest,
-) (*sdk.GetB2BSDKConfigResponse, error) {
-	var resp sdk.GetB2BSDKConfigResponse
+	body sdk.GetB2BConfigRequest,
+) (*sdk.GetB2BConfigResponse, error) {
+	var resp sdk.GetB2BConfigResponse
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
@@ -45,12 +45,12 @@ func (c *SDKClient) GetB2BSDKConfig(
 	return &resp, nil
 }
 
-// GetConsumerSDKConfig: GetConsumerConfig retrieves the SDK configuration for a B2C project environment
-func (c *SDKClient) GetConsumerSDKConfig(
+// GetConsumerConfig retrieves the SDK configuration for a B2C project environment
+func (c *SDKClient) GetConsumerConfig(
 	ctx context.Context,
-	body sdk.GetConsumerSDKConfigRequest,
-) (*sdk.GetConsumerSDKConfigResponse, error) {
-	var resp sdk.GetConsumerSDKConfigResponse
+	body sdk.GetConsumerConfigRequest,
+) (*sdk.GetConsumerConfigResponse, error) {
+	var resp sdk.GetConsumerConfigResponse
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
@@ -64,17 +64,17 @@ func (c *SDKClient) GetConsumerSDKConfig(
 	return &resp, nil
 }
 
-// SetB2BSDKConfig: SetB2BConfig updates the SDK configuration for a B2B project environment
-func (c *SDKClient) SetB2BSDKConfig(
+// SetB2BConfig updates the SDK configuration for a B2B project environment
+func (c *SDKClient) SetB2BConfig(
 	ctx context.Context,
-	body sdk.SetB2BSDKConfigRequest,
-) (*sdk.SetB2BSDKConfigResponse, error) {
+	body sdk.SetB2BConfigRequest,
+) (*sdk.SetB2BConfigResponse, error) {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 
-	var resp sdk.SetB2BSDKConfigResponse
+	var resp sdk.SetB2BConfigResponse
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPut,
@@ -88,17 +88,17 @@ func (c *SDKClient) SetB2BSDKConfig(
 	return &resp, nil
 }
 
-// SetConsumerSDKConfig: SetConsumerConfig updates the SDK configuration for a B2C project environment
-func (c *SDKClient) SetConsumerSDKConfig(
+// SetConsumerConfig updates the SDK configuration for a B2C project environment
+func (c *SDKClient) SetConsumerConfig(
 	ctx context.Context,
-	body sdk.SetConsumerSDKConfigRequest,
-) (*sdk.SetConsumerSDKConfigResponse, error) {
+	body sdk.SetConsumerConfigRequest,
+) (*sdk.SetConsumerConfigResponse, error) {
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 
-	var resp sdk.SetConsumerSDKConfigResponse
+	var resp sdk.SetConsumerConfigResponse
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPut,

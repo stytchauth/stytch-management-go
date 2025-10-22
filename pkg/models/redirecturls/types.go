@@ -33,7 +33,7 @@ type CreateRequest struct {
 	// link), you will need to explicitly specify which redirect URL should be used.
 	DoNotPromoteDefaults bool `json:"do_not_promote_defaults,omitempty"`
 	// ValidTypes is a list of all the URLRedirectType available for this URL.
-	ValidTypes []*URLType `json:"valid_types,omitempty"`
+	ValidTypes []URLType `json:"valid_types,omitempty"`
 }
 
 // CreateResponse: Response type for `RedirectURLs.Create`.
@@ -129,7 +129,7 @@ type UpdateRequest struct {
 	// link), you will need to explicitly specify which redirect URL should be used.
 	DoNotPromoteDefaults bool `json:"do_not_promote_defaults,omitempty"`
 	// ValidTypes is a list of all the URLRedirectType available for this URL.
-	ValidTypes []*URLType `json:"valid_types,omitempty"`
+	ValidTypes []URLType `json:"valid_types,omitempty"`
 }
 
 // UpdateResponse: Response type for `RedirectURLs.Update`.

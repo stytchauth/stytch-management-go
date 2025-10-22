@@ -18,7 +18,7 @@ type Environment struct {
 	ZeroDowntimeSessionMigrationURL                        string          `json:"zero_downtime_session_migration_url,omitempty"`
 	UserLockSelfServeEnabled                               bool            `json:"user_lock_self_serve_enabled,omitempty"`
 	UserLockThreshold                                      int             `json:"user_lock_threshold,omitempty"`
-	UserLockTtl                                            int             `json:"user_lock_ttl,omitempty"`
+	UserLockTTL                                            int             `json:"user_lock_ttl,omitempty"`
 	IDPAuthorizationURL                                    string          `json:"idp_authorization_url,omitempty"`
 	IDPDynamicClientRegistrationEnabled                    bool            `json:"idp_dynamic_client_registration_enabled,omitempty"`
 	IDPDynamicClientRegistrationAccessTokenTemplateContent string          `json:"idp_dynamic_client_registration_access_token_template_content,omitempty"`
@@ -55,7 +55,7 @@ type CreateRequest struct {
 	// UserLockThreshold represents the number of failed authenticate attempts that will cause a user in the
 	// environment to be locked. Defaults to 10.
 	UserLockThreshold                                      *int32  `json:"user_lock_threshold,omitempty"`
-	UserLockTtl                                            *int32  `json:"user_lock_ttl,omitempty"`
+	UserLockTTL                                            *int32  `json:"user_lock_ttl,omitempty"`
 	IDPAuthorizationURL                                    *string `json:"idp_authorization_url,omitempty"`
 	IDPDynamicClientRegistrationEnabled                    *bool   `json:"idp_dynamic_client_registration_enabled,omitempty"`
 	IDPDynamicClientRegistrationAccessTokenTemplateContent *string `json:"idp_dynamic_client_registration_access_token_template_content,omitempty"`
@@ -159,7 +159,7 @@ type UpdateRequest struct {
 	// UserLockThreshold represents the number of failed authenticate attempts that will cause a user in the
 	// environment to be locked. Defaults to 10.
 	UserLockThreshold                                      *int32  `json:"user_lock_threshold,omitempty"`
-	UserLockTtl                                            *int32  `json:"user_lock_ttl,omitempty"`
+	UserLockTTL                                            *int32  `json:"user_lock_ttl,omitempty"`
 	IDPAuthorizationURL                                    *string `json:"idp_authorization_url,omitempty"`
 	IDPDynamicClientRegistrationEnabled                    *bool   `json:"idp_dynamic_client_registration_enabled,omitempty"`
 	IDPDynamicClientRegistrationAccessTokenTemplateContent *string `json:"idp_dynamic_client_registration_access_token_template_content,omitempty"`
