@@ -40,8 +40,9 @@ type Scope struct {
 
 // GetRequest: Request type for `RBACPolicy.Get`.
 type GetRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve the RBAC policy.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve the RBAC policy.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -57,8 +58,9 @@ type GetResponse struct {
 
 // SetRequest: Request type for `RBACPolicy.Set`.
 type SetRequest struct {
+	// ProjectSlug is the slug of the project for which to set the RBAC policy.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to set the RBAC policy.
 	EnvironmentSlug string `json:"-"`
 	// StytchMember: The following fields are valid for B2B projects only: StytchMember is the default role
 	// given to members within the environment. Only permissions are returned; role_id and description are

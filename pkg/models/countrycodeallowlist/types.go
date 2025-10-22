@@ -8,6 +8,7 @@ package countrycodeallowlist
 
 // GetAllowedSMSCountryCodesRequest: Request type for `CountryCodeAllowlist.GetAllowedSMSCountryCodes`.
 type GetAllowedSMSCountryCodesRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve allowed SMS country codes.
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
 	EnvironmentSlug string `json:"-"`
@@ -26,8 +27,9 @@ type GetAllowedSMSCountryCodesResponse struct {
 // GetAllowedWhatsAppCountryCodesRequest: Request type for
 // `CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes`.
 type GetAllowedWhatsAppCountryCodesRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve allowed WhatsApp country codes.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve allowed WhatsApp country codes.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -36,7 +38,7 @@ type GetAllowedWhatsAppCountryCodesRequest struct {
 type GetAllowedWhatsAppCountryCodesResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// CountryCodes is a list of country codes that are allowed for SMS.
+	// CountryCodes is a list of country codes that are allowed for WhatsApp.
 	CountryCodes []string `json:"country_codes,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
@@ -44,6 +46,7 @@ type GetAllowedWhatsAppCountryCodesResponse struct {
 
 // SetAllowedSMSCountryCodesRequest: Request type for `CountryCodeAllowlist.SetAllowedSMSCountryCodes`.
 type SetAllowedSMSCountryCodesRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve allowed SMS country codes.
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
 	EnvironmentSlug string `json:"-"`
@@ -64,10 +67,11 @@ type SetAllowedSMSCountryCodesResponse struct {
 // SetAllowedWhatsAppCountryCodesRequest: Request type for
 // `CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes`.
 type SetAllowedWhatsAppCountryCodesRequest struct {
+	// ProjectSlug is the slug of the project for which to set allowed WhatsApp country codes.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to set allowed WhatsApp country codes.
 	EnvironmentSlug string `json:"-"`
-	// CountryCodes is a list of country codes that are allowed for SMS.
+	// CountryCodes is a list of country codes to set as allowed for WhatsApp.
 	CountryCodes []string `json:"country_codes,omitempty"`
 }
 
@@ -76,7 +80,7 @@ type SetAllowedWhatsAppCountryCodesRequest struct {
 type SetAllowedWhatsAppCountryCodesResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// CountryCodes is a list of country codes that are allowed for SMS.
+	// CountryCodes is a list of country codes that are allowed for WhatsApp.
 	CountryCodes []string `json:"country_codes,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`

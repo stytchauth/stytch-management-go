@@ -37,6 +37,8 @@ type SenderInformation struct {
 
 // CreateRequest: Request type for `EmailTemplates.Create`.
 type CreateRequest struct {
+	// ProjectSlug is the slug of the project for which to create the email template. An email template will be
+	// created in each environment associated with this project.
 	ProjectSlug string `json:"-"`
 	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
 	// when sending emails from your project or managing this template. It can never be changed after creation.
@@ -64,9 +66,10 @@ type CreateResponse struct {
 
 // DeleteRequest: Request type for `EmailTemplates.Delete`.
 type DeleteRequest struct {
+	// ProjectSlug is the slug of the project for which to delete the email template. The email template will
+	// be deleted in each environment associated with the project.
 	ProjectSlug string `json:"-"`
-	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
-	// when sending emails from your project or managing this template. It can never be changed after creation.
+	// TemplateID is the unique template ID for the email template to be deleted
 	TemplateID string `json:"-"`
 }
 
@@ -80,6 +83,7 @@ type DeleteResponse struct {
 
 // GetAllRequest: Request type for `EmailTemplates.GetAll`.
 type GetAllRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve all the email templates.
 	ProjectSlug string `json:"-"`
 }
 
@@ -95,6 +99,7 @@ type GetAllResponse struct {
 
 // GetDefaultRequest: Request type for `EmailTemplates.GetDefault`.
 type GetDefaultRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve allowed SMS country codes.
 	ProjectSlug string `json:"-"`
 	// EmailTemplateType is the template type for which to get the default email template.
 	EmailTemplateType TemplateType `json:"-"`
@@ -113,9 +118,9 @@ type GetDefaultResponse struct {
 
 // GetRequest: Request type for `EmailTemplates.Get`.
 type GetRequest struct {
+	// ProjectSlug is the slug of the project for which to get the default email template.
 	ProjectSlug string `json:"-"`
-	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
-	// when sending emails from your project or managing this template. It can never be changed after creation.
+	// TemplateID is the unique template ID for the email template to retrieve.
 	TemplateID string `json:"-"`
 }
 
@@ -131,6 +136,7 @@ type GetResponse struct {
 
 // SetDefaultRequest: Request type for `EmailTemplates.SetDefault`.
 type SetDefaultRequest struct {
+	// ProjectSlug is the slug of the project for which to set the default email template.
 	ProjectSlug string `json:"-"`
 	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
 	// when sending emails from your project or managing this template. It can never be changed after creation.
@@ -149,6 +155,7 @@ type SetDefaultResponse struct {
 
 // UnsetDefaultRequest: Request type for `EmailTemplates.UnsetDefault`.
 type UnsetDefaultRequest struct {
+	// ProjectSlug is the slug of the project for which to unset the default email template.
 	ProjectSlug string `json:"-"`
 	// EmailTemplateType is the template type for which to get the default email template.
 	EmailTemplateType TemplateType `json:"-"`
@@ -164,6 +171,8 @@ type UnsetDefaultResponse struct {
 
 // UpdateRequest: Request type for `EmailTemplates.Update`.
 type UpdateRequest struct {
+	// ProjectSlug is the slug of the project for which to update the email template. The email template will
+	// be updated in each environment associated with the project.
 	ProjectSlug string `json:"-"`
 	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
 	// when sending emails from your project or managing this template. It can never be changed after creation.

@@ -17,12 +17,11 @@ type Project struct {
 
 // CreateRequest: Request type for `Projects.Create`.
 type CreateRequest struct {
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is the name of the project.
 	Name string `json:"name,omitempty"`
 	// Vertical is the project's vertical.
-	Vertical Vertical `json:"vertical,omitempty"`
-	// ProjectSlug is the slug of the project for which to retrieve allowed SMS country codes.
-	ProjectSlug *string `json:"project_slug,omitempty"`
+	Vertical    Vertical `json:"vertical,omitempty"`
+	ProjectSlug *string  `json:"project_slug,omitempty"`
 }
 
 // CreateResponse: Response type for `Projects.Create`.
@@ -37,6 +36,7 @@ type CreateResponse struct {
 
 // DeleteRequest: Request type for `Projects.Delete`.
 type DeleteRequest struct {
+	// ProjectSlug is the slug of the project to delete.
 	ProjectSlug string `json:"-"`
 }
 
@@ -63,6 +63,7 @@ type GetAllResponse struct {
 
 // GetRequest: Request type for `Projects.Get`.
 type GetRequest struct {
+	// ProjectSlug is the slug of the project to retrieve.
 	ProjectSlug string `json:"-"`
 }
 
@@ -78,8 +79,9 @@ type GetResponse struct {
 
 // UpdateRequest: Request type for `Projects.Update`.
 type UpdateRequest struct {
+	// ProjectSlug is the slug of the project to update.
 	ProjectSlug string `json:"-"`
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is the new name for the project.
 	Name *string `json:"name,omitempty"`
 }
 

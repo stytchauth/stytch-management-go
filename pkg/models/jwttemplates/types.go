@@ -14,8 +14,9 @@ type JWTTemplate struct {
 
 // GetRequest: Request type for `JWTTemplates.Get`.
 type GetRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve the JWT template.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve the JWT template.
 	EnvironmentSlug string `json:"-"`
 	// JWTTemplateType is the type of JWT template.
 	JWTTemplateType JWTTemplateType `json:"-"`
@@ -33,8 +34,9 @@ type GetResponse struct {
 
 // SetRequest: Request type for `JWTTemplates.Set`.
 type SetRequest struct {
+	// ProjectSlug is the slug of the project for which to set the JWT template.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to set the JWT template.
 	EnvironmentSlug string `json:"-"`
 	// TemplateContent is the JWT template content.
 	TemplateContent string `json:"template_content,omitempty"`

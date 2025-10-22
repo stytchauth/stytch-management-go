@@ -22,8 +22,9 @@ type Secret struct {
 
 // CreateRequest: Request type for `Secrets.Create`.
 type CreateRequest struct {
+	// ProjectSlug is the slug of the project for which to create the secret.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to create the secret.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -39,10 +40,11 @@ type CreateResponse struct {
 
 // DeleteRequest: Request type for `Secrets.Delete`.
 type DeleteRequest struct {
+	// ProjectSlug is the slug of the project for which to delete the secret.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to delete the secret.
 	EnvironmentSlug string `json:"-"`
-	// SecretID is the unique ID of the secret in the project.
+	// SecretID is the ID of the secret to delete.
 	SecretID string `json:"-"`
 }
 
@@ -56,8 +58,9 @@ type DeleteResponse struct {
 
 // GetAllRequest: Request type for `Secrets.GetAll`.
 type GetAllRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve the secrets.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve the secrets.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -73,10 +76,11 @@ type GetAllResponse struct {
 
 // GetRequest: Request type for `Secrets.Get`.
 type GetRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve the secret.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve the secret.
 	EnvironmentSlug string `json:"-"`
-	// SecretID is the unique ID of the secret in the project.
+	// SecretID is the ID of the secret to retrieve.
 	SecretID string `json:"-"`
 }
 

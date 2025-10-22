@@ -34,12 +34,14 @@ type Metrics struct {
 
 // CreateRequest: Request type for `Environments.Create`.
 type CreateRequest struct {
+	// ProjectSlug is the slug of the project for which to create the environment.
 	ProjectSlug string `json:"-"`
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is the name of the environment.
 	Name string `json:"name,omitempty"`
 	// Type is the environment's type. See EnvironmentTypes() for possible values.
 	Type EnvironmentType `json:"type,omitempty"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the immutable unique identifier (slug) of the environment, and cannot be changed
+	// after the environment is created. If not provided, a slug will be generated.
 	EnvironmentSlug *string `json:"environment_slug,omitempty"`
 	// CrossOrgPasswordsEnabled indicates whether the environment uses cross-org passwords.
 	CrossOrgPasswordsEnabled *bool `json:"cross_org_passwords_enabled,omitempty"`
@@ -71,8 +73,9 @@ type CreateResponse struct {
 
 // DeleteRequest: Request type for `Environments.Delete`.
 type DeleteRequest struct {
+	// ProjectSlug is the slug of the project for which to delete the environment.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment to delete.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -86,6 +89,7 @@ type DeleteResponse struct {
 
 // GetAllRequest: Request type for `Environments.GetAll`.
 type GetAllRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve environments.
 	ProjectSlug string `json:"-"`
 }
 
@@ -101,8 +105,9 @@ type GetAllResponse struct {
 
 // GetMetricsRequest: Request type for `Environments.GetMetrics`.
 type GetMetricsRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve metrics.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve metrics.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -118,8 +123,9 @@ type GetMetricsResponse struct {
 
 // GetRequest: Request type for `Environments.Get`.
 type GetRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve the environment.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment to retrieve.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -135,10 +141,11 @@ type GetResponse struct {
 
 // UpdateRequest: Request type for `Environments.Update`.
 type UpdateRequest struct {
+	// ProjectSlug is the slug of the project for which to update the environment.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment to update.
 	EnvironmentSlug string `json:"-"`
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is the name of the environment.
 	Name *string `json:"name,omitempty"`
 	// CrossOrgPasswordsEnabled indicates whether the environment uses cross-org passwords.
 	CrossOrgPasswordsEnabled *bool `json:"cross_org_passwords_enabled,omitempty"`

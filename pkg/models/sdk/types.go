@@ -140,6 +140,7 @@ type SMSAutofillMetadata struct {
 
 // GetB2BSDKConfigRequest: Request type for `SDK.GetB2BSDKConfig`.
 type GetB2BSDKConfigRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve allowed SMS country codes.
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
 	EnvironmentSlug string `json:"-"`
@@ -157,8 +158,9 @@ type GetB2BSDKConfigResponse struct {
 
 // GetConsumerSDKConfigRequest: Request type for `SDK.GetConsumerSDKConfig`.
 type GetConsumerSDKConfigRequest struct {
+	// ProjectSlug is the slug of the project for which to get the B2B SDK config.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to get the B2B SDK config.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -174,6 +176,7 @@ type GetConsumerSDKConfigResponse struct {
 
 // SetB2BSDKConfigRequest: Request type for `SDK.SetB2BSDKConfig`.
 type SetB2BSDKConfigRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve allowed SMS country codes.
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
 	EnvironmentSlug string `json:"-"`
@@ -193,8 +196,9 @@ type SetB2BSDKConfigResponse struct {
 
 // SetConsumerSDKConfigRequest: Request type for `SDK.SetConsumerSDKConfig`.
 type SetConsumerSDKConfigRequest struct {
+	// ProjectSlug is the slug of the project for which to set the B2B SDK config.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to set the B2B SDK config.
 	EnvironmentSlug string `json:"-"`
 	// Config is the consumer project SDK configuration.
 	Config *ConsumerConfig `json:"config,omitempty"`

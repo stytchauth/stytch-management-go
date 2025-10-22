@@ -24,12 +24,13 @@ type TrustedTokenProfile struct {
 
 // CreatePEMFileRequest: Request type for `TrustedTokenProfiles.CreatePEMFile`.
 type CreatePEMFileRequest struct {
+	// ProjectSlug is the slug of the project for which to create the PEM file.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to create the PEM file.
 	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"-"`
-	// PublicKey is the public key content.
+	// PublicKey is the public key to create.
 	PublicKey string `json:"public_key,omitempty"`
 }
 
@@ -45,10 +46,11 @@ type CreatePEMFileResponse struct {
 
 // CreateRequest: Request type for `TrustedTokenProfiles.Create`.
 type CreateRequest struct {
+	// ProjectSlug is the slug of the project for which to create the PEM file.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to create the PEM file.
 	EnvironmentSlug string `json:"-"`
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is the name of the trusted token profile.
 	Name string `json:"name,omitempty"`
 	// Audience is the audience for the trusted token profile.
 	Audience string `json:"audience,omitempty"`
@@ -76,8 +78,9 @@ type CreateResponse struct {
 
 // DeletePEMFileRequest: Request type for `TrustedTokenProfiles.DeletePEMFile`.
 type DeletePEMFileRequest struct {
+	// ProjectSlug is the slug of the project for which to delete the PEM file.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to delete the PEM file.
 	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"-"`
@@ -95,8 +98,9 @@ type DeletePEMFileResponse struct {
 
 // DeleteRequest: Request type for `TrustedTokenProfiles.Delete`.
 type DeleteRequest struct {
+	// ProjectSlug is the slug of the project for which to delete the PEM file.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to delete the PEM file.
 	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"-"`
@@ -112,8 +116,9 @@ type DeleteResponse struct {
 
 // GetAllRequest: Request type for `TrustedTokenProfiles.GetAll`.
 type GetAllRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve the trusted token profiles.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve the trusted token profiles.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -128,8 +133,9 @@ type GetAllResponse struct {
 
 // GetPEMFileRequest: Request type for `TrustedTokenProfiles.GetPEMFile`.
 type GetPEMFileRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve the PEM file.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve the PEM file.
 	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"-"`
@@ -149,8 +155,9 @@ type GetPEMFileResponse struct {
 
 // GetRequest: Request type for `TrustedTokenProfiles.Get`.
 type GetRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve the PEM file.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve the PEM file.
 	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"-"`
@@ -167,12 +174,13 @@ type GetResponse struct {
 
 // UpdateRequest: Request type for `TrustedTokenProfiles.Update`.
 type UpdateRequest struct {
+	// ProjectSlug is the slug of the project for which to update the trusted token profile.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to update the trusted token profile.
 	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"-"`
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is the name of the trusted token profile (optional).
 	Name *string `json:"name,omitempty"`
 	// Audience is the audience for the trusted token profile.
 	Audience *string `json:"audience,omitempty"`

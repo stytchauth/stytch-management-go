@@ -17,8 +17,9 @@ type URLType struct {
 
 // CreateRequest: Request type for `RedirectURLs.Create`.
 type CreateRequest struct {
+	// ProjectSlug is the slug of the project for which to create the redirect URL.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to create the redirect URL.
 	EnvironmentSlug string `json:"-"`
 	// URL is the URL to which to redirect.
 	URL string `json:"url,omitempty"`
@@ -47,10 +48,11 @@ type CreateResponse struct {
 
 // DeleteRequest: Request type for `RedirectURLs.Delete`.
 type DeleteRequest struct {
+	// ProjectSlug is the slug of the project for which to delete the redirect URL.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to delete the redirect URL.
 	EnvironmentSlug string `json:"-"`
-	// URL is the URL to which to redirect.
+	// URL is the redirect URL to delete.
 	URL string `json:"url,omitempty"`
 	// DoNotPromoteDefaults is used to suppress the automatic "promotion" of a RedirectURL to the default if no
 	// other RedirectURL exists for the given type. This is primarily intended for use with
@@ -73,8 +75,9 @@ type DeleteResponse struct {
 
 // GetAllRequest: Request type for `RedirectURLs.GetAll`.
 type GetAllRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve all redirect URLs.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve all redirect URLs.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -90,10 +93,11 @@ type GetAllResponse struct {
 
 // GetRequest: Request type for `RedirectURLs.Get`.
 type GetRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve the redirect URL.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve the redirect URL.
 	EnvironmentSlug string `json:"-"`
-	// URL is the URL to which to redirect.
+	// URL is the redirect URL to get.
 	URL string `json:"url,omitempty"`
 }
 
@@ -109,8 +113,9 @@ type GetResponse struct {
 
 // UpdateRequest: Request type for `RedirectURLs.Update`.
 type UpdateRequest struct {
+	// ProjectSlug is the slug of the project for which to update the redirect URL.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to update the redirect URL.
 	EnvironmentSlug string `json:"-"`
 	// URL is the URL to which to redirect.
 	URL string `json:"url,omitempty"`

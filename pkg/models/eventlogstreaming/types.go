@@ -45,8 +45,9 @@ type GrafanaLokiConfigMasked struct {
 
 // CreateRequest: Request type for `EventLogStreaming.Create`.
 type CreateRequest struct {
+	// ProjectSlug is the slug of the project for which to create the event log streaming config.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to create the event log streaming config.
 	EnvironmentSlug string `json:"-"`
 	// DestinationType is the type of destination to which to send events.
 	DestinationType DestinationType `json:"destination_type,omitempty"`
@@ -66,10 +67,11 @@ type CreateResponse struct {
 
 // DeleteRequest: Request type for `EventLogStreaming.Delete`.
 type DeleteRequest struct {
+	// ProjectSlug is the slug of the project for which to delete the event log streaming config.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to delete the event log streaming config.
 	EnvironmentSlug string `json:"-"`
-	// DestinationType is the type of destination to which to send events.
+	// DestinationType is the destination type of the event log streaming config to delete.
 	DestinationType DestinationType `json:"-"`
 }
 
@@ -83,10 +85,11 @@ type DeleteResponse struct {
 
 // DisableRequest: Request type for `EventLogStreaming.Disable`.
 type DisableRequest struct {
+	// ProjectSlug is the slug of the project for which to disable the event log streaming config.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to disable the event log streaming config.
 	EnvironmentSlug string `json:"-"`
-	// DestinationType is the type of destination to which to send events.
+	// DestinationType is the destination type of the event log streaming config to disable.
 	DestinationType DestinationType `json:"-"`
 }
 
@@ -100,10 +103,11 @@ type DisableResponse struct {
 
 // EnableRequest: Request type for `EventLogStreaming.Enable`.
 type EnableRequest struct {
+	// ProjectSlug is the slug of the project for which to enable the event log streaming config.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to enable the event log streaming config.
 	EnvironmentSlug string `json:"-"`
-	// DestinationType is the type of destination to which to send events.
+	// DestinationType is the destination type of the event log streaming config to enable.
 	DestinationType DestinationType `json:"-"`
 }
 
@@ -117,10 +121,11 @@ type EnableResponse struct {
 
 // GetRequest: Request type for `EventLogStreaming.Get`.
 type GetRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve the event log streaming config.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve the event log streaming config.
 	EnvironmentSlug string `json:"-"`
-	// DestinationType is the type of destination to which to send events.
+	// DestinationType is the destination type of the event log streaming config to retrieve.
 	DestinationType DestinationType `json:"-"`
 }
 
@@ -136,12 +141,13 @@ type GetResponse struct {
 
 // UpdateRequest: Request type for `EventLogStreaming.Update`.
 type UpdateRequest struct {
+	// ProjectSlug is the slug of the project for which to update the event log streaming config.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to update the event log streaming config.
 	EnvironmentSlug string `json:"-"`
-	// DestinationType is the type of destination to which to send events.
+	// DestinationType is the type of destination for which to update the event log streaming config.
 	DestinationType DestinationType `json:"-"`
-	// DestinationConfig is the configuration for the destination to which to send events.
+	// DestinationConfig: DestinationType is the destination type of the event log streaming config to update.
 	DestinationConfig *DestinationConfig `json:"destination_config,omitempty"`
 }
 

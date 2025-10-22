@@ -17,8 +17,9 @@ type PasswordStrengthConfig struct {
 
 // GetRequest: Request type for `PasswordStrengthConfig.Get`.
 type GetRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve the password strength config.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve the password strength config.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -34,8 +35,9 @@ type GetResponse struct {
 
 // SetRequest: Request type for `PasswordStrengthConfig.Set`.
 type SetRequest struct {
+	// ProjectSlug is the slug of the project for which to set the password strength config.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to set the password strength config.
 	EnvironmentSlug string `json:"-"`
 	// CheckBreachOnCreation is a flag to check whether to use the HaveIBeenPwned database to detect password
 	// breaches when a user first creates their password.

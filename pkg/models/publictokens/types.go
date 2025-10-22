@@ -15,8 +15,9 @@ type PublicToken struct {
 
 // CreateRequest: Request type for `PublicTokens.Create`.
 type CreateRequest struct {
+	// ProjectSlug is the slug of the project for which to create the public token.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to create the public token.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -32,10 +33,11 @@ type CreateResponse struct {
 
 // DeleteRequest: Request type for `PublicTokens.Delete`.
 type DeleteRequest struct {
+	// ProjectSlug is the slug of the project for which to delete the public token.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to delete the public token.
 	EnvironmentSlug string `json:"-"`
-	// PublicToken is the public token value as well as the unique identifier for the token.
+	// PublicToken is the public token to delete.
 	PublicToken string `json:"-"`
 }
 
@@ -49,8 +51,9 @@ type DeleteResponse struct {
 
 // GetAllRequest: Request type for `PublicTokens.GetAll`.
 type GetAllRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve the public tokens.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve the public tokens.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -66,10 +69,11 @@ type GetAllResponse struct {
 
 // GetRequest: Request type for `PublicTokens.Get`.
 type GetRequest struct {
+	// ProjectSlug is the slug of the project for which to retrieve the public token.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment for which to retrieve the public token.
 	EnvironmentSlug string `json:"-"`
-	// PublicToken is the public token value as well as the unique identifier for the token.
+	// PublicToken is the identifier of the public token to retrieve.
 	PublicToken string `json:"-"`
 }
 
