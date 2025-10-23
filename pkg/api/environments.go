@@ -31,6 +31,9 @@ func (c *EnvironmentsClient) Create(
 	ctx context.Context,
 	body environments.CreateRequest,
 ) (*environments.CreateResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -55,6 +58,12 @@ func (c *EnvironmentsClient) Delete(
 	ctx context.Context,
 	body environments.DeleteRequest,
 ) (*environments.DeleteResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp environments.DeleteResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -74,6 +83,12 @@ func (c *EnvironmentsClient) Get(
 	ctx context.Context,
 	body environments.GetRequest,
 ) (*environments.GetResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp environments.GetResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -93,6 +108,9 @@ func (c *EnvironmentsClient) GetAll(
 	ctx context.Context,
 	body environments.GetAllRequest,
 ) (*environments.GetAllResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
 	var resp environments.GetAllResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -112,6 +130,12 @@ func (c *EnvironmentsClient) GetMetrics(
 	ctx context.Context,
 	body environments.GetMetricsRequest,
 ) (*environments.GetMetricsResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp environments.GetMetricsResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -131,6 +155,12 @@ func (c *EnvironmentsClient) Update(
 	ctx context.Context,
 	body environments.UpdateRequest,
 ) (*environments.UpdateResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err

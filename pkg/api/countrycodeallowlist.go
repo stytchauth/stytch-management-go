@@ -31,6 +31,12 @@ func (c *CountryCodeAllowlistClient) GetAllowedSMSCountryCodes(
 	ctx context.Context,
 	body countrycodeallowlist.GetAllowedSMSCountryCodesRequest,
 ) (*countrycodeallowlist.GetAllowedSMSCountryCodesResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp countrycodeallowlist.GetAllowedSMSCountryCodesResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -50,6 +56,12 @@ func (c *CountryCodeAllowlistClient) GetAllowedWhatsAppCountryCodes(
 	ctx context.Context,
 	body countrycodeallowlist.GetAllowedWhatsAppCountryCodesRequest,
 ) (*countrycodeallowlist.GetAllowedWhatsAppCountryCodesResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp countrycodeallowlist.GetAllowedWhatsAppCountryCodesResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -69,6 +81,12 @@ func (c *CountryCodeAllowlistClient) SetAllowedSMSCountryCodes(
 	ctx context.Context,
 	body countrycodeallowlist.SetAllowedSMSCountryCodesRequest,
 ) (*countrycodeallowlist.SetAllowedSMSCountryCodesResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -93,6 +111,12 @@ func (c *CountryCodeAllowlistClient) SetAllowedWhatsAppCountryCodes(
 	ctx context.Context,
 	body countrycodeallowlist.SetAllowedWhatsAppCountryCodesRequest,
 ) (*countrycodeallowlist.SetAllowedWhatsAppCountryCodesResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err

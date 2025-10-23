@@ -31,6 +31,12 @@ func (c *PasswordStrengthConfigClient) Get(
 	ctx context.Context,
 	body passwordstrengthconfig.GetRequest,
 ) (*passwordstrengthconfig.GetResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp passwordstrengthconfig.GetResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -50,6 +56,12 @@ func (c *PasswordStrengthConfigClient) Set(
 	ctx context.Context,
 	body passwordstrengthconfig.SetRequest,
 ) (*passwordstrengthconfig.SetResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err

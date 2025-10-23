@@ -31,6 +31,12 @@ func (c *PublicTokensClient) Create(
 	ctx context.Context,
 	body publictokens.CreateRequest,
 ) (*publictokens.CreateResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -55,6 +61,15 @@ func (c *PublicTokensClient) Delete(
 	ctx context.Context,
 	body publictokens.DeleteRequest,
 ) (*publictokens.DeleteResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.PublicToken == "" {
+		return nil, fmt.Errorf("PublicToken cannot be empty")
+	}
 	var resp publictokens.DeleteResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -74,6 +89,15 @@ func (c *PublicTokensClient) Get(
 	ctx context.Context,
 	body publictokens.GetRequest,
 ) (*publictokens.GetResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.PublicToken == "" {
+		return nil, fmt.Errorf("PublicToken cannot be empty")
+	}
 	var resp publictokens.GetResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -93,6 +117,12 @@ func (c *PublicTokensClient) GetAll(
 	ctx context.Context,
 	body publictokens.GetAllRequest,
 ) (*publictokens.GetAllResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp publictokens.GetAllResponse
 	err := c.client.NewRequest(
 		ctx,

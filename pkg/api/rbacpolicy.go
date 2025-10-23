@@ -31,6 +31,12 @@ func (c *RBACPolicyClient) Get(
 	ctx context.Context,
 	body rbacpolicy.GetRequest,
 ) (*rbacpolicy.GetResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp rbacpolicy.GetResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -50,6 +56,12 @@ func (c *RBACPolicyClient) Set(
 	ctx context.Context,
 	body rbacpolicy.SetRequest,
 ) (*rbacpolicy.SetResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err

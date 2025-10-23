@@ -32,6 +32,12 @@ func (c *SecretsClient) Create(
 	ctx context.Context,
 	body secrets.CreateRequest,
 ) (*secrets.CreateResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -56,6 +62,15 @@ func (c *SecretsClient) Delete(
 	ctx context.Context,
 	body secrets.DeleteRequest,
 ) (*secrets.DeleteResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.SecretID == "" {
+		return nil, fmt.Errorf("SecretID cannot be empty")
+	}
 	var resp secrets.DeleteResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -75,6 +90,15 @@ func (c *SecretsClient) Get(
 	ctx context.Context,
 	body secrets.GetRequest,
 ) (*secrets.GetResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.SecretID == "" {
+		return nil, fmt.Errorf("SecretID cannot be empty")
+	}
 	var resp secrets.GetResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -94,6 +118,12 @@ func (c *SecretsClient) GetAll(
 	ctx context.Context,
 	body secrets.GetAllRequest,
 ) (*secrets.GetAllResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp secrets.GetAllResponse
 	err := c.client.NewRequest(
 		ctx,

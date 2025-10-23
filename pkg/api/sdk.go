@@ -31,6 +31,12 @@ func (c *SDKClient) GetB2BConfig(
 	ctx context.Context,
 	body sdk.GetB2BConfigRequest,
 ) (*sdk.GetB2BConfigResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp sdk.GetB2BConfigResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -50,6 +56,12 @@ func (c *SDKClient) GetConsumerConfig(
 	ctx context.Context,
 	body sdk.GetConsumerConfigRequest,
 ) (*sdk.GetConsumerConfigResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp sdk.GetConsumerConfigResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -69,6 +81,12 @@ func (c *SDKClient) SetB2BConfig(
 	ctx context.Context,
 	body sdk.SetB2BConfigRequest,
 ) (*sdk.SetB2BConfigResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -93,6 +111,12 @@ func (c *SDKClient) SetConsumerConfig(
 	ctx context.Context,
 	body sdk.SetConsumerConfigRequest,
 ) (*sdk.SetConsumerConfigResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err

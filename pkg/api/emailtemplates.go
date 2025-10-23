@@ -31,6 +31,9 @@ func (c *EmailTemplatesClient) Create(
 	ctx context.Context,
 	body emailtemplates.CreateRequest,
 ) (*emailtemplates.CreateResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -55,6 +58,12 @@ func (c *EmailTemplatesClient) Delete(
 	ctx context.Context,
 	body emailtemplates.DeleteRequest,
 ) (*emailtemplates.DeleteResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.TemplateID == "" {
+		return nil, fmt.Errorf("TemplateID cannot be empty")
+	}
 	var resp emailtemplates.DeleteResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -74,6 +83,12 @@ func (c *EmailTemplatesClient) Get(
 	ctx context.Context,
 	body emailtemplates.GetRequest,
 ) (*emailtemplates.GetResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.TemplateID == "" {
+		return nil, fmt.Errorf("TemplateID cannot be empty")
+	}
 	var resp emailtemplates.GetResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -93,6 +108,9 @@ func (c *EmailTemplatesClient) GetAll(
 	ctx context.Context,
 	body emailtemplates.GetAllRequest,
 ) (*emailtemplates.GetAllResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
 	var resp emailtemplates.GetAllResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -112,6 +130,12 @@ func (c *EmailTemplatesClient) GetDefault(
 	ctx context.Context,
 	body emailtemplates.GetDefaultRequest,
 ) (*emailtemplates.GetDefaultResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EmailTemplateType == "" {
+		return nil, fmt.Errorf("EmailTemplateType cannot be empty")
+	}
 	var resp emailtemplates.GetDefaultResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -131,6 +155,12 @@ func (c *EmailTemplatesClient) SetDefault(
 	ctx context.Context,
 	body emailtemplates.SetDefaultRequest,
 ) (*emailtemplates.SetDefaultResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EmailTemplateType == "" {
+		return nil, fmt.Errorf("EmailTemplateType cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -155,6 +185,12 @@ func (c *EmailTemplatesClient) UnsetDefault(
 	ctx context.Context,
 	body emailtemplates.UnsetDefaultRequest,
 ) (*emailtemplates.UnsetDefaultResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EmailTemplateType == "" {
+		return nil, fmt.Errorf("EmailTemplateType cannot be empty")
+	}
 	var resp emailtemplates.UnsetDefaultResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -174,6 +210,12 @@ func (c *EmailTemplatesClient) Update(
 	ctx context.Context,
 	body emailtemplates.UpdateRequest,
 ) (*emailtemplates.UpdateResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.TemplateID == "" {
+		return nil, fmt.Errorf("TemplateID cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err

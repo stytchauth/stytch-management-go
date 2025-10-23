@@ -55,6 +55,9 @@ func (c *ProjectsClient) Delete(
 	ctx context.Context,
 	body projects.DeleteRequest,
 ) (*projects.DeleteResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
 	var resp projects.DeleteResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -74,6 +77,9 @@ func (c *ProjectsClient) Get(
 	ctx context.Context,
 	body projects.GetRequest,
 ) (*projects.GetResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
 	var resp projects.GetResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -112,6 +118,9 @@ func (c *ProjectsClient) Update(
 	ctx context.Context,
 	body projects.UpdateRequest,
 ) (*projects.UpdateResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err

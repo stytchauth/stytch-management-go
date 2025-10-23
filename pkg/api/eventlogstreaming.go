@@ -31,6 +31,12 @@ func (c *EventLogStreamingClient) Create(
 	ctx context.Context,
 	body eventlogstreaming.CreateRequest,
 ) (*eventlogstreaming.CreateResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -55,6 +61,15 @@ func (c *EventLogStreamingClient) Delete(
 	ctx context.Context,
 	body eventlogstreaming.DeleteRequest,
 ) (*eventlogstreaming.DeleteResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.DestinationType == "" {
+		return nil, fmt.Errorf("DestinationType cannot be empty")
+	}
 	var resp eventlogstreaming.DeleteResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -74,6 +89,15 @@ func (c *EventLogStreamingClient) Disable(
 	ctx context.Context,
 	body eventlogstreaming.DisableRequest,
 ) (*eventlogstreaming.DisableResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.DestinationType == "" {
+		return nil, fmt.Errorf("DestinationType cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -98,6 +122,15 @@ func (c *EventLogStreamingClient) Enable(
 	ctx context.Context,
 	body eventlogstreaming.EnableRequest,
 ) (*eventlogstreaming.EnableResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.DestinationType == "" {
+		return nil, fmt.Errorf("DestinationType cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -122,6 +155,15 @@ func (c *EventLogStreamingClient) Get(
 	ctx context.Context,
 	body eventlogstreaming.GetRequest,
 ) (*eventlogstreaming.GetResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.DestinationType == "" {
+		return nil, fmt.Errorf("DestinationType cannot be empty")
+	}
 	var resp eventlogstreaming.GetResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -141,6 +183,15 @@ func (c *EventLogStreamingClient) Update(
 	ctx context.Context,
 	body eventlogstreaming.UpdateRequest,
 ) (*eventlogstreaming.UpdateResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.DestinationType == "" {
+		return nil, fmt.Errorf("DestinationType cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err

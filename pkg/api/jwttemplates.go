@@ -31,6 +31,15 @@ func (c *JWTTemplatesClient) Get(
 	ctx context.Context,
 	body jwttemplates.GetRequest,
 ) (*jwttemplates.GetResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.JWTTemplateType == "" {
+		return nil, fmt.Errorf("JWTTemplateType cannot be empty")
+	}
 	var resp jwttemplates.GetResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -50,6 +59,15 @@ func (c *JWTTemplatesClient) Set(
 	ctx context.Context,
 	body jwttemplates.SetRequest,
 ) (*jwttemplates.SetResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.JWTTemplateType == "" {
+		return nil, fmt.Errorf("JWTTemplateType cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err

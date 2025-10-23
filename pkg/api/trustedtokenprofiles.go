@@ -31,6 +31,12 @@ func (c *TrustedTokenProfilesClient) Create(
 	ctx context.Context,
 	body trustedtokenprofiles.CreateRequest,
 ) (*trustedtokenprofiles.CreateResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -55,6 +61,15 @@ func (c *TrustedTokenProfilesClient) CreatePEMFile(
 	ctx context.Context,
 	body trustedtokenprofiles.CreatePEMFileRequest,
 ) (*trustedtokenprofiles.CreatePEMFileResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.ProfileID == "" {
+		return nil, fmt.Errorf("ProfileID cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -79,6 +94,15 @@ func (c *TrustedTokenProfilesClient) Delete(
 	ctx context.Context,
 	body trustedtokenprofiles.DeleteRequest,
 ) (*trustedtokenprofiles.DeleteResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.ProfileID == "" {
+		return nil, fmt.Errorf("ProfileID cannot be empty")
+	}
 	var resp trustedtokenprofiles.DeleteResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -98,6 +122,18 @@ func (c *TrustedTokenProfilesClient) DeletePEMFile(
 	ctx context.Context,
 	body trustedtokenprofiles.DeletePEMFileRequest,
 ) (*trustedtokenprofiles.DeletePEMFileResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.ProfileID == "" {
+		return nil, fmt.Errorf("ProfileID cannot be empty")
+	}
+	if body.PEMFileID == "" {
+		return nil, fmt.Errorf("PEMFileID cannot be empty")
+	}
 	var resp trustedtokenprofiles.DeletePEMFileResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -117,6 +153,15 @@ func (c *TrustedTokenProfilesClient) Get(
 	ctx context.Context,
 	body trustedtokenprofiles.GetRequest,
 ) (*trustedtokenprofiles.GetResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.ProfileID == "" {
+		return nil, fmt.Errorf("ProfileID cannot be empty")
+	}
 	var resp trustedtokenprofiles.GetResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -136,6 +181,12 @@ func (c *TrustedTokenProfilesClient) GetAll(
 	ctx context.Context,
 	body trustedtokenprofiles.GetAllRequest,
 ) (*trustedtokenprofiles.GetAllResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp trustedtokenprofiles.GetAllResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -155,6 +206,18 @@ func (c *TrustedTokenProfilesClient) GetPEMFile(
 	ctx context.Context,
 	body trustedtokenprofiles.GetPEMFileRequest,
 ) (*trustedtokenprofiles.GetPEMFileResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.ProfileID == "" {
+		return nil, fmt.Errorf("ProfileID cannot be empty")
+	}
+	if body.PEMFileID == "" {
+		return nil, fmt.Errorf("PEMFileID cannot be empty")
+	}
 	var resp trustedtokenprofiles.GetPEMFileResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -174,6 +237,15 @@ func (c *TrustedTokenProfilesClient) Update(
 	ctx context.Context,
 	body trustedtokenprofiles.UpdateRequest,
 ) (*trustedtokenprofiles.UpdateResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
+	if body.ProfileID == "" {
+		return nil, fmt.Errorf("ProfileID cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err

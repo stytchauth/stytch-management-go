@@ -31,6 +31,12 @@ func (c *RedirectURLsClient) Create(
 	ctx context.Context,
 	body redirecturls.CreateRequest,
 ) (*redirecturls.CreateResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -55,6 +61,12 @@ func (c *RedirectURLsClient) Delete(
 	ctx context.Context,
 	body redirecturls.DeleteRequest,
 ) (*redirecturls.DeleteResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp redirecturls.DeleteResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -74,6 +86,12 @@ func (c *RedirectURLsClient) Get(
 	ctx context.Context,
 	body redirecturls.GetRequest,
 ) (*redirecturls.GetResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp redirecturls.GetResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -93,6 +111,12 @@ func (c *RedirectURLsClient) GetAll(
 	ctx context.Context,
 	body redirecturls.GetAllRequest,
 ) (*redirecturls.GetAllResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	var resp redirecturls.GetAllResponse
 	err := c.client.NewRequest(
 		ctx,
@@ -112,6 +136,12 @@ func (c *RedirectURLsClient) Update(
 	ctx context.Context,
 	body redirecturls.UpdateRequest,
 ) (*redirecturls.UpdateResponse, error) {
+	if body.ProjectSlug == "" {
+		return nil, fmt.Errorf("ProjectSlug cannot be empty")
+	}
+	if body.EnvironmentSlug == "" {
+		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
+	}
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
