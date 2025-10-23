@@ -88,7 +88,7 @@ func (c *RedirectURLsClient) Get(
 	return &resp, nil
 }
 
-// GetAll: Get retrieves a redirect URL for an environment.
+// GetAll retrieves all redirect URLs for an environment.
 func (c *RedirectURLsClient) GetAll(
 	ctx context.Context,
 	body redirecturls.GetAllRequest,

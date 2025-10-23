@@ -88,7 +88,7 @@ func (c *ProjectsClient) Get(
 	return &resp, nil
 }
 
-// GetAll: Get retrieves a project.
+// GetAll retrieves all projects in a workspace.
 func (c *ProjectsClient) GetAll(
 	ctx context.Context,
 	body projects.GetAllRequest,

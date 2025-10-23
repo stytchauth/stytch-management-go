@@ -8,16 +8,19 @@ package publictokens
 
 import "time"
 
+// PublicToken:
 type PublicToken struct {
-	PublicToken string    `json:"public_token,omitempty"`
-	CreatedAt   time.Time `json:"created_at,omitempty"`
+	// PublicToken is the public token value as well as the unique identifier for the token.
+	PublicToken string `json:"public_token,omitempty"`
+	// CreatedAt is the ISO-8601 timestamp for when the environment was created.
+	CreatedAt time.Time `json:"created_at,omitempty"`
 }
 
 // CreateRequest: Request type for `PublicTokens.Create`.
 type CreateRequest struct {
-	// ProjectSlug is the slug of the project for which to create the public token.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to create the public token.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -33,11 +36,11 @@ type CreateResponse struct {
 
 // DeleteRequest: Request type for `PublicTokens.Delete`.
 type DeleteRequest struct {
-	// ProjectSlug is the slug of the project for which to delete the public token.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to delete the public token.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// PublicToken is the public token to delete.
+	// PublicToken is the public token value as well as the unique identifier for the token.
 	PublicToken string `json:"-"`
 }
 
@@ -51,9 +54,9 @@ type DeleteResponse struct {
 
 // GetAllRequest: Request type for `PublicTokens.GetAll`.
 type GetAllRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve the public tokens.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve the public tokens.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -69,11 +72,11 @@ type GetAllResponse struct {
 
 // GetRequest: Request type for `PublicTokens.Get`.
 type GetRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve the public token.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve the public token.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// PublicToken is the identifier of the public token to retrieve.
+	// PublicToken is the public token value as well as the unique identifier for the token.
 	PublicToken string `json:"-"`
 }
 

@@ -8,23 +8,33 @@ package secrets
 
 import "time"
 
+// MaskedSecret:
 type MaskedSecret struct {
-	SecretID  string    `json:"secret_id,omitempty"`
-	LastFour  string    `json:"last_four,omitempty"`
+	// SecretID is the unique ID of the secret in the project.
+	SecretID string `json:"secret_id,omitempty"`
+	// LastFour is the last four characters of the secret.
+	LastFour string `json:"last_four,omitempty"`
+	// CreatedAt is the ISO-8601 timestamp for when the environment was created.
 	CreatedAt time.Time `json:"created_at,omitempty"`
-	UsedAt    time.Time `json:"used_at,omitempty"`
+	// UsedAt is the ISO-8601 timestamp for when the secret was last used.
+	UsedAt time.Time `json:"used_at,omitempty"`
 }
+
+// Secret:
 type Secret struct {
-	SecretID  string    `json:"secret_id,omitempty"`
-	Secret    string    `json:"secret,omitempty"`
+	// SecretID is the unique ID of the secret in the project.
+	SecretID string `json:"secret_id,omitempty"`
+	// Secret is the secret value. This is only visible once upon secret creation.
+	Secret string `json:"secret,omitempty"`
+	// CreatedAt is the ISO-8601 timestamp for when the environment was created.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 }
 
 // CreateRequest: Request type for `Secrets.Create`.
 type CreateRequest struct {
-	// ProjectSlug is the slug of the project for which to create the secret.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to create the secret.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -40,11 +50,11 @@ type CreateResponse struct {
 
 // DeleteRequest: Request type for `Secrets.Delete`.
 type DeleteRequest struct {
-	// ProjectSlug is the slug of the project for which to delete the secret.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to delete the secret.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// SecretID is the ID of the secret to delete.
+	// SecretID is the unique ID of the secret in the project.
 	SecretID string `json:"-"`
 }
 
@@ -58,9 +68,9 @@ type DeleteResponse struct {
 
 // GetAllRequest: Request type for `Secrets.GetAll`.
 type GetAllRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve the secrets.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve the secrets.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -76,11 +86,11 @@ type GetAllResponse struct {
 
 // GetRequest: Request type for `Secrets.Get`.
 type GetRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve the secret.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve the secret.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// SecretID is the ID of the secret to retrieve.
+	// SecretID is the unique ID of the secret in the project.
 	SecretID string `json:"-"`
 }
 

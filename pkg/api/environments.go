@@ -69,7 +69,7 @@ func (c *EnvironmentsClient) Delete(
 	return &resp, nil
 }
 
-// Get retrieves metrics for an environment.
+// Get retrieves an environment.
 func (c *EnvironmentsClient) Get(
 	ctx context.Context,
 	body environments.GetRequest,
@@ -88,7 +88,7 @@ func (c *EnvironmentsClient) Get(
 	return &resp, nil
 }
 
-// GetAll: Get retrieves metrics for an environment.
+// GetAll retrieves all environments in a project.
 func (c *EnvironmentsClient) GetAll(
 	ctx context.Context,
 	body environments.GetAllRequest,

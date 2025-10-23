@@ -88,7 +88,7 @@ func (c *PublicTokensClient) Get(
 	return &resp, nil
 }
 
-// GetAll: Get retrieves a public token for an environment.
+// GetAll retrieves all the active public tokens defined for an environment.
 func (c *PublicTokensClient) GetAll(
 	ctx context.Context,
 	body publictokens.GetAllRequest,

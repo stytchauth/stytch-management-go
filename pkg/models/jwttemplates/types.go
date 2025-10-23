@@ -6,17 +6,21 @@ package jwttemplates
 // or your changes may be overwritten later!
 // !!!
 
+// JWTTemplate:
 type JWTTemplate struct {
-	TemplateContent string          `json:"template_content,omitempty"`
-	CustomAudience  string          `json:"custom_audience,omitempty"`
+	// TemplateContent is the JWT template content.
+	TemplateContent string `json:"template_content,omitempty"`
+	// CustomAudience is an optional custom audience for the JWT template.
+	CustomAudience string `json:"custom_audience,omitempty"`
+	// JWTTemplateType is the type of JWT template.
 	JWTTemplateType JWTTemplateType `json:"jwt_template_type,omitempty"`
 }
 
 // GetRequest: Request type for `JWTTemplates.Get`.
 type GetRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve the JWT template.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve the JWT template.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// JWTTemplateType is the type of JWT template.
 	JWTTemplateType JWTTemplateType `json:"-"`
@@ -34,9 +38,9 @@ type GetResponse struct {
 
 // SetRequest: Request type for `JWTTemplates.Set`.
 type SetRequest struct {
-	// ProjectSlug is the slug of the project for which to set the JWT template.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to set the JWT template.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// TemplateContent is the JWT template content.
 	TemplateContent string `json:"template_content,omitempty"`

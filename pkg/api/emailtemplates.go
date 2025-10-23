@@ -88,7 +88,7 @@ func (c *EmailTemplatesClient) Get(
 	return &resp, nil
 }
 
-// GetAll: Get retrieves an email template for a project.
+// GetAll retrieves all email templates for a project.
 func (c *EmailTemplatesClient) GetAll(
 	ctx context.Context,
 	body emailtemplates.GetAllRequest,
@@ -107,7 +107,7 @@ func (c *EmailTemplatesClient) GetAll(
 	return &resp, nil
 }
 
-// GetDefault: Get retrieves an email template for a project.
+// GetDefault retrieves the default email template for a specific template type in a project.
 func (c *EmailTemplatesClient) GetDefault(
 	ctx context.Context,
 	body emailtemplates.GetDefaultRequest,

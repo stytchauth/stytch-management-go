@@ -6,143 +6,302 @@ package sdk
 // or your changes may be overwritten later!
 // !!!
 
+// AuthorizedB2BDomain:
 type AuthorizedB2BDomain struct {
-	Domain      string `json:"domain,omitempty"`
+	// Domain is the domain name. Stytch uses the same-origin policy to determine matches.
+	Domain string `json:"domain,omitempty"`
+	// SlugPattern is the slug pattern that can be used to support authentication flows specific to each
+	// organization. An example value here might be 'https://{{slug}}.example.com'. The value **must** include
+	// '{{slug}}' as a placeholder for the slug.
 	SlugPattern string `json:"slug_pattern,omitempty"`
 }
+
+// B2BBasicConfig:
 type B2BBasicConfig struct {
-	Enabled                 bool                  `json:"enabled,omitempty"`
-	AllowSelfOnboarding     bool                  `json:"allow_self_onboarding,omitempty"`
-	EnableMemberPermissions bool                  `json:"enable_member_permissions,omitempty"`
-	Domains                 []AuthorizedB2BDomain `json:"domains,omitempty"`
-	BundleIDs               []string              `json:"bundle_ids,omitempty"`
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled bool `json:"enabled,omitempty"`
+	// AllowSelfOnboarding indicates whether self-onboarding is allowed for members in the SDK.
+	AllowSelfOnboarding bool `json:"allow_self_onboarding,omitempty"`
+	// EnableMemberPermissions indicates whether member permissions RBAC are enabled in the SDK.
+	EnableMemberPermissions bool `json:"enable_member_permissions,omitempty"`
+	// Domains is a list of domains authorized for use in the SDK.
+	Domains []AuthorizedB2BDomain `json:"domains,omitempty"`
+	// BundleIDs is a list of bundle IDs authorized for use in the SDK.
+	BundleIDs []string `json:"bundle_ids,omitempty"`
 }
+
+// B2BConfig:
 type B2BConfig struct {
-	Basic      *B2BBasicConfig      `json:"basic,omitempty"`
-	Sessions   *B2BSessionsConfig   `json:"sessions,omitempty"`
+	// Basic is the basic configuration for the consumer project SDK. This includes enabling the SDK.
+	Basic *B2BBasicConfig `json:"basic,omitempty"`
+	// Sessions is the session configuration for the consumer project SDK.
+	Sessions *B2BSessionsConfig `json:"sessions,omitempty"`
+	// MagicLinks is the magic links configuration for the consumer project SDK.
 	MagicLinks *B2BMagicLinksConfig `json:"magic_links,omitempty"`
 	OAuth      *B2BOAuthConfig      `json:"oauth,omitempty"`
-	TOTPs      *B2BTOTPsConfig      `json:"totps,omitempty"`
-	SSO        *B2BSSOConfig        `json:"sso,omitempty"`
-	OTPs       *B2BOTPsConfig       `json:"otps,omitempty"`
-	DFPPA      *B2BDFPPAConfig      `json:"dfppa,omitempty"`
-	Passwords  *B2BPasswordsConfig  `json:"passwords,omitempty"`
-	Cookies    *B2BCookiesConfig    `json:"cookies,omitempty"`
+	// TOTPs is the TOTPs configuration for the consumer project SDK.
+	TOTPs *B2BTOTPsConfig `json:"totps,omitempty"`
+	// SSO is the SSO configuration for the B2B project SDK.
+	SSO *B2BSSOConfig `json:"sso,omitempty"`
+	// OTPs is the OTPs configuration for the consumer project SDK.
+	OTPs *B2BOTPsConfig `json:"otps,omitempty"`
+	// DFPPA is the Device Fingerprinting Protected Auth configuration for the consumer project SDK.
+	DFPPA *B2BDFPPAConfig `json:"dfppa,omitempty"`
+	// Passwords is the passwords configuration for the consumer project SDK.
+	Passwords *B2BPasswordsConfig `json:"passwords,omitempty"`
+	// Cookies is the cookies configuration for the consumer project SDK.
+	Cookies *B2BCookiesConfig `json:"cookies,omitempty"`
 }
 type B2BCookiesConfig struct {
 	HTTPOnly string `json:"http_only,omitempty"`
 }
+
+// B2BDFPPAConfig:
 type B2BDFPPAConfig struct {
-	Enabled     DFPPASetting           `json:"enabled,omitempty"`
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled DFPPASetting `json:"enabled,omitempty"`
+	// OnChallenge is the action to take when a DFPPA "challenge" verdict is returned.
 	OnChallenge DFPPAOnChallengeAction `json:"on_challenge,omitempty"`
 }
+
+// B2BMagicLinksConfig:
 type B2BMagicLinksConfig struct {
-	Enabled      bool `json:"enabled,omitempty"`
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled bool `json:"enabled,omitempty"`
+	// PKCERequired indicates whether PKCE is required for magic links. PKCE increases security by introducing
+	// a one-time secret for each auth flow to ensure the user starts and completes each auth flow from the
+	// same application on the device. This prevents a malicious app from intercepting a redirect and
+	// authenticating with the user's token. PKCE is enabled by default for mobile SDKs.
 	PKCERequired bool `json:"pkce_required,omitempty"`
 }
+
+// B2BOAuthConfig:
 type B2BOAuthConfig struct {
-	Enabled      bool `json:"enabled,omitempty"`
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled bool `json:"enabled,omitempty"`
+	// PKCERequired indicates whether PKCE is required for magic links. PKCE increases security by introducing
+	// a one-time secret for each auth flow to ensure the user starts and completes each auth flow from the
+	// same application on the device. This prevents a malicious app from intercepting a redirect and
+	// authenticating with the user's token. PKCE is enabled by default for mobile SDKs.
 	PKCERequired bool `json:"pkce_required,omitempty"`
 }
+
+// B2BOTPsConfig:
 type B2BOTPsConfig struct {
-	SMSEnabled          bool                  `json:"sms_enabled,omitempty"`
+	// SMSEnabled indicates whether the SMS OTP endpoints are enabled in the SDK.
+	SMSEnabled bool `json:"sms_enabled,omitempty"`
+	// SMSAutofillMetadata is a list of metadata that can be used for autofill of SMS OTPs.
 	SMSAutofillMetadata []SMSAutofillMetadata `json:"sms_autofill_metadata,omitempty"`
-	EmailEnabled        bool                  `json:"email_enabled,omitempty"`
+	// EmailEnabled indicates whether the email OTP endpoints are enabled in the SDK.
+	EmailEnabled bool `json:"email_enabled,omitempty"`
 }
+
+// B2BPasswordsConfig:
 type B2BPasswordsConfig struct {
-	Enabled                       bool `json:"enabled,omitempty"`
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled bool `json:"enabled,omitempty"`
+	// PKCERequiredForPasswordResets: PKCERequired indicates whether PKCE is required for password resets. PKCE
+	// increases security by introducing a one-time secret for each auth flow to ensure the user starts and
+	// completes each auth flow from the same application on the device. This prevents a malicious app from
+	// intercepting a redirect and authenticating with the user's token. PKCE is enabled by default for mobile
+	// SDKs.
 	PKCERequiredForPasswordResets bool `json:"pkce_required_for_password_resets,omitempty"`
 }
+
+// B2BSSOConfig:
 type B2BSSOConfig struct {
-	Enabled      bool `json:"enabled,omitempty"`
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled bool `json:"enabled,omitempty"`
+	// PKCERequired indicates whether PKCE is required for magic links. PKCE increases security by introducing
+	// a one-time secret for each auth flow to ensure the user starts and completes each auth flow from the
+	// same application on the device. This prevents a malicious app from intercepting a redirect and
+	// authenticating with the user's token. PKCE is enabled by default for mobile SDKs.
 	PKCERequired bool `json:"pkce_required,omitempty"`
 }
+
+// B2BSessionsConfig:
 type B2BSessionsConfig struct {
+	// MaxSessionDurationMinutes is the maximum session duration that can be created in minutes.
 	MaxSessionDurationMinutes int `json:"max_session_duration_minutes,omitempty"`
 }
+
+// B2BTOTPsConfig:
 type B2BTOTPsConfig struct {
+	// CreateTOTPs indicates whether TOTP creation is enabled in the SDK.
 	CreateTOTPs bool `json:"create_totps,omitempty"`
-	Enabled     bool `json:"enabled,omitempty"`
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled bool `json:"enabled,omitempty"`
 }
+
+// ConsumerBasicConfig:
 type ConsumerBasicConfig struct {
-	Enabled   bool     `json:"enabled,omitempty"`
-	Domains   []string `json:"domains,omitempty"`
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled bool `json:"enabled,omitempty"`
+	// Domains is a list of domains authorized for use in the SDK.
+	Domains []string `json:"domains,omitempty"`
+	// BundleIDs is a list of bundle IDs authorized for use in the SDK.
 	BundleIDs []string `json:"bundle_ids,omitempty"`
 }
+
+// ConsumerBiometricsConfig:
 type ConsumerBiometricsConfig struct {
+	// CreateBiometricsEnabled indicates whether biometrics creation is enabled in the SDK.
 	CreateBiometricsEnabled bool `json:"create_biometrics_enabled,omitempty"`
-	Enabled                 bool `json:"enabled,omitempty"`
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled bool `json:"enabled,omitempty"`
 }
+
+// ConsumerConfig:
 type ConsumerConfig struct {
-	Basic         *ConsumerBasicConfig         `json:"basic,omitempty"`
-	Sessions      *ConsumerSessionsConfig      `json:"sessions,omitempty"`
-	MagicLinks    *ConsumerMagicLinksConfig    `json:"magic_links,omitempty"`
-	OTPs          *ConsumerOTPsConfig          `json:"otps,omitempty"`
-	OAuth         *ConsumerOAuthConfig         `json:"oauth,omitempty"`
-	TOTPs         *ConsumerTOTPsConfig         `json:"totps,omitempty"`
-	WebAuthn      *ConsumerWebAuthnConfig      `json:"webauthn,omitempty"`
+	// Basic is the basic configuration for the consumer project SDK. This includes enabling the SDK.
+	Basic *ConsumerBasicConfig `json:"basic,omitempty"`
+	// Sessions is the session configuration for the consumer project SDK.
+	Sessions *ConsumerSessionsConfig `json:"sessions,omitempty"`
+	// MagicLinks is the magic links configuration for the consumer project SDK.
+	MagicLinks *ConsumerMagicLinksConfig `json:"magic_links,omitempty"`
+	// OTPs is the OTPs configuration for the consumer project SDK.
+	OTPs  *ConsumerOTPsConfig  `json:"otps,omitempty"`
+	OAuth *ConsumerOAuthConfig `json:"oauth,omitempty"`
+	// TOTPs is the TOTPs configuration for the consumer project SDK.
+	TOTPs    *ConsumerTOTPsConfig    `json:"totps,omitempty"`
+	WebAuthn *ConsumerWebAuthnConfig `json:"webauthn,omitempty"`
+	// CryptoWallets is the Crypto Wallets configuration for the consumer project SDK.
 	CryptoWallets *ConsumerCryptoWalletsConfig `json:"crypto_wallets,omitempty"`
-	DFPPA         *ConsumerDFPPAConfig         `json:"dfppa,omitempty"`
-	Biometrics    *ConsumerBiometricsConfig    `json:"biometrics,omitempty"`
-	Passwords     *ConsumerPasswordsConfig     `json:"passwords,omitempty"`
-	Cookies       *ConsumerCookiesConfig       `json:"cookies,omitempty"`
+	// DFPPA is the Device Fingerprinting Protected Auth configuration for the consumer project SDK.
+	DFPPA *ConsumerDFPPAConfig `json:"dfppa,omitempty"`
+	// Biometrics is the biometrics configuration for the consumer project SDK.
+	Biometrics *ConsumerBiometricsConfig `json:"biometrics,omitempty"`
+	// Passwords is the passwords configuration for the consumer project SDK.
+	Passwords *ConsumerPasswordsConfig `json:"passwords,omitempty"`
+	// Cookies is the cookies configuration for the consumer project SDK.
+	Cookies *ConsumerCookiesConfig `json:"cookies,omitempty"`
 }
 type ConsumerCookiesConfig struct {
 	HTTPOnly string `json:"http_only,omitempty"`
 }
+
+// ConsumerCryptoWalletsConfig:
 type ConsumerCryptoWalletsConfig struct {
-	Enabled      bool `json:"enabled,omitempty"`
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled bool `json:"enabled,omitempty"`
+	// SIWERequired indicates whether Sign In With Ethereum is required for Crypto Wallets.
 	SIWERequired bool `json:"siwe_required,omitempty"`
 }
+
+// ConsumerDFPPAConfig:
 type ConsumerDFPPAConfig struct {
-	Enabled     DFPPASetting           `json:"enabled,omitempty"`
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled DFPPASetting `json:"enabled,omitempty"`
+	// OnChallenge is the action to take when a DFPPA "challenge" verdict is returned.
 	OnChallenge DFPPAOnChallengeAction `json:"on_challenge,omitempty"`
 }
+
+// ConsumerMagicLinksConfig:
 type ConsumerMagicLinksConfig struct {
+	// LoginOrCreateEnabled indicates whether login-or-create with magic links is enabled in the SDK.
 	LoginOrCreateEnabled bool `json:"login_or_create_enabled,omitempty"`
-	SendEnabled          bool `json:"send_enabled,omitempty"`
-	PKCERequired         bool `json:"pkce_required,omitempty"`
-}
-type ConsumerOAuthConfig struct {
-	Enabled      bool `json:"enabled,omitempty"`
+	// SendEnabled indicates whether the magic links send endpoint is enabled in the SDK.
+	SendEnabled bool `json:"send_enabled,omitempty"`
+	// PKCERequired indicates whether PKCE is required for magic links. PKCE increases security by introducing
+	// a one-time secret for each auth flow to ensure the user starts and completes each auth flow from the
+	// same application on the device. This prevents a malicious app from intercepting a redirect and
+	// authenticating with the user's token. PKCE is enabled by default for mobile SDKs.
 	PKCERequired bool `json:"pkce_required,omitempty"`
 }
-type ConsumerOTPsConfig struct {
-	SMSLoginOrCreateEnabled      bool                  `json:"sms_login_or_create_enabled,omitempty"`
-	WhatsAppLoginOrCreateEnabled bool                  `json:"whatsapp_login_or_create_enabled,omitempty"`
-	EmailLoginOrCreateEnabled    bool                  `json:"email_login_or_create_enabled,omitempty"`
-	SMSSendEnabled               bool                  `json:"sms_send_enabled,omitempty"`
-	WhatsAppSendEnabled          bool                  `json:"whatsapp_send_enabled,omitempty"`
-	EmailSendEnabled             bool                  `json:"email_send_enabled,omitempty"`
-	SMSAutofillMetadata          []SMSAutofillMetadata `json:"sms_autofill_metadata,omitempty"`
+
+// ConsumerOAuthConfig:
+type ConsumerOAuthConfig struct {
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled bool `json:"enabled,omitempty"`
+	// PKCERequired indicates whether PKCE is required for magic links. PKCE increases security by introducing
+	// a one-time secret for each auth flow to ensure the user starts and completes each auth flow from the
+	// same application on the device. This prevents a malicious app from intercepting a redirect and
+	// authenticating with the user's token. PKCE is enabled by default for mobile SDKs.
+	PKCERequired bool `json:"pkce_required,omitempty"`
 }
+
+// ConsumerOTPsConfig:
+type ConsumerOTPsConfig struct {
+	// SMSLoginOrCreateEnabled indicates whether the SMS OTP login or create endpoint is enabled in the SDK.
+	SMSLoginOrCreateEnabled      bool `json:"sms_login_or_create_enabled,omitempty"`
+	WhatsAppLoginOrCreateEnabled bool `json:"whatsapp_login_or_create_enabled,omitempty"`
+	// EmailLoginOrCreateEnabled indicates whether the email OTP login or create endpoint is enabled in the SDK.
+	EmailLoginOrCreateEnabled bool `json:"email_login_or_create_enabled,omitempty"`
+	// SMSSendEnabled indicates whether the SMS OTP send endpoint is enabled in the SDK.
+	SMSSendEnabled      bool `json:"sms_send_enabled,omitempty"`
+	WhatsAppSendEnabled bool `json:"whatsapp_send_enabled,omitempty"`
+	// EmailSendEnabled indicates whether the email OTP send endpoint is enabled in the SDK.
+	EmailSendEnabled bool `json:"email_send_enabled,omitempty"`
+	// SMSAutofillMetadata is a list of metadata that can be used for autofill of SMS OTPs.
+	SMSAutofillMetadata []SMSAutofillMetadata `json:"sms_autofill_metadata,omitempty"`
+}
+
+// ConsumerPasswordsConfig:
 type ConsumerPasswordsConfig struct {
-	Enabled                       bool `json:"enabled,omitempty"`
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled bool `json:"enabled,omitempty"`
+	// PKCERequiredForPasswordResets: PKCERequired indicates whether PKCE is required for password resets. PKCE
+	// increases security by introducing a one-time secret for each auth flow to ensure the user starts and
+	// completes each auth flow from the same application on the device. This prevents a malicious app from
+	// intercepting a redirect and authenticating with the user's token. PKCE is enabled by default for mobile
+	// SDKs.
 	PKCERequiredForPasswordResets bool `json:"pkce_required_for_password_resets,omitempty"`
 }
+
+// ConsumerSessionsConfig:
 type ConsumerSessionsConfig struct {
+	// MaxSessionDurationMinutes is the maximum session duration that can be created in minutes.
 	MaxSessionDurationMinutes int `json:"max_session_duration_minutes,omitempty"`
 }
+
+// ConsumerTOTPsConfig:
 type ConsumerTOTPsConfig struct {
+	// CreateTOTPs indicates whether TOTP creation is enabled in the SDK.
 	CreateTOTPs bool `json:"create_totps,omitempty"`
-	Enabled     bool `json:"enabled,omitempty"`
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled bool `json:"enabled,omitempty"`
 }
+
+// ConsumerWebAuthnConfig:
 type ConsumerWebAuthnConfig struct {
 	CreateWebAuthns bool `json:"create_webauthn_s,omitempty"`
-	Enabled         bool `json:"enabled,omitempty"`
+	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
+	// session data.
+	Enabled bool `json:"enabled,omitempty"`
 }
+
+// SMSAutofillMetadata:
 type SMSAutofillMetadata struct {
-	MetadataType  string `json:"metadata_type,omitempty"`
+	// MetadataType is the type of metadata to use for autofill. This should be either "domain" or "hash".
+	MetadataType string `json:"metadata_type,omitempty"`
+	// MetadataValue is the value of the metadata to use for autofill. This should be the associated domain
+	// name (for MetadataType "domain") or application hash (for MetadataType "hash").
 	MetadataValue string `json:"metadata_value,omitempty"`
-	BundleID      string `json:"bundle_id,omitempty"`
-	ID            int    `json:"id,omitempty"`
+	// BundleID is the ID of the bundle to use for autofill. This should be the associated bundle ID.
+	BundleID string `json:"bundle_id,omitempty"`
+	// ID is the unique identifier for the trusted token profile.
+	ID int `json:"id,omitempty"`
 }
 
 // GetB2BConfigRequest: Request type for `SDK.GetB2BConfig`.
 type GetB2BConfigRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve allowed SMS country codes.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -158,9 +317,9 @@ type GetB2BConfigResponse struct {
 
 // GetConsumerConfigRequest: Request type for `SDK.GetConsumerConfig`.
 type GetConsumerConfigRequest struct {
-	// ProjectSlug is the slug of the project for which to get the B2B SDK config.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to get the B2B SDK config.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -176,9 +335,9 @@ type GetConsumerConfigResponse struct {
 
 // SetB2BConfigRequest: Request type for `SDK.SetB2BConfig`.
 type SetB2BConfigRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve allowed SMS country codes.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// Config is the consumer project SDK configuration.
 	Config *B2BConfig `json:"config,omitempty"`
@@ -196,9 +355,9 @@ type SetB2BConfigResponse struct {
 
 // SetConsumerConfigRequest: Request type for `SDK.SetConsumerConfig`.
 type SetConsumerConfigRequest struct {
-	// ProjectSlug is the slug of the project for which to set the B2B SDK config.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to set the B2B SDK config.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// Config is the consumer project SDK configuration.
 	Config *ConsumerConfig `json:"config,omitempty"`

@@ -50,7 +50,7 @@ func (c *TrustedTokenProfilesClient) Create(
 	return &resp, nil
 }
 
-// CreatePEMFile: Create creates a trusted token profile for an environment.
+// CreatePEMFile: CreatePEM creates a PEM file for a trusted token profile for an environment.
 func (c *TrustedTokenProfilesClient) CreatePEMFile(
 	ctx context.Context,
 	body trustedtokenprofiles.CreatePEMFileRequest,
@@ -93,7 +93,7 @@ func (c *TrustedTokenProfilesClient) Delete(
 	return &resp, nil
 }
 
-// DeletePEMFile: Delete deletes a trusted token profile for an environment.
+// DeletePEMFile: DeletePEM deletes a PEM file for a trusted token profile for an environment.
 func (c *TrustedTokenProfilesClient) DeletePEMFile(
 	ctx context.Context,
 	body trustedtokenprofiles.DeletePEMFileRequest,
@@ -131,7 +131,7 @@ func (c *TrustedTokenProfilesClient) Get(
 	return &resp, nil
 }
 
-// GetAll: Get retrieves the trusted token profile for an environment.
+// GetAll retrieves all the trusted token profiles for an environment.
 func (c *TrustedTokenProfilesClient) GetAll(
 	ctx context.Context,
 	body trustedtokenprofiles.GetAllRequest,
@@ -150,7 +150,7 @@ func (c *TrustedTokenProfilesClient) GetAll(
 	return &resp, nil
 }
 
-// GetPEMFile: Get retrieves the trusted token profile for an environment.
+// GetPEMFile: GetPEM retrieves a PEM file for a trusted token profile for an environment.
 func (c *TrustedTokenProfilesClient) GetPEMFile(
 	ctx context.Context,
 	body trustedtokenprofiles.GetPEMFileRequest,

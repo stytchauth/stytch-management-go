@@ -6,31 +6,45 @@ package trustedtokenprofiles
 // or your changes may be overwritten later!
 // !!!
 
+// PEMFile:
 type PEMFile struct {
+	// PEMFileID is the unique identifier for the PEM file.
 	PEMFileID string `json:"pem_file_id,omitempty"`
+	// PublicKey is the public key content.
 	PublicKey string `json:"public_key,omitempty"`
 }
+
+// TrustedTokenProfile:
 type TrustedTokenProfile struct {
-	ProfileID        string          `json:"profile_id,omitempty"`
-	Name             string          `json:"name,omitempty"`
-	Audience         string          `json:"audience,omitempty"`
-	Issuer           string          `json:"issuer,omitempty"`
-	PEMFiles         []PEMFile       `json:"pem_files,omitempty"`
-	CanJITProvision  bool            `json:"can_jit_provision,omitempty"`
-	JWKSURL          *string         `json:"jwks_url,omitempty"`
+	// ProfileID is the unique identifier for the trusted token profile.
+	ProfileID string `json:"profile_id,omitempty"`
+	// Name is a human-readable name of the template. This does not have to be unique.
+	Name string `json:"name,omitempty"`
+	// Audience is the audience for the trusted token profile.
+	Audience string `json:"audience,omitempty"`
+	// Issuer is the issuer for the trusted token profile.
+	Issuer string `json:"issuer,omitempty"`
+	// PEMFiles is a list of PEM files.
+	PEMFiles []PEMFile `json:"pem_files,omitempty"`
+	// CanJITProvision indicates whether the trusted token profile can be provisioned JIT.
+	CanJITProvision bool `json:"can_jit_provision,omitempty"`
+	// JWKSURL: JwksURL is the JWKS URL for the trusted token profile.
+	JWKSURL *string `json:"jwks_url,omitempty"`
+	// AttributeMapping is the attribute mapping for the trusted token profile.
 	AttributeMapping *map[string]any `json:"attribute_mapping,omitempty"`
-	PublicKeyType    PublicKeyType   `json:"public_key_type,omitempty"`
+	// PublicKeyType is the type of public key.
+	PublicKeyType PublicKeyType `json:"public_key_type,omitempty"`
 }
 
 // CreatePEMFileRequest: Request type for `TrustedTokenProfiles.CreatePEMFile`.
 type CreatePEMFileRequest struct {
-	// ProjectSlug is the slug of the project for which to create the PEM file.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to create the PEM file.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"-"`
-	// PublicKey is the public key to create.
+	// PublicKey is the public key content.
 	PublicKey string `json:"public_key,omitempty"`
 }
 
@@ -46,19 +60,20 @@ type CreatePEMFileResponse struct {
 
 // CreateRequest: Request type for `TrustedTokenProfiles.Create`.
 type CreateRequest struct {
-	// ProjectSlug is the slug of the project for which to create the PEM file.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to create the PEM file.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// Name is the name of the trusted token profile.
+	// Name is a human-readable name of the template. This does not have to be unique.
 	Name string `json:"name,omitempty"`
 	// Audience is the audience for the trusted token profile.
 	Audience string `json:"audience,omitempty"`
 	// Issuer is the issuer for the trusted token profile.
 	Issuer string `json:"issuer,omitempty"`
 	// PEMFiles is a list of PEM files.
-	PEMFiles        []string `json:"pem_files,omitempty"`
-	CanJITProvision bool     `json:"can_jit_provision,omitempty"`
+	PEMFiles []string `json:"pem_files,omitempty"`
+	// CanJITProvision indicates whether the trusted token profile can be provisioned JIT.
+	CanJITProvision bool `json:"can_jit_provision,omitempty"`
 	// JWKSURL: JwksURL is the JWKS URL for the trusted token profile.
 	JWKSURL *string `json:"jwks_url,omitempty"`
 	// AttributeMapping is the attribute mapping for the trusted token profile.
@@ -78,9 +93,9 @@ type CreateResponse struct {
 
 // DeletePEMFileRequest: Request type for `TrustedTokenProfiles.DeletePEMFile`.
 type DeletePEMFileRequest struct {
-	// ProjectSlug is the slug of the project for which to delete the PEM file.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to delete the PEM file.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"-"`
@@ -98,9 +113,9 @@ type DeletePEMFileResponse struct {
 
 // DeleteRequest: Request type for `TrustedTokenProfiles.Delete`.
 type DeleteRequest struct {
-	// ProjectSlug is the slug of the project for which to delete the PEM file.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to delete the PEM file.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"-"`
@@ -116,9 +131,9 @@ type DeleteResponse struct {
 
 // GetAllRequest: Request type for `TrustedTokenProfiles.GetAll`.
 type GetAllRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve the trusted token profiles.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve the trusted token profiles.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -133,9 +148,9 @@ type GetAllResponse struct {
 
 // GetPEMFileRequest: Request type for `TrustedTokenProfiles.GetPEMFile`.
 type GetPEMFileRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve the PEM file.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve the PEM file.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"-"`
@@ -155,9 +170,9 @@ type GetPEMFileResponse struct {
 
 // GetRequest: Request type for `TrustedTokenProfiles.Get`.
 type GetRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve the PEM file.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve the PEM file.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"-"`
@@ -174,13 +189,13 @@ type GetResponse struct {
 
 // UpdateRequest: Request type for `TrustedTokenProfiles.Update`.
 type UpdateRequest struct {
-	// ProjectSlug is the slug of the project for which to update the trusted token profile.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to update the trusted token profile.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"-"`
-	// Name is the name of the trusted token profile (optional).
+	// Name is a human-readable name of the template. This does not have to be unique.
 	Name *string `json:"name,omitempty"`
 	// Audience is the audience for the trusted token profile.
 	Audience *string `json:"audience,omitempty"`
@@ -190,7 +205,8 @@ type UpdateRequest struct {
 	JWKSURL *string `json:"jwks_url,omitempty"`
 	// AttributeMapping is the attribute mapping for the trusted token profile.
 	AttributeMapping *map[string]any `json:"attribute_mapping,omitempty"`
-	CanJITProvision  *bool           `json:"can_jit_provision,omitempty"`
+	// CanJITProvision indicates whether the trusted token profile can be provisioned JIT.
+	CanJITProvision *bool `json:"can_jit_provision,omitempty"`
 }
 
 // UpdateResponse: Response type for `TrustedTokenProfiles.Update`.

@@ -8,40 +8,68 @@ package environments
 
 import "time"
 
+// Environment:
 type Environment struct {
-	EnvironmentSlug                                        string          `json:"environment_slug,omitempty"`
-	ProjectSlug                                            string          `json:"project_slug,omitempty"`
-	Name                                                   string          `json:"name,omitempty"`
-	OAuthCallbackID                                        string          `json:"oauth_callback_id,omitempty"`
-	CrossOrgPasswordsEnabled                               bool            `json:"cross_org_passwords_enabled,omitempty"`
-	UserImpersonationEnabled                               bool            `json:"user_impersonation_enabled,omitempty"`
-	ZeroDowntimeSessionMigrationURL                        string          `json:"zero_downtime_session_migration_url,omitempty"`
-	UserLockSelfServeEnabled                               bool            `json:"user_lock_self_serve_enabled,omitempty"`
-	UserLockThreshold                                      int             `json:"user_lock_threshold,omitempty"`
-	UserLockTTL                                            int             `json:"user_lock_ttl,omitempty"`
-	IDPAuthorizationURL                                    string          `json:"idp_authorization_url,omitempty"`
-	IDPDynamicClientRegistrationEnabled                    bool            `json:"idp_dynamic_client_registration_enabled,omitempty"`
-	IDPDynamicClientRegistrationAccessTokenTemplateContent string          `json:"idp_dynamic_client_registration_access_token_template_content,omitempty"`
-	Type                                                   EnvironmentType `json:"type,omitempty"`
-	CreatedAt                                              time.Time       `json:"created_at,omitempty"`
+	// EnvironmentSlug is the slug of the environment.
+	EnvironmentSlug string `json:"environment_slug,omitempty"`
+	ProjectSlug     string `json:"project_slug,omitempty"`
+	// Name is a human-readable name of the template. This does not have to be unique.
+	Name string `json:"name,omitempty"`
+	// OAuthCallbackID: Configuration fields for the Environment are below. OAuthCallbackID is the callback ID
+	// used in OAuth requests for the environment.
+	OAuthCallbackID string `json:"oauth_callback_id,omitempty"`
+	// CrossOrgPasswordsEnabled indicates whether the environment uses cross-org passwords.
+	CrossOrgPasswordsEnabled bool `json:"cross_org_passwords_enabled,omitempty"`
+	// UserImpersonationEnabled indicates whether user impersonation is enabled for the environment.
+	UserImpersonationEnabled bool `json:"user_impersonation_enabled,omitempty"`
+	// ZeroDowntimeSessionMigrationURL is the OIDC-compliant UserInfo endpoint for session migration.
+	ZeroDowntimeSessionMigrationURL string `json:"zero_downtime_session_migration_url,omitempty"`
+	// UserLockSelfServeEnabled: User locking fields. UserLockSelfServeEnabled indicates whether users in the
+	// environment who get locked out should automatically get an unlock email magic link.
+	UserLockSelfServeEnabled bool `json:"user_lock_self_serve_enabled,omitempty"`
+	// UserLockThreshold represents the number of failed authenticate attempts that will cause a user in the
+	// environment to be locked. Defaults to 10.
+	UserLockThreshold int `json:"user_lock_threshold,omitempty"`
+	// UserLockTTL represents the time in seconds that the user in the environment remains locked once the lock
+	// is set. Defaults to 1 hour (3600 seconds).
+	UserLockTTL int `json:"user_lock_ttl,omitempty"`
+	// IDPAuthorizationURL: IDP fields. IDPAuthorizationURL is the OpenID Configuration endpoint for Connected
+	// Apps for the environment.
+	IDPAuthorizationURL string `json:"idp_authorization_url,omitempty"`
+	// IDPDynamicClientRegistrationEnabled indicates whether the project has opted in to Dynamic Client
+	// Registration (DCR) for Connected Apps.
+	IDPDynamicClientRegistrationEnabled bool `json:"idp_dynamic_client_registration_enabled,omitempty"`
+	// IDPDynamicClientRegistrationAccessTokenTemplateContent is the access token template to use for clients
+	// created through Dynamic Client Registration (DCR).
+	IDPDynamicClientRegistrationAccessTokenTemplateContent string `json:"idp_dynamic_client_registration_access_token_template_content,omitempty"`
+	// Type is the environment's type. See EnvironmentTypes() for possible values.
+	Type EnvironmentType `json:"type,omitempty"`
+	// CreatedAt is the ISO-8601 timestamp for when the environment was created.
+	CreatedAt time.Time `json:"created_at,omitempty"`
 }
+
+// Metrics:
 type Metrics struct {
-	UserCount         uint32 `json:"user_count,omitempty"`
+	// UserCount is the number of active users in the environment (only relevant for Consumer projects).
+	UserCount uint32 `json:"user_count,omitempty"`
+	// OrganizationCount is the number of active organizations in the environment (only relevant for B2B
+	// projects).
 	OrganizationCount uint32 `json:"organization_count,omitempty"`
-	MemberCount       uint32 `json:"member_count,omitempty"`
-	M2MClientCount    uint32 `json:"m2m_client_count,omitempty"`
+	// MemberCount is the number of active members in the environment (only relevant for B2B projects).
+	MemberCount uint32 `json:"member_count,omitempty"`
+	// M2MClientCount is the number of active M2M clients in the environment.
+	M2MClientCount uint32 `json:"m2m_client_count,omitempty"`
 }
 
 // CreateRequest: Request type for `Environments.Create`.
 type CreateRequest struct {
-	// ProjectSlug is the slug of the project for which to create the environment.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
 	// Name is the name of the environment.
 	Name string `json:"name,omitempty"`
 	// Type is the environment's type. See EnvironmentTypes() for possible values.
 	Type EnvironmentType `json:"type,omitempty"`
-	// EnvironmentSlug is the immutable unique identifier (slug) of the environment, and cannot be changed
-	// after the environment is created. If not provided, a slug will be generated.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug *string `json:"environment_slug,omitempty"`
 	// CrossOrgPasswordsEnabled indicates whether the environment uses cross-org passwords.
 	CrossOrgPasswordsEnabled *bool `json:"cross_org_passwords_enabled,omitempty"`
@@ -54,10 +82,18 @@ type CreateRequest struct {
 	UserLockSelfServeEnabled *bool `json:"user_lock_self_serve_enabled,omitempty"`
 	// UserLockThreshold represents the number of failed authenticate attempts that will cause a user in the
 	// environment to be locked. Defaults to 10.
-	UserLockThreshold                                      *int32  `json:"user_lock_threshold,omitempty"`
-	UserLockTTL                                            *int32  `json:"user_lock_ttl,omitempty"`
-	IDPAuthorizationURL                                    *string `json:"idp_authorization_url,omitempty"`
-	IDPDynamicClientRegistrationEnabled                    *bool   `json:"idp_dynamic_client_registration_enabled,omitempty"`
+	UserLockThreshold *int32 `json:"user_lock_threshold,omitempty"`
+	// UserLockTTL represents the time in seconds that the user in the environment remains locked once the lock
+	// is set. Defaults to 1 hour (3600 seconds).
+	UserLockTTL *int32 `json:"user_lock_ttl,omitempty"`
+	// IDPAuthorizationURL: IDP fields. IDPAuthorizationURL is the OpenID Configuration endpoint for Connected
+	// Apps for the environment.
+	IDPAuthorizationURL *string `json:"idp_authorization_url,omitempty"`
+	// IDPDynamicClientRegistrationEnabled indicates whether the project has opted in to Dynamic Client
+	// Registration (DCR) for Connected Apps.
+	IDPDynamicClientRegistrationEnabled *bool `json:"idp_dynamic_client_registration_enabled,omitempty"`
+	// IDPDynamicClientRegistrationAccessTokenTemplateContent is the access token template to use for clients
+	// created through Dynamic Client Registration (DCR).
 	IDPDynamicClientRegistrationAccessTokenTemplateContent *string `json:"idp_dynamic_client_registration_access_token_template_content,omitempty"`
 }
 
@@ -73,9 +109,9 @@ type CreateResponse struct {
 
 // DeleteRequest: Request type for `Environments.Delete`.
 type DeleteRequest struct {
-	// ProjectSlug is the slug of the project for which to delete the environment.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment to delete.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -89,7 +125,7 @@ type DeleteResponse struct {
 
 // GetAllRequest: Request type for `Environments.GetAll`.
 type GetAllRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve environments.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
 }
 
@@ -105,9 +141,9 @@ type GetAllResponse struct {
 
 // GetMetricsRequest: Request type for `Environments.GetMetrics`.
 type GetMetricsRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve metrics.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve metrics.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -123,9 +159,9 @@ type GetMetricsResponse struct {
 
 // GetRequest: Request type for `Environments.Get`.
 type GetRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve the environment.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment to retrieve.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -141,9 +177,9 @@ type GetResponse struct {
 
 // UpdateRequest: Request type for `Environments.Update`.
 type UpdateRequest struct {
-	// ProjectSlug is the slug of the project for which to update the environment.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment to update.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// Name is the name of the environment.
 	Name *string `json:"name,omitempty"`
@@ -158,10 +194,18 @@ type UpdateRequest struct {
 	UserLockSelfServeEnabled *bool `json:"user_lock_self_serve_enabled,omitempty"`
 	// UserLockThreshold represents the number of failed authenticate attempts that will cause a user in the
 	// environment to be locked. Defaults to 10.
-	UserLockThreshold                                      *int32  `json:"user_lock_threshold,omitempty"`
-	UserLockTTL                                            *int32  `json:"user_lock_ttl,omitempty"`
-	IDPAuthorizationURL                                    *string `json:"idp_authorization_url,omitempty"`
-	IDPDynamicClientRegistrationEnabled                    *bool   `json:"idp_dynamic_client_registration_enabled,omitempty"`
+	UserLockThreshold *int32 `json:"user_lock_threshold,omitempty"`
+	// UserLockTTL represents the time in seconds that the user in the environment remains locked once the lock
+	// is set. Defaults to 1 hour (3600 seconds).
+	UserLockTTL *int32 `json:"user_lock_ttl,omitempty"`
+	// IDPAuthorizationURL: IDP fields. IDPAuthorizationURL is the OpenID Configuration endpoint for Connected
+	// Apps for the environment.
+	IDPAuthorizationURL *string `json:"idp_authorization_url,omitempty"`
+	// IDPDynamicClientRegistrationEnabled indicates whether the project has opted in to Dynamic Client
+	// Registration (DCR) for Connected Apps.
+	IDPDynamicClientRegistrationEnabled *bool `json:"idp_dynamic_client_registration_enabled,omitempty"`
+	// IDPDynamicClientRegistrationAccessTokenTemplateContent is the access token template to use for clients
+	// created through Dynamic Client Registration (DCR).
 	IDPDynamicClientRegistrationAccessTokenTemplateContent *string `json:"idp_dynamic_client_registration_access_token_template_content,omitempty"`
 }
 

@@ -6,39 +6,70 @@ package emailtemplates
 // or your changes may be overwritten later!
 // !!!
 
+// CustomHTMLCustomization:
 type CustomHTMLCustomization struct {
-	TemplateType     TemplateType `json:"template_type,omitempty"`
-	HTMLContent      *string      `json:"html_content,omitempty"`
-	PlaintextContent *string      `json:"plaintext_content,omitempty"`
-	Subject          *string      `json:"subject,omitempty"`
+	// TemplateType is the type of email template for which this custom HTML customization is valid.
+	TemplateType TemplateType `json:"template_type,omitempty"`
+	// HTMLContent is the HTML content of the email body.
+	HTMLContent *string `json:"html_content,omitempty"`
+	// PlaintextContent is the plaintext content of the email body.
+	PlaintextContent *string `json:"plaintext_content,omitempty"`
+	// Subject is the subject line in the email template.
+	Subject *string `json:"subject,omitempty"`
 }
+
+// EmailTemplate:
 type EmailTemplate struct {
-	TemplateID              string                   `json:"template_id,omitempty"`
-	Name                    *string                  `json:"name,omitempty"`
-	SenderInformation       *SenderInformation       `json:"sender_information,omitempty"`
-	PrebuiltCustomization   *PrebuiltCustomization   `json:"prebuilt_customization,omitempty"`
+	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
+	// when sending emails from your project or managing this template. It can never be changed after creation.
+	TemplateID string `json:"template_id,omitempty"`
+	// Name is a human-readable name of the template. This does not have to be unique.
+	Name *string `json:"name,omitempty"`
+	// SenderInformation is information about the email sender, such as the reply address or rendered name.
+	// This is an optional field for PrebuiltCustomization, but required for CustomHTMLCustomization.
+	SenderInformation *SenderInformation `json:"sender_information,omitempty"`
+	// PrebuiltCustomization is customization related to prebuilt fields (such as button color) for prebuilt
+	// email templates.
+	PrebuiltCustomization *PrebuiltCustomization `json:"prebuilt_customization,omitempty"`
+	// CustomHTMLCustomization is customization defined for completely custom HTML email templates.
 	CustomHTMLCustomization *CustomHTMLCustomization `json:"custom_html_customization,omitempty"`
 }
+
+// PrebuiltCustomization:
 type PrebuiltCustomization struct {
-	ButtonBorderRadius *float32      `json:"button_border_radius,omitempty"`
-	ButtonColor        *string       `json:"button_color,omitempty"`
-	ButtonTextColor    *string       `json:"button_text_color,omitempty"`
-	FontFamily         FontFamily    `json:"font_family,omitempty"`
-	LogoSrc            *string       `json:"logo_src,omitempty"`
-	TextAlignment      TextAlignment `json:"text_alignment,omitempty"`
+	// ButtonBorderRadius is the radius of the button border in the email body.
+	ButtonBorderRadius *float32 `json:"button_border_radius,omitempty"`
+	// ButtonColor is the color of the button in the email body.
+	ButtonColor *string `json:"button_color,omitempty"`
+	// ButtonTextColor is the color of the text in the button in the email body.
+	ButtonTextColor *string `json:"button_text_color,omitempty"`
+	// FontFamily is the font type to be used in the email body.
+	FontFamily FontFamily `json:"font_family,omitempty"`
+	LogoSrc    *string    `json:"logo_src,omitempty"`
+	// TextAlignment is the alignment of the text in the email body.
+	TextAlignment TextAlignment `json:"text_alignment,omitempty"`
 }
+
+// SenderInformation:
 type SenderInformation struct {
-	FromLocalPart    *string `json:"from_local_part,omitempty"`
-	FromDomain       *string `json:"from_domain,omitempty"`
-	FromName         *string `json:"from_name,omitempty"`
+	// FromLocalPart is the prefix of the sender’s email address, everything before the @ symbol (e.g.,
+	// first.last).
+	FromLocalPart *string `json:"from_local_part,omitempty"`
+	// FromDomain is the postfix of the sender’s email address, everything after the @ symbol (e.g.,
+	// stytch.com).
+	FromDomain *string `json:"from_domain,omitempty"`
+	// FromName is the sender of the email (e.g., Login).
+	FromName *string `json:"from_name,omitempty"`
+	// ReplyToLocalPart is the prefix of the reply-to email address, everything before the @ symbol (e.g.,
+	// first.last).
 	ReplyToLocalPart *string `json:"reply_to_local_part,omitempty"`
-	ReplyToName      *string `json:"reply_to_name,omitempty"`
+	// ReplyToName is the sender of the reply-to email address (e.g., Support).
+	ReplyToName *string `json:"reply_to_name,omitempty"`
 }
 
 // CreateRequest: Request type for `EmailTemplates.Create`.
 type CreateRequest struct {
-	// ProjectSlug is the slug of the project for which to create the email template. An email template will be
-	// created in each environment associated with this project.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
 	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
 	// when sending emails from your project or managing this template. It can never be changed after creation.
@@ -48,9 +79,10 @@ type CreateRequest struct {
 	// SenderInformation is information about the email sender, such as the reply address or rendered name.
 	// This is an optional field for PrebuiltCustomization, but required for CustomHTMLCustomization.
 	SenderInformation *SenderInformation `json:"sender_information,omitempty"`
-	// PrebuiltCustomization: NOTE: Only *one of these fields* should be set. PrebuiltCustomization is
-	// customization related to prebuilt fields (such as button color) for prebuilt email templates.
-	PrebuiltCustomization   *PrebuiltCustomization   `json:"prebuilt_customization,omitempty"`
+	// PrebuiltCustomization is customization related to prebuilt fields (such as button color) for prebuilt
+	// email templates.
+	PrebuiltCustomization *PrebuiltCustomization `json:"prebuilt_customization,omitempty"`
+	// CustomHTMLCustomization is customization defined for completely custom HTML email templates.
 	CustomHTMLCustomization *CustomHTMLCustomization `json:"custom_html_customization,omitempty"`
 }
 
@@ -66,10 +98,10 @@ type CreateResponse struct {
 
 // DeleteRequest: Request type for `EmailTemplates.Delete`.
 type DeleteRequest struct {
-	// ProjectSlug is the slug of the project for which to delete the email template. The email template will
-	// be deleted in each environment associated with the project.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// TemplateID is the unique template ID for the email template to be deleted
+	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
+	// when sending emails from your project or managing this template. It can never be changed after creation.
 	TemplateID string `json:"-"`
 }
 
@@ -83,7 +115,7 @@ type DeleteResponse struct {
 
 // GetAllRequest: Request type for `EmailTemplates.GetAll`.
 type GetAllRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve all the email templates.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
 }
 
@@ -99,7 +131,7 @@ type GetAllResponse struct {
 
 // GetDefaultRequest: Request type for `EmailTemplates.GetDefault`.
 type GetDefaultRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve allowed SMS country codes.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
 	// EmailTemplateType is the template type for which to get the default email template.
 	EmailTemplateType TemplateType `json:"-"`
@@ -118,9 +150,10 @@ type GetDefaultResponse struct {
 
 // GetRequest: Request type for `EmailTemplates.Get`.
 type GetRequest struct {
-	// ProjectSlug is the slug of the project for which to get the default email template.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// TemplateID is the unique template ID for the email template to retrieve.
+	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
+	// when sending emails from your project or managing this template. It can never be changed after creation.
 	TemplateID string `json:"-"`
 }
 
@@ -136,7 +169,7 @@ type GetResponse struct {
 
 // SetDefaultRequest: Request type for `EmailTemplates.SetDefault`.
 type SetDefaultRequest struct {
-	// ProjectSlug is the slug of the project for which to set the default email template.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
 	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
 	// when sending emails from your project or managing this template. It can never be changed after creation.
@@ -155,7 +188,7 @@ type SetDefaultResponse struct {
 
 // UnsetDefaultRequest: Request type for `EmailTemplates.UnsetDefault`.
 type UnsetDefaultRequest struct {
-	// ProjectSlug is the slug of the project for which to unset the default email template.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
 	// EmailTemplateType is the template type for which to get the default email template.
 	EmailTemplateType TemplateType `json:"-"`
@@ -171,8 +204,7 @@ type UnsetDefaultResponse struct {
 
 // UpdateRequest: Request type for `EmailTemplates.Update`.
 type UpdateRequest struct {
-	// ProjectSlug is the slug of the project for which to update the email template. The email template will
-	// be updated in each environment associated with the project.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
 	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
 	// when sending emails from your project or managing this template. It can never be changed after creation.
@@ -182,9 +214,10 @@ type UpdateRequest struct {
 	// SenderInformation is information about the email sender, such as the reply address or rendered name.
 	// This is an optional field for PrebuiltCustomization, but required for CustomHTMLCustomization.
 	SenderInformation *SenderInformation `json:"sender_information,omitempty"`
-	// PrebuiltCustomization: NOTE: Only *one of these fields* should be set. PrebuiltCustomization is
-	// customization related to prebuilt fields (such as button color) for prebuilt email templates.
-	PrebuiltCustomization   *PrebuiltCustomization   `json:"prebuilt_customization,omitempty"`
+	// PrebuiltCustomization is customization related to prebuilt fields (such as button color) for prebuilt
+	// email templates.
+	PrebuiltCustomization *PrebuiltCustomization `json:"prebuilt_customization,omitempty"`
+	// CustomHTMLCustomization is customization defined for completely custom HTML email templates.
 	CustomHTMLCustomization *CustomHTMLCustomization `json:"custom_html_customization,omitempty"`
 }
 

@@ -89,7 +89,7 @@ func (c *SecretsClient) Get(
 	return &resp, nil
 }
 
-// GetAll: Get retrieves a secret for an environment.
+// GetAll retrieves all secrets for an environment.
 func (c *SecretsClient) GetAll(
 	ctx context.Context,
 	body secrets.GetAllRequest,

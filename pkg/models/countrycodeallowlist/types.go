@@ -27,9 +27,9 @@ type GetAllowedSMSCountryCodesResponse struct {
 // GetAllowedWhatsAppCountryCodesRequest: Request type for
 // `CountryCodeAllowlist.GetAllowedWhatsAppCountryCodes`.
 type GetAllowedWhatsAppCountryCodesRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve allowed WhatsApp country codes.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed WhatsApp country codes.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -46,9 +46,9 @@ type GetAllowedWhatsAppCountryCodesResponse struct {
 
 // SetAllowedSMSCountryCodesRequest: Request type for `CountryCodeAllowlist.SetAllowedSMSCountryCodes`.
 type SetAllowedSMSCountryCodesRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve allowed SMS country codes.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve allowed SMS country codes.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// CountryCodes is a list of country codes that are allowed for SMS.
 	CountryCodes []string `json:"country_codes,omitempty"`
@@ -67,11 +67,11 @@ type SetAllowedSMSCountryCodesResponse struct {
 // SetAllowedWhatsAppCountryCodesRequest: Request type for
 // `CountryCodeAllowlist.SetAllowedWhatsAppCountryCodes`.
 type SetAllowedWhatsAppCountryCodesRequest struct {
-	// ProjectSlug is the slug of the project for which to set allowed WhatsApp country codes.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to set allowed WhatsApp country codes.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// CountryCodes is a list of country codes to set as allowed for WhatsApp.
+	// CountryCodes is a list of country codes that are allowed for SMS.
 	CountryCodes []string `json:"country_codes,omitempty"`
 }
 

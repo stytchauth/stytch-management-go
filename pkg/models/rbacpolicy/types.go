@@ -6,43 +6,82 @@ package rbacpolicy
 // or your changes may be overwritten later!
 // !!!
 
+// DefaultRole:
 type DefaultRole struct {
+	// Permissions are the permissions granted to this role for resources within the environment.
 	Permissions []Permission `json:"permissions,omitempty"`
 }
+
+// Permission:
 type Permission struct {
-	ResourceID string   `json:"resource_id,omitempty"`
-	Actions    []string `json:"actions,omitempty"`
+	// ResourceID is a human-readable name that is unique within the environment.
+	ResourceID string `json:"resource_id,omitempty"`
+	// Actions is an array of actions that the role can perform on the given resource.
+	Actions []string `json:"actions,omitempty"`
 }
+
+// Policy:
 type Policy struct {
-	StytchResources []Resource   `json:"stytch_resources,omitempty"`
-	CustomRoles     []Role       `json:"custom_roles,omitempty"`
-	CustomResources []Resource   `json:"custom_resources,omitempty"`
-	CustomScopes    []Scope      `json:"custom_scopes,omitempty"`
-	StytchMember    *DefaultRole `json:"stytch_member,omitempty"`
-	StytchAdmin     *DefaultRole `json:"stytch_admin,omitempty"`
-	StytchUser      *DefaultRole `json:"stytch_user,omitempty"`
+	// StytchResources consists of resources created by Stytch that always exist. This field will be returned
+	// in relevant Policy objects but can never be overridden or deleted.
+	StytchResources []Resource `json:"stytch_resources,omitempty"`
+	// CustomRoles: The following fields are valid for both B2B and Consumer projects: CustomRoles are
+	// additional roles that exist within the environment beyond the stytch_member, stytch_admin, or
+	// stytch_user roles.
+	CustomRoles []Role `json:"custom_roles,omitempty"`
+	// CustomResources are resources that exist within the environment beyond those defined within the
+	// stytch_resources.
+	CustomResources []Resource `json:"custom_resources,omitempty"`
+	// CustomScopes are additional scopes that exist within the environment beyond those defined by default.
+	CustomScopes []Scope `json:"custom_scopes,omitempty"`
+	// StytchMember: The following fields are valid for B2B projects only: StytchMember is the default role
+	// given to members within the environment. Only permissions are returned; role_id and description are
+	// managed by Stytch.
+	StytchMember *DefaultRole `json:"stytch_member,omitempty"`
+	// StytchAdmin is the role assigned to admins within an organization. Only permissions are returned;
+	// role_id and description are managed by Stytch.
+	StytchAdmin *DefaultRole `json:"stytch_admin,omitempty"`
+	// StytchUser: The following field is valid for Consumer projects only: StytchUser is the default role
+	// given to users within the environment. Only permissions are returned; role_id and description are
+	// managed by Stytch.
+	StytchUser *DefaultRole `json:"stytch_user,omitempty"`
 }
+
+// Resource:
 type Resource struct {
-	ResourceID       string   `json:"resource_id,omitempty"`
-	Description      string   `json:"description,omitempty"`
+	// ResourceID is a human-readable name that is unique within the environment.
+	ResourceID string `json:"resource_id,omitempty"`
+	// Description is a description for the role.
+	Description string `json:"description,omitempty"`
+	// AvailableActions are the actions that can be granted for this resource.
 	AvailableActions []string `json:"available_actions,omitempty"`
 }
+
+// Role:
 type Role struct {
-	RoleID      string       `json:"role_id,omitempty"`
-	Description string       `json:"description,omitempty"`
+	// RoleID is a human-readable name that is unique within the environment.
+	RoleID string `json:"role_id,omitempty"`
+	// Description is a description for the role.
+	Description string `json:"description,omitempty"`
+	// Permissions are the permissions granted to this role for resources within the environment.
 	Permissions []Permission `json:"permissions,omitempty"`
 }
+
+// Scope:
 type Scope struct {
-	Scope       string       `json:"scope,omitempty"`
-	Description string       `json:"description,omitempty"`
+	// Scope is a human-readable name that is unique within the environment.
+	Scope string `json:"scope,omitempty"`
+	// Description is a description for the role.
+	Description string `json:"description,omitempty"`
+	// Permissions are the permissions granted to this role for resources within the environment.
 	Permissions []Permission `json:"permissions,omitempty"`
 }
 
 // GetRequest: Request type for `RBACPolicy.Get`.
 type GetRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve the RBAC policy.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve the RBAC policy.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -58,9 +97,9 @@ type GetResponse struct {
 
 // SetRequest: Request type for `RBACPolicy.Set`.
 type SetRequest struct {
-	// ProjectSlug is the slug of the project for which to set the RBAC policy.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to set the RBAC policy.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// StytchMember: The following fields are valid for B2B projects only: StytchMember is the default role
 	// given to members within the environment. Only permissions are returned; role_id and description are

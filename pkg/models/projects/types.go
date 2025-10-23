@@ -8,16 +8,20 @@ package projects
 
 import "time"
 
+// Project:
 type Project struct {
-	ProjectSlug string    `json:"project_slug,omitempty"`
-	Name        string    `json:"name,omitempty"`
-	Vertical    Vertical  `json:"vertical,omitempty"`
-	CreatedAt   time.Time `json:"created_at,omitempty"`
+	ProjectSlug string `json:"project_slug,omitempty"`
+	// Name is a human-readable name of the template. This does not have to be unique.
+	Name string `json:"name,omitempty"`
+	// Vertical is the project's vertical.
+	Vertical Vertical `json:"vertical,omitempty"`
+	// CreatedAt is the ISO-8601 timestamp for when the environment was created.
+	CreatedAt time.Time `json:"created_at,omitempty"`
 }
 
 // CreateRequest: Request type for `Projects.Create`.
 type CreateRequest struct {
-	// Name is the name of the project.
+	// Name is a human-readable name of the template. This does not have to be unique.
 	Name string `json:"name,omitempty"`
 	// Vertical is the project's vertical.
 	Vertical    Vertical `json:"vertical,omitempty"`
@@ -36,7 +40,7 @@ type CreateResponse struct {
 
 // DeleteRequest: Request type for `Projects.Delete`.
 type DeleteRequest struct {
-	// ProjectSlug is the slug of the project to delete.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
 }
 
@@ -63,7 +67,7 @@ type GetAllResponse struct {
 
 // GetRequest: Request type for `Projects.Get`.
 type GetRequest struct {
-	// ProjectSlug is the slug of the project to retrieve.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
 }
 
@@ -79,9 +83,9 @@ type GetResponse struct {
 
 // UpdateRequest: Request type for `Projects.Update`.
 type UpdateRequest struct {
-	// ProjectSlug is the slug of the project to update.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// Name is the new name for the project.
+	// Name is a human-readable name of the template. This does not have to be unique.
 	Name *string `json:"name,omitempty"`
 }
 

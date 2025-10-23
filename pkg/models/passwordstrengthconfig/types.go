@@ -6,20 +6,33 @@ package passwordstrengthconfig
 // or your changes may be overwritten later!
 // !!!
 
+// PasswordStrengthConfig:
 type PasswordStrengthConfig struct {
-	CheckBreachOnCreation       bool             `json:"check_breach_on_creation,omitempty"`
-	CheckBreachOnAuthentication bool             `json:"check_breach_on_authentication,omitempty"`
-	ValidateOnAuthentication    bool             `json:"validate_on_authentication,omitempty"`
-	ValidationPolicy            ValidationPolicy `json:"validation_policy,omitempty"`
-	LudsMinPasswordLength       *int32           `json:"luds_min_password_length,omitempty"`
-	LudsMinPasswordComplexity   *int32           `json:"luds_min_password_complexity,omitempty"`
+	// CheckBreachOnCreation is a flag to check whether to use the HaveIBeenPwned database to detect password
+	// breaches when a user first creates their password.
+	CheckBreachOnCreation bool `json:"check_breach_on_creation,omitempty"`
+	// CheckBreachOnAuthentication denotes whether to use the HaveIBeenPwned database to detect password
+	// breaches when a user authenticates.
+	CheckBreachOnAuthentication bool `json:"check_breach_on_authentication,omitempty"`
+	// ValidateOnAuthentication notes whether to require a password reset on authentication if a user's current
+	// password no longer meets the project's current policy requirements.
+	ValidateOnAuthentication bool `json:"validate_on_authentication,omitempty"`
+	// ValidationPolicy is the policy to use for password validation.
+	ValidationPolicy ValidationPolicy `json:"validation_policy,omitempty"`
+	// LudsMinPasswordLength is the minimum number of characters in a password if using a LUDS
+	// validation_policy. This field is nil when using the ZXCVBN validation_policy.
+	LudsMinPasswordLength *int32 `json:"luds_min_password_length,omitempty"`
+	// LudsMinPasswordComplexity is the minimum number of "character types" in a password (Lowercase,
+	// Uppercase, Digits, Symbols) when using a LUDS validation_policy. This field is nil when using the ZXCVBN
+	// validation_policy.
+	LudsMinPasswordComplexity *int32 `json:"luds_min_password_complexity,omitempty"`
 }
 
 // GetRequest: Request type for `PasswordStrengthConfig.Get`.
 type GetRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve the password strength config.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve the password strength config.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 }
 
@@ -35,9 +48,9 @@ type GetResponse struct {
 
 // SetRequest: Request type for `PasswordStrengthConfig.Set`.
 type SetRequest struct {
-	// ProjectSlug is the slug of the project for which to set the password strength config.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to set the password strength config.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// CheckBreachOnCreation is a flag to check whether to use the HaveIBeenPwned database to detect password
 	// breaches when a user first creates their password.

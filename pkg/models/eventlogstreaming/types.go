@@ -6,13 +6,20 @@ package eventlogstreaming
 // or your changes may be overwritten later!
 // !!!
 
+// DatadogConfig:
 type DatadogConfig struct {
-	Site   DatadogSite `json:"site,omitempty"`
-	APIKey *string     `json:"api_key,omitempty"`
+	// Site is one of the supported DatadogSite constants.
+	Site DatadogSite `json:"site,omitempty"`
+	// APIKey is the API key for submitting logs to a Datadog account.
+	APIKey *string `json:"api_key,omitempty"`
 }
+
+// DatadogConfigMasked:
 type DatadogConfigMasked struct {
-	APIKeyLastFour string      `json:"api_key_last_four,omitempty"`
-	Site           DatadogSite `json:"site,omitempty"`
+	// APIKeyLastFour is the last four characters of the API key in use.
+	APIKeyLastFour string `json:"api_key_last_four,omitempty"`
+	// Site is one of the supported DatadogSite constants.
+	Site DatadogSite `json:"site,omitempty"`
 }
 type DestinationConfig struct {
 	Datadog     *DatadogConfig     `json:"datadog,omitempty"`
@@ -22,32 +29,50 @@ type DestinationConfigMasked struct {
 	Datadog     *DatadogConfigMasked     `json:"datadog,omitempty"`
 	GrafanaLoki *GrafanaLokiConfigMasked `json:"grafana_loki,omitempty"`
 }
+
+// EventLogStreaming:
 type EventLogStreaming struct {
-	DestinationType   DestinationType    `json:"destination_type,omitempty"`
+	// DestinationType is the type of destination to which to send events.
+	DestinationType DestinationType `json:"destination_type,omitempty"`
+	// DestinationConfig is the configuration for the destination to which to send events.
 	DestinationConfig *DestinationConfig `json:"destination_config,omitempty"`
 	StreamingStatus   StreamingStatus    `json:"streaming_status,omitempty"`
 }
+
+// EventLogStreamingMasked:
 type EventLogStreamingMasked struct {
-	DestinationType   DestinationType          `json:"destination_type,omitempty"`
+	// DestinationType is the type of destination to which to send events.
+	DestinationType DestinationType `json:"destination_type,omitempty"`
+	// DestinationConfig is the configuration for the destination to which to send events.
 	DestinationConfig *DestinationConfigMasked `json:"destination_config,omitempty"`
 	StreamingStatus   StreamingStatus          `json:"streaming_status,omitempty"`
 }
+
+// GrafanaLokiConfig:
 type GrafanaLokiConfig struct {
+	// Hostname is the hostname of the Grafana Loki instance to which to send events.
 	Hostname *string `json:"hostname,omitempty"`
+	// Username is the username for authenticating the request to a Grafana Loki instance.
 	Username *string `json:"username,omitempty"`
+	// Password is the password for authenticating the request to a Grafana Loki instance.
 	Password *string `json:"password,omitempty"`
 }
+
+// GrafanaLokiConfigMasked:
 type GrafanaLokiConfigMasked struct {
-	Hostname         string `json:"hostname,omitempty"`
-	Username         string `json:"username,omitempty"`
+	// Hostname is the hostname of the Grafana Loki instance to which to send events.
+	Hostname string `json:"hostname,omitempty"`
+	// Username is the username for authenticating the request to a Grafana Loki instance.
+	Username string `json:"username,omitempty"`
+	// PasswordLastFour is the last four characters of the password in use.
 	PasswordLastFour string `json:"password_last_four,omitempty"`
 }
 
 // CreateRequest: Request type for `EventLogStreaming.Create`.
 type CreateRequest struct {
-	// ProjectSlug is the slug of the project for which to create the event log streaming config.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to create the event log streaming config.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// DestinationType is the type of destination to which to send events.
 	DestinationType DestinationType `json:"destination_type,omitempty"`
@@ -67,11 +92,11 @@ type CreateResponse struct {
 
 // DeleteRequest: Request type for `EventLogStreaming.Delete`.
 type DeleteRequest struct {
-	// ProjectSlug is the slug of the project for which to delete the event log streaming config.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to delete the event log streaming config.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// DestinationType is the destination type of the event log streaming config to delete.
+	// DestinationType is the type of destination to which to send events.
 	DestinationType DestinationType `json:"-"`
 }
 
@@ -85,11 +110,11 @@ type DeleteResponse struct {
 
 // DisableRequest: Request type for `EventLogStreaming.Disable`.
 type DisableRequest struct {
-	// ProjectSlug is the slug of the project for which to disable the event log streaming config.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to disable the event log streaming config.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// DestinationType is the destination type of the event log streaming config to disable.
+	// DestinationType is the type of destination to which to send events.
 	DestinationType DestinationType `json:"-"`
 }
 
@@ -103,11 +128,11 @@ type DisableResponse struct {
 
 // EnableRequest: Request type for `EventLogStreaming.Enable`.
 type EnableRequest struct {
-	// ProjectSlug is the slug of the project for which to enable the event log streaming config.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to enable the event log streaming config.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// DestinationType is the destination type of the event log streaming config to enable.
+	// DestinationType is the type of destination to which to send events.
 	DestinationType DestinationType `json:"-"`
 }
 
@@ -121,11 +146,11 @@ type EnableResponse struct {
 
 // GetRequest: Request type for `EventLogStreaming.Get`.
 type GetRequest struct {
-	// ProjectSlug is the slug of the project for which to retrieve the event log streaming config.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to retrieve the event log streaming config.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// DestinationType is the destination type of the event log streaming config to retrieve.
+	// DestinationType is the type of destination to which to send events.
 	DestinationType DestinationType `json:"-"`
 }
 
@@ -141,13 +166,13 @@ type GetResponse struct {
 
 // UpdateRequest: Request type for `EventLogStreaming.Update`.
 type UpdateRequest struct {
-	// ProjectSlug is the slug of the project for which to update the event log streaming config.
+	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EnvironmentSlug is the slug of the environment for which to update the event log streaming config.
+	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// DestinationType is the type of destination for which to update the event log streaming config.
+	// DestinationType is the type of destination to which to send events.
 	DestinationType DestinationType `json:"-"`
-	// DestinationConfig: DestinationType is the destination type of the event log streaming config to update.
+	// DestinationConfig is the configuration for the destination to which to send events.
 	DestinationConfig *DestinationConfig `json:"destination_config,omitempty"`
 }
 
