@@ -287,7 +287,7 @@ type ConsumerWebAuthnConfig struct {
 // SMSAutofillMetadata:
 type SMSAutofillMetadata struct {
 	// MetadataType is the type of metadata to use for autofill. This should be either "domain" or "hash".
-	MetadataType string `json:"metadata_type,omitempty"`
+	MetadataType SMSAutofillMetadataMetadataType `json:"metadata_type,omitempty"`
 	// MetadataValue is the value of the metadata to use for autofill. This should be the associated domain
 	// name (for MetadataType "domain") or application hash (for MetadataType "hash").
 	MetadataValue string `json:"metadata_value,omitempty"`
@@ -404,5 +404,18 @@ func DFPPASettings() []DFPPASetting {
 		DFPPASettingEnabled,
 		DFPPASettingPassive,
 		DFPPASettingDisabled,
+	}
+}
+
+type SMSAutofillMetadataMetadataType string
+
+const (
+	SMSAutofillMetadataMetadataTypeDomain SMSAutofillMetadataMetadataType = "domain"
+	SMSAutofillMetadataMetadataTypeHash   SMSAutofillMetadataMetadataType = "hash"
+)
+
+func SMSAutofillMetadataMetadataTypes() []SMSAutofillMetadataMetadataType {
+	return []SMSAutofillMetadataMetadataType{
+		SMSAutofillMetadataMetadataTypeHash,
 	}
 }
