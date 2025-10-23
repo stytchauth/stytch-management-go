@@ -90,7 +90,7 @@ type CreateRequest struct {
 type CreateResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// EmailTemplate is the email template that was created.
+	// EmailTemplate is the email template.
 	EmailTemplate EmailTemplate `json:"email_template,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
@@ -133,7 +133,7 @@ type GetAllResponse struct {
 type GetDefaultRequest struct {
 	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EmailTemplateType is the template type for which to get the default email template.
+	// EmailTemplateType is the template type.
 	EmailTemplateType TemplateType `json:"-"`
 }
 
@@ -161,7 +161,7 @@ type GetRequest struct {
 type GetResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// EmailTemplate is the email template that was created.
+	// EmailTemplate is the email template.
 	EmailTemplate EmailTemplate `json:"email_template,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
@@ -174,7 +174,7 @@ type SetDefaultRequest struct {
 	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
 	// when sending emails from your project or managing this template. It can never be changed after creation.
 	TemplateID string `json:"template_id,omitempty"`
-	// EmailTemplateType is the template type for which to get the default email template.
+	// EmailTemplateType is the template type.
 	EmailTemplateType TemplateType `json:"-"`
 }
 
@@ -190,7 +190,7 @@ type SetDefaultResponse struct {
 type UnsetDefaultRequest struct {
 	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// EmailTemplateType is the template type for which to get the default email template.
+	// EmailTemplateType is the template type.
 	EmailTemplateType TemplateType `json:"-"`
 }
 
@@ -225,7 +225,7 @@ type UpdateRequest struct {
 type UpdateResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// EmailTemplate is the email template that was created.
+	// EmailTemplate is the email template.
 	EmailTemplate EmailTemplate `json:"email_template,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
