@@ -84,7 +84,7 @@ type CreateRequest struct {
 type CreateResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// EventLogStreamingConfig is the event log streaming configuration.
+	// EventLogStreamingConfig is the configuration that was created.
 	EventLogStreamingConfig EventLogStreaming `json:"event_log_streaming_config,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
@@ -180,7 +180,7 @@ type UpdateRequest struct {
 type UpdateResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// EventLogStreamingConfig is the event log streaming configuration.
+	// EventLogStreamingConfig is the configuration that was updated.
 	EventLogStreamingConfig EventLogStreaming `json:"event_log_streaming_config,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`

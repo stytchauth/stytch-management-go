@@ -101,7 +101,7 @@ type CreateRequest struct {
 type CreateResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// Environment contains the environment details.
+	// Environment contains the details for the newly created environment.
 	Environment Environment `json:"environment,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
@@ -213,7 +213,7 @@ type UpdateRequest struct {
 type UpdateResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// Environment contains the environment details.
+	// Environment contains the details for the updated environment.
 	Environment Environment `json:"environment,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`

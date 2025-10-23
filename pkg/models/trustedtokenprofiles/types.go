@@ -52,7 +52,7 @@ type CreatePEMFileRequest struct {
 type CreatePEMFileResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// PEMFile is the PEM file.
+	// PEMFile is the PEM file that was created.
 	PEMFile PEMFile `json:"pem_file,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
@@ -86,7 +86,7 @@ type CreateRequest struct {
 type CreateResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// Profile: TrustedTokenProfile is the trusted token profile.
+	// Profile: TrustedTokenProfile is the trusted token profile that was created.
 	Profile TrustedTokenProfile `json:"profile,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
@@ -163,7 +163,7 @@ type GetPEMFileRequest struct {
 type GetPEMFileResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// PEMFile is the PEM file.
+	// PEMFile is the PEM file that was retrieved.
 	PEMFile PEMFile `json:"pem_file,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
@@ -215,7 +215,7 @@ type UpdateRequest struct {
 type UpdateResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// Profile: TrustedTokenProfile is the trusted token profile.
+	// Profile: TrustedTokenProfile is the trusted token profile that was updated.
 	Profile TrustedTokenProfile `json:"profile,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
