@@ -6,7 +6,6 @@ package trustedtokenprofiles
 // or your changes may be overwritten later!
 // !!!
 
-// PEMFile:
 type PEMFile struct {
 	// PEMFileID is the unique identifier for the PEM file.
 	PEMFileID string `json:"pem_file_id,omitempty"`
@@ -14,11 +13,10 @@ type PEMFile struct {
 	PublicKey string `json:"public_key,omitempty"`
 }
 
-// TrustedTokenProfile:
 type TrustedTokenProfile struct {
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"profile_id,omitempty"`
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is a human-readable name. This does not have to be unique.
 	Name string `json:"name,omitempty"`
 	// Audience is the audience for the trusted token profile.
 	Audience string `json:"audience,omitempty"`
@@ -64,7 +62,7 @@ type CreateRequest struct {
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is a human-readable name. This does not have to be unique.
 	Name string `json:"name,omitempty"`
 	// Audience is the audience for the trusted token profile.
 	Audience string `json:"audience,omitempty"`
@@ -141,8 +139,9 @@ type GetAllRequest struct {
 // GetAllResponse: Response type for `TrustedTokenProfiles.GetAll`.
 type GetAllResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
-	RequestID string                `json:"request_id,omitempty"`
-	Profiles  []TrustedTokenProfile `json:"profiles,omitempty"`
+	RequestID string `json:"request_id,omitempty"`
+	// Profiles: A list of all trusted token profiles for the project.
+	Profiles []TrustedTokenProfile `json:"profiles,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
 }
@@ -197,7 +196,7 @@ type UpdateRequest struct {
 	EnvironmentSlug string `json:"-"`
 	// ProfileID is the unique identifier for the trusted token profile.
 	ProfileID string `json:"-"`
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is a human-readable name. This does not have to be unique.
 	Name *string `json:"name,omitempty"`
 	// Audience is the audience for the trusted token profile.
 	Audience *string `json:"audience,omitempty"`

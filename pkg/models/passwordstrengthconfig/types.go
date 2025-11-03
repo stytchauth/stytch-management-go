@@ -6,7 +6,6 @@ package passwordstrengthconfig
 // or your changes may be overwritten later!
 // !!!
 
-// PasswordStrengthConfig:
 type PasswordStrengthConfig struct {
 	// CheckBreachOnCreation is a flag to check whether to use the HaveIBeenPwned database to detect password
 	// breaches when a user first creates their password.

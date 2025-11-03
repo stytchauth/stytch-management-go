@@ -6,7 +6,6 @@ package jwttemplates
 // or your changes may be overwritten later!
 // !!!
 
-// JWTTemplate:
 type JWTTemplate struct {
 	// TemplateContent is the JWT template content.
 	TemplateContent string `json:"template_content,omitempty"`

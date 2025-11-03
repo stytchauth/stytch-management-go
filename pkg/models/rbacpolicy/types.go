@@ -6,13 +6,11 @@ package rbacpolicy
 // or your changes may be overwritten later!
 // !!!
 
-// DefaultRole:
 type DefaultRole struct {
 	// Permissions are the permissions granted to this role for resources within the environment.
 	Permissions []Permission `json:"permissions,omitempty"`
 }
 
-// Permission:
 type Permission struct {
 	// ResourceID is a human-readable name that is unique within the environment.
 	ResourceID string `json:"resource_id,omitempty"`
@@ -20,7 +18,6 @@ type Permission struct {
 	Actions []string `json:"actions,omitempty"`
 }
 
-// Policy:
 type Policy struct {
 	// StytchResources consists of resources created by Stytch that always exist. This field will be returned
 	// in relevant Policy objects but can never be overridden or deleted.
@@ -47,7 +44,6 @@ type Policy struct {
 	StytchUser *DefaultRole `json:"stytch_user,omitempty"`
 }
 
-// Resource:
 type Resource struct {
 	// ResourceID is a human-readable name that is unique within the environment.
 	ResourceID string `json:"resource_id,omitempty"`
@@ -57,7 +53,6 @@ type Resource struct {
 	AvailableActions []string `json:"available_actions,omitempty"`
 }
 
-// Role:
 type Role struct {
 	// RoleID is a human-readable name that is unique within the environment.
 	RoleID string `json:"role_id,omitempty"`
@@ -67,7 +62,6 @@ type Role struct {
 	Permissions []Permission `json:"permissions,omitempty"`
 }
 
-// Scope:
 type Scope struct {
 	// Scope is a human-readable name that is unique within the environment.
 	Scope string `json:"scope,omitempty"`

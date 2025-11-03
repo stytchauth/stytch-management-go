@@ -6,7 +6,6 @@ package sdk
 // or your changes may be overwritten later!
 // !!!
 
-// AuthorizedB2BDomain:
 type AuthorizedB2BDomain struct {
 	// Domain is the domain name. Stytch uses the same-origin policy to determine matches.
 	Domain string `json:"domain,omitempty"`
@@ -16,7 +15,6 @@ type AuthorizedB2BDomain struct {
 	SlugPattern string `json:"slug_pattern,omitempty"`
 }
 
-// B2BBasicConfig:
 type B2BBasicConfig struct {
 	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
 	// session data.
@@ -31,7 +29,6 @@ type B2BBasicConfig struct {
 	BundleIDs []string `json:"bundle_ids,omitempty"`
 }
 
-// B2BConfig:
 type B2BConfig struct {
 	// Basic is the basic configuration for the consumer project SDK. This includes enabling the SDK.
 	Basic *B2BBasicConfig `json:"basic,omitempty"`
@@ -57,7 +54,6 @@ type B2BCookiesConfig struct {
 	HTTPOnly string `json:"http_only,omitempty"`
 }
 
-// B2BDFPPAConfig:
 type B2BDFPPAConfig struct {
 	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
 	// session data.
@@ -66,7 +62,6 @@ type B2BDFPPAConfig struct {
 	OnChallenge DFPPAOnChallengeAction `json:"on_challenge,omitempty"`
 }
 
-// B2BMagicLinksConfig:
 type B2BMagicLinksConfig struct {
 	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
 	// session data.
@@ -78,7 +73,6 @@ type B2BMagicLinksConfig struct {
 	PKCERequired bool `json:"pkce_required,omitempty"`
 }
 
-// B2BOAuthConfig:
 type B2BOAuthConfig struct {
 	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
 	// session data.
@@ -90,7 +84,6 @@ type B2BOAuthConfig struct {
 	PKCERequired bool `json:"pkce_required,omitempty"`
 }
 
-// B2BOTPsConfig:
 type B2BOTPsConfig struct {
 	// SMSEnabled indicates whether the SMS OTP endpoints are enabled in the SDK.
 	SMSEnabled bool `json:"sms_enabled,omitempty"`
@@ -100,7 +93,6 @@ type B2BOTPsConfig struct {
 	EmailEnabled bool `json:"email_enabled,omitempty"`
 }
 
-// B2BPasswordsConfig:
 type B2BPasswordsConfig struct {
 	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
 	// session data.
@@ -113,7 +105,6 @@ type B2BPasswordsConfig struct {
 	PKCERequiredForPasswordResets bool `json:"pkce_required_for_password_resets,omitempty"`
 }
 
-// B2BSSOConfig:
 type B2BSSOConfig struct {
 	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
 	// session data.
@@ -125,13 +116,11 @@ type B2BSSOConfig struct {
 	PKCERequired bool `json:"pkce_required,omitempty"`
 }
 
-// B2BSessionsConfig:
 type B2BSessionsConfig struct {
 	// MaxSessionDurationMinutes is the maximum session duration that can be created in minutes.
 	MaxSessionDurationMinutes int `json:"max_session_duration_minutes,omitempty"`
 }
 
-// B2BTOTPsConfig:
 type B2BTOTPsConfig struct {
 	// CreateTOTPs indicates whether TOTP creation is enabled in the SDK.
 	CreateTOTPs bool `json:"create_totps,omitempty"`
@@ -140,7 +129,6 @@ type B2BTOTPsConfig struct {
 	Enabled bool `json:"enabled,omitempty"`
 }
 
-// ConsumerBasicConfig:
 type ConsumerBasicConfig struct {
 	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
 	// session data.
@@ -151,7 +139,6 @@ type ConsumerBasicConfig struct {
 	BundleIDs []string `json:"bundle_ids,omitempty"`
 }
 
-// ConsumerBiometricsConfig:
 type ConsumerBiometricsConfig struct {
 	// CreateBiometricsEnabled indicates whether biometrics creation is enabled in the SDK.
 	CreateBiometricsEnabled bool `json:"create_biometrics_enabled,omitempty"`
@@ -160,7 +147,6 @@ type ConsumerBiometricsConfig struct {
 	Enabled bool `json:"enabled,omitempty"`
 }
 
-// ConsumerConfig:
 type ConsumerConfig struct {
 	// Basic is the basic configuration for the consumer project SDK. This includes enabling the SDK.
 	Basic *ConsumerBasicConfig `json:"basic,omitempty"`
@@ -189,7 +175,6 @@ type ConsumerCookiesConfig struct {
 	HTTPOnly string `json:"http_only,omitempty"`
 }
 
-// ConsumerCryptoWalletsConfig:
 type ConsumerCryptoWalletsConfig struct {
 	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
 	// session data.
@@ -198,7 +183,6 @@ type ConsumerCryptoWalletsConfig struct {
 	SIWERequired bool `json:"siwe_required,omitempty"`
 }
 
-// ConsumerDFPPAConfig:
 type ConsumerDFPPAConfig struct {
 	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
 	// session data.
@@ -207,7 +191,6 @@ type ConsumerDFPPAConfig struct {
 	OnChallenge DFPPAOnChallengeAction `json:"on_challenge,omitempty"`
 }
 
-// ConsumerMagicLinksConfig:
 type ConsumerMagicLinksConfig struct {
 	// LoginOrCreateEnabled indicates whether login-or-create with magic links is enabled in the SDK.
 	LoginOrCreateEnabled bool `json:"login_or_create_enabled,omitempty"`
@@ -220,7 +203,6 @@ type ConsumerMagicLinksConfig struct {
 	PKCERequired bool `json:"pkce_required,omitempty"`
 }
 
-// ConsumerOAuthConfig:
 type ConsumerOAuthConfig struct {
 	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
 	// session data.
@@ -232,7 +214,6 @@ type ConsumerOAuthConfig struct {
 	PKCERequired bool `json:"pkce_required,omitempty"`
 }
 
-// ConsumerOTPsConfig:
 type ConsumerOTPsConfig struct {
 	// SMSLoginOrCreateEnabled indicates whether the SMS OTP login or create endpoint is enabled in the SDK.
 	SMSLoginOrCreateEnabled      bool `json:"sms_login_or_create_enabled,omitempty"`
@@ -248,7 +229,6 @@ type ConsumerOTPsConfig struct {
 	SMSAutofillMetadata []SMSAutofillMetadata `json:"sms_autofill_metadata,omitempty"`
 }
 
-// ConsumerPasswordsConfig:
 type ConsumerPasswordsConfig struct {
 	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
 	// session data.
@@ -261,13 +241,11 @@ type ConsumerPasswordsConfig struct {
 	PKCERequiredForPasswordResets bool `json:"pkce_required_for_password_resets,omitempty"`
 }
 
-// ConsumerSessionsConfig:
 type ConsumerSessionsConfig struct {
 	// MaxSessionDurationMinutes is the maximum session duration that can be created in minutes.
 	MaxSessionDurationMinutes int `json:"max_session_duration_minutes,omitempty"`
 }
 
-// ConsumerTOTPsConfig:
 type ConsumerTOTPsConfig struct {
 	// CreateTOTPs indicates whether TOTP creation is enabled in the SDK.
 	CreateTOTPs bool `json:"create_totps,omitempty"`
@@ -276,7 +254,6 @@ type ConsumerTOTPsConfig struct {
 	Enabled bool `json:"enabled,omitempty"`
 }
 
-// ConsumerWebAuthnConfig:
 type ConsumerWebAuthnConfig struct {
 	CreateWebAuthns bool `json:"create_webauthn_s,omitempty"`
 	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
@@ -284,7 +261,6 @@ type ConsumerWebAuthnConfig struct {
 	Enabled bool `json:"enabled,omitempty"`
 }
 
-// SMSAutofillMetadata:
 type SMSAutofillMetadata struct {
 	// MetadataType is the type of metadata to use for autofill. This should be either "domain" or "hash".
 	MetadataType SMSAutofillMetadataMetadataType `json:"metadata_type,omitempty"`

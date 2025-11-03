@@ -8,24 +8,25 @@ package projects
 
 import "time"
 
-// Project:
 type Project struct {
+	// ProjectSlug: The slug of the project.
 	ProjectSlug string `json:"project_slug,omitempty"`
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is a human-readable name. This does not have to be unique.
 	Name string `json:"name,omitempty"`
 	// Vertical is the project's vertical.
 	Vertical Vertical `json:"vertical,omitempty"`
-	// CreatedAt is the ISO-8601 timestamp for when the environment was created.
+	// CreatedAt: The ISO-8601 timestamp for when the resource was created.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 }
 
 // CreateRequest: Request type for `Projects.Create`.
 type CreateRequest struct {
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is a human-readable name. This does not have to be unique.
 	Name string `json:"name,omitempty"`
 	// Vertical is the project's vertical.
-	Vertical    Vertical `json:"vertical,omitempty"`
-	ProjectSlug *string  `json:"project_slug,omitempty"`
+	Vertical Vertical `json:"vertical,omitempty"`
+	// ProjectSlug: The slug of the project.
+	ProjectSlug *string `json:"project_slug,omitempty"`
 }
 
 // CreateResponse: Response type for `Projects.Create`.
@@ -85,7 +86,7 @@ type GetResponse struct {
 type UpdateRequest struct {
 	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is a human-readable name. This does not have to be unique.
 	Name *string `json:"name,omitempty"`
 }
 

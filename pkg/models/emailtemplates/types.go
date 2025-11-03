@@ -6,7 +6,6 @@ package emailtemplates
 // or your changes may be overwritten later!
 // !!!
 
-// CustomHTMLCustomization:
 type CustomHTMLCustomization struct {
 	// TemplateType is the type of email template for which this custom HTML customization is valid.
 	TemplateType TemplateType `json:"template_type,omitempty"`
@@ -18,12 +17,11 @@ type CustomHTMLCustomization struct {
 	Subject *string `json:"subject,omitempty"`
 }
 
-// EmailTemplate:
 type EmailTemplate struct {
 	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
 	// when sending emails from your project or managing this template. It can never be changed after creation.
 	TemplateID string `json:"template_id,omitempty"`
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is a human-readable name. This does not have to be unique.
 	Name *string `json:"name,omitempty"`
 	// SenderInformation is information about the email sender, such as the reply address or rendered name.
 	// This is an optional field for PrebuiltCustomization, but required for CustomHTMLCustomization.
@@ -35,7 +33,6 @@ type EmailTemplate struct {
 	CustomHTMLCustomization *CustomHTMLCustomization `json:"custom_html_customization,omitempty"`
 }
 
-// PrebuiltCustomization:
 type PrebuiltCustomization struct {
 	// ButtonBorderRadius is the radius of the button border in the email body.
 	ButtonBorderRadius *float32 `json:"button_border_radius,omitempty"`
@@ -45,12 +42,12 @@ type PrebuiltCustomization struct {
 	ButtonTextColor *string `json:"button_text_color,omitempty"`
 	// FontFamily is the font type to be used in the email body.
 	FontFamily FontFamily `json:"font_family,omitempty"`
-	LogoSrc    *string    `json:"logo_src,omitempty"`
+	// LogoSrc is the URL source for the logo image in the email body.
+	LogoSrc *string `json:"logo_src,omitempty"`
 	// TextAlignment is the alignment of the text in the email body.
 	TextAlignment TextAlignment `json:"text_alignment,omitempty"`
 }
 
-// SenderInformation:
 type SenderInformation struct {
 	// FromLocalPart is the prefix of the sender’s email address, everything before the @ symbol (e.g.,
 	// first.last).
@@ -74,7 +71,7 @@ type CreateRequest struct {
 	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
 	// when sending emails from your project or managing this template. It can never be changed after creation.
 	TemplateID string `json:"template_id,omitempty"`
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is a human-readable name. This does not have to be unique.
 	Name *string `json:"name,omitempty"`
 	// SenderInformation is information about the email sender, such as the reply address or rendered name.
 	// This is an optional field for PrebuiltCustomization, but required for CustomHTMLCustomization.
@@ -210,7 +207,7 @@ type UpdateRequest struct {
 	// TemplateID is a unique identifier to use for the template – this is how you will refer to the template
 	// when sending emails from your project or managing this template. It can never be changed after creation.
 	TemplateID string `json:"-"`
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// Name is a human-readable name. This does not have to be unique.
 	Name *string `json:"name,omitempty"`
 	// SenderInformation is information about the email sender, such as the reply address or rendered name.
 	// This is an optional field for PrebuiltCustomization, but required for CustomHTMLCustomization.

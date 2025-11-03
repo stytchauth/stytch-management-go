@@ -6,7 +6,6 @@ package eventlogstreaming
 // or your changes may be overwritten later!
 // !!!
 
-// DatadogConfig:
 type DatadogConfig struct {
 	// Site is one of the supported DatadogSite constants.
 	Site DatadogSite `json:"site,omitempty"`
@@ -14,7 +13,6 @@ type DatadogConfig struct {
 	APIKey *string `json:"api_key,omitempty"`
 }
 
-// DatadogConfigMasked:
 type DatadogConfigMasked struct {
 	// APIKeyLastFour is the last four characters of the API key in use.
 	APIKeyLastFour string `json:"api_key_last_four,omitempty"`
@@ -30,7 +28,6 @@ type DestinationConfigMasked struct {
 	GrafanaLoki *GrafanaLokiConfigMasked `json:"grafana_loki,omitempty"`
 }
 
-// EventLogStreaming:
 type EventLogStreaming struct {
 	// DestinationType is the type of destination to which to send events.
 	DestinationType DestinationType `json:"destination_type,omitempty"`
@@ -39,7 +36,6 @@ type EventLogStreaming struct {
 	StreamingStatus   StreamingStatus    `json:"streaming_status,omitempty"`
 }
 
-// EventLogStreamingMasked:
 type EventLogStreamingMasked struct {
 	// DestinationType is the type of destination to which to send events.
 	DestinationType DestinationType `json:"destination_type,omitempty"`
@@ -48,7 +44,6 @@ type EventLogStreamingMasked struct {
 	StreamingStatus   StreamingStatus          `json:"streaming_status,omitempty"`
 }
 
-// GrafanaLokiConfig:
 type GrafanaLokiConfig struct {
 	// Hostname is the hostname of the Grafana Loki instance to which to send events.
 	Hostname *string `json:"hostname,omitempty"`
@@ -58,7 +53,6 @@ type GrafanaLokiConfig struct {
 	Password *string `json:"password,omitempty"`
 }
 
-// GrafanaLokiConfigMasked:
 type GrafanaLokiConfigMasked struct {
 	// Hostname is the hostname of the Grafana Loki instance to which to send events.
 	Hostname string `json:"hostname,omitempty"`

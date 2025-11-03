@@ -6,19 +6,17 @@ package redirecturls
 // or your changes may be overwritten later!
 // !!!
 
-// RedirectURL:
 type RedirectURL struct {
-	// URL is the URL to which to redirect.
+	// URL: The URL to which to redirect.
 	URL string `json:"url,omitempty"`
 	// ValidTypes is a list of all the URLRedirectType available for this URL.
 	ValidTypes []URLType `json:"valid_types,omitempty"`
 }
 
-// URLType:
 type URLType struct {
 	// IsDefault is true if this is the default redirect type, false otherwise.
 	IsDefault bool `json:"is_default,omitempty"`
-	// Type is the environment's type. See EnvironmentTypes() for possible values.
+	// Type: The environment's type.
 	Type RedirectURLType `json:"type,omitempty"`
 }
 
@@ -28,7 +26,7 @@ type CreateRequest struct {
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// URL is the URL to which to redirect.
+	// URL: The URL to which to redirect.
 	URL string `json:"url,omitempty"`
 	// DoNotPromoteDefaults is used to suppress the automatic "promotion" of a RedirectURL to the default if no
 	// other RedirectURL exists for the given type. This is primarily intended for use with
@@ -59,7 +57,7 @@ type DeleteRequest struct {
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// URL is the URL to which to redirect.
+	// URL: The URL to which to redirect.
 	URL string `json:"url,omitempty"`
 	// DoNotPromoteDefaults is used to suppress the automatic "promotion" of a RedirectURL to the default if no
 	// other RedirectURL exists for the given type. This is primarily intended for use with
@@ -104,7 +102,7 @@ type GetRequest struct {
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// URL is the URL to which to redirect.
+	// URL: The URL to which to redirect.
 	URL string `json:"url,omitempty"`
 }
 
@@ -124,7 +122,7 @@ type UpdateRequest struct {
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// URL is the URL to which to redirect.
+	// URL: The URL to which to redirect.
 	URL string `json:"url,omitempty"`
 	// DoNotPromoteDefaults is used to suppress the automatic "promotion" of a RedirectURL to the default if no
 	// other RedirectURL exists for the given type. This is primarily intended for use with

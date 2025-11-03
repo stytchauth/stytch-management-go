@@ -8,25 +8,23 @@ package secrets
 
 import "time"
 
-// MaskedSecret:
 type MaskedSecret struct {
 	// SecretID is the unique ID of the secret in the project.
 	SecretID string `json:"secret_id,omitempty"`
 	// LastFour is the last four characters of the secret.
 	LastFour string `json:"last_four,omitempty"`
-	// CreatedAt is the ISO-8601 timestamp for when the environment was created.
+	// CreatedAt: The ISO-8601 timestamp for when the resource was created.
 	CreatedAt time.Time `json:"created_at,omitempty"`
-	// UsedAt is the ISO-8601 timestamp for when the secret was last used.
+	// UsedAt: The ISO-8601 timestamp for when the secret was last used.
 	UsedAt time.Time `json:"used_at,omitempty"`
 }
 
-// Secret:
 type Secret struct {
 	// SecretID is the unique ID of the secret in the project.
 	SecretID string `json:"secret_id,omitempty"`
 	// Secret is the secret value. This is only visible once upon secret creation.
 	Secret string `json:"secret,omitempty"`
-	// CreatedAt is the ISO-8601 timestamp for when the environment was created.
+	// CreatedAt: The ISO-8601 timestamp for when the resource was created.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 }
 

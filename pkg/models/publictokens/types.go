@@ -8,11 +8,10 @@ package publictokens
 
 import "time"
 
-// PublicToken:
 type PublicToken struct {
 	// PublicToken is the public token value as well as the unique identifier for the token.
 	PublicToken string `json:"public_token,omitempty"`
-	// CreatedAt is the ISO-8601 timestamp for when the environment was created.
+	// CreatedAt: The ISO-8601 timestamp for when the resource was created.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 }
 

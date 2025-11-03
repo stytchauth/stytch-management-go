@@ -8,33 +8,31 @@ package environments
 
 import "time"
 
-// Environment:
 type Environment struct {
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"environment_slug,omitempty"`
-	ProjectSlug     string `json:"project_slug,omitempty"`
-	// Name is a human-readable name of the template. This does not have to be unique.
+	// ProjectSlug: The slug of the project.
+	ProjectSlug string `json:"project_slug,omitempty"`
+	// Name is a human-readable name. This does not have to be unique.
 	Name string `json:"name,omitempty"`
-	// OAuthCallbackID: Configuration fields for the Environment are below. OAuthCallbackID is the callback ID
-	// used in OAuth requests for the environment.
+	// OAuthCallbackID: The callback ID used in OAuth requests for the environment.
 	OAuthCallbackID string `json:"oauth_callback_id,omitempty"`
 	// CrossOrgPasswordsEnabled indicates whether the environment uses cross-org passwords.
 	CrossOrgPasswordsEnabled bool `json:"cross_org_passwords_enabled,omitempty"`
-	// UserImpersonationEnabled indicates whether user impersonation is enabled for the environment.
+	// UserImpersonationEnabled: Indicates whether user impersonation is enabled for the environment.
 	UserImpersonationEnabled bool `json:"user_impersonation_enabled,omitempty"`
 	// ZeroDowntimeSessionMigrationURL is the OIDC-compliant UserInfo endpoint for session migration.
 	ZeroDowntimeSessionMigrationURL string `json:"zero_downtime_session_migration_url,omitempty"`
-	// UserLockSelfServeEnabled: User locking fields. UserLockSelfServeEnabled indicates whether users in the
-	// environment who get locked out should automatically get an unlock email magic link.
+	// UserLockSelfServeEnabled: Indicates whether users in the environment who get locked out should
+	// automatically get an unlock email magic link.
 	UserLockSelfServeEnabled bool `json:"user_lock_self_serve_enabled,omitempty"`
 	// UserLockThreshold represents the number of failed authenticate attempts that will cause a user in the
 	// environment to be locked. Defaults to 10.
 	UserLockThreshold int `json:"user_lock_threshold,omitempty"`
-	// UserLockTTL represents the time in seconds that the user in the environment remains locked once the lock
-	// is set. Defaults to 1 hour (3600 seconds).
+	// UserLockTTL: Represents the time in seconds that the user in the environment remains locked once the
+	// lock is set. Defaults to 1 hour (3600 seconds).
 	UserLockTTL int `json:"user_lock_ttl,omitempty"`
-	// IDPAuthorizationURL: IDP fields. IDPAuthorizationURL is the OpenID Configuration endpoint for Connected
-	// Apps for the environment.
+	// IDPAuthorizationURL: The OpenID Configuration endpoint for Connected Apps for the environment.
 	IDPAuthorizationURL string `json:"idp_authorization_url,omitempty"`
 	// IDPDynamicClientRegistrationEnabled indicates whether the project has opted in to Dynamic Client
 	// Registration (DCR) for Connected Apps.
@@ -42,15 +40,14 @@ type Environment struct {
 	// IDPDynamicClientRegistrationAccessTokenTemplateContent is the access token template to use for clients
 	// created through Dynamic Client Registration (DCR).
 	IDPDynamicClientRegistrationAccessTokenTemplateContent string `json:"idp_dynamic_client_registration_access_token_template_content,omitempty"`
-	// Type is the environment's type. See EnvironmentTypes() for possible values.
+	// Type: The environment's type.
 	Type EnvironmentType `json:"type,omitempty"`
-	// CreatedAt is the ISO-8601 timestamp for when the environment was created.
+	// CreatedAt: The ISO-8601 timestamp for when the resource was created.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 }
 
-// Metrics:
 type Metrics struct {
-	// UserCount is the number of active users in the environment (only relevant for Consumer projects).
+	// UserCount: The number of active users in the environment (only relevant for Consumer projects).
 	UserCount uint32 `json:"user_count,omitempty"`
 	// OrganizationCount is the number of active organizations in the environment (only relevant for B2B
 	// projects).
@@ -65,29 +62,28 @@ type Metrics struct {
 type CreateRequest struct {
 	// ProjectSlug is the slug of the project.
 	ProjectSlug string `json:"-"`
-	// Name is the name of the environment.
+	// Name is a human-readable name. This does not have to be unique.
 	Name string `json:"name,omitempty"`
-	// Type is the environment's type. See EnvironmentTypes() for possible values.
+	// Type: The environment's type.
 	Type EnvironmentType `json:"type,omitempty"`
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug *string `json:"environment_slug,omitempty"`
 	// CrossOrgPasswordsEnabled indicates whether the environment uses cross-org passwords.
 	CrossOrgPasswordsEnabled *bool `json:"cross_org_passwords_enabled,omitempty"`
-	// UserImpersonationEnabled indicates whether user impersonation is enabled for the environment.
+	// UserImpersonationEnabled: Indicates whether user impersonation is enabled for the environment.
 	UserImpersonationEnabled *bool `json:"user_impersonation_enabled,omitempty"`
 	// ZeroDowntimeSessionMigrationURL is the OIDC-compliant UserInfo endpoint for session migration.
 	ZeroDowntimeSessionMigrationURL *string `json:"zero_downtime_session_migration_url,omitempty"`
-	// UserLockSelfServeEnabled: User locking fields. UserLockSelfServeEnabled indicates whether users in the
-	// environment who get locked out should automatically get an unlock email magic link.
+	// UserLockSelfServeEnabled: Indicates whether users in the environment who get locked out should
+	// automatically get an unlock email magic link.
 	UserLockSelfServeEnabled *bool `json:"user_lock_self_serve_enabled,omitempty"`
 	// UserLockThreshold represents the number of failed authenticate attempts that will cause a user in the
 	// environment to be locked. Defaults to 10.
 	UserLockThreshold *int32 `json:"user_lock_threshold,omitempty"`
-	// UserLockTTL represents the time in seconds that the user in the environment remains locked once the lock
-	// is set. Defaults to 1 hour (3600 seconds).
+	// UserLockTTL: Represents the time in seconds that the user in the environment remains locked once the
+	// lock is set. Defaults to 1 hour (3600 seconds).
 	UserLockTTL *int32 `json:"user_lock_ttl,omitempty"`
-	// IDPAuthorizationURL: IDP fields. IDPAuthorizationURL is the OpenID Configuration endpoint for Connected
-	// Apps for the environment.
+	// IDPAuthorizationURL: The OpenID Configuration endpoint for Connected Apps for the environment.
 	IDPAuthorizationURL *string `json:"idp_authorization_url,omitempty"`
 	// IDPDynamicClientRegistrationEnabled indicates whether the project has opted in to Dynamic Client
 	// Registration (DCR) for Connected Apps.
@@ -181,25 +177,24 @@ type UpdateRequest struct {
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// Name is the name of the environment.
+	// Name is a human-readable name. This does not have to be unique.
 	Name *string `json:"name,omitempty"`
 	// CrossOrgPasswordsEnabled indicates whether the environment uses cross-org passwords.
 	CrossOrgPasswordsEnabled *bool `json:"cross_org_passwords_enabled,omitempty"`
-	// UserImpersonationEnabled indicates whether user impersonation is enabled for the environment.
+	// UserImpersonationEnabled: Indicates whether user impersonation is enabled for the environment.
 	UserImpersonationEnabled *bool `json:"user_impersonation_enabled,omitempty"`
 	// ZeroDowntimeSessionMigrationURL is the OIDC-compliant UserInfo endpoint for session migration.
 	ZeroDowntimeSessionMigrationURL *string `json:"zero_downtime_session_migration_url,omitempty"`
-	// UserLockSelfServeEnabled: User locking fields. UserLockSelfServeEnabled indicates whether users in the
-	// environment who get locked out should automatically get an unlock email magic link.
+	// UserLockSelfServeEnabled: Indicates whether users in the environment who get locked out should
+	// automatically get an unlock email magic link.
 	UserLockSelfServeEnabled *bool `json:"user_lock_self_serve_enabled,omitempty"`
 	// UserLockThreshold represents the number of failed authenticate attempts that will cause a user in the
 	// environment to be locked. Defaults to 10.
 	UserLockThreshold *int32 `json:"user_lock_threshold,omitempty"`
-	// UserLockTTL represents the time in seconds that the user in the environment remains locked once the lock
-	// is set. Defaults to 1 hour (3600 seconds).
+	// UserLockTTL: Represents the time in seconds that the user in the environment remains locked once the
+	// lock is set. Defaults to 1 hour (3600 seconds).
 	UserLockTTL *int32 `json:"user_lock_ttl,omitempty"`
-	// IDPAuthorizationURL: IDP fields. IDPAuthorizationURL is the OpenID Configuration endpoint for Connected
-	// Apps for the environment.
+	// IDPAuthorizationURL: The OpenID Configuration endpoint for Connected Apps for the environment.
 	IDPAuthorizationURL *string `json:"idp_authorization_url,omitempty"`
 	// IDPDynamicClientRegistrationEnabled indicates whether the project has opted in to Dynamic Client
 	// Registration (DCR) for Connected Apps.

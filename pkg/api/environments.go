@@ -26,7 +26,7 @@ func newEnvironmentsClient(c *internal.Client) *EnvironmentsClient {
 	}
 }
 
-// Create creates an environment.
+// Create: Creates a new environment in a project.
 func (c *EnvironmentsClient) Create(
 	ctx context.Context,
 	body environments.CreateRequest,
@@ -53,7 +53,7 @@ func (c *EnvironmentsClient) Create(
 	return &resp, nil
 }
 
-// Delete deletes an environment.
+// Delete: Deletes an environment.
 func (c *EnvironmentsClient) Delete(
 	ctx context.Context,
 	body environments.DeleteRequest,
@@ -78,7 +78,7 @@ func (c *EnvironmentsClient) Delete(
 	return &resp, nil
 }
 
-// Get retrieves an environment.
+// Get: Retrieves an environment.
 func (c *EnvironmentsClient) Get(
 	ctx context.Context,
 	body environments.GetRequest,
@@ -103,7 +103,7 @@ func (c *EnvironmentsClient) Get(
 	return &resp, nil
 }
 
-// GetAll retrieves all environments in a project.
+// GetAll: Retrieves all environments in a project.
 func (c *EnvironmentsClient) GetAll(
 	ctx context.Context,
 	body environments.GetAllRequest,
@@ -125,7 +125,7 @@ func (c *EnvironmentsClient) GetAll(
 	return &resp, nil
 }
 
-// GetMetrics: Get retrieves metrics for an environment.
+// GetMetrics: Retrieves metrics for an environment.
 func (c *EnvironmentsClient) GetMetrics(
 	ctx context.Context,
 	body environments.GetMetricsRequest,
@@ -150,7 +150,7 @@ func (c *EnvironmentsClient) GetMetrics(
 	return &resp, nil
 }
 
-// Update updates the environment.
+// Update: Updates the environment.
 func (c *EnvironmentsClient) Update(
 	ctx context.Context,
 	body environments.UpdateRequest,
