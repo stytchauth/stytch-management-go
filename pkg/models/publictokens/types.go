@@ -9,7 +9,7 @@ package publictokens
 import "time"
 
 type PublicToken struct {
-	// PublicToken is the public token value as well as the unique identifier for the token.
+	// PublicToken: The public token value as well as the unique identifier for the token.
 	PublicToken string `json:"public_token,omitempty"`
 	// CreatedAt: The ISO-8601 timestamp for when the resource was created.
 	CreatedAt time.Time `json:"created_at,omitempty"`
@@ -27,7 +27,7 @@ type CreateRequest struct {
 type CreateResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// PublicToken is the public token value as well as the unique identifier for the token.
+	// PublicToken: Contains details about the public token object.
 	PublicToken PublicToken `json:"public_token,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
@@ -39,7 +39,7 @@ type DeleteRequest struct {
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// PublicToken is the public token value as well as the unique identifier for the token.
+	// PublicToken: The public token to delete.
 	PublicToken string `json:"-"`
 }
 
@@ -63,7 +63,7 @@ type GetAllRequest struct {
 type GetAllResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// PublicTokens is all the public tokens that belong to the environment.
+	// PublicTokens: All the public tokens that belong to the environment.
 	PublicTokens []PublicToken `json:"public_tokens,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
@@ -75,7 +75,7 @@ type GetRequest struct {
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// PublicToken is the public token value as well as the unique identifier for the token.
+	// PublicToken: The identifier of the public token to retrieve.
 	PublicToken string `json:"-"`
 }
 
@@ -83,7 +83,7 @@ type GetRequest struct {
 type GetResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// PublicToken is the public token value as well as the unique identifier for the token.
+	// PublicToken: Contains details about the public token object.
 	PublicToken PublicToken `json:"public_token,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`

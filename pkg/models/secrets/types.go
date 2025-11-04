@@ -9,7 +9,7 @@ package secrets
 import "time"
 
 type MaskedSecret struct {
-	// SecretID is the unique ID of the secret in the project.
+	// SecretID: The unique ID of the secret in the project.
 	SecretID string `json:"secret_id,omitempty"`
 	// LastFour is the last four characters of the secret.
 	LastFour string `json:"last_four,omitempty"`
@@ -20,9 +20,9 @@ type MaskedSecret struct {
 }
 
 type Secret struct {
-	// SecretID is the unique ID of the secret in the project.
+	// SecretID: The unique ID of the secret in the project.
 	SecretID string `json:"secret_id,omitempty"`
-	// Secret is the secret value. This is only visible once upon secret creation.
+	// Secret: The secret value. This is only visible once upon secret creation.
 	Secret string `json:"secret,omitempty"`
 	// CreatedAt: The ISO-8601 timestamp for when the resource was created.
 	CreatedAt time.Time `json:"created_at,omitempty"`
@@ -40,7 +40,7 @@ type CreateRequest struct {
 type CreateResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// Secret is the secret value. This is only visible once upon secret creation.
+	// Secret: The secret object that was created.
 	Secret Secret `json:"secret,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
@@ -52,7 +52,7 @@ type DeleteRequest struct {
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// SecretID is the unique ID of the secret in the project.
+	// SecretID: The ID of the secret to delete.
 	SecretID string `json:"-"`
 }
 
@@ -88,7 +88,7 @@ type GetRequest struct {
 	ProjectSlug string `json:"-"`
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
-	// SecretID is the unique ID of the secret in the project.
+	// SecretID: The ID of the secret to retrieve.
 	SecretID string `json:"-"`
 }
 
@@ -96,7 +96,7 @@ type GetRequest struct {
 type GetResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// Secret is the secret value. This is only visible once upon secret creation.
+	// Secret: The secret object with the secret value masked.
 	Secret MaskedSecret `json:"secret,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
