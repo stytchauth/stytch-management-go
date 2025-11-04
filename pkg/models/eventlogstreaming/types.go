@@ -7,10 +7,10 @@ package eventlogstreaming
 // !!!
 
 type DatadogConfig struct {
+	// APIKey is the API key for submitting logs to a Datadog account.
+	APIKey string `json:"api_key,omitempty"`
 	// Site is one of the supported DatadogSite constants.
 	Site DatadogSite `json:"site,omitempty"`
-	// APIKey is the API key for submitting logs to a Datadog account.
-	APIKey *string `json:"api_key,omitempty"`
 }
 
 type DatadogConfigMasked struct {
@@ -19,12 +19,18 @@ type DatadogConfigMasked struct {
 	// Site is one of the supported DatadogSite constants.
 	Site DatadogSite `json:"site,omitempty"`
 }
+
 type DestinationConfig struct {
-	Datadog     *DatadogConfig     `json:"datadog,omitempty"`
+	// Datadog configuration settings for the destination.
+	Datadog *DatadogConfig `json:"datadog,omitempty"`
+	// GrafanaLoki: Grafana Loki configuration settings for the destination.
 	GrafanaLoki *GrafanaLokiConfig `json:"grafana_loki,omitempty"`
 }
+
 type DestinationConfigMasked struct {
-	Datadog     *DatadogConfigMasked     `json:"datadog,omitempty"`
+	// Datadog configuration settings for the destination.
+	Datadog *DatadogConfigMasked `json:"datadog,omitempty"`
+	// GrafanaLoki: Grafana Loki configuration settings for the destination.
 	GrafanaLoki *GrafanaLokiConfigMasked `json:"grafana_loki,omitempty"`
 }
 
@@ -33,7 +39,8 @@ type EventLogStreaming struct {
 	DestinationType DestinationType `json:"destination_type,omitempty"`
 	// DestinationConfig is the configuration for the destination to which to send events.
 	DestinationConfig *DestinationConfig `json:"destination_config,omitempty"`
-	StreamingStatus   StreamingStatus    `json:"streaming_status,omitempty"`
+	// StreamingStatus: Indicates whether event log streaming is enabled or disabled for the environment.
+	StreamingStatus StreamingStatus `json:"streaming_status,omitempty"`
 }
 
 type EventLogStreamingMasked struct {
@@ -41,16 +48,17 @@ type EventLogStreamingMasked struct {
 	DestinationType DestinationType `json:"destination_type,omitempty"`
 	// DestinationConfig is the configuration for the destination to which to send events.
 	DestinationConfig *DestinationConfigMasked `json:"destination_config,omitempty"`
-	StreamingStatus   StreamingStatus          `json:"streaming_status,omitempty"`
+	// StreamingStatus: Indicates whether event log streaming is enabled or disabled for the environment.
+	StreamingStatus StreamingStatus `json:"streaming_status,omitempty"`
 }
 
 type GrafanaLokiConfig struct {
 	// Hostname is the hostname of the Grafana Loki instance to which to send events.
-	Hostname *string `json:"hostname,omitempty"`
+	Hostname string `json:"hostname,omitempty"`
 	// Username is the username for authenticating the request to a Grafana Loki instance.
-	Username *string `json:"username,omitempty"`
+	Username string `json:"username,omitempty"`
 	// Password is the password for authenticating the request to a Grafana Loki instance.
-	Password *string `json:"password,omitempty"`
+	Password string `json:"password,omitempty"`
 }
 
 type GrafanaLokiConfigMasked struct {
@@ -152,7 +160,8 @@ type GetRequest struct {
 type GetResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// EventLogStreamingConfig is the event log streaming configuration.
+	// EventLogStreamingConfig is the event log streaming configuration, with sensitive values masked (e.g.,
+	// APIKey, Password).
 	EventLogStreamingConfig EventLogStreamingMasked `json:"event_log_streaming_config,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`

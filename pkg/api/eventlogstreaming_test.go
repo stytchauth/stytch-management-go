@@ -26,7 +26,7 @@ func TestEventLogStreamingClient_Create(t *testing.T) {
 			DestinationConfig: &eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
 					Site:   eventlogstreaming.DatadogSiteUs,
-					APIKey: ptr("1234567890abcdef1234567890abcdef"),
+					APIKey: "1234567890abcdef1234567890abcdef",
 				},
 			},
 		})
@@ -35,7 +35,7 @@ func TestEventLogStreamingClient_Create(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, eventlogstreaming.DestinationTypeDatadog, resp.EventLogStreamingConfig.DestinationType)
 		assert.Equal(t, eventlogstreaming.DatadogSiteUs, resp.EventLogStreamingConfig.DestinationConfig.Datadog.Site)
-		assert.Equal(t, ptr("1234567890abcdef1234567890abcdef"), resp.EventLogStreamingConfig.DestinationConfig.Datadog.APIKey)
+		assert.Equal(t, "1234567890abcdef1234567890abcdef", resp.EventLogStreamingConfig.DestinationConfig.Datadog.APIKey)
 		assert.Equal(t, eventlogstreaming.StreamingStatusDisabled, resp.EventLogStreamingConfig.StreamingStatus)
 	})
 
@@ -52,9 +52,9 @@ func TestEventLogStreamingClient_Create(t *testing.T) {
 			DestinationType: eventlogstreaming.DestinationTypeGrafanaLoki,
 			DestinationConfig: &eventlogstreaming.DestinationConfig{
 				GrafanaLoki: &eventlogstreaming.GrafanaLokiConfig{
-					Hostname: ptr("logs-prod-us-central1.grafana.net"),
-					Username: ptr("test-user"),
-					Password: ptr("test-password-12345678"),
+					Hostname: "logs-prod-us-central1.grafana.net",
+					Username: "test-user",
+					Password: "test-password-12345678",
 				},
 			},
 		})
@@ -62,9 +62,9 @@ func TestEventLogStreamingClient_Create(t *testing.T) {
 		// Assert
 		assert.NoError(t, err)
 		assert.Equal(t, eventlogstreaming.DestinationTypeGrafanaLoki, resp.EventLogStreamingConfig.DestinationType)
-		assert.Equal(t, ptr("logs-prod-us-central1.grafana.net"), resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Hostname)
-		assert.Equal(t, ptr("test-user"), resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Username)
-		assert.Equal(t, ptr("test-password-12345678"), resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Password)
+		assert.Equal(t, "logs-prod-us-central1.grafana.net", resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Hostname)
+		assert.Equal(t, "test-user", resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Username)
+		assert.Equal(t, "test-password-12345678", resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Password)
 		assert.Equal(t, eventlogstreaming.StreamingStatusDisabled, resp.EventLogStreamingConfig.StreamingStatus)
 	})
 }
@@ -84,7 +84,7 @@ func TestEventLogStreamingClient_Get(t *testing.T) {
 			DestinationConfig: &eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
 					Site:   eventlogstreaming.DatadogSiteUs,
-					APIKey: ptr("1234567890abcdef1234567890abcdef"),
+					APIKey: "1234567890abcdef1234567890abcdef",
 				},
 			},
 		})
@@ -139,7 +139,7 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 			DestinationConfig: &eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
 					Site:   eventlogstreaming.DatadogSiteUs,
-					APIKey: ptr("1234567890abcdef1234567890abcdef"),
+					APIKey: "1234567890abcdef1234567890abcdef",
 				},
 			},
 		})
@@ -153,7 +153,7 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 			DestinationConfig: &eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
 					Site:   eventlogstreaming.DatadogSiteEu,
-					APIKey: ptr("abcdefabcdefabcdefabcdefabcdefab"),
+					APIKey: "abcdefabcdefabcdefabcdefabcdefab",
 				},
 			},
 		})
@@ -162,7 +162,7 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, eventlogstreaming.DestinationTypeDatadog, resp.EventLogStreamingConfig.DestinationType)
 		assert.Equal(t, eventlogstreaming.DatadogSiteEu, resp.EventLogStreamingConfig.DestinationConfig.Datadog.Site)
-		assert.Equal(t, ptr("abcdefabcdefabcdefabcdefabcdefab"), resp.EventLogStreamingConfig.DestinationConfig.Datadog.APIKey)
+		assert.Equal(t, "abcdefabcdefabcdefabcdefabcdefab", resp.EventLogStreamingConfig.DestinationConfig.Datadog.APIKey)
 	})
 
 	t.Run("update grafana loki config", func(t *testing.T) {
@@ -178,9 +178,9 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 			DestinationType: eventlogstreaming.DestinationTypeGrafanaLoki,
 			DestinationConfig: &eventlogstreaming.DestinationConfig{
 				GrafanaLoki: &eventlogstreaming.GrafanaLokiConfig{
-					Hostname: ptr("logs-prod-us-central1.grafana.net"),
-					Username: ptr("initial-user"),
-					Password: ptr("initial-password-12345678"),
+					Hostname: "logs-prod-us-central1.grafana.net",
+					Username: "initial-user",
+					Password: "initial-password-12345678",
 				},
 			},
 		})
@@ -193,9 +193,9 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 			DestinationType: eventlogstreaming.DestinationTypeGrafanaLoki,
 			DestinationConfig: &eventlogstreaming.DestinationConfig{
 				GrafanaLoki: &eventlogstreaming.GrafanaLokiConfig{
-					Hostname: ptr("logs-prod-eu-west-0.grafana.net"),
-					Username: ptr("updated-user"),
-					Password: ptr("updated-password-87654321"),
+					Hostname: "logs-prod-eu-west-0.grafana.net",
+					Username: "updated-user",
+					Password: "updated-password-87654321",
 				},
 			},
 		})
@@ -203,9 +203,9 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 		// Assert
 		assert.NoError(t, err)
 		assert.Equal(t, eventlogstreaming.DestinationTypeGrafanaLoki, resp.EventLogStreamingConfig.DestinationType)
-		assert.Equal(t, ptr("logs-prod-eu-west-0.grafana.net"), resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Hostname)
-		assert.Equal(t, ptr("updated-user"), resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Username)
-		assert.Equal(t, ptr("updated-password-87654321"), resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Password)
+		assert.Equal(t, "logs-prod-eu-west-0.grafana.net", resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Hostname)
+		assert.Equal(t, "updated-user", resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Username)
+		assert.Equal(t, "updated-password-87654321", resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Password)
 	})
 
 	t.Run("update loki config when datadog config exists", func(t *testing.T) {
@@ -222,7 +222,7 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 			DestinationConfig: &eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
 					Site:   eventlogstreaming.DatadogSiteUs,
-					APIKey: ptr("1234567890abcdef1234567890abcdef"),
+					APIKey: "1234567890abcdef1234567890abcdef",
 				},
 			},
 		})
@@ -235,9 +235,9 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 			DestinationType: eventlogstreaming.DestinationTypeGrafanaLoki,
 			DestinationConfig: &eventlogstreaming.DestinationConfig{
 				GrafanaLoki: &eventlogstreaming.GrafanaLokiConfig{
-					Hostname: ptr("logs-prod-eu-west-0.grafana.net"),
-					Username: ptr("test-user"),
-					Password: ptr("test-password-12345678"),
+					Hostname: "logs-prod-eu-west-0.grafana.net",
+					Username: "test-user",
+					Password: "test-password-12345678",
 				},
 			},
 		})
@@ -261,7 +261,7 @@ func TestEventLogStreamingClient_Update(t *testing.T) {
 			DestinationConfig: &eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
 					Site:   eventlogstreaming.DatadogSiteUs,
-					APIKey: ptr("1234567890abcdef1234567890abcdef"),
+					APIKey: "1234567890abcdef1234567890abcdef",
 				},
 			},
 		})
@@ -287,7 +287,7 @@ func TestEventLogStreamingClient_Enable(t *testing.T) {
 			DestinationConfig: &eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
 					Site:   eventlogstreaming.DatadogSiteUs,
-					APIKey: ptr("1234567890abcdef1234567890abcdef"),
+					APIKey: "1234567890abcdef1234567890abcdef",
 				},
 			},
 		})
@@ -339,7 +339,7 @@ func TestEventLogStreamingClient_Disable(t *testing.T) {
 			DestinationConfig: &eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
 					Site:   eventlogstreaming.DatadogSiteUs,
-					APIKey: ptr("1234567890abcdef1234567890abcdef"),
+					APIKey: "1234567890abcdef1234567890abcdef",
 				},
 			},
 		})
@@ -398,7 +398,7 @@ func TestEventLogStreamingClient_Delete(t *testing.T) {
 			DestinationConfig: &eventlogstreaming.DestinationConfig{
 				Datadog: &eventlogstreaming.DatadogConfig{
 					Site:   eventlogstreaming.DatadogSiteUs,
-					APIKey: ptr("1234567890abcdef1234567890abcdef"),
+					APIKey: "1234567890abcdef1234567890abcdef",
 				},
 			},
 		})
