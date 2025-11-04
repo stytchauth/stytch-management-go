@@ -67,12 +67,20 @@ func (c *RedirectURLsClient) Delete(
 	if body.EnvironmentSlug == "" {
 		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
 	}
+	queryParams := make(map[string]string)
+	queryParams["url"] = body.URL
+	if body.DoNotPromoteDefaults {
+		queryParams["do_not_promote_defaults"] = "true"
+	} else {
+		queryParams["do_not_promote_defaults"] = "false"
+	}
+
 	var resp redirecturls.DeleteResponse
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodDelete,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls", body.ProjectSlug, body.EnvironmentSlug),
-		nil,
+		queryParams,
 		nil,
 		&resp)
 	if err != nil {
@@ -92,12 +100,15 @@ func (c *RedirectURLsClient) Get(
 	if body.EnvironmentSlug == "" {
 		return nil, fmt.Errorf("EnvironmentSlug cannot be empty")
 	}
+	queryParams := make(map[string]string)
+	queryParams["url"] = body.URL
+
 	var resp redirecturls.GetResponse
 	err := c.client.NewRequest(
 		ctx,
 		http.MethodGet,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls", body.ProjectSlug, body.EnvironmentSlug),
-		nil,
+		queryParams,
 		nil,
 		&resp)
 	if err != nil {
@@ -147,12 +158,15 @@ func (c *RedirectURLsClient) Update(
 		return nil, err
 	}
 
+	queryParams := make(map[string]string)
+	queryParams["url"] = body.URL
+
 	var resp redirecturls.UpdateResponse
 	err = c.client.NewRequest(
 		ctx,
 		http.MethodPut,
 		fmt.Sprintf("/pwa/v3/projects/%s/environments/%s/redirect_urls", body.ProjectSlug, body.EnvironmentSlug),
-		nil,
+		queryParams,
 		jsonBody,
 		&resp)
 	if err != nil {

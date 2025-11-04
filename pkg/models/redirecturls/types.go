@@ -16,7 +16,7 @@ type RedirectURL struct {
 type URLType struct {
 	// IsDefault is true if this is the default redirect type, false otherwise.
 	IsDefault bool `json:"is_default,omitempty"`
-	// Type: The environment's type.
+	// Type: One of the RedirectType values.
 	Type RedirectURLType `json:"type,omitempty"`
 }
 
@@ -58,7 +58,7 @@ type DeleteRequest struct {
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// URL: The URL to which to redirect.
-	URL string `json:"url,omitempty"`
+	URL string `json:"-"`
 	// DoNotPromoteDefaults is used to suppress the automatic "promotion" of a RedirectURL to the default if no
 	// other RedirectURL exists for the given type. This is primarily intended for use with
 	// stytchauth/terraform-provider-stytch to allow Terraform provisioning to be idempotent. For a Create
@@ -67,7 +67,7 @@ type DeleteRequest struct {
 	// possible to have valid RedirectURLs for a given type but *no* default RedirectURL for that type. If no
 	// default exists for a given type, using an API endpoint that uses redirect URLs (such as sending a magic
 	// link), you will need to explicitly specify which redirect URL should be used.
-	DoNotPromoteDefaults bool `json:"do_not_promote_defaults,omitempty"`
+	DoNotPromoteDefaults bool `json:"-"`
 }
 
 // DeleteResponse: Response type for `RedirectURLs.Delete`.
@@ -103,7 +103,7 @@ type GetRequest struct {
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// URL: The URL to which to redirect.
-	URL string `json:"url,omitempty"`
+	URL string `json:"-"`
 }
 
 // GetResponse: Response type for `RedirectURLs.Get`.
@@ -123,7 +123,7 @@ type UpdateRequest struct {
 	// EnvironmentSlug is the slug of the environment.
 	EnvironmentSlug string `json:"-"`
 	// URL: The URL to which to redirect.
-	URL string `json:"url,omitempty"`
+	URL string `json:"-"`
 	// DoNotPromoteDefaults is used to suppress the automatic "promotion" of a RedirectURL to the default if no
 	// other RedirectURL exists for the given type. This is primarily intended for use with
 	// stytchauth/terraform-provider-stytch to allow Terraform provisioning to be idempotent. For a Create
