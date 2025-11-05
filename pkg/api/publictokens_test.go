@@ -71,7 +71,7 @@ func TestPublicTokensClient_Get(t *testing.T) {
 		})
 
 		// Assert
-		assert.ErrorContains(t, err, "public token")
+		assert.ErrorContains(t, err, "cannot be empty")
 		assert.Nil(t, resp)
 	})
 }

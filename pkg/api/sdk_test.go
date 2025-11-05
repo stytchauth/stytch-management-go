@@ -35,7 +35,7 @@ func makeTestConsumerConfig() sdk.ConsumerConfig {
 			EmailSendEnabled:             true,
 			SMSAutofillMetadata: []sdk.SMSAutofillMetadata{
 				{
-					MetadataType:  sdk.SMSAutofillMetadataTypeDomain,
+					MetadataType:  "domain",
 					MetadataValue: "myapp.com",
 					BundleID:      "com.example.myapp",
 				},
@@ -74,7 +74,7 @@ func makeTestConsumerConfig() sdk.ConsumerConfig {
 		Cookies: &sdk.ConsumerCookiesConfig{
 			// Only disabled is supported, unless the project has
 			// CNAMEs configured.
-			HttpOnlyCookies: sdk.HttpOnlyCookiesSettingDisabled,
+			HTTPOnly: sdk.ConsumerCookiesConfigHttpOnlyDisabled,
 		},
 	}
 }
@@ -117,7 +117,7 @@ func makeTestB2BConfig() sdk.B2BConfig {
 			EmailEnabled: true,
 			SMSAutofillMetadata: []sdk.SMSAutofillMetadata{
 				{
-					MetadataType:  sdk.SMSAutofillMetadataTypeHash,
+					MetadataType:  "hash",
 					MetadataValue: "abc123hash",
 					BundleID:      "com.example.b2bapp",
 				},
@@ -136,7 +136,7 @@ func makeTestB2BConfig() sdk.B2BConfig {
 		Cookies: &sdk.B2BCookiesConfig{
 			// Only disabled is supported, unless the project has
 			// CNAMEs configured.
-			HttpOnlyCookies: sdk.HttpOnlyCookiesSettingDisabled,
+			HTTPOnly: sdk.B2BCookiesConfigHttpOnlyDisabled,
 		},
 	}
 }
@@ -153,7 +153,7 @@ func TestSDKClient_GetConsumerConfig(t *testing.T) {
 		_, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
-			Config:          expectedConfig,
+			Config:          &expectedConfig,
 		})
 		require.NoError(t, err)
 
@@ -181,7 +181,7 @@ func TestSDKClient_SetConsumerConfig(t *testing.T) {
 		resp, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
-			Config:          config,
+			Config:          &config,
 		})
 
 		// Assert
@@ -200,7 +200,7 @@ func TestSDKClient_SetConsumerConfig(t *testing.T) {
 		resp, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
-			Config:          config,
+			Config:          &config,
 		})
 
 		// Assert
@@ -221,7 +221,7 @@ func TestSDKClient_GetB2BConfig(t *testing.T) {
 		_, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
-			Config:          expectedConfig,
+			Config:          &expectedConfig,
 		})
 		require.NoError(t, err)
 
@@ -249,7 +249,7 @@ func TestSDKClient_SetB2BConfig(t *testing.T) {
 		resp, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
-			Config:          config,
+			Config:          &config,
 		})
 
 		// Assert
@@ -268,7 +268,7 @@ func TestSDKClient_SetB2BConfig(t *testing.T) {
 		resp, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
-			Config:          config,
+			Config:          &config,
 		})
 
 		// Assert

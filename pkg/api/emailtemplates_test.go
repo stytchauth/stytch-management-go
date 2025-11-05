@@ -23,8 +23,8 @@ func makeTestPrebuiltTemplate(templateID string) emailtemplates.PrebuiltCustomiz
 		ButtonBorderRadius: ptr(float32(5.0)),
 		ButtonColor:        ptr("#007BFF"),
 		ButtonTextColor:    ptr("#FFFFFF"),
-		FontFamily:         ptr(emailtemplates.FontFamilyArial),
-		TextAlignment:      ptr(emailtemplates.TextAlignmentCenter),
+		FontFamily:         emailtemplates.FontFamilyArial,
+		TextAlignment:      emailtemplates.TextAlignmentCenter,
 	}
 }
 
@@ -130,7 +130,7 @@ func TestEmailTemplatesClient_Get(t *testing.T) {
 		})
 
 		// Assert
-		assert.ErrorContains(t, err, "template ID")
+		assert.ErrorContains(t, err, "cannot be empty")
 		assert.Nil(t, resp)
 	})
 }
@@ -211,8 +211,8 @@ func TestEmailTemplatesClient_Update(t *testing.T) {
 			ButtonBorderRadius: ptr(float32(10.0)),
 			ButtonColor:        ptr("#FF0000"),
 			ButtonTextColor:    ptr("#000000"),
-			FontFamily:         ptr(emailtemplates.FontFamilyHelvetica),
-			TextAlignment:      ptr(emailtemplates.TextAlignmentLeft),
+			FontFamily:         emailtemplates.FontFamilyHelvetica,
+			TextAlignment:      emailtemplates.TextAlignmentLeft,
 		}
 
 		resp, err := client.EmailTemplates.Update(ctx, emailtemplates.UpdateRequest{

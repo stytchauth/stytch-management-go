@@ -29,13 +29,12 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             testRedirectURL1,
-			ValidTypes: []redirecturls.URLRedirectType{
+			ValidTypes: []redirecturls.URLType{
 				{
-					Type:      redirecturls.RedirectTypeLogin,
+					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
 				},
 			},
-			DoNotPromoteDefaults: false,
 		})
 
 		// Assert
@@ -43,7 +42,7 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 		assert.NotNil(t, resp)
 		assert.Equal(t, testRedirectURL1, resp.RedirectURL.URL)
 		assert.Len(t, resp.RedirectURL.ValidTypes, 1)
-		assert.Equal(t, redirecturls.RedirectTypeLogin, resp.RedirectURL.ValidTypes[0].Type)
+		assert.Equal(t, redirecturls.RedirectURLTypeLogin, resp.RedirectURL.ValidTypes[0].Type)
 		assert.True(t, resp.RedirectURL.ValidTypes[0].IsDefault)
 	})
 
@@ -58,21 +57,20 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             testRedirectURL2,
-			ValidTypes: []redirecturls.URLRedirectType{
+			ValidTypes: []redirecturls.URLType{
 				{
-					Type:      redirecturls.RedirectTypeLogin,
+					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
 				},
 				{
-					Type:      redirecturls.RedirectTypeSignup,
+					Type:      redirecturls.RedirectURLTypeSignup,
 					IsDefault: false,
 				},
 				{
-					Type:      redirecturls.RedirectTypeInvite,
+					Type:      redirecturls.RedirectURLTypeInvite,
 					IsDefault: true,
 				},
 			},
-			DoNotPromoteDefaults: false,
 		})
 
 		// Assert
@@ -82,13 +80,13 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 		assert.Len(t, resp.RedirectURL.ValidTypes, 3)
 
 		// Check that all types are present
-		typeMap := make(map[redirecturls.RedirectType]bool)
+		typeMap := make(map[redirecturls.RedirectURLType]bool)
 		for _, validType := range resp.RedirectURL.ValidTypes {
 			typeMap[validType.Type] = validType.IsDefault
 		}
-		assert.Contains(t, typeMap, redirecturls.RedirectTypeLogin)
-		assert.Contains(t, typeMap, redirecturls.RedirectTypeSignup)
-		assert.Contains(t, typeMap, redirecturls.RedirectTypeInvite)
+		assert.Contains(t, typeMap, redirecturls.RedirectURLTypeLogin)
+		assert.Contains(t, typeMap, redirecturls.RedirectURLTypeSignup)
+		assert.Contains(t, typeMap, redirecturls.RedirectURLTypeInvite)
 	})
 
 	t.Run("create redirect URL with do not promote defaults", func(t *testing.T) {
@@ -102,13 +100,13 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             testRedirectURL3,
-			ValidTypes: []redirecturls.URLRedirectType{
+			ValidTypes: []redirecturls.URLType{
 				{
-					Type:      redirecturls.RedirectTypeResetPassword,
+					Type:      redirecturls.RedirectURLTypeResetPassword,
 					IsDefault: false,
 				},
 			},
-			DoNotPromoteDefaults: true,
+			DoNotPromoteDefaults: ptr(true),
 		})
 
 		// Assert
@@ -116,7 +114,7 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 		assert.NotNil(t, resp)
 		assert.Equal(t, testRedirectURL3, resp.RedirectURL.URL)
 		assert.Len(t, resp.RedirectURL.ValidTypes, 1)
-		assert.Equal(t, redirecturls.RedirectTypeResetPassword, resp.RedirectURL.ValidTypes[0].Type)
+		assert.Equal(t, redirecturls.RedirectURLTypeResetPassword, resp.RedirectURL.ValidTypes[0].Type)
 	})
 
 	t.Run("create duplicate redirect URL", func(t *testing.T) {
@@ -132,9 +130,9 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             duplicateURL,
-			ValidTypes: []redirecturls.URLRedirectType{
+			ValidTypes: []redirecturls.URLType{
 				{
-					Type:      redirecturls.RedirectTypeLogin,
+					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
 				},
 			},
@@ -147,9 +145,9 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             duplicateURL,
-			ValidTypes: []redirecturls.URLRedirectType{
+			ValidTypes: []redirecturls.URLType{
 				{
-					Type:      redirecturls.RedirectTypeSignup,
+					Type:      redirecturls.RedirectURLTypeSignup,
 					IsDefault: true,
 				},
 			},
@@ -182,9 +180,9 @@ func TestRedirectURLsClient_GetAll(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             url1,
-			ValidTypes: []redirecturls.URLRedirectType{
+			ValidTypes: []redirecturls.URLType{
 				{
-					Type:      redirecturls.RedirectTypeLogin,
+					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
 				},
 			},
@@ -195,9 +193,9 @@ func TestRedirectURLsClient_GetAll(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             url2,
-			ValidTypes: []redirecturls.URLRedirectType{
+			ValidTypes: []redirecturls.URLType{
 				{
-					Type:      redirecturls.RedirectTypeSignup,
+					Type:      redirecturls.RedirectURLTypeSignup,
 					IsDefault: true,
 				},
 			},
@@ -253,9 +251,9 @@ func TestRedirectURLsClient_Get(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             getURL,
-			ValidTypes: []redirecturls.URLRedirectType{
+			ValidTypes: []redirecturls.URLType{
 				{
-					Type:      redirecturls.RedirectTypeLogin,
+					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
 				},
 			},
@@ -276,12 +274,12 @@ func TestRedirectURLsClient_Get(t *testing.T) {
 		assert.Len(t, resp.RedirectURL.ValidTypes, 1)
 
 		// Verify the types match
-		typeMap := make(map[redirecturls.RedirectType]bool)
+		typeMap := make(map[redirecturls.RedirectURLType]bool)
 		for _, validType := range resp.RedirectURL.ValidTypes {
 			typeMap[validType.Type] = validType.IsDefault
 		}
-		assert.Contains(t, typeMap, redirecturls.RedirectTypeLogin)
-		assert.True(t, typeMap[redirecturls.RedirectTypeLogin])
+		assert.Contains(t, typeMap, redirecturls.RedirectURLTypeLogin)
+		assert.True(t, typeMap[redirecturls.RedirectURLTypeLogin])
 	})
 	t.Run("get existing redirect URL using query params", func(t *testing.T) {
 		// Arrange
@@ -296,9 +294,9 @@ func TestRedirectURLsClient_Get(t *testing.T) {
 			EnvironmentSlug: env.EnvironmentSlug,
 			// Use one with query params to check that escaping is correct
 			URL: urlWithQueryParams,
-			ValidTypes: []redirecturls.URLRedirectType{
+			ValidTypes: []redirecturls.URLType{
 				{
-					Type:      redirecturls.RedirectTypeInvite,
+					Type:      redirecturls.RedirectURLTypeInvite,
 					IsDefault: false,
 				},
 			},
@@ -352,9 +350,9 @@ func TestRedirectURLsClient_Update(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             updateURL,
-			ValidTypes: []redirecturls.URLRedirectType{
+			ValidTypes: []redirecturls.URLType{
 				{
-					Type:      redirecturls.RedirectTypeLogin,
+					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
 				},
 			},
@@ -367,21 +365,20 @@ func TestRedirectURLsClient_Update(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             updateURL,
-			ValidTypes: []redirecturls.URLRedirectType{
+			ValidTypes: []redirecturls.URLType{
 				{
-					Type:      redirecturls.RedirectTypeLogin,
+					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
 				},
 				{
-					Type:      redirecturls.RedirectTypeSignup,
+					Type:      redirecturls.RedirectURLTypeSignup,
 					IsDefault: true,
 				},
 				{
-					Type:      redirecturls.RedirectTypeResetPassword,
+					Type:      redirecturls.RedirectURLTypeResetPassword,
 					IsDefault: false,
 				},
 			},
-			DoNotPromoteDefaults: false,
 		})
 
 		// Assert
@@ -391,13 +388,13 @@ func TestRedirectURLsClient_Update(t *testing.T) {
 		assert.Len(t, resp.RedirectURL.ValidTypes, 3)
 
 		// Verify all types are present
-		typeMap := make(map[redirecturls.RedirectType]bool)
+		typeMap := make(map[redirecturls.RedirectURLType]bool)
 		for _, validType := range resp.RedirectURL.ValidTypes {
 			typeMap[validType.Type] = validType.IsDefault
 		}
-		assert.Contains(t, typeMap, redirecturls.RedirectTypeLogin)
-		assert.Contains(t, typeMap, redirecturls.RedirectTypeSignup)
-		assert.Contains(t, typeMap, redirecturls.RedirectTypeResetPassword)
+		assert.Contains(t, typeMap, redirecturls.RedirectURLTypeLogin)
+		assert.Contains(t, typeMap, redirecturls.RedirectURLTypeSignup)
+		assert.Contains(t, typeMap, redirecturls.RedirectURLTypeResetPassword)
 	})
 
 	t.Run("update non-existent redirect URL", func(t *testing.T) {
@@ -411,9 +408,9 @@ func TestRedirectURLsClient_Update(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             "https://nonexistent-update.example.com/callback",
-			ValidTypes: []redirecturls.URLRedirectType{
+			ValidTypes: []redirecturls.URLType{
 				{
-					Type:      redirecturls.RedirectTypeLogin,
+					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
 				},
 			},
@@ -439,9 +436,9 @@ func TestRedirectURLsClient_Delete(t *testing.T) {
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			URL:             deleteURL,
-			ValidTypes: []redirecturls.URLRedirectType{
+			ValidTypes: []redirecturls.URLType{
 				{
-					Type:      redirecturls.RedirectTypeLogin,
+					Type:      redirecturls.RedirectURLTypeLogin,
 					IsDefault: true,
 				},
 			},
@@ -450,10 +447,9 @@ func TestRedirectURLsClient_Delete(t *testing.T) {
 
 		// Act
 		resp, err := client.RedirectURLs.Delete(ctx, redirecturls.DeleteRequest{
-			ProjectSlug:          env.ProjectSlug,
-			EnvironmentSlug:      env.EnvironmentSlug,
-			URL:                  deleteURL,
-			DoNotPromoteDefaults: false,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			URL:             deleteURL,
 		})
 
 		// Assert
