@@ -5,7 +5,7 @@ The Stytch Management Go library makes it easy to use Stytch's Programmatic Work
 This library is tested with go 1.22.
 
 > [!WARNING]
-> The v3 of this SDK is currently in development and only available as an alpha version, with unnanounced breaking changes. For the current major release, see our [v2 branch](https://github.com/stytchauth/stytch-management-go/tree/v2). 
+> The v3 of this SDK is currently in development and only available as an alpha version, with unnanounced breaking changes. For the current major release, see our stable [v2 branch](https://github.com/stytchauth/stytch-management-go/tree/v2).
 
 
 ## Install
@@ -21,6 +21,8 @@ You need your Stytch Management API Credentials from the workspace management se
 
 **Note:** This key will allow you to perform read and write actions on your workspace,
 potentially deleting important Stytch resources like projects or secrets that are in use.
+
+If you are migrating from v1 or v2 of this SDK, see the [migration doc](./migrate_from_v2.md).
 
 ## Usage
 

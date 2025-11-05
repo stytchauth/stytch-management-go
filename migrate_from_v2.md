@@ -2,10 +2,9 @@
 
 This guide helps you migrate from v2 to v3 of the Stytch Management Go SDK. v3 introduces significant architectural changes that provide a better developer experience and support Stytch custom environments.
 
-For more details on how the management API changed, see our [PWA docs](https://stytch.com/docs/workspace-management/pwa/overview).
-
 > [!WARNING]
-> The v3 of this SDK is currently in development and only available as an alpha version, with unnanounced breaking changes. For the current major release, see our [v2 branch](https://github.com/stytchauth/stytch-management-go/tree/v2). 
+> The v3 of this SDK is currently in development and only available as an alpha version, with unnanounced breaking changes. For the current major release, see our stable [v2 branch](https://github.com/stytchauth/stytch-management-go/tree/v2).
+> The SDK is self-documented with docstrings. The documentation for the management API endpoints this SDK interacts with is not yet available and will be released soon.
 
 ## Key Changes
 
@@ -23,6 +22,7 @@ For more details on how the management API changed, see our [PWA docs](https://s
 - `Environment` holds the configuration for one instance of the project
   - An environment can be of type live or type test 
   - A maximum of one live environment is supported
+  - A live environment cannot be deleted. The project must be deleted instead.
   - It's possible to have many test environments
   - Each environment has an identifier, also called a slug
   - The slug is immutable and configurable at creation
@@ -66,7 +66,7 @@ v3 includes new resource clients:
 - `Environments` - Manage environments within projects
 
 v3 renames:
-- `ProjectMetrics` - Replaced by `EnvironmentMetrics`
+- `ProjectMetrics` is now part of the `Environments` client.
 
 ### 4. Email Templates
 
@@ -92,7 +92,7 @@ In v3 of the SDK as well as the management API we revamped all aspects of error 
 2. Replace v2 project configuration with v3 environment configuration
 3. Replace `ProjectID` parameters with `ProjectSlug` and `EnvironmentSlug` in most resources
 4. Update any relevant schemas that no longer use nested payloads
-5. Update metrics calls from `ProjectMetrics` to `EnvironmentMetrics`
+5. Update metrics calls from `ProjectMetrics` to `Environments.GetMetrics`
 
 ## Questions 
 
@@ -104,7 +104,7 @@ Yes. V2 will be considered deprecated once v3 GA is released, with no new featur
 
 ### How long will stytch-management-go v2 be supported?
 
-See our documentation on our workspace management API for a deprecation calendar. 
+Once v3 is released as GA, you will be able to see a deprecation calendar in our documentation.
 
 ### If I use custom environments and have more than one test environment, what is v2's test environment?
 
