@@ -79,7 +79,7 @@ func Test_ProjectsGet(t *testing.T) {
 		})
 
 		// Assert
-		assert.ErrorContains(t, err, "project")
+		assert.ErrorContains(t, err, "cannot be empty")
 		assert.Nil(t, resp)
 	})
 }

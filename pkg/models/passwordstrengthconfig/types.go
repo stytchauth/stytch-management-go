@@ -20,11 +20,11 @@ type PasswordStrengthConfig struct {
 	ValidationPolicy ValidationPolicy `json:"validation_policy,omitempty"`
 	// LudsMinPasswordLength is the minimum number of characters in a password if using a LUDS
 	// validation_policy. This field is nil when using the ZXCVBN validation_policy.
-	LudsMinPasswordLength *int32 `json:"luds_min_password_length,omitempty"`
+	LudsMinPasswordLength *int `json:"luds_min_password_length,omitempty"`
 	// LudsMinPasswordComplexity is the minimum number of "character types" in a password (Lowercase,
 	// Uppercase, Digits, Symbols) when using a LUDS validation_policy. This field is nil when using the ZXCVBN
 	// validation_policy.
-	LudsMinPasswordComplexity *int32 `json:"luds_min_password_complexity,omitempty"`
+	LudsMinPasswordComplexity *int `json:"luds_min_password_complexity,omitempty"`
 }
 
 // GetRequest: Request type for `PasswordStrengthConfig.Get`.
@@ -64,11 +64,11 @@ type SetRequest struct {
 	ValidationPolicy ValidationPolicy `json:"validation_policy,omitempty"`
 	// LudsMinPasswordLength is the minimum number of characters in a password if using a LUDS
 	// validation_policy. This field is nil when using the ZXCVBN validation_policy.
-	LudsMinPasswordLength *int32 `json:"luds_min_password_length,omitempty"`
+	LudsMinPasswordLength *int `json:"luds_min_password_length,omitempty"`
 	// LudsMinPasswordComplexity is the minimum number of "character types" in a password (Lowercase,
 	// Uppercase, Digits, Symbols) when using a LUDS validation_policy. This field is nil when using the ZXCVBN
 	// validation_policy.
-	LudsMinPasswordComplexity *int32 `json:"luds_min_password_complexity,omitempty"`
+	LudsMinPasswordComplexity *int `json:"luds_min_password_complexity,omitempty"`
 }
 
 // SetResponse: Response type for `PasswordStrengthConfig.Set`.

@@ -45,8 +45,8 @@ func TestPasswordStrengthConfigClient_Set(t *testing.T) {
 			CheckBreachOnAuthentication: true,
 			ValidateOnAuthentication:    true,
 			ValidationPolicy:            passwordstrengthconfig.ValidationPolicyLUDS,
-			LudsMinPasswordLength:       ptr(int32(10)),
-			LudsMinPasswordComplexity:   ptr(int32(3)),
+			LudsMinPasswordLength:       ptr(10),
+			LudsMinPasswordComplexity:   ptr(3),
 		})
 
 		// Assert
@@ -55,8 +55,8 @@ func TestPasswordStrengthConfigClient_Set(t *testing.T) {
 		assert.Equal(t, true, resp.PasswordStrengthConfig.CheckBreachOnAuthentication)
 		assert.Equal(t, true, resp.PasswordStrengthConfig.ValidateOnAuthentication)
 		assert.Equal(t, passwordstrengthconfig.ValidationPolicyLUDS, resp.PasswordStrengthConfig.ValidationPolicy)
-		assert.Equal(t, int32(10), *resp.PasswordStrengthConfig.LudsMinPasswordLength)
-		assert.Equal(t, int32(3), *resp.PasswordStrengthConfig.LudsMinPasswordComplexity)
+		assert.Equal(t, 10, *resp.PasswordStrengthConfig.LudsMinPasswordLength)
+		assert.Equal(t, 3, *resp.PasswordStrengthConfig.LudsMinPasswordComplexity)
 	})
 
 	t.Run("set password strength config with ZXCVBN policy", func(t *testing.T) {

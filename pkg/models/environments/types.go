@@ -79,10 +79,10 @@ type CreateRequest struct {
 	UserLockSelfServeEnabled *bool `json:"user_lock_self_serve_enabled,omitempty"`
 	// UserLockThreshold represents the number of failed authenticate attempts that will cause a user in the
 	// environment to be locked. Defaults to 10.
-	UserLockThreshold *int32 `json:"user_lock_threshold,omitempty"`
+	UserLockThreshold *int `json:"user_lock_threshold,omitempty"`
 	// UserLockTTL: Represents the time in seconds that the user in the environment remains locked once the
 	// lock is set. Defaults to 1 hour (3600 seconds).
-	UserLockTTL *int32 `json:"user_lock_ttl,omitempty"`
+	UserLockTTL *int `json:"user_lock_ttl,omitempty"`
 	// IDPAuthorizationURL: The OpenID Configuration endpoint for Connected Apps for the environment.
 	IDPAuthorizationURL *string `json:"idp_authorization_url,omitempty"`
 	// IDPDynamicClientRegistrationEnabled indicates whether the project has opted in to Dynamic Client
@@ -190,10 +190,10 @@ type UpdateRequest struct {
 	UserLockSelfServeEnabled *bool `json:"user_lock_self_serve_enabled,omitempty"`
 	// UserLockThreshold represents the number of failed authenticate attempts that will cause a user in the
 	// environment to be locked. Defaults to 10.
-	UserLockThreshold *int32 `json:"user_lock_threshold,omitempty"`
+	UserLockThreshold *int `json:"user_lock_threshold,omitempty"`
 	// UserLockTTL: Represents the time in seconds that the user in the environment remains locked once the
 	// lock is set. Defaults to 1 hour (3600 seconds).
-	UserLockTTL *int32 `json:"user_lock_ttl,omitempty"`
+	UserLockTTL *int `json:"user_lock_ttl,omitempty"`
 	// IDPAuthorizationURL: The OpenID Configuration endpoint for Connected Apps for the environment.
 	IDPAuthorizationURL *string `json:"idp_authorization_url,omitempty"`
 	// IDPDynamicClientRegistrationEnabled indicates whether the project has opted in to Dynamic Client

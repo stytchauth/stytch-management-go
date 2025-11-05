@@ -54,7 +54,7 @@ type B2BConfig struct {
 
 type B2BCookiesConfig struct {
 	// HTTPOnly: Specifies whether cookies should be set with the HttpOnly flag.
-	HTTPOnly string `json:"http_only,omitempty"`
+	HTTPOnly B2BCookiesConfigHttpOnly `json:"http_only,omitempty"`
 }
 
 type B2BDFPPAConfig struct {
@@ -176,7 +176,7 @@ type ConsumerConfig struct {
 
 type ConsumerCookiesConfig struct {
 	// HTTPOnly: Specifies whether cookies should be set with the HttpOnly flag.
-	HTTPOnly string `json:"http_only,omitempty"`
+	HTTPOnly ConsumerCookiesConfigHttpOnly `json:"http_only,omitempty"`
 }
 
 type ConsumerCryptoWalletsConfig struct {
@@ -259,7 +259,7 @@ type ConsumerTOTPsConfig struct {
 }
 
 type ConsumerWebAuthnConfig struct {
-	CreateWebAuthns bool `json:"create_webauthn_s,omitempty"`
+	CreateWebAuthns bool `json:"create_webauthns,omitempty"`
 	// Enabled: Indicates whether WebAuthn endpoints are enabled in the SDK.
 	Enabled bool `json:"enabled,omitempty"`
 }
@@ -272,8 +272,6 @@ type SMSAutofillMetadata struct {
 	MetadataValue string `json:"metadata_value,omitempty"`
 	// BundleID is the ID of the bundle to use for autofill. This should be the associated bundle ID.
 	BundleID string `json:"bundle_id,omitempty"`
-	// ID is the unique identifier for the trusted token profile.
-	ID int `json:"id,omitempty"`
 }
 
 // GetB2BConfigRequest: Request type for `SDK.GetB2BConfig`.
@@ -352,6 +350,38 @@ type SetConsumerConfigResponse struct {
 	StatusCode int `json:"status_code,omitempty"`
 }
 
+type B2BCookiesConfigHttpOnly string
+
+const (
+	B2BCookiesConfigHttpOnlyDisabled B2BCookiesConfigHttpOnly = "DISABLED"
+	B2BCookiesConfigHttpOnlyEnabled  B2BCookiesConfigHttpOnly = "ENABLED"
+	B2BCookiesConfigHttpOnlyEnforced B2BCookiesConfigHttpOnly = "ENFORCED"
+)
+
+func B2BCookiesConfigHttpOnlys() []B2BCookiesConfigHttpOnly {
+	return []B2BCookiesConfigHttpOnly{
+		B2BCookiesConfigHttpOnlyDisabled,
+		B2BCookiesConfigHttpOnlyEnabled,
+		B2BCookiesConfigHttpOnlyEnforced,
+	}
+}
+
+type ConsumerCookiesConfigHttpOnly string
+
+const (
+	ConsumerCookiesConfigHttpOnlyDisabled ConsumerCookiesConfigHttpOnly = "DISABLED"
+	ConsumerCookiesConfigHttpOnlyEnabled  ConsumerCookiesConfigHttpOnly = "ENABLED"
+	ConsumerCookiesConfigHttpOnlyEnforced ConsumerCookiesConfigHttpOnly = "ENFORCED"
+)
+
+func ConsumerCookiesConfigHttpOnlys() []ConsumerCookiesConfigHttpOnly {
+	return []ConsumerCookiesConfigHttpOnly{
+		ConsumerCookiesConfigHttpOnlyDisabled,
+		ConsumerCookiesConfigHttpOnlyEnabled,
+		ConsumerCookiesConfigHttpOnlyEnforced,
+	}
+}
+
 type DFPPAOnChallengeAction string
 
 const (
@@ -395,6 +425,7 @@ const (
 
 func SMSAutofillMetadataMetadataTypes() []SMSAutofillMetadataMetadataType {
 	return []SMSAutofillMetadataMetadataType{
+		SMSAutofillMetadataMetadataTypeDomain,
 		SMSAutofillMetadataMetadataTypeHash,
 	}
 }

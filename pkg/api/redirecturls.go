@@ -69,10 +69,12 @@ func (c *RedirectURLsClient) Delete(
 	}
 	queryParams := make(map[string]string)
 	queryParams["url"] = body.URL
-	if body.DoNotPromoteDefaults {
-		queryParams["do_not_promote_defaults"] = "true"
-	} else {
-		queryParams["do_not_promote_defaults"] = "false"
+	if body.DoNotPromoteDefaults != nil {
+		if *body.DoNotPromoteDefaults {
+			queryParams["do_not_promote_defaults"] = "true"
+		} else {
+			queryParams["do_not_promote_defaults"] = "false"
+		}
 	}
 
 	var resp redirecturls.DeleteResponse

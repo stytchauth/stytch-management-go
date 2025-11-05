@@ -47,8 +47,8 @@ func Test_EnvironmentsCreate(t *testing.T) {
 		ctx := context.Background()
 
 		// Act
-		userLockThreshold := int32(5)
-		userLockTTL := int32(600)
+		userLockThreshold := 5
+		userLockTTL := 600
 		resp, err := client.Environments.Create(ctx, environments.CreateRequest{
 			ProjectSlug:              project.ProjectSlug,
 			Name:                     "Test Environment",
@@ -147,7 +147,7 @@ func Test_EnvironmentsGet(t *testing.T) {
 		})
 
 		// Assert
-		assert.ErrorContains(t, err, "environment")
+		assert.ErrorContains(t, err, "cannot be empty")
 		assert.Nil(t, resp)
 	})
 }
@@ -222,8 +222,8 @@ func Test_EnvironmentsUpdate(t *testing.T) {
 		ctx := context.Background()
 
 		// Act
-		userLockThreshold := int32(5)
-		userLockTTL := int32(600)
+		userLockThreshold := 5
+		userLockTTL := 600
 		resp, err := client.Environments.Update(ctx, environments.UpdateRequest{
 			ProjectSlug:              env.ProjectSlug,
 			EnvironmentSlug:          env.EnvironmentSlug,

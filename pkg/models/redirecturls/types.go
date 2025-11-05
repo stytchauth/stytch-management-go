@@ -28,6 +28,8 @@ type CreateRequest struct {
 	EnvironmentSlug string `json:"-"`
 	// URL: The URL to which to redirect.
 	URL string `json:"url,omitempty"`
+	// ValidTypes is a list of all the URLRedirectType available for this URL.
+	ValidTypes []URLType `json:"valid_types,omitempty"`
 	// DoNotPromoteDefaults is used to suppress the automatic "promotion" of a RedirectURL to the default if no
 	// other RedirectURL exists for the given type. This is primarily intended for use with
 	// stytchauth/terraform-provider-stytch to allow Terraform provisioning to be idempotent. For a Create
@@ -36,9 +38,7 @@ type CreateRequest struct {
 	// possible to have valid RedirectURLs for a given type but *no* default RedirectURL for that type. If no
 	// default exists for a given type, using an API endpoint that uses redirect URLs (such as sending a magic
 	// link), you will need to explicitly specify which redirect URL should be used.
-	DoNotPromoteDefaults bool `json:"do_not_promote_defaults,omitempty"`
-	// ValidTypes is a list of all the URLRedirectType available for this URL.
-	ValidTypes []URLType `json:"valid_types,omitempty"`
+	DoNotPromoteDefaults *bool `json:"do_not_promote_defaults,omitempty"`
 }
 
 // CreateResponse: Response type for `RedirectURLs.Create`.
@@ -67,7 +67,7 @@ type DeleteRequest struct {
 	// possible to have valid RedirectURLs for a given type but *no* default RedirectURL for that type. If no
 	// default exists for a given type, using an API endpoint that uses redirect URLs (such as sending a magic
 	// link), you will need to explicitly specify which redirect URL should be used.
-	DoNotPromoteDefaults bool `json:"-"`
+	DoNotPromoteDefaults *bool `json:"-"`
 }
 
 // DeleteResponse: Response type for `RedirectURLs.Delete`.
@@ -90,8 +90,8 @@ type GetAllRequest struct {
 type GetAllResponse struct {
 	// RequestID is a unique identifier to help with debugging the request.
 	RequestID string `json:"request_id,omitempty"`
-	// RedirectURLS: RedirectURLs is a list of all the redirect URLs for the project.
-	RedirectURLS []RedirectURL `json:"redirect_url_s,omitempty"`
+	// RedirectURLs is a list of all the redirect URLs for the project.
+	RedirectURLs []RedirectURL `json:"redirect_urls,omitempty"`
 	// StatusCode is the HTTP status code for the response.
 	StatusCode int `json:"status_code,omitempty"`
 }
@@ -124,6 +124,8 @@ type UpdateRequest struct {
 	EnvironmentSlug string `json:"-"`
 	// URL: The URL to which to redirect.
 	URL string `json:"-"`
+	// ValidTypes is a list of all the URLRedirectType available for this URL.
+	ValidTypes []URLType `json:"valid_types,omitempty"`
 	// DoNotPromoteDefaults is used to suppress the automatic "promotion" of a RedirectURL to the default if no
 	// other RedirectURL exists for the given type. This is primarily intended for use with
 	// stytchauth/terraform-provider-stytch to allow Terraform provisioning to be idempotent. For a Create
@@ -132,9 +134,7 @@ type UpdateRequest struct {
 	// possible to have valid RedirectURLs for a given type but *no* default RedirectURL for that type. If no
 	// default exists for a given type, using an API endpoint that uses redirect URLs (such as sending a magic
 	// link), you will need to explicitly specify which redirect URL should be used.
-	DoNotPromoteDefaults bool `json:"do_not_promote_defaults,omitempty"`
-	// ValidTypes is a list of all the URLRedirectType available for this URL.
-	ValidTypes []URLType `json:"valid_types,omitempty"`
+	DoNotPromoteDefaults *bool `json:"do_not_promote_defaults,omitempty"`
 }
 
 // UpdateResponse: Response type for `RedirectURLs.Update`.

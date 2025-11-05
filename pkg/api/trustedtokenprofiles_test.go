@@ -53,7 +53,7 @@ func TestTrustedTokenProfilesClient_Create(t *testing.T) {
 		assert.Equal(t, "Test JWK Profile", resp.Profile.Name)
 		assert.Equal(t, "test-audience", resp.Profile.Audience)
 		assert.Equal(t, "test-issuer", resp.Profile.Issuer)
-		assert.Equal(t, testJWKSURL, resp.Profile.JWKSURL)
+		assert.Equal(t, testJWKSURL, *resp.Profile.JWKSURL)
 		assert.Equal(t, trustedtokenprofiles.PublicKeyTypeJwk, resp.Profile.PublicKeyType)
 		assert.NotEmpty(t, resp.Profile.ProfileID)
 		assert.True(t, resp.Profile.CanJITProvision)
@@ -159,7 +159,7 @@ func TestTrustedTokenProfilesClient_Get(t *testing.T) {
 		})
 
 		// Assert
-		assert.ErrorContains(t, err, "profile ID")
+		assert.ErrorContains(t, err, "cannot be empty")
 		assert.Nil(t, resp)
 	})
 }

@@ -42,8 +42,6 @@ type PrebuiltCustomization struct {
 	ButtonTextColor *string `json:"button_text_color,omitempty"`
 	// FontFamily is the font type to be used in the email body.
 	FontFamily FontFamily `json:"font_family,omitempty"`
-	// LogoSrc is the URL source for the logo image in the email body.
-	LogoSrc *string `json:"logo_src,omitempty"`
 	// TextAlignment is the alignment of the text in the email body.
 	TextAlignment TextAlignment `json:"text_alignment,omitempty"`
 }

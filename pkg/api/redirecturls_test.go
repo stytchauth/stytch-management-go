@@ -35,7 +35,6 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 					IsDefault: true,
 				},
 			},
-			DoNotPromoteDefaults: false,
 		})
 
 		// Assert
@@ -72,7 +71,6 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 					IsDefault: true,
 				},
 			},
-			DoNotPromoteDefaults: false,
 		})
 
 		// Assert
@@ -108,7 +106,7 @@ func TestRedirectURLsClient_Create(t *testing.T) {
 					IsDefault: false,
 				},
 			},
-			DoNotPromoteDefaults: true,
+			DoNotPromoteDefaults: ptr(true),
 		})
 
 		// Assert
@@ -211,11 +209,11 @@ func TestRedirectURLsClient_GetAll(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.NotNil(t, resp)
-		assert.GreaterOrEqual(t, len(resp.RedirectURLS), 2)
+		assert.GreaterOrEqual(t, len(resp.RedirectURLs), 2)
 
 		// Check that both URLs are present
 		urlMap := make(map[string]bool)
-		for _, redirectURL := range resp.RedirectURLS {
+		for _, redirectURL := range resp.RedirectURLs {
 			urlMap[redirectURL.URL] = true
 		}
 		assert.Contains(t, urlMap, url1)
@@ -235,7 +233,7 @@ func TestRedirectURLsClient_GetAll(t *testing.T) {
 		require.NoError(t, err)
 		assert.NotNil(t, resp)
 		// Environments come with one default redirect URL
-		assert.LessOrEqual(t, len(resp.RedirectURLS), 1)
+		assert.LessOrEqual(t, len(resp.RedirectURLs), 1)
 	})
 }
 
@@ -381,7 +379,6 @@ func TestRedirectURLsClient_Update(t *testing.T) {
 					IsDefault: false,
 				},
 			},
-			DoNotPromoteDefaults: false,
 		})
 
 		// Assert
@@ -450,10 +447,9 @@ func TestRedirectURLsClient_Delete(t *testing.T) {
 
 		// Act
 		resp, err := client.RedirectURLs.Delete(ctx, redirecturls.DeleteRequest{
-			ProjectSlug:          env.ProjectSlug,
-			EnvironmentSlug:      env.EnvironmentSlug,
-			URL:                  deleteURL,
-			DoNotPromoteDefaults: false,
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			URL:             deleteURL,
 		})
 
 		// Assert

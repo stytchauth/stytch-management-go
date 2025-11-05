@@ -74,7 +74,7 @@ func makeTestConsumerConfig() sdk.ConsumerConfig {
 		Cookies: &sdk.ConsumerCookiesConfig{
 			// Only disabled is supported, unless the project has
 			// CNAMEs configured.
-			HTTPOnly: "disabled",
+			HTTPOnly: sdk.ConsumerCookiesConfigHttpOnlyDisabled,
 		},
 	}
 }
@@ -136,7 +136,7 @@ func makeTestB2BConfig() sdk.B2BConfig {
 		Cookies: &sdk.B2BCookiesConfig{
 			// Only disabled is supported, unless the project has
 			// CNAMEs configured.
-			HTTPOnly: "disabled",
+			HTTPOnly: sdk.B2BCookiesConfigHttpOnlyDisabled,
 		},
 	}
 }

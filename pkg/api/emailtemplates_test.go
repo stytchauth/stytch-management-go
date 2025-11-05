@@ -130,7 +130,7 @@ func TestEmailTemplatesClient_Get(t *testing.T) {
 		})
 
 		// Assert
-		assert.ErrorContains(t, err, "template ID")
+		assert.ErrorContains(t, err, "cannot be empty")
 		assert.Nil(t, resp)
 	})
 }
