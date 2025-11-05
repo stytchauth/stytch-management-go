@@ -34,6 +34,7 @@ type API struct {
 	SDK                    *SDKClient
 	Secrets                *SecretsClient
 	TrustedTokenProfiles   *TrustedTokenProfilesClient
+	V1ToV3MigrationClient  *V1ToV3MigrationClient
 }
 
 type apiConfig struct {
@@ -102,6 +103,7 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 		SDK:                    newSDKClient(client),
 		Secrets:                newSecretsClient(client),
 		TrustedTokenProfiles:   newTrustedTokenProfilesClient(client),
+		V1ToV3MigrationClient:  newMigrationClient(client),
 	}
 }
 
@@ -137,5 +139,6 @@ func NewAccessTokenClient(accessToken string, opts ...APIOption) *API {
 		SDK:                    newSDKClient(client),
 		Secrets:                newSecretsClient(client),
 		TrustedTokenProfiles:   newTrustedTokenProfilesClient(client),
+		V1ToV3MigrationClient:  newMigrationClient(client),
 	}
 }
