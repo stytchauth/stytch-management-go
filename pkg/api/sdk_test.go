@@ -6,93 +6,95 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projects"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/sdk"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/sdk"
 )
 
-func makeTestConsumerConfig(t *testing.T) sdk.ConsumerConfig {
-	t.Helper()
+func makeTestConsumerConfig() sdk.ConsumerConfig {
 	return sdk.ConsumerConfig{
 		Basic: &sdk.ConsumerBasicConfig{
-			Enabled:        true,
-			CreateNewUsers: true,
-			Domains:        []string{"https://example.com"},
-			BundleIDs:      []string{"com.example.app"},
+			Enabled:   true,
+			Domains:   []string{"https://example.com"},
+			BundleIDs: []string{"com.example.myapp"},
 		},
 		Sessions: &sdk.ConsumerSessionsConfig{
-			MaxSessionDurationMinutes: 60,
+			MaxSessionDurationMinutes: 120,
 		},
 		MagicLinks: &sdk.ConsumerMagicLinksConfig{
 			LoginOrCreateEnabled: true,
-			SendEnabled:          false,
+			SendEnabled:          true,
 			PKCERequired:         false,
 		},
 		OTPs: &sdk.ConsumerOTPsConfig{
 			SMSLoginOrCreateEnabled:      true,
 			WhatsAppLoginOrCreateEnabled: false,
-			EmailLoginOrCreateEnabled:    false,
-			SMSSendEnabled:               false,
+			EmailLoginOrCreateEnabled:    true,
+			SMSSendEnabled:               true,
 			WhatsAppSendEnabled:          false,
-			EmailSendEnabled:             false,
-			SMSAutofillMetadata:          []sdk.SMSAutofillMetadata{},
+			EmailSendEnabled:             true,
+			SMSAutofillMetadata: []sdk.SMSAutofillMetadata{
+				{
+					MetadataType:  "domain",
+					MetadataValue: "myapp.com",
+					BundleID:      "com.example.myapp",
+				},
+			},
 		},
 		OAuth: &sdk.ConsumerOAuthConfig{
 			Enabled:      true,
-			PKCERequired: true,
+			PKCERequired: false,
 		},
 		TOTPs: &sdk.ConsumerTOTPsConfig{
-			CreateTOTPs: true,
 			Enabled:     true,
+			CreateTOTPs: true,
 		},
 		WebAuthn: &sdk.ConsumerWebAuthnConfig{
-			CreateWebAuthns: false,
-			Enabled:         false,
+			Enabled:         true,
+			CreateWebAuthns: true,
 		},
 		CryptoWallets: &sdk.ConsumerCryptoWalletsConfig{
-			Enabled:      false,
+			Enabled:      true,
 			SIWERequired: false,
 		},
-		// This cannot be modified beyond defaults
-		// unless the project uses DFPPA
+		// DFPPA sdk settings cannot be modified beyond defaults
+		// unless the project has DFPPA enabled by Stytch.
 		DFPPA: &sdk.ConsumerDFPPAConfig{
-			Enabled:              sdk.DFPPASettingDisabled,
-			OnChallenge:          sdk.DFPPAOnChallengeActionAllow,
-			LookupTimeoutSeconds: 10,
+			Enabled:     sdk.DFPPASettingDisabled,
+			OnChallenge: sdk.DFPPAOnChallengeActionAllow,
 		},
 		Biometrics: &sdk.ConsumerBiometricsConfig{
-			CreateBiometricsEnabled: true,
 			Enabled:                 true,
+			CreateBiometricsEnabled: true,
 		},
 		Passwords: &sdk.ConsumerPasswordsConfig{
 			Enabled:                       true,
-			PKCERequiredForPasswordResets: true,
+			PKCERequiredForPasswordResets: false,
 		},
 		Cookies: &sdk.ConsumerCookiesConfig{
-			// This can only be Disabled unless the project has
-			// CNAMEs configured
-			HttpOnlyCookies: sdk.HttpOnlyCookiesSettingDisabled,
+			// Only disabled is supported, unless the project has
+			// CNAMEs configured.
+			HTTPOnly: sdk.ConsumerCookiesConfigHttpOnlyDisabled,
 		},
 	}
 }
 
-func makeTestB2BConfig(t *testing.T) sdk.B2BConfig {
-	t.Helper()
+func makeTestB2BConfig() sdk.B2BConfig {
 	return sdk.B2BConfig{
 		Basic: &sdk.B2BBasicConfig{
 			Enabled:                 true,
-			CreateNewMembers:        true,
 			AllowSelfOnboarding:     true,
 			EnableMemberPermissions: true,
 			Domains: []sdk.AuthorizedB2BDomain{
 				{
-					Domain:      "https://example.com",
-					SlugPattern: "https://{{slug}}.example.com",
+					Domain:      "https://myb2bapp.com",
+					SlugPattern: "https://{{slug}}.myb2bapp.com",
 				},
 			},
-			BundleIDs: []string{"com.example.app"},
+			BundleIDs: []string{"com.example.b2bapp"},
 		},
 		Sessions: &sdk.B2BSessionsConfig{
-			MaxSessionDurationMinutes: 60,
+			MaxSessionDurationMinutes: 180,
 		},
 		MagicLinks: &sdk.B2BMagicLinksConfig{
 			Enabled:      true,
@@ -103,109 +105,174 @@ func makeTestB2BConfig(t *testing.T) sdk.B2BConfig {
 			PKCERequired: true,
 		},
 		TOTPs: &sdk.B2BTOTPsConfig{
-			CreateTOTPs: true,
 			Enabled:     true,
+			CreateTOTPs: true,
 		},
 		SSO: &sdk.B2BSSOConfig{
 			Enabled:      true,
 			PKCERequired: false,
 		},
 		OTPs: &sdk.B2BOTPsConfig{
-			SMSEnabled:          false,
-			SMSAutofillMetadata: []sdk.SMSAutofillMetadata{},
-			EmailEnabled:        false,
+			SMSEnabled:   true,
+			EmailEnabled: true,
+			SMSAutofillMetadata: []sdk.SMSAutofillMetadata{
+				{
+					MetadataType:  "hash",
+					MetadataValue: "abc123hash",
+					BundleID:      "com.example.b2bapp",
+				},
+			},
 		},
-		// These cannot be modified beyond defaults
-		// unless the project is using DFPPA
+		// DFPPA sdk settings cannot be modified beyond defaults
+		// unless the project has DFPPA enabled by Stytch.
 		DFPPA: &sdk.B2BDFPPAConfig{
-			Enabled:              sdk.DFPPASettingDisabled,
-			OnChallenge:          sdk.DFPPAOnChallengeActionAllow,
-			LookupTimeoutSeconds: 10,
+			Enabled:     sdk.DFPPASettingEnabled,
+			OnChallenge: sdk.DFPPAOnChallengeActionBlock,
 		},
 		Passwords: &sdk.B2BPasswordsConfig{
-			Enabled:                       false,
-			PKCERequiredForPasswordResets: false,
+			Enabled:                       true,
+			PKCERequiredForPasswordResets: true,
 		},
 		Cookies: &sdk.B2BCookiesConfig{
-			// This can only be Disabled unless the project has
-			// CNAMEs configured
-			HttpOnlyCookies: sdk.HttpOnlyCookiesSettingDisabled,
+			// Only disabled is supported, unless the project has
+			// CNAMEs configured.
+			HTTPOnly: sdk.B2BCookiesConfigHttpOnlyDisabled,
 		},
 	}
 }
 
 func TestSDKClient_GetConsumerConfig(t *testing.T) {
-	// Arrange
-	client := NewTestClient(t)
-	project := client.DisposableProject(projects.VerticalConsumer)
-	config := makeTestConsumerConfig(t)
-	_, err := client.SDK.SetConsumerConfig(context.Background(), sdk.SetConsumerConfigRequest{
-		ProjectID: project.LiveProjectID,
-		Config:    config,
-	})
-	require.NoError(t, err)
+	t.Run("base case", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+		expectedConfig := makeTestConsumerConfig()
 
-	// Act
-	resp, err := client.SDK.GetConsumerConfig(context.Background(), sdk.GetConsumerConfigRequest{
-		ProjectID: project.LiveProjectID,
-	})
+		// First set the configuration
+		_, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			Config:          &expectedConfig,
+		})
+		require.NoError(t, err)
 
-	// Assert
-	assert.NoError(t, err)
-	assert.Equal(t, config, resp.Config)
+		// Act
+		resp, err := client.SDK.GetConsumerConfig(ctx, sdk.GetConsumerConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, expectedConfig, resp.Config)
+	})
 }
 
 func TestSDKClient_SetConsumerConfig(t *testing.T) {
-	// Arrange
-	client := NewTestClient(t)
-	project := client.DisposableProject(projects.VerticalConsumer)
-	config := makeTestConsumerConfig(t)
+	t.Run("base case", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+		config := makeTestConsumerConfig()
 
-	// Act
-	resp, err := client.SDK.SetConsumerConfig(context.Background(), sdk.SetConsumerConfigRequest{
-		ProjectID: project.LiveProjectID,
-		Config:    config,
+		// Act
+		resp, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			Config:          &config,
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, config, resp.Config)
 	})
+	t.Run("invalid vertical config returns error", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+		config := makeTestB2BConfig()
+		config.Basic.Enabled = false
 
-	// Assert
-	assert.NoError(t, err)
-	assert.Equal(t, config, resp.Config)
+		// Act
+		resp, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			Config:          &config,
+		})
+
+		// Assert
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
 }
 
 func TestSDKClient_GetB2BConfig(t *testing.T) {
-	// Arrange
-	client := NewTestClient(t)
-	project := client.DisposableProject(projects.VerticalB2B)
-	config := makeTestB2BConfig(t)
-	_, err := client.SDK.SetB2BConfig(context.Background(), sdk.SetB2BConfigRequest{
-		ProjectID: project.LiveProjectID,
-		Config:    config,
-	})
-	require.NoError(t, err)
+	t.Run("base case", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+		expectedConfig := makeTestB2BConfig()
 
-	// Act
-	resp, err := client.SDK.GetB2BConfig(context.Background(), sdk.GetB2BConfigRequest{
-		ProjectID: project.LiveProjectID,
-	})
+		// First set the configuration
+		_, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			Config:          &expectedConfig,
+		})
+		require.NoError(t, err)
 
-	// Assert
-	assert.NoError(t, err)
-	assert.Equal(t, config, resp.Config)
+		// Act
+		resp, err := client.SDK.GetB2BConfig(ctx, sdk.GetB2BConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, expectedConfig, resp.Config)
+	})
 }
 
 func TestSDKClient_SetB2BConfig(t *testing.T) {
-	// Arrange
-	client := NewTestClient(t)
-	project := client.DisposableProject(projects.VerticalB2B)
-	config := makeTestB2BConfig(t)
+	t.Run("base case", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+		config := makeTestB2BConfig()
 
-	// Act
-	resp, err := client.SDK.SetB2BConfig(context.Background(), sdk.SetB2BConfigRequest{
-		ProjectID: project.LiveProjectID,
-		Config:    config,
+		// Act
+		resp, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			Config:          &config,
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, config, resp.Config)
 	})
+	t.Run("invalid vertical config returns error", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+		config := makeTestConsumerConfig()
+		config.Basic.Enabled = false
 
-	// Assert
-	assert.NoError(t, err)
-	assert.Equal(t, config, resp.Config)
+		// Act
+		resp, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			Config:          &config,
+		})
+
+		// Assert
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
 }

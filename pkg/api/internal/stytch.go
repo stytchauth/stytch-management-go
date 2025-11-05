@@ -10,8 +10,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/stytchauth/stytch-management-go/v2/pkg/stytcherror"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/version"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/stytcherror"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/version"
 )
 
 type ClientConfig struct {
@@ -118,7 +118,7 @@ func (c *Client) RawRequest(
 		return nil, fmt.Errorf("error sending http request: %w", err)
 	}
 	defer func() {
-		res.Body.Close()
+		_ = res.Body.Close()
 	}()
 
 	// Successful response
@@ -126,7 +126,14 @@ func (c *Client) RawRequest(
 		return io.ReadAll(res.Body)
 	}
 
+	// Attempt to unmarshal the response body into Stytch error format.
+	var stytchErr stytcherror.Error
+	if json.NewDecoder(res.Body).Decode(&stytchErr) == nil {
+		return nil, stytchErr
+	}
+
 	if res.StatusCode == 404 {
+		// Fallback if the error cannot be unmarshalled.
 		err := stytcherror.Error{
 			StatusCode:   res.StatusCode,
 			ErrorMessage: "Not found.",
@@ -134,11 +141,5 @@ func (c *Client) RawRequest(
 		return nil, err
 	}
 
-	// Attempt to unmarshal into Stytch error format
-	var stytchErr stytcherror.Error
-	if err = json.NewDecoder(res.Body).Decode(&stytchErr); err != nil {
-		return nil, fmt.Errorf("error decoding http request: %w", err)
-	}
-	stytchErr.StatusCode = res.StatusCode
-	return nil, stytchErr
+	return nil, fmt.Errorf("error decoding http response: %w", err)
 }

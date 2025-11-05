@@ -10,6 +10,11 @@ help:
 lint:
 	golangci-lint run --fix
 
+TEST_CMD := gotestsum ./pkg/... -v
+ifeq (, $(shell command -v gotestsum))
+	TEST_CMD := go test ./pkg/... -v
+endif
+
 .PHONY: test
 test:
 	@if [ ! -f .env ]; then \
@@ -19,7 +24,7 @@ test:
 	STYTCH_WORKSPACE_KEY_ID="$(STYTCH_WORKSPACE_KEY_ID)" \
 	STYTCH_WORKSPACE_KEY_SECRET="$(STYTCH_WORKSPACE_KEY_SECRET)" \
 	STYTCH_WORKSPACE_BASE_URI="$(STYTCH_WORKSPACE_BASE_URI)" \
-	go test ./pkg/... -v
+	$(TEST_CMD)
 
 .PHONY: tests
 tests: test # A useful alias

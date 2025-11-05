@@ -6,184 +6,440 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/eventlogstreaming"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/eventlogstreaming"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 )
 
-func (c *testClient) createEventLogStreamingConfig(
-	projectID string,
-	destinationType eventlogstreaming.DestinationType,
-	destinationConfig eventlogstreaming.DestinationConfig,
-) {
-	c.t.Helper()
-	_, err := c.EventLogStreaming.Create(context.Background(), eventlogstreaming.CreateEventLogStreamingRequest{
-		ProjectID:         projectID,
-		DestinationType:   destinationType,
-		DestinationConfig: destinationConfig,
-	})
-	require.NoError(c.t, err)
-}
-
-func (c *testClient) cleanupEventLogStreamingConfig(projectID string, destinationType eventlogstreaming.DestinationType) {
-	c.t.Helper()
-	c.t.Cleanup(func() {
-		_, err := c.EventLogStreaming.Delete(context.Background(), eventlogstreaming.DeleteEventLogStreamingRequest{
-			ProjectID:       projectID,
-			DestinationType: destinationType,
-		})
-		require.NoError(c.t, err)
-	})
-}
-
 func TestEventLogStreamingClient_Create(t *testing.T) {
-	// Arrange
-	client := NewTestClient(t)
-	project := client.DisposableProject(projects.VerticalB2B)
-	destinationConfig := eventlogstreaming.DestinationConfig{
-		Datadog: &eventlogstreaming.DatadogConfig{
-			APIKey: "1234567890abcdef1234567890abcdef",
-			Site:   eventlogstreaming.DatadogSiteUS,
-		},
-	}
+	t.Run("create datadog config", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
 
-	t.Run("happy path", func(t *testing.T) {
 		// Act
-		resp, err := client.EventLogStreaming.Create(context.Background(), eventlogstreaming.CreateEventLogStreamingRequest{
-			ProjectID:         project.TestProjectID,
-			DestinationType:   eventlogstreaming.DestinationTypeDatadog,
-			DestinationConfig: destinationConfig,
+		resp, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+			DestinationConfig: &eventlogstreaming.DestinationConfig{
+				Datadog: &eventlogstreaming.DatadogConfig{
+					Site:   eventlogstreaming.DatadogSiteUs,
+					APIKey: "1234567890abcdef1234567890abcdef",
+				},
+			},
 		})
-		client.cleanupEventLogStreamingConfig(project.TestProjectID, eventlogstreaming.DestinationTypeDatadog)
 
 		// Assert
 		assert.NoError(t, err)
 		assert.Equal(t, eventlogstreaming.DestinationTypeDatadog, resp.EventLogStreamingConfig.DestinationType)
-		assert.Equal(t, destinationConfig, resp.EventLogStreamingConfig.DestinationConfig)
+		assert.Equal(t, eventlogstreaming.DatadogSiteUs, resp.EventLogStreamingConfig.DestinationConfig.Datadog.Site)
+		assert.Equal(t, "1234567890abcdef1234567890abcdef", resp.EventLogStreamingConfig.DestinationConfig.Datadog.APIKey)
 		assert.Equal(t, eventlogstreaming.StreamingStatusDisabled, resp.EventLogStreamingConfig.StreamingStatus)
 	})
 
-	t.Run("incorrect destination type for config returns error", func(t *testing.T) {
+	t.Run("create grafana loki config", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+
 		// Act
-		_, err := client.EventLogStreaming.Create(context.Background(), eventlogstreaming.CreateEventLogStreamingRequest{
-			ProjectID:         project.TestProjectID,
-			DestinationType:   eventlogstreaming.DestinationTypeGrafanaLoki,
-			DestinationConfig: destinationConfig,
+		resp, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeGrafanaLoki,
+			DestinationConfig: &eventlogstreaming.DestinationConfig{
+				GrafanaLoki: &eventlogstreaming.GrafanaLokiConfig{
+					Hostname: "logs-prod-us-central1.grafana.net",
+					Username: "test-user",
+					Password: "test-password-12345678",
+				},
+			},
 		})
 
 		// Assert
-		assert.Error(t, err)
+		assert.NoError(t, err)
+		assert.Equal(t, eventlogstreaming.DestinationTypeGrafanaLoki, resp.EventLogStreamingConfig.DestinationType)
+		assert.Equal(t, "logs-prod-us-central1.grafana.net", resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Hostname)
+		assert.Equal(t, "test-user", resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Username)
+		assert.Equal(t, "test-password-12345678", resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Password)
+		assert.Equal(t, eventlogstreaming.StreamingStatusDisabled, resp.EventLogStreamingConfig.StreamingStatus)
 	})
 }
 
 func TestEventLogStreamingClient_Get(t *testing.T) {
-	// Arrange
-	client := NewTestClient(t)
-	project := client.DisposableProject(projects.VerticalB2B)
-	destinationConfig := eventlogstreaming.DestinationConfig{
-		Datadog: &eventlogstreaming.DatadogConfig{
-			APIKey: "1234567890abcdef1234567890abcdef",
-			Site:   eventlogstreaming.DatadogSiteUS,
-		},
-	}
-	client.createEventLogStreamingConfig(project.TestProjectID, eventlogstreaming.DestinationTypeDatadog, destinationConfig)
-	client.cleanupEventLogStreamingConfig(project.TestProjectID, eventlogstreaming.DestinationTypeDatadog)
+	t.Run("get datadog config", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
 
-	// Act
-	resp, err := client.EventLogStreaming.Get(context.Background(), eventlogstreaming.GetEventLogStreamingRequest{
-		ProjectID:       project.TestProjectID,
-		DestinationType: eventlogstreaming.DestinationTypeDatadog,
+		// Create config first
+		_, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+			DestinationConfig: &eventlogstreaming.DestinationConfig{
+				Datadog: &eventlogstreaming.DatadogConfig{
+					Site:   eventlogstreaming.DatadogSiteUs,
+					APIKey: "1234567890abcdef1234567890abcdef",
+				},
+			},
+		})
+		require.NoError(t, err)
+
+		// Act
+		resp, err := client.EventLogStreaming.Get(ctx, eventlogstreaming.GetRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, eventlogstreaming.DestinationTypeDatadog, resp.EventLogStreamingConfig.DestinationType)
+		assert.Equal(t, eventlogstreaming.DatadogSiteUs, resp.EventLogStreamingConfig.DestinationConfig.Datadog.Site)
+		assert.Equal(t, "cdef", resp.EventLogStreamingConfig.DestinationConfig.Datadog.APIKeyLastFour)
+		assert.Equal(t, eventlogstreaming.StreamingStatusDisabled, resp.EventLogStreamingConfig.StreamingStatus)
 	})
 
-	// Assert
-	assert.NoError(t, err)
-	assert.Equal(t, eventlogstreaming.DestinationTypeDatadog, resp.EventLogStreamingConfig.DestinationType)
-	// The destination is masked, so we need to check one at a time
-	assert.Equal(t, eventlogstreaming.StreamingStatusDisabled, resp.EventLogStreamingConfig.StreamingStatus)
-	assert.Equal(t, eventlogstreaming.DatadogSiteUS, resp.EventLogStreamingConfig.DestinationConfig.Datadog.Site)
-	assert.Equal(t, "cdef", resp.EventLogStreamingConfig.DestinationConfig.Datadog.APIKeyLastFour)
+	t.Run("config does not exist", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+
+		// Act
+		resp, err := client.EventLogStreaming.Get(ctx, eventlogstreaming.GetRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+		})
+
+		// Assert
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
 }
 
 func TestEventLogStreamingClient_Update(t *testing.T) {
-	// Arrange
-	client := NewTestClient(t)
-	project := client.DisposableProject(projects.VerticalB2B)
-	destinationConfig := eventlogstreaming.DestinationConfig{
-		Datadog: &eventlogstreaming.DatadogConfig{
-			APIKey: "1234567890abcdef1234567890abcdef",
-			Site:   eventlogstreaming.DatadogSiteUS5,
-		},
-	}
-	client.createEventLogStreamingConfig(project.TestProjectID, eventlogstreaming.DestinationTypeDatadog, destinationConfig)
-	client.cleanupEventLogStreamingConfig(project.TestProjectID, eventlogstreaming.DestinationTypeDatadog)
+	t.Run("update datadog config", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
 
-	// Act
-	resp, err := client.EventLogStreaming.Update(context.Background(), eventlogstreaming.UpdateEventLogStreamingRequest{
-		ProjectID:       project.TestProjectID,
-		DestinationType: eventlogstreaming.DestinationTypeDatadog,
-		DestinationConfig: eventlogstreaming.DestinationConfig{
-			Datadog: &eventlogstreaming.DatadogConfig{
-				APIKey: "00000000000000000000000000000000",
-				Site:   eventlogstreaming.DatadogSiteUS,
+		// Create config first
+		_, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+			DestinationConfig: &eventlogstreaming.DestinationConfig{
+				Datadog: &eventlogstreaming.DatadogConfig{
+					Site:   eventlogstreaming.DatadogSiteUs,
+					APIKey: "1234567890abcdef1234567890abcdef",
+				},
 			},
-		},
+		})
+		require.NoError(t, err)
+
+		// Act
+		resp, err := client.EventLogStreaming.Update(ctx, eventlogstreaming.UpdateRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+			DestinationConfig: &eventlogstreaming.DestinationConfig{
+				Datadog: &eventlogstreaming.DatadogConfig{
+					Site:   eventlogstreaming.DatadogSiteEu,
+					APIKey: "abcdefabcdefabcdefabcdefabcdefab",
+				},
+			},
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, eventlogstreaming.DestinationTypeDatadog, resp.EventLogStreamingConfig.DestinationType)
+		assert.Equal(t, eventlogstreaming.DatadogSiteEu, resp.EventLogStreamingConfig.DestinationConfig.Datadog.Site)
+		assert.Equal(t, "abcdefabcdefabcdefabcdefabcdefab", resp.EventLogStreamingConfig.DestinationConfig.Datadog.APIKey)
 	})
 
-	// Assert
-	assert.NoError(t, err)
-	assert.Equal(t, resp.EventLogStreamingConfig.DestinationType, eventlogstreaming.DestinationTypeDatadog)
-	assert.Equal(t, resp.EventLogStreamingConfig.DestinationConfig.Datadog.Site, eventlogstreaming.DatadogSiteUS)
-	assert.Equal(t, resp.EventLogStreamingConfig.DestinationConfig.Datadog.APIKey, "00000000000000000000000000000000")
-	assert.Equal(t, resp.EventLogStreamingConfig.StreamingStatus, eventlogstreaming.StreamingStatusDisabled)
+	t.Run("update grafana loki config", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+
+		// Create Loki config first
+		_, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeGrafanaLoki,
+			DestinationConfig: &eventlogstreaming.DestinationConfig{
+				GrafanaLoki: &eventlogstreaming.GrafanaLokiConfig{
+					Hostname: "logs-prod-us-central1.grafana.net",
+					Username: "initial-user",
+					Password: "initial-password-12345678",
+				},
+			},
+		})
+		require.NoError(t, err)
+
+		// Act
+		resp, err := client.EventLogStreaming.Update(ctx, eventlogstreaming.UpdateRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeGrafanaLoki,
+			DestinationConfig: &eventlogstreaming.DestinationConfig{
+				GrafanaLoki: &eventlogstreaming.GrafanaLokiConfig{
+					Hostname: "logs-prod-eu-west-0.grafana.net",
+					Username: "updated-user",
+					Password: "updated-password-87654321",
+				},
+			},
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.Equal(t, eventlogstreaming.DestinationTypeGrafanaLoki, resp.EventLogStreamingConfig.DestinationType)
+		assert.Equal(t, "logs-prod-eu-west-0.grafana.net", resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Hostname)
+		assert.Equal(t, "updated-user", resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Username)
+		assert.Equal(t, "updated-password-87654321", resp.EventLogStreamingConfig.DestinationConfig.GrafanaLoki.Password)
+	})
+
+	t.Run("update loki config when datadog config exists", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+
+		// Create Datadog config first
+		_, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+			DestinationConfig: &eventlogstreaming.DestinationConfig{
+				Datadog: &eventlogstreaming.DatadogConfig{
+					Site:   eventlogstreaming.DatadogSiteUs,
+					APIKey: "1234567890abcdef1234567890abcdef",
+				},
+			},
+		})
+		require.NoError(t, err)
+
+		// Act - Try to update with Loki config when Datadog exists
+		resp, err := client.EventLogStreaming.Update(ctx, eventlogstreaming.UpdateRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeGrafanaLoki,
+			DestinationConfig: &eventlogstreaming.DestinationConfig{
+				GrafanaLoki: &eventlogstreaming.GrafanaLokiConfig{
+					Hostname: "logs-prod-eu-west-0.grafana.net",
+					Username: "test-user",
+					Password: "test-password-12345678",
+				},
+			},
+		})
+
+		// Assert
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
+
+	t.Run("config does not exist", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+
+		// Act
+		resp, err := client.EventLogStreaming.Update(ctx, eventlogstreaming.UpdateRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+			DestinationConfig: &eventlogstreaming.DestinationConfig{
+				Datadog: &eventlogstreaming.DatadogConfig{
+					Site:   eventlogstreaming.DatadogSiteUs,
+					APIKey: "1234567890abcdef1234567890abcdef",
+				},
+			},
+		})
+
+		// Assert
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
 }
 
 func TestEventLogStreamingClient_Enable(t *testing.T) {
-	// Arrange
-	client := NewTestClient(t)
-	project := client.DisposableProject(projects.VerticalB2B)
-	destinationConfig := eventlogstreaming.DestinationConfig{
-		Datadog: &eventlogstreaming.DatadogConfig{
-			APIKey: "1234567890abcdef1234567890abcdef",
-			Site:   eventlogstreaming.DatadogSiteUS5,
-		},
-	}
-	client.createEventLogStreamingConfig(project.TestProjectID, eventlogstreaming.DestinationTypeDatadog, destinationConfig)
-	client.cleanupEventLogStreamingConfig(project.TestProjectID, eventlogstreaming.DestinationTypeDatadog)
+	t.Run("enable config", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
 
-	// Act
-	_, err := client.EventLogStreaming.Enable(context.Background(), eventlogstreaming.EnableEventLogStreamingRequest{
-		ProjectID:       project.TestProjectID,
-		DestinationType: eventlogstreaming.DestinationTypeDatadog,
+		// Create config first
+		_, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+			DestinationConfig: &eventlogstreaming.DestinationConfig{
+				Datadog: &eventlogstreaming.DatadogConfig{
+					Site:   eventlogstreaming.DatadogSiteUs,
+					APIKey: "1234567890abcdef1234567890abcdef",
+				},
+			},
+		})
+		require.NoError(t, err)
+
+		// Act
+		resp, err := client.EventLogStreaming.Enable(ctx, eventlogstreaming.EnableRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.NotEmpty(t, resp.RequestID)
 	})
 
-	// Assert
-	assert.NoError(t, err)
+	t.Run("config does not exist", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+
+		// Act
+		resp, err := client.EventLogStreaming.Enable(ctx, eventlogstreaming.EnableRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+		})
+
+		// Assert
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
 }
 
 func TestEventLogStreamingClient_Disable(t *testing.T) {
-	// Arrange
-	client := NewTestClient(t)
-	project := client.DisposableProject(projects.VerticalB2B)
-	destinationConfig := eventlogstreaming.DestinationConfig{
-		Datadog: &eventlogstreaming.DatadogConfig{
-			APIKey: "1234567890abcdef1234567890abcdef",
-			Site:   eventlogstreaming.DatadogSiteUS5,
-		},
-	}
-	client.createEventLogStreamingConfig(project.TestProjectID, eventlogstreaming.DestinationTypeDatadog, destinationConfig)
-	client.cleanupEventLogStreamingConfig(project.TestProjectID, eventlogstreaming.DestinationTypeDatadog)
-	// Must enable before disabling a destination
-	_, err := client.EventLogStreaming.Enable(context.Background(), eventlogstreaming.EnableEventLogStreamingRequest{
-		ProjectID:       project.TestProjectID,
-		DestinationType: eventlogstreaming.DestinationTypeDatadog,
-	})
-	require.NoError(t, err)
+	t.Run("disable config", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
 
-	// Act
-	_, err = client.EventLogStreaming.Disable(context.Background(), eventlogstreaming.DisableEventLogStreamingRequest{
-		ProjectID:       project.TestProjectID,
-		DestinationType: eventlogstreaming.DestinationTypeDatadog,
+		// Create and enable config first
+		_, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+			DestinationConfig: &eventlogstreaming.DestinationConfig{
+				Datadog: &eventlogstreaming.DatadogConfig{
+					Site:   eventlogstreaming.DatadogSiteUs,
+					APIKey: "1234567890abcdef1234567890abcdef",
+				},
+			},
+		})
+		require.NoError(t, err)
+
+		_, err = client.EventLogStreaming.Enable(ctx, eventlogstreaming.EnableRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+		})
+		require.NoError(t, err)
+
+		// Act
+		resp, err := client.EventLogStreaming.Disable(ctx, eventlogstreaming.DisableRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.NotEmpty(t, resp.RequestID)
 	})
 
-	// Assert
-	assert.NoError(t, err)
+	t.Run("config does not exist", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+
+		// Act
+		resp, err := client.EventLogStreaming.Disable(ctx, eventlogstreaming.DisableRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+		})
+
+		// Assert
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
+}
+
+func TestEventLogStreamingClient_Delete(t *testing.T) {
+	t.Run("delete config", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+
+		// Create config first
+		_, err := client.EventLogStreaming.Create(ctx, eventlogstreaming.CreateRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+			DestinationConfig: &eventlogstreaming.DestinationConfig{
+				Datadog: &eventlogstreaming.DatadogConfig{
+					Site:   eventlogstreaming.DatadogSiteUs,
+					APIKey: "1234567890abcdef1234567890abcdef",
+				},
+			},
+		})
+		require.NoError(t, err)
+
+		// Act
+		resp, err := client.EventLogStreaming.Delete(ctx, eventlogstreaming.DeleteRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+		})
+
+		// Assert
+		assert.NoError(t, err)
+		assert.NotEmpty(t, resp.RequestID)
+
+		// Verify config is deleted by trying to get it
+		getResp, err := client.EventLogStreaming.Get(ctx, eventlogstreaming.GetRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+		})
+		assert.Error(t, err)
+		assert.Nil(t, getResp)
+	})
+
+	t.Run("config does not exist", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+
+		// Act
+		resp, err := client.EventLogStreaming.Delete(ctx, eventlogstreaming.DeleteRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			DestinationType: eventlogstreaming.DestinationTypeDatadog,
+		})
+
+		// Assert
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
 }

@@ -6,8 +6,9 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/api"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/api"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 )
 
 func ptr[T any](v T) *T {
@@ -18,6 +19,10 @@ type testClient struct {
 	t *testing.T
 	*api.API
 }
+
+// This is the name of the first live environment created
+// when a new project is created from the dashboard. We choose the same name in tests.
+const LiveEnvironment string = "production"
 
 // NewTestClient is a test helper function that returns a new API client.
 // It relies on the environment variables STYTCH_WORKSPACE_KEY_ID and STYTCH_WORKSPACE_KEY_SECRET being set.
@@ -45,17 +50,56 @@ func (c *testClient) DisposableProject(vertical projects.Vertical) projects.Proj
 	c.t.Helper()
 	ctx := context.Background()
 	resp, err := c.Projects.Create(ctx, projects.CreateRequest{
-		ProjectName: "Disposable project",
-		Vertical:    vertical,
+		Name:     "Disposable Project",
+		Vertical: vertical,
+	})
+	require.NoError(c.t, err)
+
+	// Create a live environment since otherwise we cannot create disposable test environments.
+	_, err = c.Environments.Create(ctx, environments.CreateRequest{
+		ProjectSlug:     resp.Project.ProjectSlug,
+		Name:            LiveEnvironment,
+		Type:            environments.EnvironmentTypeLive,
+		EnvironmentSlug: ptr(LiveEnvironment),
 	})
 	require.NoError(c.t, err)
 
 	c.t.Cleanup(func() {
 		_, err := c.Projects.Delete(ctx, projects.DeleteRequest{
-			ProjectID: resp.Project.LiveProjectID,
+			ProjectSlug: resp.Project.ProjectSlug,
 		})
 		require.NoError(c.t, err)
 	})
 
 	return resp.Project
+}
+
+func (c *testClient) DisposableEnvironment(
+	vertical projects.Vertical, environmentType environments.EnvironmentType,
+) environments.Environment {
+	c.t.Helper()
+	project := c.DisposableProject(vertical)
+	ctx := context.Background()
+
+	envResp, err := c.Environments.GetAll(ctx, environments.GetAllRequest{
+		ProjectSlug: project.ProjectSlug,
+	})
+	require.NoError(c.t, err)
+
+	// Projects are created with both a live and test environment, so return the one that matches the
+	// requested type (if it exists).
+	for _, env := range envResp.Environments {
+		if env.Type == environmentType {
+			return env
+		}
+	}
+
+	// Otherwise, we need to create a new one because one of that type does not exist
+	createResp, err := c.Environments.Create(ctx, environments.CreateRequest{
+		ProjectSlug: project.ProjectSlug,
+		Name:        "Disposable Environment",
+		Type:        environmentType,
+	})
+	require.NoError(c.t, err)
+	return createResp.Environment
 }

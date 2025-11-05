@@ -6,110 +6,123 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/jwttemplates"
-	"github.com/stytchauth/stytch-management-go/v2/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/jwttemplates"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
 )
 
-func TestJWTTemplatesClient_Set(t *testing.T) {
-	t.Run("sessions template", func(t *testing.T) {
+func TestJWTTemplatesClient_GetJWTTemplate(t *testing.T) {
+	t.Run("get session template", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
-		expected := jwttemplates.JWTTemplate{
-			TemplateContent: "{\"bid\": {{member.trusted_metadata.billing_id}}}",
-			CustomAudience:  "audience",
-			TemplateType:    jwttemplates.TemplateTypeSession,
-		}
+		templateContent := `{"custom_user_id": "user-123", "custom_email": "test@example.com"}`
+		customAudience := "my-custom-audience"
+
+		// First set a template
+		_, err := client.JWTTemplates.Set(ctx, jwttemplates.SetRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			JWTTemplateType: jwttemplates.JWTTemplateTypeSession,
+			TemplateContent: templateContent,
+			CustomAudience:  customAudience,
+		})
+		require.NoError(t, err)
 
 		// Act
-		resp, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
-			ProjectID:   project.LiveProjectID,
-			JWTTemplate: expected,
+		resp, err := client.JWTTemplates.Get(ctx, jwttemplates.GetRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			JWTTemplateType: jwttemplates.JWTTemplateTypeSession,
 		})
 
 		// Assert
 		assert.NoError(t, err)
-		assert.Equal(t, resp.StatusCode, 200)
-		assert.Equal(t, expected, resp.JWTTemplate)
+		assert.Equal(t, templateContent, resp.JWTTemplate.TemplateContent)
+		assert.Equal(t, customAudience, resp.JWTTemplate.CustomAudience)
+		assert.Equal(t, jwttemplates.JWTTemplateTypeSession, resp.JWTTemplate.JWTTemplateType)
 	})
-	t.Run("m2m template", func(t *testing.T) {
+
+	t.Run("get m2m template", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
-		expected := jwttemplates.JWTTemplate{
-			TemplateContent: "{\"tier\": {{ client.trusted_metadata.subscription_tier }}}",
-			CustomAudience:  "audience",
-			TemplateType:    jwttemplates.TemplateTypeM2M,
-		}
+		templateContent := `{"custom_org_id": "org-456", "custom_name": "Test Organization"}`
+		customAudience := "m2m-audience"
+
+		// First set a template
+		_, err := client.JWTTemplates.Set(ctx, jwttemplates.SetRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			JWTTemplateType: jwttemplates.JWTTemplateTypeM2M,
+			TemplateContent: templateContent,
+			CustomAudience:  customAudience,
+		})
+		require.NoError(t, err)
 
 		// Act
-		resp, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
-			ProjectID:   project.LiveProjectID,
-			JWTTemplate: expected,
+		resp, err := client.JWTTemplates.Get(ctx, jwttemplates.GetRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			JWTTemplateType: jwttemplates.JWTTemplateTypeM2M,
 		})
 
 		// Assert
 		assert.NoError(t, err)
-		assert.Equal(t, resp.StatusCode, 200)
-		assert.Equal(t, expected, resp.JWTTemplate)
+		assert.Equal(t, templateContent, resp.JWTTemplate.TemplateContent)
+		assert.Equal(t, customAudience, resp.JWTTemplate.CustomAudience)
+		assert.Equal(t, jwttemplates.JWTTemplateTypeM2M, resp.JWTTemplate.JWTTemplateType)
 	})
 }
 
-func TestJWTTemplatesClient_Get(t *testing.T) {
-	t.Run("sessions template", func(t *testing.T) {
+func TestJWTTemplatesClient_SetJWTTemplate(t *testing.T) {
+	t.Run("set session template", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
 		ctx := context.Background()
-		expected := jwttemplates.JWTTemplate{
-			TemplateContent: "{\"bid\": {{member.trusted_metadata.billing_id}}}",
-			CustomAudience:  "audience",
-			TemplateType:    jwttemplates.TemplateTypeSession,
-		}
-		_, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
-			ProjectID:   project.LiveProjectID,
-			JWTTemplate: expected,
-		})
-		require.NoError(t, err)
+		templateContent := `{"custom_user_id": "user-123", "custom_email": "test@example.com"}`
+		customAudience := "my-custom-audience"
 
 		// Act
-		resp, err := client.JWTTemplates.Get(ctx, &jwttemplates.GetRequest{
-			ProjectID:    project.LiveProjectID,
-			TemplateType: jwttemplates.TemplateTypeSession,
+		setResp, err := client.JWTTemplates.Set(ctx, jwttemplates.SetRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			JWTTemplateType: jwttemplates.JWTTemplateTypeSession,
+			TemplateContent: templateContent,
+			CustomAudience:  customAudience,
 		})
 
 		// Assert
 		assert.NoError(t, err)
-		assert.Equal(t, resp.StatusCode, 200)
-		assert.Equal(t, expected, resp.JWTTemplate)
+		assert.Equal(t, templateContent, setResp.JWTTemplate.TemplateContent)
+		assert.Equal(t, customAudience, setResp.JWTTemplate.CustomAudience)
+		assert.Equal(t, jwttemplates.JWTTemplateTypeSession, setResp.JWTTemplate.JWTTemplateType)
 	})
-	t.Run("m2m template", func(t *testing.T) {
+
+	t.Run("set m2m template", func(t *testing.T) {
 		// Arrange
 		client := NewTestClient(t)
-		project := client.DisposableProject(projects.VerticalB2B)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
 		ctx := context.Background()
-		expected := jwttemplates.JWTTemplate{
-			TemplateContent: "{\"tier\": {{ client.trusted_metadata.subscription_tier }}}",
-			CustomAudience:  "audience",
-			TemplateType:    jwttemplates.TemplateTypeM2M,
-		}
-		_, err := client.JWTTemplates.Set(ctx, &jwttemplates.SetRequest{
-			ProjectID:   project.LiveProjectID,
-			JWTTemplate: expected,
-		})
-		require.NoError(t, err)
+		templateContent := `{"custom_org_id": "org-456", "custom_name": "Test Organization"}`
+		customAudience := "m2m-audience"
 
 		// Act
-		resp, err := client.JWTTemplates.Get(ctx, &jwttemplates.GetRequest{
-			ProjectID:    project.LiveProjectID,
-			TemplateType: jwttemplates.TemplateTypeM2M,
+		setResp, err := client.JWTTemplates.Set(ctx, jwttemplates.SetRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			JWTTemplateType: jwttemplates.JWTTemplateTypeM2M,
+			TemplateContent: templateContent,
+			CustomAudience:  customAudience,
 		})
 
 		// Assert
 		assert.NoError(t, err)
-		assert.Equal(t, resp.StatusCode, 200)
-		assert.Equal(t, expected, resp.JWTTemplate)
+		assert.Equal(t, templateContent, setResp.JWTTemplate.TemplateContent)
+		assert.Equal(t, customAudience, setResp.JWTTemplate.CustomAudience)
+		assert.Equal(t, jwttemplates.JWTTemplateTypeM2M, setResp.JWTTemplate.JWTTemplateType)
 	})
 }
