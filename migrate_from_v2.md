@@ -98,13 +98,20 @@ In v3 of the SDK as well as the management API we revamped all aspects of error 
 
 ### Can I still use stytch-management-go v2?
 
-Yes. V2 will be considered deprecated once v3 GA is released, with no new features or functionality added. Only critical security patches and bugs will be fixed. 
+Yes. V2 will be considered deprecated once v3.0.0 is released, with no new features or functionality added. 
 
-*Note: v1 is no longer maintained.*
+*Note: v1 is no longer maintained. Upgrading from v1 to v2 is a simple change, with only 2 fields being backwards incompatible vs v1 (see [diff](https://github.com/stytchauth/stytch-management-go/pull/49/files#diff-9a60b5784c6af2215a7d0bf01e9f36ddb1b00cd14d032f10c1afd1539e7d2b25))*
 
 ### How long will stytch-management-go v2 be supported?
 
-Once v3 is released as GA, you will be able to see a deprecation calendar in our documentation.
+We will publish a more detailed deprecation calendar with a concrete end of life date in our documentation. For now, use this as a reference:
+
+| SDK | No new features | Deprecation | End of life **not before**|
+|-|-|-|-|
+| stytch-management-go v1 | Already stopped | November 14, 2025  | June 30, 2026 |
+| stytch-management-go v2 | November 14, 2025 | January 31, 2026 | June 30, 2026  |
+
+Once a version is deprecated, support will be minimal and scoped primarily to major bugs and security upgrades.
 
 ### If I use custom environments and have more than one test environment, what is v2's test environment?
 
@@ -114,6 +121,5 @@ The test environment configuration in v2 is the oldest non-deleted test environm
 
 If you encounter issues during migration, please:
 - Check the [v3 documentation](README.md) for updated examples
-- Check the [Stytch Management API docs](https://stytch.com/docs/workspace-management/pwa/overview) for further documentation and information
 - File an issue on [GitHub](https://github.com/stytchauth/stytch-management-go/issues)
 - Contact support via [Slack](https://stytch.com/docs/resources/support/overview) or email support@stytch.com
