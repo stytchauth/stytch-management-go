@@ -5,8 +5,7 @@ The Stytch Management Go library makes it easy to use Stytch's Programmatic Work
 This library is tested with go 1.22.
 
 > [!WARNING]
-> The v3 of this SDK is currently in development and only available as an alpha version, with unnanounced breaking changes. For the current major release, see our stable [v2 branch](https://github.com/stytchauth/stytch-management-go/tree/v2).
-
+> This is a new version of the SDK with various breaking changes from v2. It uses a new version of the Stytch Management API (v3). If you are currently using v2, please read the [migration guidance](./migrate_from_v2.md) for more details.
 
 ## Install
 
