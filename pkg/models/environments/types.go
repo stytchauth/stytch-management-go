@@ -22,7 +22,8 @@ type Environment struct {
 	// UserImpersonationEnabled: Indicates whether user impersonation is enabled for the environment.
 	UserImpersonationEnabled bool `json:"user_impersonation_enabled,omitempty"`
 	// ZeroDowntimeSessionMigrationURL is the OIDC-compliant UserInfo endpoint for session migration.
-	ZeroDowntimeSessionMigrationURL string `json:"zero_downtime_session_migration_url,omitempty"`
+	ZeroDowntimeSessionMigrationURL  string `json:"zero_downtime_session_migration_url,omitempty"`
+	UseCustomDomainInMagicLinkEmails bool   `json:"use_custom_domain_in_magic_link_emails,omitempty"`
 	// UserLockSelfServeEnabled: Indicates whether users in the environment who get locked out should
 	// automatically get an unlock email magic link.
 	UserLockSelfServeEnabled bool `json:"user_lock_self_serve_enabled,omitempty"`
@@ -40,6 +41,7 @@ type Environment struct {
 	// IDPDynamicClientRegistrationAccessTokenTemplateContent is the access token template to use for clients
 	// created through Dynamic Client Registration (DCR).
 	IDPDynamicClientRegistrationAccessTokenTemplateContent string `json:"idp_dynamic_client_registration_access_token_template_content,omitempty"`
+	ProjectID                                              string `json:"project_id,omitempty"`
 	// Type: The environment's type.
 	Type EnvironmentType `json:"type,omitempty"`
 	// CreatedAt: The ISO-8601 timestamp for when the resource was created.
@@ -184,7 +186,8 @@ type UpdateRequest struct {
 	// UserImpersonationEnabled: Indicates whether user impersonation is enabled for the environment.
 	UserImpersonationEnabled *bool `json:"user_impersonation_enabled,omitempty"`
 	// ZeroDowntimeSessionMigrationURL is the OIDC-compliant UserInfo endpoint for session migration.
-	ZeroDowntimeSessionMigrationURL *string `json:"zero_downtime_session_migration_url,omitempty"`
+	ZeroDowntimeSessionMigrationURL  *string `json:"zero_downtime_session_migration_url,omitempty"`
+	UseCustomDomainInMagicLinkEmails *bool   `json:"use_custom_domain_in_magic_link_emails,omitempty"`
 	// UserLockSelfServeEnabled: Indicates whether users in the environment who get locked out should
 	// automatically get an unlock email magic link.
 	UserLockSelfServeEnabled *bool `json:"user_lock_self_serve_enabled,omitempty"`
