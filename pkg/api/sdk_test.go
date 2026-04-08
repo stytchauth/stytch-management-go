@@ -76,6 +76,9 @@ func makeTestConsumerConfig() sdk.ConsumerConfig {
 			// CNAMEs configured.
 			HTTPOnly: sdk.ConsumerCookiesConfigHttpOnlyDisabled,
 		},
+		UserImpersonation: &sdk.ConsumerUserImpersonationConfig{
+			Enabled: false,
+		},
 	}
 }
 
@@ -137,6 +140,9 @@ func makeTestB2BConfig() sdk.B2BConfig {
 			// Only disabled is supported, unless the project has
 			// CNAMEs configured.
 			HTTPOnly: sdk.B2BCookiesConfigHttpOnlyDisabled,
+		},
+		UserImpersonation: &sdk.B2BUserImpersonationConfig{
+			Enabled: false,
 		},
 	}
 }
