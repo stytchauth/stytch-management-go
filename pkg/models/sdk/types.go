@@ -54,8 +54,8 @@ type B2BConfig struct {
 }
 
 type B2BCookiesConfig struct {
-	// HttpOnly: Specifies whether cookies should be set with the HttpOnly flag.
-	HttpOnly B2BCookiesConfigHttpOnly `json:"http_only,omitempty"`
+	// HTTPOnly: Specifies whether cookies should be set with the HttpOnly flag.
+	HTTPOnly B2BCookiesConfigHttpOnly `json:"http_only,omitempty"`
 }
 
 type B2BDFPPAConfig struct {
@@ -183,8 +183,8 @@ type ConsumerConfig struct {
 }
 
 type ConsumerCookiesConfig struct {
-	// HttpOnly: Specifies whether cookies should be set with the HttpOnly flag.
-	HttpOnly ConsumerCookiesConfigHttpOnly `json:"http_only,omitempty"`
+	// HTTPOnly: Specifies whether cookies should be set with the HttpOnly flag.
+	HTTPOnly ConsumerCookiesConfigHttpOnly `json:"http_only,omitempty"`
 }
 
 type ConsumerCryptoWalletsConfig struct {
