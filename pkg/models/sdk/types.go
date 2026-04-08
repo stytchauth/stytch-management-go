@@ -49,12 +49,13 @@ type B2BConfig struct {
 	// Passwords is the passwords configuration for the SDK.
 	Passwords *B2BPasswordsConfig `json:"passwords,omitempty"`
 	// Cookies is the cookies configuration for the SDK.
-	Cookies *B2BCookiesConfig `json:"cookies,omitempty"`
+	Cookies           *B2BCookiesConfig           `json:"cookies,omitempty"`
+	UserImpersonation *B2BUserImpersonationConfig `json:"user_impersonation,omitempty"`
 }
 
 type B2BCookiesConfig struct {
-	// HTTPOnly: Specifies whether cookies should be set with the HttpOnly flag.
-	HTTPOnly B2BCookiesConfigHttpOnly `json:"http_only,omitempty"`
+	// HttpOnly: Specifies whether cookies should be set with the HttpOnly flag.
+	HttpOnly B2BCookiesConfigHttpOnly `json:"http_only,omitempty"`
 }
 
 type B2BDFPPAConfig struct {
@@ -129,6 +130,12 @@ type B2BTOTPsConfig struct {
 	Enabled bool `json:"enabled,omitempty"`
 }
 
+type B2BUserImpersonationConfig struct {
+	// Enabled: Enable authenticating member impersonation tokens. Allow the SDK to authenticate a member
+	// impersonation token for a full session as an impersonated member.
+	Enabled bool `json:"enabled,omitempty"`
+}
+
 type ConsumerBasicConfig struct {
 	// Enabled indicates whether the consumer project SDK is enabled. This allows the SDK to manage user and
 	// session data.
@@ -171,12 +178,13 @@ type ConsumerConfig struct {
 	// Passwords is the passwords configuration for the SDK.
 	Passwords *ConsumerPasswordsConfig `json:"passwords,omitempty"`
 	// Cookies is the cookies configuration for the SDK.
-	Cookies *ConsumerCookiesConfig `json:"cookies,omitempty"`
+	Cookies           *ConsumerCookiesConfig           `json:"cookies,omitempty"`
+	UserImpersonation *ConsumerUserImpersonationConfig `json:"user_impersonation,omitempty"`
 }
 
 type ConsumerCookiesConfig struct {
-	// HTTPOnly: Specifies whether cookies should be set with the HttpOnly flag.
-	HTTPOnly ConsumerCookiesConfigHttpOnly `json:"http_only,omitempty"`
+	// HttpOnly: Specifies whether cookies should be set with the HttpOnly flag.
+	HttpOnly ConsumerCookiesConfigHttpOnly `json:"http_only,omitempty"`
 }
 
 type ConsumerCryptoWalletsConfig struct {
@@ -255,6 +263,12 @@ type ConsumerTOTPsConfig struct {
 	// CreateTOTPs indicates whether TOTP creation is enabled in the SDK.
 	CreateTOTPs bool `json:"create_totps,omitempty"`
 	// Enabled: Indicates whether TOTP endpoints are enabled in the SDK.
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+type ConsumerUserImpersonationConfig struct {
+	// Enabled: Enable authenticating member impersonation tokens. Allow the SDK to authenticate a member
+	// impersonation token for a full session as an impersonated member.
 	Enabled bool `json:"enabled,omitempty"`
 }
 
