@@ -21,20 +21,21 @@ type API struct {
 
 	// These are the clients for all the different resources available via the management API, in
 	// alphabetical order.
-	CountryCodeAllowlist   *CountryCodeAllowlistClient
-	EmailTemplates         *EmailTemplatesClient
-	Environments           *EnvironmentsClient
-	EventLogStreaming      *EventLogStreamingClient
-	JWTTemplates           *JWTTemplatesClient
-	PasswordStrengthConfig *PasswordStrengthConfigClient
-	Projects               *ProjectsClient
-	PublicTokens           *PublicTokensClient
-	RBACPolicy             *RBACPolicyClient
-	RedirectURLs           *RedirectURLsClient
-	SDK                    *SDKClient
-	Secrets                *SecretsClient
-	TrustedTokenProfiles   *TrustedTokenProfilesClient
-	V1ToV3MigrationClient  *V1ToV3MigrationClient
+	CountryCodeAllowlist        *CountryCodeAllowlistClient
+	EmailTemplates              *EmailTemplatesClient
+	Environments                *EnvironmentsClient
+	EventLogStreaming           *EventLogStreamingClient
+	JWTTemplates                *JWTTemplatesClient
+	PasswordStrengthConfig      *PasswordStrengthConfigClient
+	ProjectTwilioAPIKeysService *ProjectTwilioAPIKeysServiceClient
+	Projects                    *ProjectsClient
+	PublicTokens                *PublicTokensClient
+	RBACPolicy                  *RBACPolicyClient
+	RedirectURLs                *RedirectURLsClient
+	SDK                         *SDKClient
+	Secrets                     *SecretsClient
+	TrustedTokenProfiles        *TrustedTokenProfilesClient
+	V1ToV3MigrationClient       *V1ToV3MigrationClient
 }
 
 type apiConfig struct {
@@ -89,21 +90,22 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 	})
 
 	return &API{
-		client:                 client,
-		CountryCodeAllowlist:   newCountryCodeAllowlistClient(client),
-		EmailTemplates:         newEmailTemplatesClient(client),
-		Environments:           newEnvironmentsClient(client),
-		EventLogStreaming:      newEventLogStreamingClient(client),
-		JWTTemplates:           newJWTTemplatesClient(client),
-		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
-		Projects:               newProjectsClient(client),
-		PublicTokens:           newPublicTokensClient(client),
-		RBACPolicy:             newRBACPolicyClient(client),
-		RedirectURLs:           newRedirectURLsClient(client),
-		SDK:                    newSDKClient(client),
-		Secrets:                newSecretsClient(client),
-		TrustedTokenProfiles:   newTrustedTokenProfilesClient(client),
-		V1ToV3MigrationClient:  newMigrationClient(client),
+		client:                      client,
+		CountryCodeAllowlist:        newCountryCodeAllowlistClient(client),
+		EmailTemplates:              newEmailTemplatesClient(client),
+		Environments:                newEnvironmentsClient(client),
+		EventLogStreaming:           newEventLogStreamingClient(client),
+		JWTTemplates:                newJWTTemplatesClient(client),
+		PasswordStrengthConfig:      newPasswordStrengthConfigClient(client),
+		ProjectTwilioAPIKeysService: newProjectTwilioAPIKeysServiceClient(client),
+		Projects:                    newProjectsClient(client),
+		PublicTokens:                newPublicTokensClient(client),
+		RBACPolicy:                  newRBACPolicyClient(client),
+		RedirectURLs:                newRedirectURLsClient(client),
+		SDK:                         newSDKClient(client),
+		Secrets:                     newSecretsClient(client),
+		TrustedTokenProfiles:        newTrustedTokenProfilesClient(client),
+		V1ToV3MigrationClient:       newMigrationClient(client),
 	}
 }
 
@@ -125,20 +127,21 @@ func NewAccessTokenClient(accessToken string, opts ...APIOption) *API {
 	})
 
 	return &API{
-		client:                 client,
-		CountryCodeAllowlist:   newCountryCodeAllowlistClient(client),
-		EmailTemplates:         newEmailTemplatesClient(client),
-		Environments:           newEnvironmentsClient(client),
-		EventLogStreaming:      newEventLogStreamingClient(client),
-		JWTTemplates:           newJWTTemplatesClient(client),
-		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
-		Projects:               newProjectsClient(client),
-		PublicTokens:           newPublicTokensClient(client),
-		RBACPolicy:             newRBACPolicyClient(client),
-		RedirectURLs:           newRedirectURLsClient(client),
-		SDK:                    newSDKClient(client),
-		Secrets:                newSecretsClient(client),
-		TrustedTokenProfiles:   newTrustedTokenProfilesClient(client),
-		V1ToV3MigrationClient:  newMigrationClient(client),
+		client:                      client,
+		CountryCodeAllowlist:        newCountryCodeAllowlistClient(client),
+		EmailTemplates:              newEmailTemplatesClient(client),
+		Environments:                newEnvironmentsClient(client),
+		EventLogStreaming:           newEventLogStreamingClient(client),
+		JWTTemplates:                newJWTTemplatesClient(client),
+		PasswordStrengthConfig:      newPasswordStrengthConfigClient(client),
+		ProjectTwilioAPIKeysService: newProjectTwilioAPIKeysServiceClient(client),
+		Projects:                    newProjectsClient(client),
+		PublicTokens:                newPublicTokensClient(client),
+		RBACPolicy:                  newRBACPolicyClient(client),
+		RedirectURLs:                newRedirectURLsClient(client),
+		SDK:                         newSDKClient(client),
+		Secrets:                     newSecretsClient(client),
+		TrustedTokenProfiles:        newTrustedTokenProfilesClient(client),
+		V1ToV3MigrationClient:       newMigrationClient(client),
 	}
 }
