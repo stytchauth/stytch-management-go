@@ -62,6 +62,7 @@ func makeTestConsumerConfig() sdk.ConsumerConfig {
 		DFPPA: &sdk.ConsumerDFPPAConfig{
 			Enabled:     sdk.DFPPASettingDisabled,
 			OnChallenge: sdk.DFPPAOnChallengeActionAllow,
+			FreEnabled:  sdk.DFPPASettingDisabled,
 		},
 		Biometrics: &sdk.ConsumerBiometricsConfig{
 			Enabled:                 true,
@@ -131,6 +132,7 @@ func makeTestB2BConfig() sdk.B2BConfig {
 		DFPPA: &sdk.B2BDFPPAConfig{
 			Enabled:     sdk.DFPPASettingEnabled,
 			OnChallenge: sdk.DFPPAOnChallengeActionBlock,
+			FreEnabled:  sdk.DFPPASettingDisabled,
 		},
 		Passwords: &sdk.B2BPasswordsConfig{
 			Enabled:                       true,

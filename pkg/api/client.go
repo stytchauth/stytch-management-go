@@ -27,6 +27,7 @@ type API struct {
 	EventLogStreaming      *EventLogStreamingClient
 	JWTTemplates           *JWTTemplatesClient
 	PasswordStrengthConfig *PasswordStrengthConfigClient
+	ProjectTwilioAPIKeys   *ProjectTwilioAPIKeysClient
 	Projects               *ProjectsClient
 	PublicTokens           *PublicTokensClient
 	RBACPolicy             *RBACPolicyClient
@@ -96,6 +97,7 @@ func NewClient(workspaceKeyID string, workspaceKeySecret string, opts ...APIOpti
 		EventLogStreaming:      newEventLogStreamingClient(client),
 		JWTTemplates:           newJWTTemplatesClient(client),
 		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
+		ProjectTwilioAPIKeys:   newProjectTwilioAPIKeysClient(client),
 		Projects:               newProjectsClient(client),
 		PublicTokens:           newPublicTokensClient(client),
 		RBACPolicy:             newRBACPolicyClient(client),
@@ -132,6 +134,7 @@ func NewAccessTokenClient(accessToken string, opts ...APIOption) *API {
 		EventLogStreaming:      newEventLogStreamingClient(client),
 		JWTTemplates:           newJWTTemplatesClient(client),
 		PasswordStrengthConfig: newPasswordStrengthConfigClient(client),
+		ProjectTwilioAPIKeys:   newProjectTwilioAPIKeysClient(client),
 		Projects:               newProjectsClient(client),
 		PublicTokens:           newPublicTokensClient(client),
 		RBACPolicy:             newRBACPolicyClient(client),
