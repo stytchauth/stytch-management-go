@@ -63,6 +63,10 @@ type B2BDFPPAConfig struct {
 	Enabled DFPPASetting `json:"enabled,omitempty"`
 	// OnChallenge is the action to take when a DFPPA "challenge" verdict is returned.
 	OnChallenge DFPPAOnChallengeAction `json:"on_challenge,omitempty"`
+	// FreEnabled: FREEnabled is the Twilio Fraud Prevention setting for Device Fingerprinting Protected Auth
+	// in the SDK. It can only be turned on if the environment has a Twilio API key, and it cannot be stricter
+	// than the DFPPA setting.
+	FreEnabled DFPPASetting `json:"fre_enabled,omitempty"`
 }
 
 type B2BMagicLinksConfig struct {
@@ -199,6 +203,10 @@ type ConsumerDFPPAConfig struct {
 	Enabled DFPPASetting `json:"enabled,omitempty"`
 	// OnChallenge is the action to take when a DFPPA "challenge" verdict is returned.
 	OnChallenge DFPPAOnChallengeAction `json:"on_challenge,omitempty"`
+	// FreEnabled: FREEnabled is the Twilio Fraud Prevention setting for Device Fingerprinting Protected Auth
+	// in the SDK. It can only be turned on if the environment has a Twilio API key, and it cannot be stricter
+	// than the DFPPA setting.
+	FreEnabled DFPPASetting `json:"fre_enabled,omitempty"`
 }
 
 type ConsumerMagicLinksConfig struct {
@@ -364,38 +372,6 @@ type SetConsumerConfigResponse struct {
 	StatusCode int `json:"status_code,omitempty"`
 }
 
-type B2BCookiesConfigHttpOnly string
-
-const (
-	B2BCookiesConfigHttpOnlyDisabled B2BCookiesConfigHttpOnly = "DISABLED"
-	B2BCookiesConfigHttpOnlyEnabled  B2BCookiesConfigHttpOnly = "ENABLED"
-	B2BCookiesConfigHttpOnlyEnforced B2BCookiesConfigHttpOnly = "ENFORCED"
-)
-
-func B2BCookiesConfigHttpOnlys() []B2BCookiesConfigHttpOnly {
-	return []B2BCookiesConfigHttpOnly{
-		B2BCookiesConfigHttpOnlyDisabled,
-		B2BCookiesConfigHttpOnlyEnabled,
-		B2BCookiesConfigHttpOnlyEnforced,
-	}
-}
-
-type ConsumerCookiesConfigHttpOnly string
-
-const (
-	ConsumerCookiesConfigHttpOnlyDisabled ConsumerCookiesConfigHttpOnly = "DISABLED"
-	ConsumerCookiesConfigHttpOnlyEnabled  ConsumerCookiesConfigHttpOnly = "ENABLED"
-	ConsumerCookiesConfigHttpOnlyEnforced ConsumerCookiesConfigHttpOnly = "ENFORCED"
-)
-
-func ConsumerCookiesConfigHttpOnlys() []ConsumerCookiesConfigHttpOnly {
-	return []ConsumerCookiesConfigHttpOnly{
-		ConsumerCookiesConfigHttpOnlyDisabled,
-		ConsumerCookiesConfigHttpOnlyEnabled,
-		ConsumerCookiesConfigHttpOnlyEnforced,
-	}
-}
-
 type DFPPAOnChallengeAction string
 
 const (
@@ -427,6 +403,38 @@ func DFPPASettings() []DFPPASetting {
 		DFPPASettingEnabled,
 		DFPPASettingPassive,
 		DFPPASettingDisabled,
+	}
+}
+
+type B2BCookiesConfigHttpOnly string
+
+const (
+	B2BCookiesConfigHttpOnlyDisabled B2BCookiesConfigHttpOnly = "DISABLED"
+	B2BCookiesConfigHttpOnlyEnabled  B2BCookiesConfigHttpOnly = "ENABLED"
+	B2BCookiesConfigHttpOnlyEnforced B2BCookiesConfigHttpOnly = "ENFORCED"
+)
+
+func B2BCookiesConfigHttpOnlys() []B2BCookiesConfigHttpOnly {
+	return []B2BCookiesConfigHttpOnly{
+		B2BCookiesConfigHttpOnlyDisabled,
+		B2BCookiesConfigHttpOnlyEnabled,
+		B2BCookiesConfigHttpOnlyEnforced,
+	}
+}
+
+type ConsumerCookiesConfigHttpOnly string
+
+const (
+	ConsumerCookiesConfigHttpOnlyDisabled ConsumerCookiesConfigHttpOnly = "DISABLED"
+	ConsumerCookiesConfigHttpOnlyEnabled  ConsumerCookiesConfigHttpOnly = "ENABLED"
+	ConsumerCookiesConfigHttpOnlyEnforced ConsumerCookiesConfigHttpOnly = "ENFORCED"
+)
+
+func ConsumerCookiesConfigHttpOnlys() []ConsumerCookiesConfigHttpOnly {
+	return []ConsumerCookiesConfigHttpOnly{
+		ConsumerCookiesConfigHttpOnlyDisabled,
+		ConsumerCookiesConfigHttpOnlyEnabled,
+		ConsumerCookiesConfigHttpOnlyEnforced,
 	}
 }
 
