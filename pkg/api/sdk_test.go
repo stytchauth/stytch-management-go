@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/environments"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projects"
+	"github.com/stytchauth/stytch-management-go/v3/pkg/models/projecttwilioapikeys"
 	"github.com/stytchauth/stytch-management-go/v3/pkg/models/sdk"
 )
 
@@ -274,6 +275,81 @@ func TestSDKClient_SetB2BConfig(t *testing.T) {
 
 		// Act
 		resp, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			Config:          &config,
+		})
+
+		// Assert
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
+}
+
+func TestSDKClient_SetB2BConfig_FreEnabled(t *testing.T) {
+	t.Run("fre enabled succeeds when environment has a twilio api key", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+		_, err := client.ProjectTwilioAPIKeys.CreateTwilioAPIKey(ctx, projecttwilioapikeys.CreateTwilioAPIKeyRequest{
+			ProjectSlug:        env.ProjectSlug,
+			EnvironmentSlug:    env.EnvironmentSlug,
+			TwilioAPIKeySid:    testTwilioAPIKeySid,
+			TwilioAPIKeySecret: testTwilioAPIKeySecret,
+		})
+		require.NoError(t, err)
+		config := makeTestB2BConfig()
+		config.DFPPA.FreEnabled = sdk.DFPPASettingEnabled
+
+		// Act
+		resp, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			Config:          &config,
+		})
+
+		// Assert
+		require.NoError(t, err)
+		assert.Equal(t, sdk.DFPPASettingEnabled, resp.Config.DFPPA.FreEnabled)
+	})
+	t.Run("fre enabled without a twilio api key returns error", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+		config := makeTestB2BConfig()
+		config.DFPPA.FreEnabled = sdk.DFPPASettingEnabled
+
+		// Act
+		resp, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			Config:          &config,
+		})
+
+		// Assert
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
+	t.Run("fre enabled stricter than dfppa returns error", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+		_, err := client.ProjectTwilioAPIKeys.CreateTwilioAPIKey(ctx, projecttwilioapikeys.CreateTwilioAPIKeyRequest{
+			ProjectSlug:        env.ProjectSlug,
+			EnvironmentSlug:    env.EnvironmentSlug,
+			TwilioAPIKeySid:    testTwilioAPIKeySid,
+			TwilioAPIKeySecret: testTwilioAPIKeySecret,
+		})
+		require.NoError(t, err)
+		config := makeTestB2BConfig()
+		config.DFPPA.Enabled = sdk.DFPPASettingPassive
+		config.DFPPA.FreEnabled = sdk.DFPPASettingEnabled
+
+		// Act
+		resp, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
 			ProjectSlug:     env.ProjectSlug,
 			EnvironmentSlug: env.EnvironmentSlug,
 			Config:          &config,
