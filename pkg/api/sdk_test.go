@@ -359,4 +359,117 @@ func TestSDKClient_SetB2BConfig_FreEnabled(t *testing.T) {
 		assert.Error(t, err)
 		assert.Nil(t, resp)
 	})
+	t.Run("fre passive succeeds when dfppa is passive", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalB2B, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+		_, err := client.ProjectTwilioAPIKeys.CreateTwilioAPIKey(ctx, projecttwilioapikeys.CreateTwilioAPIKeyRequest{
+			ProjectSlug:        env.ProjectSlug,
+			EnvironmentSlug:    env.EnvironmentSlug,
+			TwilioAPIKeySid:    testTwilioAPIKeySid,
+			TwilioAPIKeySecret: testTwilioAPIKeySecret,
+		})
+		require.NoError(t, err)
+		config := makeTestB2BConfig()
+		config.DFPPA.Enabled = sdk.DFPPASettingPassive
+		config.DFPPA.FreEnabled = sdk.DFPPASettingPassive
+
+		// Act
+		resp, err := client.SDK.SetB2BConfig(ctx, sdk.SetB2BConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			Config:          &config,
+		})
+
+		// Assert
+		require.NoError(t, err)
+		assert.Equal(t, sdk.DFPPASettingPassive, resp.Config.DFPPA.Enabled)
+		assert.Equal(t, sdk.DFPPASettingPassive, resp.Config.DFPPA.FreEnabled)
+	})
+}
+
+func TestSDKClient_SetConsumerConfig_FreEnabled(t *testing.T) {
+	t.Run("fre enabled succeeds when environment has a twilio api key", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+		_, err := client.ProjectTwilioAPIKeys.CreateTwilioAPIKey(ctx, projecttwilioapikeys.CreateTwilioAPIKeyRequest{
+			ProjectSlug:        env.ProjectSlug,
+			EnvironmentSlug:    env.EnvironmentSlug,
+			TwilioAPIKeySid:    testTwilioAPIKeySid,
+			TwilioAPIKeySecret: testTwilioAPIKeySecret,
+		})
+		require.NoError(t, err)
+		config := makeTestConsumerConfig()
+		config.DFPPA.Enabled = sdk.DFPPASettingEnabled
+		config.DFPPA.FreEnabled = sdk.DFPPASettingEnabled
+
+		// Act
+		resp, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			Config:          &config,
+		})
+
+		// Assert
+		require.NoError(t, err)
+		assert.Equal(t, sdk.DFPPASettingEnabled, resp.Config.DFPPA.FreEnabled)
+	})
+	t.Run("fre enabled stricter than dfppa returns error", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+		_, err := client.ProjectTwilioAPIKeys.CreateTwilioAPIKey(ctx, projecttwilioapikeys.CreateTwilioAPIKeyRequest{
+			ProjectSlug:        env.ProjectSlug,
+			EnvironmentSlug:    env.EnvironmentSlug,
+			TwilioAPIKeySid:    testTwilioAPIKeySid,
+			TwilioAPIKeySecret: testTwilioAPIKeySecret,
+		})
+		require.NoError(t, err)
+		// DFPPA is disabled by default in the test config, so enabling FRE is stricter than DFPPA.
+		config := makeTestConsumerConfig()
+		config.DFPPA.FreEnabled = sdk.DFPPASettingEnabled
+
+		// Act
+		resp, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			Config:          &config,
+		})
+
+		// Assert
+		assert.Error(t, err)
+		assert.Nil(t, resp)
+	})
+	t.Run("fre passive succeeds when dfppa is enabled", func(t *testing.T) {
+		// Arrange
+		client := NewTestClient(t)
+		env := client.DisposableEnvironment(projects.VerticalConsumer, environments.EnvironmentTypeTest)
+		ctx := context.Background()
+		_, err := client.ProjectTwilioAPIKeys.CreateTwilioAPIKey(ctx, projecttwilioapikeys.CreateTwilioAPIKeyRequest{
+			ProjectSlug:        env.ProjectSlug,
+			EnvironmentSlug:    env.EnvironmentSlug,
+			TwilioAPIKeySid:    testTwilioAPIKeySid,
+			TwilioAPIKeySecret: testTwilioAPIKeySecret,
+		})
+		require.NoError(t, err)
+		config := makeTestConsumerConfig()
+		config.DFPPA.Enabled = sdk.DFPPASettingEnabled
+		config.DFPPA.FreEnabled = sdk.DFPPASettingPassive
+
+		// Act
+		resp, err := client.SDK.SetConsumerConfig(ctx, sdk.SetConsumerConfigRequest{
+			ProjectSlug:     env.ProjectSlug,
+			EnvironmentSlug: env.EnvironmentSlug,
+			Config:          &config,
+		})
+
+		// Assert
+		require.NoError(t, err)
+		assert.Equal(t, sdk.DFPPASettingEnabled, resp.Config.DFPPA.Enabled)
+		assert.Equal(t, sdk.DFPPASettingPassive, resp.Config.DFPPA.FreEnabled)
+	})
 }
